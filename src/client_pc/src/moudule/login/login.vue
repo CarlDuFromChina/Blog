@@ -42,23 +42,26 @@ export default {
   methods: {
     signIn() {
       this.loading = true;
-      try {
-        this.$refs.form.validate(valid => {
-          if (valid) {
-            setTimeout(() => {
-              this.$message.success(
-                `账号：${this.data.account}, 密码：${this.data.password}`
-              );
-              this.loading = false;
-            }, 300);
-          } else {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          const url = 'api/user/login';
+          const user = {
+            account: this.account,
+            password: this.password
+          };
+          try {
+            sp.post(url, user).then(resp => {
+              this.$message.success('登录成功');
+            });
+          } catch (error) {
+            this.$message.error(error);
+          } finally {
             this.loading = false;
           }
-        });
-      } catch (error) {
-        this.$message.error(error);
-        this.loading = false;
-      }
+        } else {
+          this.loading = false;
+        }
+      });
     }
   }
 };
