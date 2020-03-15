@@ -12,7 +12,11 @@ Vue.use(spCompoents);
 
 Vue.use(VueRouter);
 const router = new VueRouter({
-  routes: mouduleRouter
+  routes: [({ // 顶层
+    path: '/',
+    component: App,
+    children: mouduleRouter
+  })]
 });
 
 /* eslint-disable no-new */

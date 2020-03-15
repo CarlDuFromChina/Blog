@@ -2,7 +2,10 @@
   <el-container class="container">
     <el-header class="header">
       <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
+        <i
+          class="el-icon-setting"
+          style="margin-right: 15px"
+        ></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>查看</el-dropdown-item>
           <el-dropdown-item>新增</el-dropdown-item>
@@ -12,8 +15,16 @@
       <span>{{ userInfo.name }}</span>
     </el-header>
     <el-container class="container__wrapper">
-      <el-aside width="200px" class="menu">
-        <el-menu :default-openeds="['1']">
+      <el-aside
+        width="200px"
+        class="menu"
+      >
+        <el-menu
+          :default-active="$route.path"
+          :default-openeds="defaultOpenedsArray"
+          @open="handleOpen"
+          router
+        >
           <el-submenu
             v-for="(item, index) in menus"
             :key="index"
@@ -29,10 +40,11 @@
             >
               <el-menu-item
                 v-for="(item3, index3) in item2.menus"
-                :index="`${index}-${(index2 + 1) * (index3 + 1)}`"
+                :index="`/${item.router}/${item3.router}`"
                 :key="index3"
-                >{{ item3.title }}</el-menu-item
               >
+                {{ item3.title }}
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -40,19 +52,7 @@
 
       <el-container>
         <el-main>
-          <el-table :data="tableData">
-            <el-table-column
-              prop="date"
-              label="日期"
-              width="140"
-            ></el-table-column>
-            <el-table-column
-              prop="name"
-              label="姓名"
-              width="120"
-            ></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-          </el-table>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -60,17 +60,13 @@
 </template>
 
 <script>
-const item = {
-  date: '2016-05-02',
-  name: '王小虎',
-  address: '上海市普陀区金沙江路 1518 弄'
-};
+
 export default {
   name: 'home',
   data() {
     return {
-      tableData: Array(4).fill(item),
-      menus: []
+      menus: [],
+      defaultOpenedsArray: []
     };
   },
   created() {
@@ -88,12 +84,13 @@ export default {
       this.menus = [
         {
           title: '编程语言',
+          router: 'home',
           subMenu: [
             {
               title: '',
               menus: [
-                { title: 'JavScript' },
-                { title: 'C#' },
+                { title: 'JavScript', router: 'test' },
+                { title: 'C#', router: 'test2' },
                 { title: '数据库' }
               ]
             }
@@ -102,7 +99,7 @@ export default {
         {
           title: '闲谈',
           subMenu: [
-            { title: '', menus: [{ title: '想法' }, { title: '程序人生#' }] }
+            { title: '', menus: [{ title: '想法' }, { title: '程序人生' }] }
           ]
         },
         {
@@ -110,15 +107,18 @@ export default {
           subMenu: [
             {
               title: '数据',
-              menus: [{ title: '想法' }, { title: '程序人生#' }]
+              menus: [{ title: '菜单' }, { title: '实体' }]
             },
             {
-              title: '数据',
-              menus: [{ title: '想法' }, { title: '程序人生#' }]
+              title: '业务',
+              menus: [{ title: '作业管理' }, { title: '异步' }]
             }
           ]
         }
       ];
+    },
+    handleOpen(key) {
+      this.defaultOpenedsArray.push(key);
     }
   }
 };
