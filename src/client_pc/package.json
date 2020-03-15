@@ -11,8 +11,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "sixpence.platform.pc.vue": "^1.0.5",
-    "vue": "^2.5.2"
+    "marked": "^0.7.0",
+    "sixpence.platform.pc.vue": "^1.0.6",
+    "vue": "^2.5.2",
+    "vue-markdown": "^2.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

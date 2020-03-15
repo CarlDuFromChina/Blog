@@ -2,10 +2,7 @@
   <el-container class="container">
     <el-header class="header">
       <el-dropdown>
-        <i
-          class="el-icon-setting"
-          style="margin-right: 15px"
-        ></i>
+        <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>查看</el-dropdown-item>
           <el-dropdown-item>新增</el-dropdown-item>
@@ -15,34 +12,15 @@
       <span>{{ userInfo.name }}</span>
     </el-header>
     <el-container class="container__wrapper">
-      <el-aside
-        width="200px"
-        class="menu"
-      >
-        <el-menu
-          :default-active="$route.path"
-          :default-openeds="defaultOpenedsArray"
-          @open="handleOpen"
-          router
-        >
-          <el-submenu
-            v-for="(item, index) in menus"
-            :key="index"
-            :index="`${index}`"
-          >
+      <el-aside width="200px" class="menu">
+        <el-menu :default-active="$route.path" :default-openeds="defaultOpenedsArray" @open="handleOpen" router>
+          <el-submenu v-for="(item, index) in menus" :key="index" :index="`${index}`">
             <template slot="title">
               <i class="el-icon-menu"></i>{{ item.title }}
             </template>
-            <el-menu-item-group
-              v-for="(item2, index2) in item.subMenu"
-              :key="index2"
-              :title="item2.title"
-            >
-              <el-menu-item
-                v-for="(item3, index3) in item2.menus"
-                :index="`/${item.router}/${item3.router}`"
-                :key="index3"
-              >
+            <el-menu-item-group v-for="(item2, index2) in item.subMenu" :key="index2" :title="item2.title">
+              <el-menu-item v-for="(item3, index3) in item2.menus" :index="`/${item.router}/${item3.router}`"
+                :key="index3">
                 {{ item3.title }}
               </el-menu-item>
             </el-menu-item-group>
@@ -89,8 +67,8 @@ export default {
             {
               title: '',
               menus: [
-                { title: 'JavScript', router: 'test' },
-                { title: 'C#', router: 'test2' },
+                { title: 'JavaScript', router: 'js' },
+                { title: 'C#', router: 'csharp' },
                 { title: '数据库' }
               ]
             }
