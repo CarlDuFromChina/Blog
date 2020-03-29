@@ -5,10 +5,12 @@ import App from './App';
 import VueRouter from 'vue-router';
 import mouduleRouter from './moudule';
 import spCompoents from 'sixpence.platform.pc.vue';
+import moment from 'vue-moment';
 
 Vue.config.productionTip = false;
 
 Vue.use(spCompoents);
+Vue.use(moment);
 
 Vue.use(VueRouter);
 const router = new VueRouter({
