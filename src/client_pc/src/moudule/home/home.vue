@@ -19,7 +19,7 @@
               <i class="el-icon-menu"></i>{{ item.title }}
             </template>
             <el-menu-item-group v-for="(item2, index2) in item.subMenu" :key="index2" :title="item2.title">
-              <el-menu-item v-for="(item3, index3) in item2.menus" :index="`/${item.router}/${item3.router}`"
+              <el-menu-item v-for="(item3, index3) in item2.menus" :index="`/home/${item3.router}`"
                 :key="index3">
                 {{ item3.title }}
               </el-menu-item>
@@ -59,41 +59,22 @@ export default {
       };
     },
     getMenu() {
-      this.menus = [
-        {
-          title: '编程语言',
-          router: 'home',
-          subMenu: [
-            {
-              title: '',
-              menus: [
-                { title: 'JavaScript', router: 'js' },
-                { title: 'C#', router: 'csharp' },
-                { title: '数据库' }
-              ]
-            }
-          ]
-        },
-        {
-          title: '闲谈',
-          subMenu: [
-            { title: '', menus: [{ title: '想法' }, { title: '程序人生' }] }
-          ]
-        },
-        {
-          title: '系统设置',
-          subMenu: [
-            {
-              title: '数据',
-              menus: [{ title: '菜单' }, { title: '实体' }]
-            },
-            {
-              title: '业务',
-              menus: [{ title: '作业管理' }, { title: '异步' }]
-            }
-          ]
-        }
-      ];
+      sp.get('api/sysmenu/getdatalist').then(resp => {
+        resp.forEach(e => {
+          const menu = {
+            title: e.name,
+            router: e.router,
+            subMenu: [{ title: '', menus: [] }]
+          };
+          if (e.ChildMenus && e.ChildMenus.length > 0) {
+            menu.subMenu[0].menus = e.ChildMenus.map(item => ({
+              title: item.name,
+              router: item.router
+            }));
+          }
+          this.menus.push(menu);
+        });
+      });
     },
     handleOpen(key) {
       this.defaultOpenedsArray.push(key);
