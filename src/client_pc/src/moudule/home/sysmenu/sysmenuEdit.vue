@@ -71,6 +71,7 @@ export default {
       }
       sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
         this.$emit('close');
+        this.$emit('load-data');
         this.$message.success('添加成功');
       });
     }

@@ -28,7 +28,7 @@
       title="编辑"
       :visible.sync="editVisible"
       width="50%">
-      <component v-if="editVisible" :is="editComponent" @close="editVisible=false" :related-attr="relatedAttr"></component>
+      <component v-if="editVisible" :is="editComponent" @close="editVisible=false" :related-attr="relatedAttr" @load-data="$emit('load-data')"></component>
     </el-dialog>
   </div>
 </template>
@@ -51,11 +51,15 @@ export default {
     };
   },
   created() {
-    sp.get('api/sysmenu/getdatalist').then(resp => {
-      this.tableData = resp;
-    });
+    this.$on('load-data', this.loadData);
+    this.$emit('load-data');
   },
   methods: {
+    loadData() {
+      sp.get('api/sysmenu/getdatalist').then(resp => {
+        this.tableData = resp;
+      });
+    },
     formatDate(value) {
       if (!sp.isNullOrEmpty(value)) {
         return this.$moment(value).format('YYYY-MM-DD HH:MM');
