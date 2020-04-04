@@ -2,25 +2,19 @@
   <el-container class="container">
     <el-header class="header">
       <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
+        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="margin-top: 10px;"></el-avatar>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
+          <el-dropdown-item>修改密码</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>{{ userInfo.name }}</span>
     </el-header>
     <el-container class="container__wrapper">
       <el-aside width="200px" class="menu">
         <el-menu :default-active="$route.path" :default-openeds="defaultOpenedsArray" @open="handleOpen" router>
           <el-submenu v-for="(item, index) in menus" :key="index" :index="`${index}`">
-            <template slot="title">
-              <i class="el-icon-menu"></i>{{ item.title }}
-            </template>
+            <template slot="title"> <i class="el-icon-menu"></i>{{ item.title }} </template>
             <el-menu-item-group v-for="(item2, index2) in item.subMenu" :key="index2" :title="item2.title">
-              <el-menu-item v-for="(item3, index3) in item2.menus" :index="`/home/${item3.router}`"
-                :key="index3">
+              <el-menu-item v-for="(item3, index3) in item2.menus" :index="`/home/${item3.router}`" :key="index3">
                 {{ item3.title }}
               </el-menu-item>
             </el-menu-item-group>
@@ -38,7 +32,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'home',
   data() {
