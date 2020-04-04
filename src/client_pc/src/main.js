@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import mouduleRouter from './moudule';
 import spCompoents from 'sixpence.platform.pc.vue';
 import moment from 'vue-moment';
+import './assets';
 
 Vue.config.productionTip = false;
 
@@ -14,11 +15,14 @@ Vue.use(moment);
 
 Vue.use(VueRouter);
 const router = new VueRouter({
-  routes: [({ // 顶层
-    path: '/',
-    component: App,
-    children: mouduleRouter
-  })]
+  routes: [
+    {
+      // 顶层
+      path: '/',
+      component: App,
+      children: mouduleRouter
+    }
+  ]
 });
 
 /* eslint-disable no-new */
