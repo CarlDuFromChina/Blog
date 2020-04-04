@@ -6,7 +6,7 @@ import VueRouter from 'vue-router';
 import mouduleRouter from './moudule';
 import spCompoents from 'sixpence.platform.pc.vue';
 import moment from 'vue-moment';
-import './assets';
+import './assets/icons';
 
 Vue.config.productionTip = false;
 
