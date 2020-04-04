@@ -20,14 +20,9 @@
 <script>
 export default {
   name: 'login',
-  props: {
-    header: {
-      type: String,
-      default: 'Sign In'
-    }
-  },
   data() {
     return {
+      header: 'Sign In',
       data: {
         account: '',
         password: ''
@@ -40,9 +35,10 @@ export default {
     };
   },
   methods: {
-    signIn() {
+    async signIn() {
       this.loading = true;
-      this.$refs.form.validate(valid => {
+      try {
+        const valid = await this.$refs.form.validate();
         if (valid) {
           const url = 'api/user/login';
           const user = {
@@ -61,7 +57,11 @@ export default {
         } else {
           this.loading = false;
         }
-      });
+      } catch (error) {
+        this.$message.error('请检查必填项');
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };
@@ -70,9 +70,7 @@ export default {
 <style lang="less" scoped>
 .login {
   width: 400px;
-  height: 300px;
-  margin: 0 auto;
-  margin-top: 200px;
+  margin: 200px auto 0 auto;
   border: 5px solid #d1d1d1;
   border-radius: 5%;
   box-shadow: 10px 10px 20px 10px #d1d1d1,
