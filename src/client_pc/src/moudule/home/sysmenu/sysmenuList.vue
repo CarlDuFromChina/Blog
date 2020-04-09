@@ -3,12 +3,16 @@
     <sp-header>
       <sp-button-list :buttons="buttons"></sp-button-list>
     </sp-header>
-    <el-table ref="multipleTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange"
-      :tree-props="{children: 'ChildMenus', hasChildren: 'hasChildren'}" default-expand-all row-key="Id">
-      <el-table-column
-        type="selection"
-        width="55">
-      </el-table-column>
+    <el-table
+      ref="multipleTable"
+      :data="tableData"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+      :tree-props="{ children: 'ChildMenus', hasChildren: 'hasChildren' }"
+      default-expand-all
+      row-key="Id"
+    >
+      <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="菜单名">
         <template slot-scope="scope">
           <a class="compute-span" href="javascript:;" @click.stop.prevent="handleClick(scope.row)">{{ scope.row.name }}</a>
@@ -24,11 +28,14 @@
         <template slot-scope="scope">{{ formatDate(scope.row.modifiedOn) }}</template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      title="编辑"
-      :visible.sync="editVisible"
-      width="50%">
-      <component v-if="editVisible" :is="editComponent" @close="editVisible=false" :related-attr="relatedAttr" @load-data="$emit('load-data')"></component>
+    <el-dialog title="编辑" :visible.sync="editVisible" width="50%">
+      <component
+        v-if="editVisible"
+        :is="editComponent"
+        @close="editVisible = false"
+        :related-attr="relatedAttr"
+        @load-data="$emit('load-data')"
+      ></component>
     </el-dialog>
   </div>
 </template>
@@ -85,22 +92,24 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        const ids = this.selections.map(item => {
-          return item.Id;
-        });
-        sp.post(`api/${this.controllerName}/DeleteData`, ids).then(() => {
+      })
+        .then(() => {
+          const ids = this.selections.map(item => {
+            return item.Id;
+          });
+          sp.post(`api/${this.controllerName}/DeleteData`, ids).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          });
+        })
+        .catch(() => {
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+            type: 'info',
+            message: '已取消删除'
           });
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
     },
     toggleSelection(rows) {
       if (rows) {
@@ -120,7 +129,7 @@ export default {
 
 <style>
 .compute-span {
-  color: #409EFF;
+  color: #409eff;
   text-decoration: none;
 }
 </style>
