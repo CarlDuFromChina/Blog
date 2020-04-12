@@ -4,13 +4,13 @@ import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
 import mouduleRouter from './moudule';
-import spCompoents from 'sixpence.platform.pc.vue';
+import spComponents from 'sixpence.platform.pc.vue';
 import moment from 'vue-moment';
 import './assets/icons';
 
 Vue.config.productionTip = false;
 
-Vue.use(spCompoents);
+Vue.use(spComponents);
 Vue.use(moment);
 
 Vue.use(VueRouter);
