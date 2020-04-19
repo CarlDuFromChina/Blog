@@ -1,5 +1,5 @@
 <template>
-  <sp-list :controllerName="controllerName" :operations="operations" :columns="columns" :editComponent="editComponent"></sp-list>
+  <sp-list :controllerName="controllerName" :operations="operations" :columns="columns" :editComponent="editComponent" :allow-select="true"></sp-list>
 </template>
 
 <script>

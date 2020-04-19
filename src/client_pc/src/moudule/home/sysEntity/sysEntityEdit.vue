@@ -1,19 +1,20 @@
 <template>
-  <el-form ref="form" :model="data" label-width="80px">
+  <el-form ref="form" :model="data" label-width="80px" :rules="rules">
     <el-row>
       <el-col :span="12">
-        <el-form-item label="名称">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="data.name"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="编码">
+        <el-form-item label="编码" prop="code">
           <el-input v-model="data.code"></el-input>
         </el-form-item>
       </el-col>
     </el-row>
     <el-divider content-position="left">字段</el-divider>
     <el-button size="mini" type="primary" style="margin-left:20px" @click="editVisible = true">新增</el-button>
+    <el-button size="mini" type="success" style="margin-left:20px" @click="publishEntity">发布</el-button>
     <el-table :data="attrs" style="width: 100%;padding: 0 20px 40px 20px">
       <el-table-column label="名称" prop="name"> </el-table-column>
       <el-table-column label="类型" prop="attr_type"> </el-table-column>
@@ -38,7 +39,7 @@
       </el-col>
     </el-row>
     <el-dialog title="编辑" :visible.sync="editVisible" width="60%" append-to-body>
-      <sys-attrs-edit :parentId="Id"></sys-attrs-edit>
+      <sys-attrs-edit :parent="parentObj" @close="handleClose"></sys-attrs-edit>
     </el-dialog>
   </el-form>
 </template>
@@ -55,15 +56,57 @@ export default {
     return {
       controllerName: 'SysEntity',
       attrs: [],
-      editVisible: false
+      editVisible: false,
+      rules: {
+        name: [{ required: true, message: '请输入实体名', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入编码', trigger: 'blur' }]
+      }
     };
   },
+  computed: {
+    parentObj() {
+      return {
+        id: this.Id,
+        name: this.data.name
+      };
+    }
+  },
   methods: {
-    handleDelete(index, row) {
-      console.log(index, row);
+    handleClose() {
+      this.editVisible = false;
+      this.loadAttrs();
     },
-    async loadComplete() {
-      this.attrs = await sp.get(`api/SysEntity/GetEntityAttrs?id=${this.Id}`);
+    handleDelete(index, row) {
+      const id = row.sys_attrsId;
+      sp.post('api/SysAttrs/DeleteData', [id]).then(resp => {
+        this.$message.success('删除成功');
+        this.loadAttrs();
+      });
+    },
+    loadComplete() {
+      this.loadAttrs();
+    },
+    loadAttrs() {
+      sp.get(`api/SysEntity/GetEntityAttrs?id=${this.Id}`).then(resp => {
+        this.attrs = resp;
+      });
+    },
+    publishEntity() {
+      if (sp.isNullOrEmpty(this.Id)) {
+        this.$message.error('请保存实体后再发布');
+        return;
+      }
+      this.$confirm('此操作将修改实体, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.$message.success('发布成功');
+        })
+        .catch(() => {
+          this.$message.info('已取消');
+        });
     }
   }
 };
