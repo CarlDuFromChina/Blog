@@ -63,6 +63,10 @@ export default {
           label: '字符串'
         },
         {
+          value: 'text',
+          label: '长文本'
+        },
+        {
           value: 'INT4',
           label: '数值（4）'
         },
@@ -85,6 +89,7 @@ export default {
   created() {
     this.data.entityid = this.parent.id;
     this.data.entityidname = this.parent.name;
+    this.data.entityCode = this.parent.entityCode;
   },
   methods: {
     saveData() {
@@ -94,6 +99,9 @@ export default {
       this.$refs.form.validate(resp => {
         if (resp) {
           this.data.isrequire = this.data.isrequire2 ? 1 : 0;
+          if (sp.isNullOrEmpty(this.data.attr_length)) {
+            this.data.attr_length = 0;
+          }
           sp.post(`api/${this.controllerName}/CreateData`, this.data)
             .then(resp => {
               this.$emit('close');

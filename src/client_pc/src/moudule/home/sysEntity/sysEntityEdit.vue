@@ -22,7 +22,7 @@
         <el-table-column label="长度" prop="attr_length"> </el-table-column>
         <el-table-column label="必填" prop="isrequire">
           <template slot-scope="scope">
-            <span>{{ scope.row.isrequire === 1 ? '是' : '否' }}</span>
+            <span>{{ scope.row.isrequire === 0 ? '否' : '是' }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -69,7 +69,8 @@ export default {
     parentObj() {
       return {
         id: this.Id,
-        name: this.data.name
+        name: this.data.name,
+        entityCode: this.data.code
       };
     }
   },
