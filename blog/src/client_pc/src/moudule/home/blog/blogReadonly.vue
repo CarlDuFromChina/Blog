@@ -60,7 +60,6 @@ export default {
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
   .__body {
-    height: calc(100% - 60px);
     background-color: #e9ecef;
     color: #212529;
     padding-top: 24px;
