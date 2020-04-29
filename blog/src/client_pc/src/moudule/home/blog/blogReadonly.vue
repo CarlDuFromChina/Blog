@@ -64,8 +64,8 @@ export default {
     color: #212529;
     padding-top: 24px;
     .__body__wrapper {
-      width: calc(100% - 200px);
-      margin: 0px 104px;
+      max-width: 900px;
+      margin: 0 auto;
       padding: 20px;
       background-color: #fff;
       .__title {
