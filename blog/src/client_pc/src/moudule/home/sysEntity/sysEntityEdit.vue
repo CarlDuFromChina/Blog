@@ -18,6 +18,7 @@
       <el-button size="mini" type="primary" style="margin-left:20px" @click="addSystemAttrs">添加系统字段</el-button>
       <el-table :data="attrs" style="width: 100%;padding: 0 20px 40px 20px">
         <el-table-column label="名称" prop="name"> </el-table-column>
+        <el-table-column label="编码" prop="code"> </el-table-column>
         <el-table-column label="类型" prop="attr_type"> </el-table-column>
         <el-table-column label="长度" prop="attr_length"> </el-table-column>
         <el-table-column label="必填" prop="isrequire">

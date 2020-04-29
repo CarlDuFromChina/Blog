@@ -5,9 +5,9 @@
     </div>
     <div class="__body">
       <div class="__body__wrapper">
-        <div class="__title">123</div>
+        <div class="__title">{{ data.title }}</div>
         <div class="__content">
-          <vue-markdown :source="data"></vue-markdown>
+          <vue-markdown :source="content"></vue-markdown>
         </div>
       </div>
     </div>
@@ -19,19 +19,31 @@ import VueMarkdown from 'vue-markdown';
 import marked from 'marked';
 
 export default {
-  name: 'blog',
+  name: 'blogReadonly',
   components: { VueMarkdown },
   data() {
     return {
-      data: '',
-      title: ''
+      Id: this.$route.params.id,
+      controllerName: 'blog',
+      data: {},
+      content: ''
     };
   },
   created() {
-    this.data = marked(this.$route.params.content || '123', {
-      sanitize: true
-    });
-    this.title = this.$route.params.title;
+    this.loadData();
+  },
+  methods: {
+    async loadData() {
+      this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`);
+      if (this.loadComplete && typeof this.loadComplete === 'function') {
+        this.loadComplete();
+      }
+    },
+    loadComplete() {
+      this.content = marked(this.data.content, {
+        sanitize: true
+      });
+    }
   }
 };
 </script>
@@ -54,7 +66,6 @@ export default {
     padding-top: 24px;
     .__body__wrapper {
       width: calc(100% - 200px);
-      height: calc(100% - 120px);
       margin: 0px 104px;
       padding: 20px;
       background-color: #fff;

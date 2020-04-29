@@ -1,7 +1,7 @@
 export default [
   {
-    path: '/blog/:id?',
-    name: 'blog',
+    path: '/blogReadonly/:id?',
+    name: 'blogReadonly',
     component: () => import('./blogReadonly')
   },
   {

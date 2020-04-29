@@ -3,21 +3,24 @@
 </template>
 
 <script>
-const item = {
-  date: '2016-05-02',
-  name: '王小虎',
-  title: 'JavaScript作用域',
-  content: '123'
-};
 export default {
   name: 'csharp',
   data() {
     return {
-      tableData: Array(4).fill(item)
+      tableData: []
     };
+  },
+  created() {
+    sp.get(`api/blog/GetDataList?searchList=${JSON.stringify(this.searchList)}`).then(resp => {
+      this.tableData = resp;
+    });
+  },
+  computed: {
+    searchList() {
+      return [{ Name: 'blog_type', Value: 'csharp' }];
+    }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
