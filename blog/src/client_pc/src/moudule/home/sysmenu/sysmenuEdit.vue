@@ -20,6 +20,21 @@
           </el-select>
         </el-form-item>
       </el-col>
+      <el-col :span="12">
+        <el-form-item label="状态">
+          <el-select v-model="data.stateCode" placeholder="请选择状态">
+            <el-option
+              v-for="(item, index) in [
+                { name: '启用', value: 1 },
+                { name: '禁用', value: 0 }
+              ]"
+              :key="index"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
     </el-row>
     <el-row>
       <el-col style="text-align:right">
@@ -58,6 +73,13 @@ export default {
     }
     this.getSelectData();
   },
+  watch: {
+    'data.stateCode': {
+      handler() {
+        this.data.stateCodeName = this.data.stateCode === 1 ? '启用' : '禁用';
+      }
+    }
+  },
   methods: {
     getSelectData() {
       sp.get(`api/${this.controllerName}/GetFirstMenu`).then(resp => {
@@ -79,6 +101,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

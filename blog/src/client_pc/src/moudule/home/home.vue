@@ -53,7 +53,13 @@ export default {
       };
     },
     getMenu() {
-      sp.get('api/sysmenu/getdatalist').then(resp => {
+      const searchList = [
+        {
+          Name: 'stateCode',
+          Value: 1
+        }
+      ];
+      sp.get(`api/sysmenu/getdatalist?searchList=${JSON.stringify(searchList)}`).then(resp => {
         resp.forEach(e => {
           const menu = {
             title: e.name,

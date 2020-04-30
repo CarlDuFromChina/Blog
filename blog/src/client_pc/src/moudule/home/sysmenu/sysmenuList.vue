@@ -27,6 +27,7 @@
       <el-table-column label="最后修改日期" width="200">
         <template slot-scope="scope">{{ formatDate(scope.row.modifiedOn) }}</template>
       </el-table-column>
+      <el-table-column prop="stateCodeName" label="状态"></el-table-column>
     </el-table>
     <el-dialog title="编辑" :visible.sync="editVisible" width="50%">
       <component
@@ -63,7 +64,7 @@ export default {
   },
   methods: {
     loadData() {
-      sp.get('api/sysmenu/getdatalist').then(resp => {
+      sp.get(`api/sysmenu/GetDataList`).then(resp => {
         this.tableData = resp;
       });
     },
