@@ -22,7 +22,28 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-
+      <el-dialog title="修改密码" :visible.sync="editVisible">
+        <el-form ref="form" :model="data" label-width="100px">
+          <el-row>
+            <el-col>
+              <el-form-item label="密码">
+                <el-input v-model="data.password" placeholder="请输入新密码" show-password></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col>
+              <el-form-item label="确认密码">
+                <el-input v-model="data.password2" placeholder="请再次输入密码" show-password></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editVisible = false">取 消</el-button>
+          <el-button type="primary" @click="savePassword">确 定</el-button>
+        </span>
+      </el-dialog>
       <el-container>
         <el-main>
           <router-view></router-view>
@@ -38,7 +59,9 @@ export default {
   data() {
     return {
       menus: [],
-      defaultOpenedsArray: []
+      defaultOpenedsArray: [],
+      editVisible: false,
+      data: {}
     };
   },
   created() {
@@ -82,7 +105,17 @@ export default {
       }
     },
     editPassword() {
-      this.$message.success('修改密码成功');
+      this.editVisible = true;
+    },
+    savePassword() {
+      if (this.data.password !== this.data.password2) {
+        this.$message.error('两次密码不一致');
+      } else {
+        sp.post('api/AuthUser/EditPassword', `=${this.data.password}`).then(() => {
+          this.$message.success('修改密码成功');
+          this.editVisible = false;
+        });
+      }
     },
     logout() {
       this.$message.success('退出成功');
