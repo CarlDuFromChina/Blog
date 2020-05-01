@@ -6948,10 +6948,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.22:
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.22.tgz#4347090b3939c237d7f04313f33e478fcc71da57"
-  integrity sha512-D+yv4VChv2CNNT9YpmdHHqi92qkWJ1o6dBbo4QEtegFEjdrhKbWxjlLOSGge2h7jnCqOEBWO0VcbvIEVeqHOBg==
+sixpence.platform.pc.vue@1.0.23:
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.23.tgz#5a3f9ee47e1b9fb1d47490c0a8c021009b5647ca"
+  integrity sha512-TtQ51mZg7AOLP3OhFjArKxbjSWqXEptfem5DZW45AMGZ+SdCyZgcAitFMblc+xYe83WIO7mRuf4Yjm118fx1oQ==
   dependencies:
     axios "^0.19.0"
     element-ui "^2.10.1"
