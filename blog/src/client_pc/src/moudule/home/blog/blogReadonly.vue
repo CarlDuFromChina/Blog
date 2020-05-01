@@ -1,26 +1,20 @@
 <template>
-  <div class="blog blog__readonly">
-    <div class="blog-header">
-      <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
-    </div>
-    <div class="blog-body">
-      <div class="bodyWrapper">
-        <div class="bodyWrapper-title">{{ data.title }}</div>
-        <div class="bodyWrapper-content">
-          <vue-markdown :source="content"></vue-markdown>
-        </div>
+  <div>
+    <markdown-read :title="data.title" :content="content">
+      <div class="blog-header">
+        <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
       </div>
-    </div>
+    </markdown-read>
   </div>
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown';
+import markdownRead from '../../../components/markdownRead';
 import marked from 'marked';
 
 export default {
   name: 'blogReadonly',
-  components: { VueMarkdown },
+  components: { markdownRead },
   data() {
     return {
       Id: this.$route.params.id,
