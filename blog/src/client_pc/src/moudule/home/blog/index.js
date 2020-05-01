@@ -1,4 +1,7 @@
-export default [
+import js from './js';
+import csharp from './csharp';
+
+export const blogRouter = [
   {
     path: '/blogReadonly/:id?',
     name: 'blogReadonly',
@@ -10,3 +13,10 @@ export default [
     component: () => import('./blogEdit')
   }
 ];
+
+export const blogsRouter = [
+  js,
+  csharp
+];
+
+export default { blogRouter, blogsRouter };

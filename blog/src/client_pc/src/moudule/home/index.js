@@ -1,14 +1,14 @@
-import js from './blog/js';
-import csharp from './blog/csharp';
-import blog from './blog';
-import sysmenu from './sysmenu';
-import sysEntity from './sysEntity';
+
+import { blogRouter, blogsRouter } from './blog';
+import system from './system';
 
 export default [
   {
     path: '/home',
     name: 'home',
     component: () => import('./home'),
-    children: [].concat(js, csharp, sysmenu, sysEntity)
+    children: []
+      .concat(blogsRouter.map(item => item[0]))
+      .concat(system.map(item => item[0]))
   }
-].concat(blog);
+].concat(blogRouter);
