@@ -23,7 +23,9 @@ Pop-Location
 Write-Success-Message "OK."
 
 # Reset Build folder
-If (Test-Path \blog\build) { Remove-Item -Recurse -Force "blog\build\*" }
+If (Test-Path blog\build) {
+  Remove-Item -Recurse -Force "blog\build\*"
+}
 else
 {
   New-Item -ItemType directory "blog\build\"
