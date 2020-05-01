@@ -1,5 +1,5 @@
 import sysEntity from './sysEntity';
-import sysMenu from './sysmenu';
+import sysMenu from './sysMenu';
 
 export default [
   sysEntity,
