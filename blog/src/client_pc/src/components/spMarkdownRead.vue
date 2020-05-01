@@ -1,7 +1,7 @@
 <template>
   <div class="blog blog__readonly">
     <slot />
-    <div class="blog-body">
+    <div class="blog-body" :style="{ 'background-color': backgroudColor }">
       <div class="bodyWrapper">
         <div class="bodyWrapper-title">{{ title }}</div>
         <div class="bodyWrapper-content">
@@ -26,6 +26,10 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    backgroudColor: {
+      type: String,
+      default: '#e9ecef'
     }
   }
 };
