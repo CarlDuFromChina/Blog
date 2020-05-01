@@ -1,19 +1,10 @@
 <template>
-  <div class="blog blog__edit">
-    <div class="blog-header">
+  <sp-markdown-edit :imgAdd="imgAdd" v-model="data.content" @change="change">
+    <div class="blog-header" slot="header">
       <el-button icon="el-icon-back" @click="$router.back()">返回</el-button>
       <el-button icon="el-icon-check" type="primary" @click="submit">提交</el-button>
     </div>
-    <div class="blog-body">
-      <div class="blog-bodywrapper">
-        <div class="blog-bodywrapper-markdown">
-          <div class="blog-bodywrapper-markdown-container">
-            <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <el-dialog title="发布文章" :visible.sync="editVisible">
+    <el-dialog title="发布文章" :visible.sync="editVisible" slot="dialog">
       <el-form ref="form" :model="data" label-width="50px">
         <el-row>
           <el-col>
@@ -44,18 +35,15 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </span>
     </el-dialog>
-  </div>
+  </sp-markdown-edit>
 </template>
 
 <script>
-import { mavonEditor } from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
 import { edit } from 'sixpence.platform.pc.vue';
 
 export default {
   name: 'blogEdit',
   mixins: [edit],
-  components: { mavonEditor },
   data() {
     return {
       html: '',

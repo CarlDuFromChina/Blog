@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <markdown-read :title="data.title" :content="content">
-      <div class="blog-header">
-        <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
-      </div>
-    </markdown-read>
-  </div>
+  <sp-markdown-read :title="data.title" :content="content">
+    <div class="blog-header">
+      <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
+    </div>
+  </sp-markdown-read>
 </template>
 
 <script>
-import markdownRead from '../../../components/markdownRead';
 import marked from 'marked';
 
 export default {
   name: 'blogReadonly',
-  components: { markdownRead },
   data() {
     return {
       Id: this.$route.params.id,

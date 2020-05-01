@@ -16,7 +16,7 @@
 import VueMarkdown from 'vue-markdown';
 
 export default {
-  name: 'markdown-read',
+  name: 'spMarkdownRead',
   components: { VueMarkdown },
   props: {
     title: {

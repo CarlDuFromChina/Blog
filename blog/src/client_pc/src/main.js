@@ -13,7 +13,9 @@ import './style/index.less';
 Vue.config.productionTip = false;
 
 const install = _Vue => {
-  components.forEach(item => _Vue.component(item.name, item.component));
+  components.forEach(item => {
+    _Vue.component(item.name, item.component);
+  });
 };
 
 Vue.use(install);
