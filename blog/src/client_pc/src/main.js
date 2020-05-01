@@ -8,6 +8,7 @@ import spComponents from 'sixpence.platform.pc.vue';
 import components from './components';
 import moment from 'vue-moment';
 import './assets/icons';
+import './style/index.less';
 
 Vue.config.productionTip = false;
 

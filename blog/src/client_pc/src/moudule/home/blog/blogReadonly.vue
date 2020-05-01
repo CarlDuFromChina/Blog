@@ -1,12 +1,12 @@
 <template>
-  <div class="blog">
-    <div class="__header">
+  <div class="blog blog__readonly">
+    <div class="blog-header">
       <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
     </div>
-    <div class="__body">
-      <div class="__body__wrapper">
-        <div class="__title">{{ data.title }}</div>
-        <div class="__content">
+    <div class="blog-body">
+      <div class="bodyWrapper">
+        <div class="bodyWrapper-title">{{ data.title }}</div>
+        <div class="bodyWrapper-content">
           <vue-markdown :source="content"></vue-markdown>
         </div>
       </div>
@@ -47,35 +47,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less">
-.blog {
-  height: 100%;
-  .__header {
-    width: 100%;
-    height: 60px;
-    display: inline-block;
-    line-height: 60px;
-    padding-left: 20px;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  }
-  .__body {
-    background-color: #e9ecef;
-    color: #212529;
-    padding-top: 24px;
-    .__body__wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      .__title {
-        font-size: 2rem;
-        text-align: center;
-      }
-      .__content {
-        height: 100%;
-      }
-    }
-  }
-}
-</style>

@@ -1,13 +1,13 @@
 <template>
-  <div class="blog">
-    <div class="__header">
+  <div class="blog blog__edit">
+    <div class="blog-header">
       <el-button icon="el-icon-back" @click="$router.back()">返回</el-button>
       <el-button icon="el-icon-check" type="primary" @click="submit">提交</el-button>
     </div>
-    <div class="__body">
-      <div class="body__wrapper">
-        <div class="markdown">
-          <div class="container">
+    <div class="blog-body">
+      <div class="blog-bodywrapper">
+        <div class="blog-bodywrapper-markdown">
+          <div class="blog-bodywrapper-markdown-container">
             <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
           </div>
         </div>
@@ -122,39 +122,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-.blog {
-  height: 100%;
-  .__header {
-    width: 100%;
-    height: 60px;
-    display: inline-block;
-    line-height: 60px;
-    padding-left: 20px;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  }
-  .__body {
-    height: calc(100% - 60px);
-    background-color: #e9ecef;
-    color: #212529;
-    padding-top: 24px;
-    .body__wrapper {
-      width: calc(100% - 40px);
-      height: calc(100% - 120px);
-      padding: 0px;
-      margin: 0px 20px;
-      background-color: #fff;
-      .form {
-        height: 100px;
-      }
-      .markdown {
-        height: 100%;
-        .container {
-          height: 100%;
-        }
-      }
-    }
-  }
-}
-</style>
