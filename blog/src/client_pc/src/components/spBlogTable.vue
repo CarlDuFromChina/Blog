@@ -3,7 +3,7 @@
     <sp-header>
       <sp-button-list :buttons="buttons"></sp-button-list>
     </sp-header>
-    <el-table :data="data">
+    <el-table :data="data" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
       <el-table-column prop="title" label="标题"> </el-table-column>
       <el-table-column prop="createdOn" label="日期" width="200">
         <template slot-scope="scope">
@@ -25,7 +25,26 @@
 export default {
   name: 'spBlogTable',
   props: {
-    data: { type: Array, default: () => [] }
+    fetch: { type: Function }
+  },
+  data() {
+    return {
+      data: [],
+      loading: false
+    };
+  },
+  created() {
+    this.loading = true;
+    this.fetch()
+      .then(resp => {
+        this.data = resp;
+      })
+      .catch(error => this.$message.error(error))
+      .finally(() =>
+        setTimeout(() => {
+          this.loading = false;
+        }, 200)
+      );
   },
   computed: {
     buttons() {

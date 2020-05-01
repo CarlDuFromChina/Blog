@@ -1,5 +1,5 @@
 <template>
-  <sp-blog-table :data="tableData"></sp-blog-table>
+  <sp-blog-table :fetch="fetchData"></sp-blog-table>
 </template>
 
 <script>
@@ -10,10 +10,11 @@ export default {
       tableData: []
     };
   },
-  created() {
-    sp.get(`api/blog/GetDataList?searchList=${JSON.stringify(this.searchList)}`).then(resp => {
-      this.tableData = resp;
-    });
+  created() {},
+  methods: {
+    fetchData() {
+      return sp.get(`api/blog/GetDataList?searchList=${JSON.stringify(this.searchList)}`).then(resp => resp);
+    }
   },
   computed: {
     searchList() {
