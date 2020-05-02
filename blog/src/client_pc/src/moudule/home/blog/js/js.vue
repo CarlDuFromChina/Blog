@@ -5,11 +5,6 @@
 <script>
 export default {
   name: 'js',
-  data() {
-    return {
-      tableData: []
-    };
-  },
   created() {},
   methods: {
     fetchData() {
