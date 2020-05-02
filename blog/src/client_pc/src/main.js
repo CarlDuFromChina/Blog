@@ -9,6 +9,7 @@ import components from './components';
 import moment from 'vue-moment';
 import './assets/icons';
 import './style/index.less';
+import './directives';
 
 Vue.config.productionTip = false;
 

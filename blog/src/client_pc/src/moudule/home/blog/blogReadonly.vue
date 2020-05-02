@@ -1,5 +1,5 @@
 <template>
-  <sp-markdown-read :title="data.title" :content="content">
+  <sp-markdown-read :title="data.title" :content="data.content">
     <div class="blog-header">
       <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
     </div>
@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import marked from 'marked';
-
 export default {
   name: 'blogReadonly',
   data() {
@@ -28,11 +26,6 @@ export default {
       if (this.loadComplete && typeof this.loadComplete === 'function') {
         this.loadComplete();
       }
-    },
-    loadComplete() {
-      this.content = marked(this.data.content, {
-        sanitize: true
-      });
     }
   }
 };

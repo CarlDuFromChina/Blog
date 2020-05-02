@@ -5,7 +5,7 @@
       <div class="bodyWrapper">
         <div class="bodyWrapper-title">{{ title }}</div>
         <div class="bodyWrapper-content">
-          <vue-markdown :source="content"></vue-markdown>
+          <div v-highlight v-html="formatterContent"></div>
         </div>
       </div>
     </div>
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown';
+import marked from 'marked';
+import 'mavon-editor/dist/css/index.css';
 
 export default {
   name: 'spMarkdownRead',
-  components: { VueMarkdown },
   props: {
     title: {
       type: String,
@@ -30,6 +30,23 @@ export default {
     backgroudColor: {
       type: String,
       default: '#e9ecef'
+    }
+  },
+  data() {
+    return {
+      formatterContent: ''
+    };
+  },
+  watch: {
+    content: {
+      immediate: true,
+      handler(newVal) {
+        if (!sp.isNullOrEmpty(newVal)) {
+          this.formatterContent = marked(newVal, {
+            sanitize: true
+          });
+        }
+      }
     }
   }
 };
