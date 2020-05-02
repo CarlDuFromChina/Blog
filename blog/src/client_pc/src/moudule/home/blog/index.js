@@ -1,5 +1,6 @@
 import js from './js';
 import csharp from './csharp';
+import css from './css';
 
 export const blogRouter = [
   {
@@ -14,9 +15,6 @@ export const blogRouter = [
   }
 ];
 
-export const blogsRouter = [
-  js,
-  csharp
-];
+export const blogsRouter = [js, csharp, css];
 
 export default { blogRouter, blogsRouter };
