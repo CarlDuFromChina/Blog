@@ -10,6 +10,7 @@ import moment from 'vue-moment';
 import './assets/icons';
 import './style/index.less';
 import './directives';
+import NotFound from './moudule/notFound';
 
 Vue.config.productionTip = false;
 
@@ -30,8 +31,10 @@ const router = new VueRouter({
       // 顶层
       path: '/',
       component: App,
-      children: mouduleRouter
-    }
+      children: mouduleRouter,
+      redirect: { name: 'home' }
+    },
+    { path: '*', component: NotFound }
   ]
 });
 
