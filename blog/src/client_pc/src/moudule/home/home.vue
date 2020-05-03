@@ -1,17 +1,16 @@
 <template>
-  <el-container class="container">
-    <el-header class="header">
-      <el-dropdown @command="handleCommand">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" style="margin-top: 10px;"></el-avatar>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item :command="editPassword">修改密码</el-dropdown-item>
-          <el-dropdown-item :command="logout">退出</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-header>
-    <el-container class="container__wrapper">
+  <el-container class="home">
+    <el-container class="home_wrapper">
       <el-aside width="200px" class="menu">
-        <el-menu :default-active="$route.path" :default-openeds="defaultOpenedsArray" @open="handleOpen" router>
+        <el-menu
+          :default-active="$route.path"
+          :default-openeds="defaultOpenedsArray"
+          @open="handleOpen"
+          router
+          background-color="#6750d7"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
           <el-submenu v-for="(item, index) in menus" :key="index" :index="`${index}`">
             <template slot="title"> <i class="el-icon-menu"></i>{{ item.title }} </template>
             <el-menu-item-group v-for="(item2, index2) in item.subMenu" :key="index2" :title="item2.title">
@@ -45,6 +44,15 @@
         </span>
       </el-dialog>
       <el-container>
+        <el-header class="home-header">
+          <el-dropdown @command="handleCommand">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" class="home-header-avatar"></el-avatar>
+            <el-dropdown-menu slot="dropdown" placement="bottom-end">
+              <el-dropdown-item :command="editPassword">修改密码</el-dropdown-item>
+              <el-dropdown-item :command="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -129,16 +137,27 @@ export default {
 </script>
 
 <style lang="less">
-.container {
+.home {
   height: 100%;
-  border: 1px solid #eee;
+  .home-header {
+    margin: 0 20px;
+    text-align: right;
+    font-size: 12px;
+    background-color: #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .home-header-avatar {
+    margin-top: 10px;
+  }
   .header {
     text-align: right;
     font-size: 12px;
+    background-color: #fff;
   }
-  .container__wrapper {
+  .home_wrapper {
     .menu {
-      background-color: rgb(238, 241, 246);
+      background-color: #6750d7;
     }
   }
 }
@@ -156,5 +175,10 @@ html {
   margin: 0px;
   width: 100%;
   height: 100%;
+}
+</style>
+<style lang="less" scoped>
+.el-container {
+  background-color: #edeef2;
 }
 </style>
