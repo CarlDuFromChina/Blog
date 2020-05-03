@@ -154,6 +154,10 @@ export default {
     text-align: right;
     font-size: 12px;
     background-color: #fff;
+    padding: 0 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px solid #ebeef5;
   }
   .home_wrapper {
     .menu {

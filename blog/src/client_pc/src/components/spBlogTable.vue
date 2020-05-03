@@ -86,4 +86,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.el-table {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+</style>
