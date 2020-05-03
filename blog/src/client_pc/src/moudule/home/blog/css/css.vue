@@ -1,5 +1,6 @@
 <template>
-  <sp-blog-table :fetch="fetchData"></sp-blog-table>
+  <!-- <sp-blog-table :fetch="fetchData"></sp-blog-table> -->
+  <sp-blog-card :fetch="fetchData"></sp-blog-card>
 </template>
 
 <script>
