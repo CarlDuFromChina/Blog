@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="8" v-for="(item, index) in data" :key="index" style="padding-right:10px">
+    <el-col :span="8" v-for="(item, index) in data" :key="index">
       <el-card class="blogCard">
         <div style="display:inline-block;">
           <strong
@@ -20,6 +20,11 @@
         <div style="display: inline-block; float : right;">
           <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
         </div>
+      </el-card>
+    </el-col>
+    <el-col :span="8">
+      <el-card class="blogCard" style="text-align:center">
+        <el-button icon="el-icon-plus" circle style="font-size:50px;margin-top:30px" @click="createData"></el-button>
       </el-card>
     </el-col>
   </el-row>
@@ -94,6 +99,7 @@ export default {
 .blogCard {
   display: inline-block;
   min-width: 400px;
+  min-height: 180px;
   .blogCard-title {
     font-size: 20px;
     color: black;
