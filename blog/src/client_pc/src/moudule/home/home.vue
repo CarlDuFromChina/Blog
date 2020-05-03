@@ -21,18 +21,18 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-dialog title="修改密码" :visible.sync="editVisible">
-        <el-form ref="form" :model="data" label-width="100px">
+      <el-dialog title="修改密码" :visible.sync="editVisible" width="40%">
+        <el-form ref="form" :model="data" label-width="100px" :rules="rules">
           <el-row>
             <el-col>
-              <el-form-item label="密码">
+              <el-form-item label="密码" prop="password">
                 <el-input v-model="data.password" placeholder="请输入新密码" show-password></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col>
-              <el-form-item label="确认密码">
+              <el-form-item label="确认密码" prop="password2">
                 <el-input v-model="data.password2" placeholder="请再次输入密码" show-password></el-input>
               </el-form-item>
             </el-col>
@@ -69,7 +69,11 @@ export default {
       menus: [],
       defaultOpenedsArray: [],
       editVisible: false,
-      data: {}
+      data: {},
+      rules: {
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
+      }
     };
   },
   created() {
@@ -116,14 +120,20 @@ export default {
       this.editVisible = true;
     },
     savePassword() {
-      if (this.data.password !== this.data.password2) {
-        this.$message.error('两次密码不一致');
-      } else {
-        sp.post('api/AuthUser/EditPassword', `=${this.data.password}`).then(() => {
-          this.$message.success('修改密码成功');
-          this.editVisible = false;
-        });
-      }
+      this.$refs.form.validate(resp => {
+        if (resp) {
+          if (this.data.password !== this.data.password2) {
+            this.$message.error('两次密码不一致');
+          } else {
+            sp.post('api/AuthUser/EditPassword', `=${this.data.password}`).then(() => {
+              this.$message.success('修改密码成功');
+              this.editVisible = false;
+            });
+          }
+        } else {
+          this.$message.error('请检查表单必填项');
+        }
+      });
     },
     logout() {
       this.$message.success('退出成功');
