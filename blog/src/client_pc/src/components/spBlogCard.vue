@@ -1,18 +1,24 @@
 <template>
   <el-row>
-    <el-col :span="10" v-for="(item, index) in data" :key="index" :offset="index > 0 ? 2 : 0">
-      <el-card id="card" :body-style="{padding: '0px'}">
-        <div style="padding: 14px; display: inline-block; ">
-          <strong><span class="title">{{ item.title }}</span></strong>
-          <p><span class="creator">{{ item.createdByName }}</span></p>
-          <p><span class="date">{{ item.createdOn | moment('YYYY-MM-DD HH:MM') }}</span></p>
-          <div class="bottom clearfix">            
+    <el-col :span="8" v-for="(item, index) in data" :key="index" style="padding-right:10px">
+      <el-card class="blogCard">
+        <div style="display:inline-block;">
+          <strong
+            ><span class="blogCard-title">{{ item.title }}</span></strong
+          >
+          <p>
+            <span class="creator">{{ item.createdByName }}</span>
+          </p>
+          <p>
+            <span class="date">{{ item.createdOn | moment('YYYY-MM-DD HH:MM') }}</span>
+          </p>
+          <div class="clearfix">
             <el-button @click="goReadonly(item)" type="text" size="small" class="button">查看</el-button>
             <el-button @click="goEdit(item)" type="text" size="small" class="button">编辑</el-button>
           </div>
         </div>
-        <div style="display: inline-block; float : right ; padding : 14px">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <div style="display: inline-block; float : right;">
+          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
         </div>
       </el-card>
     </el-col>
@@ -84,12 +90,11 @@ export default {
 };
 </script>
 
-<style>
-  .card {
-    width: 400px;
-    height: 150px;
-  }
-  .title {
+<style lang="less">
+.blogCard {
+  display: inline-block;
+  min-width: 400px;
+  .blogCard-title {
     font-size: 20px;
     color: black;
   }
@@ -98,12 +103,8 @@ export default {
     color: teal;
   }
   .date {
-    font-size: 13px;
+    font-size: 15px;
     color: #999;
-  }
-  .bottom {
-    margin-top: 13px;
-    line-height: 10px;
   }
   .button {
     padding: 0;
@@ -111,8 +112,9 @@ export default {
     float: initial;
   }
   .image {
-    width: 150px;
-    height: 150px;
-    display: inline-block;  
+    width: 140px;
+    height: 140px;
+    display: inline-block;
   }
+}
 </style>
