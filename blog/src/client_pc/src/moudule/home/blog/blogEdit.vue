@@ -17,7 +17,7 @@
           <el-col>
             <el-form-item label="分类">
               <el-select v-model="data.blog_type" @change="handleTypeChange">
-                <el-option :label="item.label" :value="item.value" v-for="(item, index) in blogType" :key="index"></el-option>
+                <el-option :label="item.Name" :value="item.Value" v-for="(item, index) in blogType" :key="index"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -49,27 +49,31 @@ export default {
       html: '',
       configs: {},
       editVisible: false,
-      controllerName: 'blog'
+      controllerName: 'blog',
+      blogType: []
     };
   },
-  computed: {
-    blogType() {
-      return [
-        {
-          label: 'JavaScript',
-          value: 'js'
-        },
-        {
-          label: 'C#',
-          value: 'csharp'
-        }
-      ];
-    }
-  },
+  // computed: {
+  //   blogType() {
+  //     return [
+  //       {
+  //         label: 'JavaScript',
+  //         value: 'js'
+  //       },
+  //       {
+  //         label: 'C#',
+  //         value: 'csharp'
+  //       }
+  //     ];
+  //   }
+  // },
   created() {
     if (this.$route.params.Id) {
       this.Id = this.$route.params.Id;
       this.loadData();
+      sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
+        this.blogType = resp;
+      });
     }
   },
   methods: {
@@ -88,9 +92,9 @@ export default {
       this.html = render; // render 为 markdown 解析后的结果[html]
     },
     handleTypeChange(value) {
-      const arrs = this.blogType.filter(item => item.value === value);
+      const arrs = this.blogType.filter(item => item.Value === value);
       if (arrs.length > 0) {
-        this.data.blog_typeName = arrs[0].label;
+        this.data.blog_typeName = arrs[0].Name;
       }
     },
     // 提交
