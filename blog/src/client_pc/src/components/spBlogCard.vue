@@ -100,6 +100,7 @@ export default {
   display: inline-block;
   min-width: 400px;
   min-height: 180px;
+  margin-top: 20px;
   .blogCard-title {
     font-size: 20px;
     color: black;

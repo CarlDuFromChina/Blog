@@ -53,28 +53,14 @@ export default {
       blogType: []
     };
   },
-  // computed: {
-  //   blogType() {
-  //     return [
-  //       {
-  //         label: 'JavaScript',
-  //         value: 'js'
-  //       },
-  //       {
-  //         label: 'C#',
-  //         value: 'csharp'
-  //       }
-  //     ];
-  //   }
-  // },
   created() {
     if (this.$route.params.Id) {
       this.Id = this.$route.params.Id;
       this.loadData();
-      sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
-        this.blogType = resp;
-      });
     }
+    sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
+      this.blogType = resp;
+    });
   },
   methods: {
     // 将图片上传到服务器，返回地址替换到md中
