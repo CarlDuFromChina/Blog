@@ -65,7 +65,7 @@ SELECT * FROM sys_file WHERE objectid = @id;
             return data;
         }
 
-        public override IList<blog> GetDataList(IList<SearchCondition> searchList)
+        public override IList<blog> GetDataList(IList<SearchCondition> searchList, string orderBy = "")
         {
             var sql = $@"
 SELECT
@@ -90,7 +90,7 @@ WHERE 1=1
                 }
             }
 
-            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where, paramList);
+            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where + " ORDER BY blog.createdon desc, blog.blogid", paramList);
             return data;
         }
     }
