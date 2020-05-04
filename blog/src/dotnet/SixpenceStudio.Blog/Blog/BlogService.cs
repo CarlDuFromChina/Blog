@@ -28,7 +28,14 @@ namespace SixpenceStudio.Blog.Blog
 
         public void UpdateFileObject(string fileId, string objectId)
         {
+            #region 删除过期图片
             var sql = @"
+DELETE FROM sys_file WHERE objectid = @objectId;
+";
+            _cmd.broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@objectId", objectId } });
+            #endregion
+
+            sql = @"
 UPDATE sys_file SET objectid = @id WHERE sys_fileid = @fileId;
 ";
             _cmd.broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@id", objectId }, { "@fileId", fileId } });
@@ -54,7 +61,7 @@ SELECT * FROM sys_file WHERE objectid = @id;
 ";
             var image = _cmd.broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
             data.imageId = image?.sys_fileId;
-            data.imageSrc =  "temp\\" + image?.name;
+            data.imageSrc =  "temp/" + image?.name;
             return data;
         }
 

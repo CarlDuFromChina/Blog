@@ -32,7 +32,7 @@
         <el-row>
           <el-col>
             <el-form-item label="图片">
-              <el-upload :action="baseUrl" drag :limit="1" ref="files" :http-request="uploadImage">
+              <el-upload :action="baseUrl" drag :limit="1" ref="files" :http-request="uploadImage" :file-list="fileList">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -62,6 +62,7 @@ export default {
       editVisible: false,
       controllerName: 'blog',
       blogType: [],
+      fileList: [],
       baseUrl: '',
       token: ''
     };
@@ -74,7 +75,7 @@ export default {
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
       this.blogType = resp;
     });
-    this.baseUrl = window.localStorage.getItem('baseUrl') + '/api/DataService/UploadImage';
+    this.baseUrl = window.localStorage.getItem('baseUrl');
     this.token = window.localStorage.getItem('Token');
   },
   computed: {
@@ -85,10 +86,23 @@ export default {
     }
   },
   methods: {
+    loadComplete() {
+      if (!sp.isNullOrEmpty(this.data.imageId)) {
+        const arr = (this.data.imageSrc || '').split('/');
+        const name = arr.length > 0 ? arr[arr.length - 1] : '';
+        this.fileList = [
+          {
+            name: name,
+            url: this.baseUrl + '/' + this.data.imageSrc
+          }
+        ];
+      }
+    },
     uploadImage(param) {
+      const url = this.baseUrl + '/api/DataService/UploadImage';
       const formData = new FormData();
       formData.append('file', param.file);
-      sp.post(this.baseUrl, formData, this.headers).then(resp => (this.data.imageId = resp));
+      sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp));
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
