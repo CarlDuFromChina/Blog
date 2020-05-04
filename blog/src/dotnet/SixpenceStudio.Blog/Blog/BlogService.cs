@@ -50,11 +50,11 @@ UPDATE sys_file SET objectid = @id WHERE sys_fileid = @fileId;
         {
             var data = base.GetData(id);
             var sql = @"
-SELECT * sys_file WHERE objectid = @id;
+SELECT * FROM sys_file WHERE objectid = @id;
 ";
             var image = _cmd.broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
-            data.imageId = image.sys_fileId;
-            data.imageSrc =  "temp\\" + image.name;
+            data.imageId = image?.sys_fileId;
+            data.imageSrc =  "temp\\" + image?.name;
             return data;
         }
 
