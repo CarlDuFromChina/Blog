@@ -4,7 +4,7 @@
       <el-card class="blogCard">
         <div style="display:inline-block;">
           <strong
-            ><span class="blogCard-title">{{ item.title }}</span></strong
+            ><div class="blogCard-title">{{ item.title }}</div></strong
           >
           <p>
             <span class="creator">{{ item.createdByName }}</span>
@@ -104,8 +104,12 @@ export default {
   min-height: 180px;
   margin-top: 20px;
   .blogCard-title {
-    font-size: 20px;
+    font-size: 18px;
     color: black;
+    text-overflow: ellipsis;
+    max-width: 210px;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .creator {
     font-size: 15px;
