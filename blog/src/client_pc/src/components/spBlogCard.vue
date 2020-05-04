@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="8" v-for="(item, index) in data" :key="index">
-      <el-card class="blogCard">
+      <el-card class="blogCard" shadow="hover">
         <div style="display:inline-block;">
           <strong
             ><div class="blogCard-title">{{ item.title }}</div></strong
