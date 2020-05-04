@@ -1,6 +1,8 @@
 <template>
   <div class="notFound">
-    <span>404</span>
+    <div class="notFound-card">
+      <img src="//static.hdslb.com/error/very_sorry.png" style="flex-wrap: wrap" />
+    </div>
   </div>
 </template>
 
@@ -12,10 +14,17 @@ export default {
 
 <style lang="less" scoped>
 .notFound {
-  height: 100%;
   font-size: 100px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  background: #f4f5f7;
+  height: 100%;
+  .notFound-card {
+    padding: 0 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    height: 300px;
+    margin-top: 100px;
+  }
 }
 </style>
