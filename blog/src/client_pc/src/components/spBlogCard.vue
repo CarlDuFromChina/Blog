@@ -18,7 +18,7 @@
           </div>
         </div>
         <div style="display: inline-block; float : right;">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
+          <img :src="`${baseUrl}/${item.imageSrc}`" class="image" />
         </div>
       </el-card>
     </el-col>
@@ -39,11 +39,13 @@ export default {
   data() {
     return {
       data: [],
+      baseUrl: '',
       loading: false
     };
   },
   created() {
     this.loading = true;
+    this.baseUrl = window.localStorage.getItem('baseUrl');
     this.fetch()
       .then(resp => {
         this.data = resp;

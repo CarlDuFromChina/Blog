@@ -29,6 +29,17 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item label="图片">
+              <el-upload :action="baseUrl" drag :limit="1" ref="files" :http-request="uploadImage">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editVisible = false">取 消</el-button>
@@ -50,7 +61,9 @@ export default {
       configs: {},
       editVisible: false,
       controllerName: 'blog',
-      blogType: []
+      blogType: [],
+      baseUrl: '',
+      token: ''
     };
   },
   created() {
@@ -61,8 +74,22 @@ export default {
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
       this.blogType = resp;
     });
+    this.baseUrl = window.localStorage.getItem('baseUrl') + '/api/DataService/UploadImage';
+    this.token = window.localStorage.getItem('Token');
+  },
+  computed: {
+    headers() {
+      return {
+        Authorization: 'BasicAuth ' + this.token
+      };
+    }
   },
   methods: {
+    uploadImage(param) {
+      const formData = new FormData();
+      formData.append('file', param.file);
+      sp.post(this.baseUrl, formData, this.headers).then(resp => (this.data.imageId = resp));
+    },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
       sp.post('api/DataService/UploadAttachment?id=', file)
