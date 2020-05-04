@@ -12,7 +12,11 @@ export default {
       controllerName: 'SysParamGroup',
       columns: [
         { prop: 'name', label: '名称' },
-        { prop: 'code', label: '编码' }
+        { prop: 'code', label: '编码' },
+        { prop: 'createdByName', label: '创建人' },
+        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
+        { prop: 'modifiedByName', label: '最后修改人' },
+        { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' }
       ],
       editComponent: sysParamEdit
     };
