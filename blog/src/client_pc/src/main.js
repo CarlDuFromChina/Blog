@@ -3,14 +3,14 @@
 import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
-import mouduleRouter from './moudule';
+import moduleRouter from './moudule';
 import spComponents from 'sixpence.platform.pc.vue';
 import components from './components';
 import moment from 'vue-moment';
 import './assets/icons';
 import './style/index.less';
 import './directives';
-import NotFound from './moudule/notFound';
+import menus from './moudule/menu';
 
 Vue.config.productionTip = false;
 
@@ -31,12 +31,13 @@ const router = new VueRouter({
       // 顶层
       path: '/',
       component: App,
-      children: mouduleRouter,
+      children: moduleRouter,
       redirect: { name: 'home' }
-    },
-    { path: '*', component: NotFound }
+    }
   ]
 });
+
+menus.register(router);
 
 /* eslint-disable no-new */
 new Vue({

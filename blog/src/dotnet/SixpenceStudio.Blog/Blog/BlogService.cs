@@ -93,5 +93,18 @@ WHERE 1=1
             var data = _cmd.broker.RetrieveMultiple<blog>(sql + where + " ORDER BY blog.createdon desc, blog.blogid", paramList);
             return data;
         }
+
+        public IEnumerable<string> GetBlogRouterNameList()
+        {
+            var sql = @"
+SELECT
+	router
+FROM
+	sys_menu 
+WHERE
+	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
+";
+            return _cmd.broker.DbClient.Query<string>(sql);
+        }
     }
 }
