@@ -31,8 +31,11 @@
 </template>
 
 <script>
+import { pagination } from 'sixpence.platform.pc.vue';
+
 export default {
   name: 'spBlogCard',
+  mixins: [pagination],
   props: {
     fetch: { type: Function }
   },
@@ -48,7 +51,8 @@ export default {
     this.baseUrl = window.localStorage.getItem('baseUrl');
     this.fetch()
       .then(resp => {
-        this.data = resp;
+        this.data = resp.DataList;
+        this.total = resp.RecordCount;
       })
       .catch(error => this.$message.error(error))
       .finally(() =>
@@ -65,10 +69,7 @@ export default {
   methods: {
     createData() {
       this.$router.push({
-        name: 'blogEdit',
-        params: {
-          Id: ''
-        }
+        name: 'blogEdit'
       });
     },
     goReadonly(row) {
@@ -86,7 +87,7 @@ export default {
         this.$router.push({
           name: 'blogEdit',
           params: {
-            Id: row.Id
+            id: row.Id
           }
         });
       } else {

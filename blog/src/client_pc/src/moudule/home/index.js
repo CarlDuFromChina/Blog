@@ -4,7 +4,6 @@ export default [
   {
     path: '/home',
     name: 'home',
-    component: () => import('./home'),
-    children: []
+    component: () => import('./home')
   }
 ].concat(blogRouter);

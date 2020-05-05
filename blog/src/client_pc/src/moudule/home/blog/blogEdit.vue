@@ -68,8 +68,8 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.Id) {
-      this.Id = this.$route.params.Id;
+    if (this.$route.params.id) {
+      this.Id = this.$route.params.id;
       this.loadData();
     }
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
