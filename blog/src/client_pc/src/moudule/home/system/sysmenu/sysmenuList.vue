@@ -52,7 +52,7 @@ export default {
         { icon: 'el-icon-plus', text: '', operate: this.createData },
         { icon: 'el-icon-delete', text: '', operate: this.deleteData }
       ],
-      editComponent: () => import('./sysmenuEdit'),
+      editComponent: () => import('./sysMenuEdit'),
       editVisible: false,
       selections: [],
       relatedAttr: null

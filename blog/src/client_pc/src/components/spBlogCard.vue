@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="8" v-for="(item, index) in data" :key="index">
+    <el-col :span="5" v-for="(item, index) in data" :key="index" style="min-width:400px;margin:10px">
       <el-card class="blogCard" shadow="hover">
         <div style="display:inline-block;">
           <strong
@@ -22,7 +22,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="5" style="min-width:400px;margin:10px;">
       <el-card class="blogCard" style="text-align:center">
         <el-button icon="el-icon-plus" circle style="font-size:50px;margin-top:30px" @click="createData"></el-button>
       </el-card>
@@ -100,9 +100,9 @@ export default {
 <style lang="less">
 .blogCard {
   display: inline-block;
+  width: 100%;
   min-width: 400px;
   min-height: 180px;
-  margin-top: 20px;
   .blogCard-title {
     font-size: 18px;
     color: black;
