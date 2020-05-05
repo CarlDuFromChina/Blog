@@ -65,7 +65,7 @@ SELECT * FROM sys_file WHERE objectid = @id;
             return data;
         }
 
-        public override IList<blog> GetDataList(IList<SearchCondition> searchList, string orderBy = "")
+        public override DataModel<blog> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex)
         {
             var sql = $@"
 SELECT
@@ -90,8 +90,12 @@ WHERE 1=1
                 }
             }
 
-            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where + " ORDER BY blog.createdon desc, blog.blogid", paramList);
-            return data;
+            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where + " ORDER BY blog.createdon desc, blog.blogid", paramList, orderBy, pageSize, pageIndex, out var recordCount);
+            return new DataModel<blog>()
+            {
+                DataList = data,
+                RecordCount = recordCount
+            };
         }
 
         public IEnumerable<string> GetBlogRouterNameList()
