@@ -1,5 +1,5 @@
 <template>
-  <sp-markdown-edit :imgAdd="imgAdd" v-model="data.content" @change="change">
+  <sp-markdown-edit :imgAdd="imgAdd" v-model="data.content" @change="change" ref="md">
     <div class="blog-header" slot="header">
       <el-button icon="el-icon-back" @click="$router.back()">返回</el-button>
       <el-button icon="el-icon-check" type="primary" @click="submit">提交</el-button>
@@ -106,13 +106,22 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      sp.post('api/DataService/UploadAttachment?id=', file)
-        .then(res => {
-          this.$refs.md.$img2Url(pos, res.data);
-        })
-        .catch(err => {
-          this.$message.error(err);
-        });
+      const url = this.baseUrl + '/api/DataService/UploadImage';
+      const formData = new FormData();
+      formData.append('file', file);
+      sp.post(url, formData, this.headers).then(resp => {
+        const name = file.name;
+        if (this.data.content.includes(name)) {
+          let oStr = `(${pos})`;
+          let nStr = `(${this.baseUrl}/${resp.path})`;
+          let index = this.data.content.indexOf(oStr);
+          let str = this.data.content.replace(oStr, '');
+          let insertStr = (soure, start, newStr) => {
+            return soure.slice(0, start) + newStr + soure.slice(start);
+          };
+          this.data.content = insertStr(str, index, nStr);
+        }
+      });
     },
     // 所有操作都会被解析重新渲染
     change(value, render) {

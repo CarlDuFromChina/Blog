@@ -74,7 +74,7 @@ SELECT
 	'temp/' || sys_file.name AS imageSrc
 FROM
 	blog
-LEFT JOIN sys_file ON sys_file.objectid = blog.blogid
+LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = 'blog_surface'
 WHERE 1=1
 ";
             var where = string.Empty;
