@@ -99,14 +99,14 @@ export default {
       }
     },
     uploadImage(param) {
-      const url = this.baseUrl + '/api/DataService/UploadImage';
+      const url = '/api/DataService/UploadImage';
       const formData = new FormData();
       formData.append('file', param.file);
       sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp));
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = this.baseUrl + '/api/DataService/UploadImage';
+      const url = '/api/DataService/UploadImage';
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
