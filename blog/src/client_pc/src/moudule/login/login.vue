@@ -8,7 +8,7 @@
         <el-input v-model="data.code" placeholder="邮箱或者手机号"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="data.password" placeholder="密码" show-password></el-input>
+        <el-input v-model="data.password" placeholder="密码" @keyup.enter.native="signIn" show-password></el-input>
       </el-form-item>
       <el-form-item>
         <el-button style="width:100%" type="primary" @click="signIn" :loading="loading">登录</el-button>
