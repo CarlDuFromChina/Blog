@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="5" v-for="(item, index) in data" :key="index" style="min-width:400px;margin:10px">
-      <el-card class="blogCard" shadow="hover">
+      <el-card class="blogCard" shadow="hover" @click.native.stop="goReadonly(item)">
         <div style="display:inline-block;">
           <strong
             ><div class="blogCard-title">{{ item.title }}</div></strong
@@ -13,8 +13,8 @@
             <span class="date">{{ item.createdOn | moment('YYYY-MM-DD HH:MM') }}</span>
           </p>
           <div class="clearfix">
-            <el-button @click="goReadonly(item)" type="text" size="small" class="button">查看</el-button>
-            <el-button @click="goEdit(item)" type="text" size="small" class="button">编辑</el-button>
+            <el-button @click.stop="deleteData(item)" type="text" size="small" class="button">删除</el-button>
+            <el-button @click.stop="goEdit(item)" type="text" size="small" class="button">编辑</el-button>
           </div>
         </div>
         <div style="display: inline-block; float : right;">
@@ -47,19 +47,8 @@ export default {
     };
   },
   created() {
-    this.loading = true;
-    this.baseUrl = window.localStorage.getItem('baseUrl');
-    this.fetch()
-      .then(resp => {
-        this.data = resp.DataList;
-        this.total = resp.RecordCount;
-      })
-      .catch(error => this.$message.error(error))
-      .finally(() =>
-        setTimeout(() => {
-          this.loading = false;
-        }, 200)
-      );
+    this.baseUrl = localStorage.getItem('baseUrl');
+    this.loadData();
   },
   computed: {
     buttons() {
@@ -67,6 +56,42 @@ export default {
     }
   },
   methods: {
+    loadData() {
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
+      this.fetch()
+        .then(resp => {
+          this.data = resp.DataList;
+          this.total = resp.RecordCount;
+        })
+        .catch(error => this.$message.error(error))
+        .finally(() =>
+          setTimeout(() => {
+            this.loading = false;
+          }, 200)
+        );
+    },
+    deleteData(item) {
+      this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          sp.post('api/Blog/DeleteData', [item.Id]).then(() => {
+            this.$message.success('删除成功');
+            this.loadData();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+    },
     createData() {
       this.$router.push({
         name: 'blogEdit'
@@ -100,6 +125,7 @@ export default {
 
 <style lang="less">
 .blogCard {
+  cursor: pointer;
   display: inline-block;
   width: 100%;
   min-width: 400px;

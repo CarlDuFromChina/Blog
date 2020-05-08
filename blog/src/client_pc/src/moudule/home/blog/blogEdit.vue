@@ -32,7 +32,7 @@
         <el-row>
           <el-col>
             <el-form-item label="图片">
-              <el-upload :action="baseUrl" drag :limit="1" ref="files" :http-request="uploadImage" :file-list="fileList">
+              <el-upload :action="baseUrl" drag :limit="1" ref="files" :http-request="uploadImage" :file-list="fileList" :on-remove="removeImage">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -99,28 +99,30 @@ export default {
       }
     },
     uploadImage(param) {
-      const url = '/api/DataService/UploadImage';
+      const url = '/api/DataService/UploadImage?fileType=blog_surface';
       const formData = new FormData();
       formData.append('file', param.file);
-      sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp));
+      sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp.id));
+    },
+    removeImage() {
+      sp.post('api/Blog/DeleteSurface', `=${this.data.imageId}`).then(() => {
+        this.$message.success('删除成功！');
+      });
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/DataService/UploadImage';
+      const url = '/api/DataService/UploadImage?fileType=blog_content&objectId=' + this.Id;
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
-        const name = file.name;
-        if (this.data.content.includes(name)) {
-          let oStr = `(${pos})`;
-          let nStr = `(${this.baseUrl}/${resp.path})`;
-          let index = this.data.content.indexOf(oStr);
-          let str = this.data.content.replace(oStr, '');
-          let insertStr = (soure, start, newStr) => {
-            return soure.slice(0, start) + newStr + soure.slice(start);
-          };
-          this.data.content = insertStr(str, index, nStr);
-        }
+        let oStr = `(${pos})`;
+        let nStr = `(${this.baseUrl}/${resp.path})`;
+        let index = this.data.content.indexOf(oStr);
+        let str = this.data.content.replace(oStr, '');
+        let insertStr = (soure, start, newStr) => {
+          return soure.slice(0, start) + newStr + soure.slice(start);
+        };
+        this.data.content = insertStr(str, index, nStr);
       });
     },
     // 所有操作都会被解析重新渲染

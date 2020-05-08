@@ -21,5 +21,15 @@ namespace SixpenceStudio.Blog.Blog
         {
             return new BlogService().GetBlogRouterNameList();
         }
+
+        /// <summary>
+        /// 删除博客封面
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpPost]
+        public void DeleteSurface([FromBody]string id)
+        {
+            new BlogService().DeleteSurface(id);
+        }
     }
 }
