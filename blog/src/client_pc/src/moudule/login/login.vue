@@ -1,19 +1,21 @@
 <template>
-  <div class="login">
-    <el-form ref="form" :model="data" :rules="rules" class="login__wrapper">
-      <el-form-item>
-        <span class="header">{{ header }}</span>
-      </el-form-item>
-      <el-form-item prop="code">
-        <el-input v-model="data.code" placeholder="邮箱或者手机号"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="data.password" placeholder="密码" @keyup.enter.native="signIn" show-password></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button style="width:100%" type="primary" @click="signIn" :loading="loading">登录</el-button>
-      </el-form-item>
-    </el-form>
+  <div style="width:100%;height:100%" :style="{ 'background-image': `url(${imageUrl})` }">
+    <div class="login">
+      <el-form ref="form" :model="data" :rules="rules" class="login__wrapper">
+        <el-form-item>
+          <span class="header">{{ header }}</span>
+        </el-form-item>
+        <el-form-item prop="code">
+          <el-input v-model="data.code" placeholder="邮箱或者手机号"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="data.password" placeholder="密码" @keyup.enter.native="signIn" show-password></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button style="width:100%" type="primary" @click="signIn" :loading="loading">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -31,16 +33,28 @@ export default {
       rules: {
         code: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      }
+      },
+      imageUrl: ''
     };
   },
   created() {
-    sp.get('api/DataService/test').then(resp => {
-      this.$router.push('home');
-      sp.refreshRouter.call({ router: this.$router });
-    });
+    this.test();
+    this.loadBackground();
   },
   methods: {
+    test() {
+      sp.get('api/DataService/test').then(resp => {
+        this.$router.push('home');
+        sp.refreshRouter.call({ router: this.$router });
+      });
+    },
+    loadBackground() {
+      sp.get('api/DataService/GetRandomImage')
+        .then(image => {
+          this.imageUrl = JSON.parse(image).imgurl;
+        })
+        .catch(() => this.$message.error('背景加载失败'));
+    },
     async signIn() {
       this.loading = true;
       try {
@@ -79,10 +93,15 @@ export default {
 <style lang="less" scoped>
 .login {
   width: 400px;
-  margin: 200px auto 0 auto;
-  border: 5px solid #d1d1d1;
+  position: absolute;
+  left: calc(~'50%' - 200px);
+  top: 200px;
+  border: 1px solid #d1d1d1;
   border-radius: 5%;
-  box-shadow: 10px 10px 20px 10px #d1d1d1, -10px 10px 10px 10px rgba(255, 255, 255, 0.5);
+  background: #f7f1f5;
+  filter: alpha(Opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.6;
   .login__wrapper {
     width: 100%;
     height: 100%;
@@ -92,6 +111,10 @@ export default {
       font-size: 40px;
     }
   }
+}
+.login:hover {
+  opacity: 1;
+  transition: all 800ms;
 }
 /deep/.el-form-item__content {
   margin: 5px 10px;
