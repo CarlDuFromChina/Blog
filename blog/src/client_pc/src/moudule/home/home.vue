@@ -137,6 +137,7 @@ export default {
     },
     logout() {
       this.$message.success('退出成功');
+      localStorage.removeItem('Token');
       this.$router.replace('/login');
     },
     handleOpen(key) {

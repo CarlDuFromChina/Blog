@@ -37,7 +37,10 @@ const router = new VueRouter({
   ]
 });
 
-menus.register(router);
+sp = Object.assign(sp,
+  { refreshRouter: menus.register },
+  { goHome: () => (location.href = '/#/home') }
+);
 
 /* eslint-disable no-new */
 new Vue({

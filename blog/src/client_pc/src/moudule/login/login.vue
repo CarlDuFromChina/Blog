@@ -34,6 +34,12 @@ export default {
       }
     };
   },
+  created() {
+    sp.get('api/DataService/test').then(resp => {
+      this.$router.push('home');
+      sp.refreshRouter.call({ router: this.$router });
+    });
+  },
   methods: {
     async signIn() {
       this.loading = true;
@@ -46,6 +52,7 @@ export default {
               if (resp.result) {
                 localStorage.setItem('Token', resp.Ticket);
                 this.$router.push('home');
+                sp.refreshRouter.call({ router: this.$router });
                 this.$message.success('登录成功');
               } else {
                 this.$message.error('账号密码错误');

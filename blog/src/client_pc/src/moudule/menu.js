@@ -14,19 +14,19 @@ async function loadRouter() {
   return [].concat(routers).concat(system.map(item => item[0]));
 }
 
-function register(_router) {
+function register() {
   const loading = Loading.service({
     lock: true,
     text: '加载菜单信息',
     spinner: 'el-icon-loading'
   });
   loadRouter().then(resp => {
-    _router.selfaddRoutes = params => {
-      _router.addRoutes(params);
+    this.router.selfaddRoutes = params => {
+      this.router.addRoutes(params);
     };
     home[0].children = resp;
-    _router.selfaddRoutes([home[0]]);
-    _router.addRoutes([{ path: '*', component: NotFound }]);
+    this.router.selfaddRoutes([home[0]]);
+    this.router.addRoutes([{ path: '*', component: NotFound }]);
   });
   setTimeout(() => {
     loading.close();
