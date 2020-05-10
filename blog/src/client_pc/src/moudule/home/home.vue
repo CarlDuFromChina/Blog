@@ -33,6 +33,7 @@
             element-loading-spinner="el-icon-loading"
             @loading="loading = true"
             @loading-close="loading = false"
+            readonly
           ></sp-blog-card>
         </el-aside>
         <el-aside width="30%">
@@ -63,9 +64,8 @@ export default {
       console.log(key, keyPath);
     },
     fetchData() {
-      const searchList = [{ Name: 'blog_type', Value: 'js' }];
       return sp
-        .get(`api/blog/GetDataList?orderBy=&pageSize=10&pageIndex=1&searchList=${JSON.stringify(searchList)}`)
+        .get(`api/blog/GetDataList?orderBy=&pageSize=10&pageIndex=1&searchList=`)
         .then(resp => resp)
         .catch(() => this.$message.error('加载出错了'));
     }
@@ -91,9 +91,12 @@ export default {
       border-bottom: none !important;
       max-width: 80%;
       margin: 0 auto;
+      .el-menu-item {
+        font-size: 16px;
+        color: #fff;
+      }
       .el-menu-item:hover {
         background: #48456c;
-        color: #fff;
       }
     }
   }

@@ -12,7 +12,7 @@
           <p>
             <span class="date">{{ item.createdOn | moment('YYYY-MM-DD HH:MM') }}</span>
           </p>
-          <div class="clearfix">
+          <div class="clearfix" v-if="!readonly">
             <el-button @click.stop="deleteData(item)" type="text" size="small" class="button">删除</el-button>
             <el-button @click.stop="goEdit(item)" type="text" size="small" class="button">编辑</el-button>
           </div>
@@ -22,7 +22,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="5" style="min-width:400px;margin:10px;">
+    <el-col :span="5" style="min-width:400px;margin:10px;" v-if="!readonly">
       <el-card class="blogCard" style="text-align:center">
         <el-button icon="el-icon-plus" circle style="font-size:50px;margin-top:30px" @click="createData"></el-button>
       </el-card>
@@ -37,7 +37,11 @@ export default {
   name: 'spBlogCard',
   mixins: [pagination],
   props: {
-    fetch: { type: Function }
+    fetch: { type: Function },
+    readonly: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
