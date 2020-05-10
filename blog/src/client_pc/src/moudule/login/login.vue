@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;height:100%" :style="{ 'background-image': `url(${imageUrl})` }">
+  <div class="background" :style="{ 'background-image': `url(${imageUrl})` }">
     <div class="login">
       <el-form ref="form" :model="data" :rules="rules" class="login__wrapper">
         <el-form-item>
@@ -91,6 +91,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.background {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
 .login {
   width: 400px;
   position: absolute;
