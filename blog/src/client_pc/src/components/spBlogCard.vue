@@ -42,8 +42,7 @@ export default {
   data() {
     return {
       data: [],
-      baseUrl: '',
-      loading: false
+      baseUrl: ''
     };
   },
   created() {
@@ -57,21 +56,16 @@ export default {
   },
   methods: {
     loadData() {
-      if (this.loading) {
-        return;
-      }
-      this.loading = true;
+      this.$emit('loading');
       this.fetch()
         .then(resp => {
           this.data = resp.DataList;
           this.total = resp.RecordCount;
         })
         .catch(error => this.$message.error(error))
-        .finally(() =>
-          setTimeout(() => {
-            this.loading = false;
-          }, 200)
-        );
+        .finally(() => {
+          this.$emit('loading-close');
+        });
     },
     deleteData(item) {
       this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
