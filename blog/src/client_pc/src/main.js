@@ -31,7 +31,8 @@ const router = new VueRouter({
       // 顶层
       path: '/',
       component: App,
-      children: moduleRouter
+      children: moduleRouter,
+      redirect: 'home'
     }
   ]
 });
@@ -40,6 +41,7 @@ sp = Object.assign(sp,
   { refreshRouter: menus.register }
 );
 
+// TODO: 验证身份
 sp.get('api/DataService/test').then(resp => {
   sp.refreshRouter.call({ router });
 });
