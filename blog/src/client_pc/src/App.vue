@@ -6,14 +6,7 @@
 
 <script>
 export default {
-  name: 'App',
-  created() {
-    sp.get('api/DataService/test').then(resp => {
-      // 获取菜单，返回首页
-      sp.refreshRouter.call({ router: this.$router });
-      sp.goHome();
-    });
-  }
+  name: 'App'
 };
 </script>
 

@@ -42,6 +42,10 @@ sp = Object.assign(sp,
   { goHome: () => (location.href = '/#/home') }
 );
 
+sp.get('api/DataService/test').then(resp => {
+  sp.refreshRouter.call({ router });
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -30,7 +30,7 @@ function register() {
   });
   setTimeout(() => {
     loading.close();
-  }, 2000);
+  }, 1000);
 }
 
 export default {
