@@ -62,7 +62,9 @@ export default {
           this.data = resp.DataList;
           this.total = resp.RecordCount;
         })
-        .catch(error => this.$message.error(error))
+        .catch(() => {
+          this.$message.error('加载出错了');
+        })
         .finally(() => {
           this.$emit('loading-close');
         });
