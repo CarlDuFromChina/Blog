@@ -65,7 +65,7 @@ export default {
     },
     fetchData() {
       return sp
-        .get(`api/blog/GetDataList?orderBy=&pageSize=10&pageIndex=1&searchList=`)
+        .get(`api/blog2/GetDataList?orderBy=&pageSize=10&pageIndex=1&searchList=`)
         .then(resp => resp)
         .catch(() => this.$message.error('加载出错了'));
     }

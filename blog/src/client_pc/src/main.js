@@ -42,9 +42,9 @@ sp = Object.assign(sp,
 );
 
 // TODO: 验证身份
-sp.get('api/DataService/test').then(resp => {
-  sp.refreshRouter.call({ router });
-});
+// sp.get('api/DataService/test').then(resp => {
+//   sp.refreshRouter.call({ router });
+// });
 
 /* eslint-disable no-new */
 new Vue({
