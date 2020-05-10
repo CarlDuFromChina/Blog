@@ -123,38 +123,8 @@ export default {
 };
 </script>
 
-<style lang="less">
-.blogCard {
-  cursor: pointer;
-  display: inline-block;
-  width: 100%;
-  min-width: 400px;
-  min-height: 180px;
-  .blogCard-title {
-    font-size: 18px;
-    color: black;
-    text-overflow: ellipsis;
-    max-width: 210px;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .creator {
-    font-size: 15px;
-    color: teal;
-  }
-  .date {
-    font-size: 15px;
-    color: #999;
-  }
-  .button {
-    padding: 0;
-    font-size: 15px;
-    float: initial;
-  }
-  .image {
-    width: 140px;
-    height: 140px;
-    display: inline-block;
-  }
+<style lang="less" scoped>
+/deep/.el-card.is-hover-shadow:hover {
+  box-shadow: 0 2px 12px 0 #6750d7;
 }
 </style>
