@@ -44,7 +44,7 @@ export default {
   methods: {
     test() {
       sp.get('api/DataService/test').then(resp => {
-        this.$router.push('home');
+        this.$router.push('admin');
         sp.refreshRouter.call({ router: this.$router });
       });
     },
@@ -65,7 +65,7 @@ export default {
             sp.post(url, this.data).then(resp => {
               if (resp.result) {
                 localStorage.setItem('Token', resp.Ticket);
-                this.$router.push('home');
+                this.$router.push('admin');
                 sp.refreshRouter.call({ router: this.$router });
                 this.$message.success('登录成功');
               } else {

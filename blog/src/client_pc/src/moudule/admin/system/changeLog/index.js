@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/home/changeLog',
+    path: '/admin/changeLog',
     name: 'changeLogList',
     component: () => import('./changeLogList')
   }

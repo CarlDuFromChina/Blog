@@ -31,15 +31,13 @@ const router = new VueRouter({
       // 顶层
       path: '/',
       component: App,
-      children: moduleRouter,
-      redirect: { name: 'home' }
+      children: moduleRouter
     }
   ]
 });
 
 sp = Object.assign(sp,
-  { refreshRouter: menus.register },
-  { goHome: () => (location.href = '/#/home') }
+  { refreshRouter: menus.register }
 );
 
 sp.get('api/DataService/test').then(resp => {

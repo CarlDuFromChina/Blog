@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/home/sysEntity',
+    path: '/admin/sysEntity',
     name: 'sysEntityList',
     component: () => import('./sysEntityList')
   }

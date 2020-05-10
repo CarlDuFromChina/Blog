@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/home/sysParamGroup',
+    path: '/admin/sysParamGroup',
     name: 'sysParamGroupList',
     component: () => import('./sysParamGroupList')
   }

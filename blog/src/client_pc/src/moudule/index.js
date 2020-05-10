@@ -1,4 +1,4 @@
 import login from './login';
-import home from './home';
+import admin from './admin';
 
-export default [].concat(login, home);
+export default [].concat(login, admin);

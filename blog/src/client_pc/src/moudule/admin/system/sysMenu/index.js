@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/home/sysMenu',
+    path: '/admin/sysMenu',
     name: 'sysMenuList',
     component: () => import('./sysMenuList')
   }
