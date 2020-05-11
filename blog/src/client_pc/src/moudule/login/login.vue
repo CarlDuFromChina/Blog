@@ -44,8 +44,10 @@ export default {
   methods: {
     test() {
       sp.get('api/DataService/test').then(resp => {
-        this.$router.push('admin');
-        sp.refreshRouter.call({ router: this.$router });
+        if (resp) {
+          this.$router.push('admin');
+          sp.refreshRouter.call({ router: this.$router });
+        }
       });
     },
     loadBackground() {
