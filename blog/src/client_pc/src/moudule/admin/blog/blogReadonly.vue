@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       Id: this.$route.params.id,
-      controllerName: 'blog',
+      controllerName: 'blog2',
       data: {},
       content: '',
       loading: false
