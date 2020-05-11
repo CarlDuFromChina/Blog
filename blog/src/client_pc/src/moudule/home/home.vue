@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background:#edeef2">
     <div class="header">
       <div class="header-menu">
         <el-row>
@@ -26,6 +26,8 @@
     <div class="container">
       <el-container>
         <el-aside width="60%">
+          <h3>最新博客</h3>
+          <el-divider></el-divider>
           <sp-blog-card
             :fetch="fetchData"
             v-loading="loading"
@@ -36,8 +38,9 @@
             readonly
           ></sp-blog-card>
         </el-aside>
-        <el-aside width="30%">
-          最新博客
+        <el-aside width="30%" style="padding-left:20px;">
+          <h3>想法</h3>
+          <el-divider></el-divider>
         </el-aside>
       </el-container>
     </div>
@@ -65,7 +68,7 @@ export default {
     },
     fetchData() {
       return sp
-        .get(`api/blog2/GetDataList?orderBy=&pageSize=10&pageIndex=1&searchList=`)
+        .get(`api/blog2/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=`)
         .then(resp => resp)
         .catch(() => this.$message.error('加载出错了'));
     }

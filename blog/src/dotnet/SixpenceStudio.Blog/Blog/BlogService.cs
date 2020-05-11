@@ -133,7 +133,13 @@ WHERE 1=1
                 }
             }
 
-            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where + " ORDER BY blog.createdon desc, blog.blogid", paramList, orderBy, pageSize, pageIndex, out var recordCount);
+            var _orderBy = " blog.createdon desc, blog.blogid ";
+            if (!string.IsNullOrEmpty(_orderBy))
+            {
+                _orderBy = orderBy;
+            }
+
+            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where, paramList, _orderBy, pageSize, pageIndex, out var recordCount);
             return new DataModel<blog>()
             {
                 DataList = data,
