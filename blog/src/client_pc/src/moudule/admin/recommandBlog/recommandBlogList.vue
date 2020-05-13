@@ -5,7 +5,7 @@
     :operations="operations"
     :columns="columns"
     :editComponent="editComponent"
-    :allow-select="isNormal"
+    :allow-select="!isReadonly"
     :header-click="openLink"
     v-bind="$attrs"
     v-on="$listeners"
