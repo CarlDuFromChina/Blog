@@ -25,12 +25,11 @@
     </div>
     <div class="container">
       <el-container>
-        <el-aside width="60%">
+        <el-aside width="60%" v-loading="loading">
           <h3>最新博客</h3>
           <el-divider></el-divider>
           <sp-blog-card
             :fetch="fetchData"
-            v-loading="loading"
             element-loading-text="拼命加载中"
             element-loading-spinner="el-icon-loading"
             @loading="loading = true"
@@ -39,8 +38,10 @@
           ></sp-blog-card>
         </el-aside>
         <el-aside width="30%" style="padding-left:20px;">
-          <h3>想法</h3>
-          <el-divider></el-divider>
+          <sp-section title="推荐好文">
+            <recommend-blog type="readonly"></recommend-blog>
+          </sp-section>
+          <sp-section title="想法"> </sp-section>
         </el-aside>
       </el-container>
     </div>
@@ -54,8 +55,12 @@
 </template>
 
 <script>
+import spSection from './spSection';
+import recommendBlog from '../admin/recommandBlog/recommandBlogList';
+
 export default {
   name: 'home',
+  components: { spSection, recommendBlog },
   data() {
     return {
       activeIndex: '1',
@@ -151,6 +156,7 @@ export default {
 }
 .container {
   max-width: 80%;
+  min-height: 800px;
   margin: 0 auto;
   padding: 0 10px;
 }

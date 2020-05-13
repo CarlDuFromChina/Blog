@@ -105,7 +105,10 @@ export default {
       sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp.id));
     },
     removeImage() {
-      sp.post('api/Blog/DeleteSurface', `=${this.data.imageId}`).then(() => {
+      if (sp.isNullOrEmpty(this.data.imageId)) {
+        return Promise.resolve(true);
+      }
+      return sp.post('api/Blog/DeleteSurface', `=${this.data.imageId}`).then(() => {
         this.$message.success('删除成功！');
       });
     },
