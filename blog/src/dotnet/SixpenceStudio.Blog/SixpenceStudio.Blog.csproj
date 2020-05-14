@@ -162,6 +162,9 @@
     <Compile Include="Blog\BlogController.cs" />
     <Compile Include="Blog\BlogPartial.cs" />
     <Compile Include="Blog\BlogService.cs" />
+    <Compile Include="idea\idea.cs" />
+    <Compile Include="idea\IdeaController.cs" />
+    <Compile Include="idea\IdeaSerivice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecommendBlog\RecommendBlogController.cs" />
     <Compile Include="RecommendBlog\RecommendBlogService.cs" />

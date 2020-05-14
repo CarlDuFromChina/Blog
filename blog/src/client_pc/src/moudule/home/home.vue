@@ -41,7 +41,9 @@
           <sp-section title="推荐好文">
             <recommend-blog type="readonly"></recommend-blog>
           </sp-section>
-          <sp-section title="想法"> </sp-section>
+          <sp-section title="想法">
+            <idea type="readonly"></idea>
+          </sp-section>
         </el-aside>
       </el-container>
     </div>
@@ -57,10 +59,11 @@
 <script>
 import spSection from './spSection';
 import recommendBlog from '../admin/recommandBlog/recommandBlogList';
+import idea from '../admin/idea/ideaList';
 
 export default {
   name: 'home',
-  components: { spSection, recommendBlog },
+  components: { spSection, recommendBlog, idea },
   data() {
     return {
       activeIndex: '1',
