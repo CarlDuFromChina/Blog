@@ -6,8 +6,8 @@
           <el-col>
             <ul class="el-menu el-menu-demo el-menu--horizontal">
               <li class="el-menu-item">首页</li>
-              <li class="el-menu-item">想法</li>
-              <li class="el-menu-item">实验室</li>
+              <li class="el-menu-item">归档</li>
+              <li class="el-menu-item">友人帐</li>
               <li class="el-menu-item">关于</li>
             </ul>
           </el-col>
