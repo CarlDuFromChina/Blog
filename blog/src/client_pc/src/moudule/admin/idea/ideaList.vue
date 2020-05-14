@@ -5,7 +5,7 @@
     :operations="operations"
     :columns="columns"
     :editComponent="editComponent"
-    :allow-select="false"
+    :allow-select="!isReadonly"
     v-bind="$attrs"
     v-on="$listeners"
   ></sp-list>
