@@ -28,9 +28,9 @@ export default {
     },
     columns() {
       const editColumns = [
+        { prop: 'content', label: '内容' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
-        { prop: 'content', label: '内容' }
+        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
       ];
       const readonlyColumns = [{ prop: 'content', label: '最新想法' }];
       return !this.isReadonly ? editColumns : readonlyColumns;

@@ -42,7 +42,7 @@
             <recommend-blog type="readonly"></recommend-blog>
           </sp-section>
           <sp-section title="想法">
-            <idea type="readonly"></idea>
+            <idea></idea>
           </sp-section>
         </el-aside>
       </el-container>
@@ -59,7 +59,7 @@
 <script>
 import spSection from './spSection';
 import recommendBlog from '../admin/recommandBlog/recommandBlogList';
-import idea from '../admin/idea/ideaList';
+import idea from '../admin/idea/ideaCard';
 
 export default {
   name: 'home',
