@@ -24,20 +24,26 @@ export default {
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
-      pageSize: 4,
+      pageSize: 0,
       firstLoad: true
     };
   },
   created() {
     this.loadData();
   },
+  computed: {
+    allowLoad() {
+      return this.pageSize <= this.total || this.firstLoad;
+    }
+  },
   methods: {
     loadData() {
-      if (this.loading || (this.pageSize >= this.total && !this.firstLoad)) {
+      if (this.loading || !this.allowLoad) {
         return;
       }
       this.loading = true;
       this.firstLoad = false;
+      this.pageSize += 5;
       let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       try {
         sp.get(url).then(resp => {
@@ -53,9 +59,6 @@ export default {
       } finally {
         setTimeout(() => {
           this.loading = false;
-          if (this.total >= this.pageSize) {
-            this.pageSize += 5;
-          }
         }, 200);
       }
     }
@@ -65,7 +68,7 @@ export default {
 
 <style lang="less" scoped>
 .infinite-list {
-  max-height: 400px;
+  height: 600px;
   .infinite-list-item {
     display: inline-block;
     min-height: 120px;

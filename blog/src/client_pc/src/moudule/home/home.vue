@@ -161,7 +161,7 @@ export default {
   max-width: 80%;
   min-height: 800px;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 10px 50px 10px;
 }
 .footer {
   color: #888;
@@ -169,7 +169,6 @@ export default {
   line-height: 1.5;
   text-align: center;
   width: 100%;
-  position: relative;
   position: absolute;
   min-height: 50px;
   .footer-wrapper {
