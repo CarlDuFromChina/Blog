@@ -9,6 +9,8 @@
               <li class="el-menu-item">归档</li>
               <li class="el-menu-item">友人帐</li>
               <li class="el-menu-item">关于</li>
+              <li class="el-menu-item" style="float:right" @click="login">登录</li>
+              <li class="el-menu-item" style="float:right" @click="register">注册</li>
             </ul>
           </el-col>
         </el-row>
@@ -71,6 +73,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.$router.push({
+        name: 'login'
+      });
+    },
+    register() {
+      this.$message.error('暂未开放注册');
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
