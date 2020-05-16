@@ -14,7 +14,8 @@ export default {
       Id: this.$route.params.id,
       controllerName: 'ChangeLog',
       content: '',
-      title: '测试'
+      title: '测试',
+      data: []
     };
   },
   created() {
