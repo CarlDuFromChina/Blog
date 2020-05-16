@@ -5,7 +5,7 @@
       <div class="blog-bodywrapper">
         <div class="blog-bodywrapper-markdown">
           <div class="blog-bodywrapper-markdown-container">
-            <mavon-editor v-model="value" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
+            <mavon-editor v-model="model" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
           </div>
         </div>
       </div>
@@ -29,9 +29,14 @@ export default {
       type: Function
     }
   },
-  watch: {
-    value(newVal) {
-      this.$emit('input', newVal);
+  computed: {
+    model: {
+      get() {
+        return this.value;
+      },
+      set(newVal) {
+        this.$emit('input', newVal);
+      }
     }
   },
   methods: {
