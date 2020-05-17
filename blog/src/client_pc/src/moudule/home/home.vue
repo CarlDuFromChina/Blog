@@ -66,14 +66,12 @@
 </template>
 
 <script>
-import spMenu from './spMenu';
-import spSection from './spSection';
 import recommendInfo from '../admin/recommendInfo/recommendInfoList';
 import idea from '../admin/idea/ideaCard';
 
 export default {
   name: 'home',
-  components: { spMenu, spSection, recommendInfo, idea },
+  components: { recommendInfo, idea },
   data() {
     return {
       activeIndex: '1',
