@@ -32,8 +32,11 @@ namespace SixpenceStudio.Blog.Blog
         #region CRUD
         public override void DeleteData(List<string> ids)
         {
-            ids.ForEach(item => DeleteBlogImages(item));
-            base.DeleteData(ids);
+            _cmd.broker.ExecuteTransaction(() =>
+            {
+                ids.ForEach(item => DeleteBlogImages(item));
+                base.DeleteData(ids);
+            });
         }
 
         /// <summary>
@@ -51,14 +54,22 @@ UPDATE sys_file SET objectid = @objectid WHERE sys_fileid = @id
 
         public override string CreateData(blog t)
         {
-            UpdateSurface(t.Id, t.imageId);
-            return base.CreateData(t);
+            var id = "";
+            _cmd.broker.ExecuteTransaction(() =>
+            {
+                UpdateSurface(t.Id, t.imageId);
+                id = base.CreateData(t);
+            });
+            return id;
         }
 
         public override void UpdateData(blog t)
         {
-            UpdateSurface(t.Id, t.imageId);
-            base.UpdateData(t);
+            _cmd.broker.ExecuteTransaction(() =>
+            {
+                UpdateSurface(t.Id, t.imageId);
+                base.UpdateData(t);
+            });
         }
 
         /// <summary>
@@ -147,7 +158,6 @@ WHERE 1=1
             };
         }
         #endregion
-
 
         /// <summary>
         /// 获取博客路由
