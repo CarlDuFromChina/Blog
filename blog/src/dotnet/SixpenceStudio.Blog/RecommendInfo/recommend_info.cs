@@ -6,30 +6,30 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.RecommendBlog
+namespace SixpenceStudio.Blog.RecommendInfo
 {
-    public class recommend_blog : BaseEntity
+    public class recommend_info : BaseEntity
     {
-        public recommend_blog()
+        public recommend_info()
         {
-            this.EntityName = "recommend_blog";
+            this.EntityName = "recommend_info";
         }
 
         /// <summary>
         /// 实体id
         /// </summary>
-        private string _recommend_blogid;
+        private string _recommend_infoid;
         [DataMember]
-        public string recommend_blogId
+        public string recommend_infoId
         {
             get
             {
-                return this._recommend_blogid;
+                return this._recommend_infoid;
             }
             set
             {
-                this._recommend_blogid = value;
-                SetAttributeValue("recommend_blogId", value);
+                this._recommend_infoid = value;
+                SetAttributeValue("recommend_infoId", value);
             }
         }
 
@@ -156,6 +156,42 @@ namespace SixpenceStudio.Blog.RecommendBlog
             {
                 this._modifiedon = value;
                 SetAttributeValue("ModifiedOn", value);
+            }
+        }
+
+        /// <summary>
+        /// 推荐类型
+        /// </summary>
+        private string _recommend_type;
+        [DataMember]
+        public string recommend_type
+        {
+            get
+            {
+                return this._recommend_type;
+            }
+            set
+            {
+                this._recommend_type = value;
+                SetAttributeValue("recommend_type", value);
+            }
+        }
+
+        /// <summary>
+        /// 推荐类型
+        /// </summary>
+        private string _recommend_typeName;
+        [DataMember]
+        public string recommend_typeName
+        {
+            get
+            {
+                return this._recommend_typeName;
+            }
+            set
+            {
+                this._recommend_typeName = value;
+                SetAttributeValue("recommend_typeName", value);
             }
         }
 

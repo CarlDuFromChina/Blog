@@ -1,5 +1,5 @@
 import blogRouter from './blog';
-import recommandBlog from './recommandBlog';
+import recommendInfo from './recommendInfo';
 import idea from './idea';
 
 export default [
@@ -7,6 +7,6 @@ export default [
     path: '/admin',
     name: 'admin',
     component: () => import('./admin'),
-    children: [].concat(recommandBlog, idea)
+    children: [].concat(recommendInfo, idea)
   }
 ].concat(blogRouter);

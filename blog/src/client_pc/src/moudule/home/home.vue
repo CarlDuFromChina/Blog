@@ -1,20 +1,11 @@
 <template>
   <div style="background:#edeef2">
-    <div class="header">
-      <div class="header-menu">
-        <el-row>
-          <el-col>
-            <ul class="el-menu el-menu-demo el-menu--horizontal">
-              <li class="el-menu-item">首页</li>
-              <li class="el-menu-item">归档</li>
-              <li class="el-menu-item">友人帐</li>
-              <li class="el-menu-item">关于</li>
-              <li class="el-menu-item" style="float:right" @click="login">登录</li>
-              <li class="el-menu-item" style="float:right" @click="register">注册</li>
-            </ul>
-          </el-col>
-        </el-row>
-      </div>
+    <!-- 菜单 -->
+    <sp-menu>
+      <template slot="menus">
+        <li class="el-menu-item" style="float:right;" @click="login">登录</li>
+        <li class="el-menu-item" style="float:right;" @click="register">注册</li>
+      </template>
       <div class="header-img">
         <div class="scene">
           <span>Hi, Karl</span>
@@ -24,9 +15,11 @@
           <h2>Any advanced technology is no different from magic.</h2>
         </div>
       </div>
-    </div>
+    </sp-menu>
+    <!-- 菜单 -->
     <div class="container">
       <el-container>
+        <!-- 博客 -->
         <el-aside width="60%" v-loading="loading">
           <h3>最新博客</h3>
           <el-divider></el-divider>
@@ -39,13 +32,27 @@
             readonly
           ></sp-blog-card>
         </el-aside>
+        <!-- 博客 -->
         <el-aside width="30%" style="padding-left:20px;">
-          <sp-section title="推荐好文">
-            <recommend-blog type="readonly"></recommend-blog>
+          <!-- 推荐 -->
+          <sp-section title="推荐书籍">
+            <el-carousel height="300px">
+              <el-carousel-item v-for="(item, index) in recommendPic" :key="index">
+                <el-image :src="item.src"></el-image>
+              </el-carousel-item>
+            </el-carousel>
           </sp-section>
+          <!-- 推荐 -->
+          <!-- 推荐博客 -->
+          <sp-section title="推荐博客">
+            <recommend-info minHeight="300px" type="readonly" :pageSize="5"></recommend-info>
+          </sp-section>
+          <!-- 推荐博客 -->
+          <!-- 想法 -->
           <sp-section title="想法">
-            <idea></idea>
+            <idea :pageSize="5"></idea>
           </sp-section>
+          <!-- 想法 -->
         </el-aside>
       </el-container>
     </div>
@@ -59,18 +66,25 @@
 </template>
 
 <script>
+import spMenu from './spMenu';
 import spSection from './spSection';
-import recommendBlog from '../admin/recommandBlog/recommandBlogList';
+import recommendInfo from '../admin/recommendInfo/recommendInfoList';
 import idea from '../admin/idea/ideaCard';
 
 export default {
   name: 'home',
-  components: { spSection, recommendBlog, idea },
+  components: { spMenu, spSection, recommendInfo, idea },
   data() {
     return {
       activeIndex: '1',
-      loading: 'false'
+      loading: 'false',
+      recommendPic: []
     };
+  },
+  created() {
+    this.getRecommendPictures().then(resp => {
+      this.recommendPic = resp.DataList.map(item => ({ src: item.url }));
+    });
   },
   methods: {
     login() {
@@ -84,6 +98,16 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    // 获取推荐图片
+    getRecommendPictures() {
+      const searchList = [
+        {
+          Name: 'recommend_type',
+          Value: 'picture'
+        }
+      ];
+      return sp.get(`api/recommendInfo/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=${JSON.stringify(searchList)}`);
+    },
     fetchData() {
       return sp
         .get(`api/blog2/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=`)
@@ -95,75 +119,48 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header {
-  .header-menu {
+.header-img {
+  height: 650px;
+  position: relative;
+  width: 100%;
+  background-size: cover;
+  background-position: center 50%;
+  background-repeat: no-repeat;
+  margin-bottom: 150px;
+  background-image: url('http://mangoya.cn/upload/theme/yourName/20fbf79218e1c60c9bc96c1442f916fa.jpg');
+  .scene {
     width: 100%;
-    background: rgba(40, 42, 44, 0.6);
-    /*margin-bottom:30px;*/
-    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
-    position: fixed;
+    text-align: center;
+    font-size: 100px;
+    font-weight: 200;
+    color: #fff;
+    position: absolute;
     left: 0;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    .el-menu-demo {
-      background: transparent;
-      border-bottom: none !important;
-      max-width: 80%;
-      margin: 0 auto;
-      .el-menu-item {
-        font-size: 16px;
-        color: #fff;
-      }
-      .el-menu-item:hover {
-        background: #48456c;
-      }
+    top: 160px;
+    font-family: 'Sigmar One', Arial;
+    text-shadow: 0 2px 2px #47456d;
+    > span {
+      text-shadow: 1px 1px 0 #ff3f1a, -1px -1px 0 #00a7e0;
     }
   }
-  .header-img {
-    height: 650px;
+  .information {
+    text-align: center;
+    width: 70%;
+    margin: auto;
     position: relative;
-    width: 100%;
-    background-size: cover;
-    background-position: center 50%;
-    background-repeat: no-repeat;
-    margin-bottom: 150px;
-    background-image: url('http://mangoya.cn/upload/theme/yourName/20fbf79218e1c60c9bc96c1442f916fa.jpg');
-    .scene {
-      width: 100%;
-      text-align: center;
-      font-size: 100px;
-      font-weight: 200;
-      color: #fff;
-      position: absolute;
-      left: 0;
-      top: 160px;
-      font-family: 'Sigmar One', Arial;
-      text-shadow: 0 2px 2px #47456d;
-      > span {
-        text-shadow: 1px 1px 0 #ff3f1a, -1px -1px 0 #00a7e0;
-      }
-    }
-    .information {
-      text-align: center;
-      width: 70%;
-      margin: auto;
-      position: relative;
-      top: 480px;
-      padding: 40px 0;
-      font-size: 16px;
-      opacity: 0.98;
-      background: rgba(230, 244, 249, 0.8);
-      border-radius: 5px;
-      z-index: 1;
-      animation: b 1s ease-out;
-      -webkit-animation: b 1s ease-out;
-      > h2 {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: 700;
-      }
+    top: 480px;
+    padding: 40px 0;
+    font-size: 16px;
+    opacity: 0.98;
+    background: rgba(230, 244, 249, 0.8);
+    border-radius: 5px;
+    z-index: 1;
+    animation: b 1s ease-out;
+    -webkit-animation: b 1s ease-out;
+    > h2 {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
     }
   }
 }

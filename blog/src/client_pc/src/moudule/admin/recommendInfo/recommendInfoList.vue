@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import recommandBlogEdit from './recommandBlogEdit';
+import RecommendInfoEdit from './RecommendInfoEdit';
 
 export default {
-  name: 'recommandBlogList',
+  name: 'RecommendInfoList',
   data() {
     return {
-      controllerName: 'RecommandBlog',
-      editComponent: recommandBlogEdit
+      controllerName: 'RecommendInfo',
+      editComponent: RecommendInfoEdit
     };
   },
   computed: {
@@ -30,7 +30,8 @@ export default {
     columns() {
       const editColumns = [
         { prop: 'name', label: '名称', width: 300 },
-        { prop: 'url', label: '地址', width: 800 },
+        { prop: 'url', label: '地址', width: 500 },
+        { prop: 'recommend_typeName', label: '类型' },
         { prop: 'createdByName', label: '创建人' },
         { prop: 'createdOn', label: '创建日期', type: 'datetime' }
       ];

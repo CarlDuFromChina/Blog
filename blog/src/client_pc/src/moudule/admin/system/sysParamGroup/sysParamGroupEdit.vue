@@ -12,7 +12,7 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row v-if="!isGrid">
       <el-col style="text-align:right">
         <span class="dialog-footer">
           <el-button @click="$emit('close')">取 消</el-button>
@@ -27,47 +27,22 @@
 import { edit } from 'sixpence.platform.pc.vue';
 
 export default {
+  name: 'sysParamGroupEdit',
   props: {
-    relatedAttr: {
-      type: Object
+    isGrid: {
+      type: Boolean,
+      default: false
     }
   },
-  inject: ['parentId'],
-  name: 'sysParamEdit',
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysParam',
+      controllerName: 'SysParamGroup',
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'Null' }],
         code: [{ required: true, message: '请再次编码', trigger: 'Null' }]
       }
     };
-  },
-  methods: {
-    saveData() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          const { id, name } = this.parentId();
-          this.data.sys_paramGroupid = id;
-          this.data.sys_paramGroupidName = name;
-          const operateName = sp.isNullOrEmpty(this.Id) ? 'CreateData' : 'UpdateData';
-          if (sp.isNullOrEmpty(this.Id)) {
-            this.data.Id = sp.newUUID();
-          }
-          sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
-            if (this.postSave && typeof this.postSave === 'function') {
-              this.postSave();
-            }
-            this.$emit('close');
-            this.$emit('load-data');
-            this.$message.success('添加成功');
-          });
-        } else {
-          this.$message.error('请检查表单必填项');
-        }
-      });
-    }
   }
 };
 </script>

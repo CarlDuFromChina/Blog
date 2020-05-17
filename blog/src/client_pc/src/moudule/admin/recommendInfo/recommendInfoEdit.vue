@@ -13,6 +13,15 @@
       </el-col>
     </el-row>
     <el-row>
+      <el-col>
+        <el-form-item label="分类">
+          <el-select v-model="data.recommend_type" @change="handleTypeChange">
+            <el-option :label="item.Name" :value="item.Value" v-for="(item, index) in recommentType" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col style="text-align:right">
         <span class="dialog-footer">
           <el-button @click="$emit('close')">取 消</el-button>
@@ -27,14 +36,28 @@
 import { edit } from 'sixpence.platform.pc.vue';
 
 export default {
-  name: 'recommandBlogEdit',
+  name: 'recommendInfoEdit',
   mixins: [edit],
   data() {
     return {
-      controllerName: 'RecommandBlog',
+      controllerName: 'RecommendInfo',
       Id: '',
-      data: {}
+      data: {},
+      recommentType: []
     };
+  },
+  created() {
+    sp.get('api/SysParamGroup/GetParams?code=recommend_type').then(resp => {
+      this.recommentType = resp;
+    });
+  },
+  methods: {
+    handleTypeChange(value) {
+      const arrs = this.recommentType.filter(item => item.Value === value);
+      if (arrs.length > 0) {
+        this.data.recommend_typeName = arrs[0].Name;
+      }
+    }
   }
 };
 </script>

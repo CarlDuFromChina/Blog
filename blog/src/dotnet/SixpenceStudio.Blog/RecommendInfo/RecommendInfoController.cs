@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.RecommendBlog
+namespace SixpenceStudio.Blog.RecommendInfo
 {
-    public class RecommandBlogController : EntityController<recommend_blog, RecommendBlogService>
+    public class RecommendInfoController : EntityController<recommend_info, RecommendInfoService>
     {
     }
 }

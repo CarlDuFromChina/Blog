@@ -7,19 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.RecommendBlog
+namespace SixpenceStudio.Blog.RecommendInfo
 {
-    public class RecommendBlogService : EntityService<recommend_blog>
+    public class RecommendInfoService : EntityService<recommend_info>
     {
         #region 构造函数
-        public RecommendBlogService()
+        public RecommendInfoService()
         {
-            _cmd = new EntityCommand<recommend_blog>();
+            _cmd = new EntityCommand<recommend_info>();
         }
 
-        public RecommendBlogService(IPersistBroker broker)
+        public RecommendInfoService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<recommend_blog>(broker);
+            _cmd = new EntityCommand<recommend_info>(broker);
         }
         #endregion
 
