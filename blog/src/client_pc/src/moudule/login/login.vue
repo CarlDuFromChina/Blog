@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { encryptPwd } from '../../utils/enryption';
+
 export default {
   name: 'login',
   data() {
@@ -64,7 +66,11 @@ export default {
         if (valid) {
           const url = 'api/AuthUser/login';
           try {
-            sp.post(url, this.data).then(resp => {
+            const data = {
+              code: this.data.code,
+              password: encryptPwd(this.data.password)
+            };
+            sp.post(url, data).then(resp => {
               if (resp.result) {
                 localStorage.setItem('Token', resp.Ticket);
                 this.$router.push('admin');

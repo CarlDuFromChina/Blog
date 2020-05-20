@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import { encryptPwd } from '../../utils/enryption';
+
 export default {
   name: 'admin',
   data() {
@@ -125,7 +127,7 @@ export default {
           if (this.data.password !== this.data.password2) {
             this.$message.error('两次密码不一致');
           } else {
-            sp.post('api/AuthUser/EditPassword', `=${this.data.password}`).then(() => {
+            sp.post('api/AuthUser/EditPassword', `=${encryptPwd(this.data.password)}`).then(() => {
               this.$message.success('修改密码成功');
               this.editVisible = false;
             });
