@@ -43,8 +43,20 @@ export default {
             this.$router.push({ name: 'home' });
           }
         },
-        { name: '归档', click: () => {} },
-        { name: '友人帐', click: () => {} },
+        {
+          name: '归档',
+          click: () => {
+            document.body.scrollIntoView();
+            this.$router.push({ name: 'archive' });
+          }
+        },
+        {
+          name: '友人帐',
+          click: () => {
+            document.body.scrollIntoView();
+            this.$router.push({ name: 'friends' });
+          }
+        },
         {
           name: '关于',
           click: () => {

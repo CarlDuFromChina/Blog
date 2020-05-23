@@ -12,6 +12,14 @@ export default [
       path: '/index/aboutme',
       name: 'aboutme',
       component: () => import('./aboutme')
+    }, {
+      path: '/index/archive',
+      name: 'archive',
+      component: () => import('./archive')
+    }, {
+      path: '/index/friends',
+      name: 'friends',
+      component: () => import('./friends')
     }]
   }
 ];
