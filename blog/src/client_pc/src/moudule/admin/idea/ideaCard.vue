@@ -44,7 +44,7 @@ export default {
       this.loading = true;
       this.firstLoad = false;
       this.pageSize += 5;
-      let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
+      let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       try {
         sp.get(url).then(resp => {
           if (resp && resp.DataList) {
