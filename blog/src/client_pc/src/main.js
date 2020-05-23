@@ -32,7 +32,7 @@ const router = new VueRouter({
       path: '/',
       component: App,
       children: moduleRouter,
-      redirect: 'home'
+      redirect: 'index/home'
     }
   ]
 });
