@@ -29,6 +29,30 @@ namespace SixpenceStudio.Blog.Blog
         }
         #endregion
 
+        public override IList<EntityView<blog>> GetViewList()
+        {
+            var sql = $@"
+SELECT
+	blog.*,
+	sys_file.sys_fileid AS imageId,
+	'{FileUtils.FILE_FOLDER}/' || sys_file.name AS imageSrc
+FROM
+	blog
+LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
+WHERE 1=1
+";
+            return new List<EntityView<blog>>()
+            {
+                new EntityView<blog>()
+                {
+                    Sql = sql,
+                    ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
+                    Name = "全部博客",
+                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                }
+            };
+        }
+
         #region CRUD
         public override void DeleteData(List<string> ids)
         {
@@ -119,44 +143,6 @@ SELECT * FROM sys_file WHERE objectid = @id and file_type = '{BLOG_SURFACE_NAME}
         /// <param name="pageSize"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public override DataModel<blog> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex)
-        {
-            var sql = $@"
-SELECT
-	blog.*,
-	sys_file.sys_fileid AS imageId,
-	'{FileUtils.FILE_FOLDER}/' || sys_file.name AS imageSrc
-FROM
-	blog
-LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
-WHERE 1=1
-";
-            var where = string.Empty;
-            var paramList = new Dictionary<string, object>();
-
-            if (searchList != null)
-            {
-                var count = 0;
-                foreach (var search in searchList)
-                {
-                    where += $" AND blog.{search.Name} = @params{count}";
-                    paramList.Add($"@params{count++}", search.Value);
-                }
-            }
-
-            var _orderBy = " blog.createdon desc, blog.blogid ";
-            if (!string.IsNullOrEmpty(_orderBy))
-            {
-                _orderBy = orderBy;
-            }
-
-            var data = _cmd.broker.RetrieveMultiple<blog>(sql + where, paramList, _orderBy, pageSize, pageIndex, out var recordCount);
-            return new DataModel<blog>()
-            {
-                DataList = data,
-                RecordCount = recordCount
-            };
-        }
         #endregion
 
         /// <summary>

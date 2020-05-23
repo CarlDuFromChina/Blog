@@ -10,7 +10,7 @@
             <span class="creator">{{ item.createdByName }}</span>
           </p>
           <p>
-            <span class="date">{{ item.createdOn | moment('YYYY-MM-DD HH:MM') }}</span>
+            <span class="date">{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
           </p>
           <div class="clearfix" v-if="!readonly">
             <el-button @click.stop="deleteData(item)" type="text" size="small" class="button">删除</el-button>
