@@ -2525,10 +2525,10 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30, electron-to-chromium@
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.372.tgz#fb61b6dfe06f3278a384d084ebef75d463ec7580"
   integrity sha512-77a4jYC52OdisHM+Tne7dgWEvQT1FoNu/jYl279pP88ZtG4ZRIPyhQwAKxj6C2rzsyC1OwsOds9JlZtNncSz6g==
 
-element-ui@^2.10.1:
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.13.0.tgz#f6bb04e5b0a76ea5f62466044b774407ba4ebd2d"
-  integrity sha512-KYsHWsBXYbLELS8cdfvgJTOMSUby3UEjvsPV1V1VmgJ/DdkOAS4z3MiOrPxrT9w2Cc5lZ4eVSQiGhYFR5NVChw==
+element-ui@^2.13.2:
+  version "2.13.2"
+  resolved "https://registry.yarnpkg.com/element-ui/-/element-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
+  integrity sha512-r761DRPssMPKDiJZWFlG+4e4vr0cRG/atKr3Eqr8Xi0tQMNbtmYU1QXvFnKiFPFFGkgJ6zS6ASkG+sellcoHlQ==
   dependencies:
     async-validator "~1.8.1"
     babel-helper-vue-jsx-merge-props "^2.0.0"
@@ -6958,13 +6958,13 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.34:
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.34.tgz#05da9ff74374fe30afa32a988e61a4fc12c722c9"
-  integrity sha512-10IldcI+HZcCZcwmOOth2iONMwnNuIF8IhpOCOH2fk8MYmQGx28be7QGzLlbHtOBMRHJ+DsfcIvJHMnJw4UQjw==
+sixpence.platform.pc.vue@1.0.35:
+  version "1.0.35"
+  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.35.tgz#25a96caa2296abba685c9f66caa20a6ffc40c462"
+  integrity sha512-SA2JrEfDoBfkwPSPYYdLkCRVOKHzgOQYGLfGm+LbkpHKQPLrKYakXRXlRHmdc8eG6xEOZYQagYCJtT5UPEqgwA==
   dependencies:
     axios "^0.19.0"
-    element-ui "^2.10.1"
+    element-ui "^2.13.2"
     less "^3.10.3"
     less-loader "^5.0.0"
     uuidjs "^4.2.4"
