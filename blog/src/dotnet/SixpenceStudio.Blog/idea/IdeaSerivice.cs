@@ -22,5 +22,6 @@ namespace SixpenceStudio.Blog.idea
             _cmd = new EntityCommand<idea>(broker);
         }
         #endregion
+
     }
 }

@@ -46,7 +46,7 @@
       <el-container>
         <el-header class="home-header">
           <el-dropdown @command="handleCommand">
-            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" class="home-header-avatar"></el-avatar>
+            <el-avatar :src="imageUrl" class="home-header-avatar"></el-avatar>
             <el-dropdown-menu slot="dropdown" placement="bottom-end">
               <el-dropdown-item :command="editPassword">修改密码</el-dropdown-item>
               <el-dropdown-item :command="logout">退出</el-dropdown-item>
@@ -75,7 +75,8 @@ export default {
       rules: {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
-      }
+      },
+      imageUrl: '' // 头像
     };
   },
   created() {
@@ -84,10 +85,10 @@ export default {
   },
   methods: {
     getUserInfo() {
-      this.userInfo = {
-        date: '2016-05-02',
-        name: 'Karl'
-      };
+      return sp.get(`api/UserInfo/GetData?id=${sp.getUser()}`).then(resp => {
+        this.imageUrl = sp.getBaseUrl() + resp.avatarUrl;
+        localStorage.setItem('Avatar', this.imageUrl);
+      });
     },
     getMenu() {
       const searchList = [

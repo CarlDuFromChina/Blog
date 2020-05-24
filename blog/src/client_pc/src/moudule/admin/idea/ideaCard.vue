@@ -82,7 +82,7 @@ export default {
       background-color: #fff;
       font-size: 13px;
       .avatar {
-        background-image: url('https://mirror-gold-cdn.xitu.io/16e8bab2eb60299bfff?imageView2/1/w/100/h/100/q/85/format/webp/interlace/1');
+        background-image: url('http://www.dumiaoxin.top:8002/temp/1B715131BA7631E818D1713D3E6766E541717022.png');
         width: 50px;
         height: 50px;
         border-radius: 50%;

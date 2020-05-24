@@ -22,7 +22,7 @@
     <el-row>
       <el-col :span="8">
         <el-form-item label="长度">
-          <el-input v-model="data.attr_length"></el-input>
+          <el-input v-model="data.attr_length" type="number"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="8">
@@ -77,6 +77,10 @@ export default {
         {
           value: 'timestamp',
           label: '时间'
+        },
+        {
+          value: 'bytea',
+          label: '二进制'
         }
       ],
       rules: {
@@ -96,22 +100,24 @@ export default {
       if (sp.isNullOrEmpty(this.Id)) {
         this.data.Id = sp.newUUID();
       }
+      const that = this;
       this.$refs.form.validate(resp => {
         if (resp) {
-          this.data.isrequire = this.data.isrequire2 ? 1 : 0;
-          if (sp.isNullOrEmpty(this.data.attr_length)) {
-            this.data.attr_length = 0;
+          that.data.isrequire = that.data.isrequire2 ? 1 : 0;
+          if (sp.isNull(that.data.attr_length)) {
+            that.data.attr_length = 0;
           }
-          sp.post(`api/${this.controllerName}/CreateData`, this.data)
+          sp.post(`api/${this.controllerName}/CreateData`, that.data)
             .then(resp => {
-              this.$emit('close');
-              this.$message.success('添加成功');
+              that.$emit('close');
+              that.$refs.form.resetFields();
+              that.$message.success('添加成功');
             })
             .catch(error => {
-              this.$message.error(error);
+              that.$message.error(error);
             });
         } else {
-          this.$message.error('请检查表单必填项');
+          that.$message.error('请检查表单必填项');
         }
       });
     }

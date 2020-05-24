@@ -73,6 +73,7 @@ export default {
             sp.post(url, data).then(resp => {
               if (resp.result) {
                 localStorage.setItem('Token', resp.Ticket);
+                localStorage.setItem('UserId', resp.UserId);
                 this.$router.push('admin');
                 sp.refreshRouter.call({ router: this.$router });
                 this.$message.success('登录成功');
