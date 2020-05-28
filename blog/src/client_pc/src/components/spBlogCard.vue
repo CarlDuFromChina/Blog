@@ -1,7 +1,8 @@
 <template>
   <el-row>
-    <el-col :span="5" v-for="(item, index) in data" :key="index" style="min-width:400px;margin:10px">
+    <el-col :span="5" v-for="item in data" :key="item.Id" style="min-width:390px;margin:10px">
       <el-card class="blogCard" shadow="hover" @click.native.stop="goReadonly(item)">
+        <div class="blogCard-badge" v-if="newTag && isNewBlog(item)">New</div>
         <div style="display:inline-block;">
           <strong
             ><div class="blogCard-title">{{ item.title }}</div></strong
@@ -31,14 +32,15 @@
 </template>
 
 <script>
-import { pagination } from 'sixpence.platform.pc.vue';
-
 export default {
   name: 'spBlogCard',
-  mixins: [pagination],
   props: {
     fetch: { type: Function },
     readonly: {
+      type: Boolean,
+      default: false
+    },
+    newTag: {
       type: Boolean,
       default: false
     }
@@ -59,12 +61,14 @@ export default {
     }
   },
   methods: {
+    isNewBlog(item) {
+      return this.$moment().diff(this.$moment(item.createdOn), 'day') < 5;
+    },
     loadData() {
       this.$emit('loading');
       this.fetch()
         .then(resp => {
           this.data = resp.DataList;
-          this.total = resp.RecordCount;
         })
         .catch(() => {
           this.$message.error('加载出错了');

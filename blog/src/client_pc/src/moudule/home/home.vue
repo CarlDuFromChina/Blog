@@ -1,17 +1,10 @@
 <template>
-  <el-container>
+  <el-container v-infinite-scroll="load" style="overflow:auto">
     <!-- 博客 -->
-    <el-aside width="60%" v-loading="loading">
+    <el-aside width="60%">
       <h3>最新博客</h3>
       <el-divider></el-divider>
-      <sp-blog-card
-        :fetch="fetchData"
-        element-loading-text="拼命加载中"
-        element-loading-spinner="el-icon-loading"
-        @loading="loading = true"
-        @loading-close="loading = false"
-        readonly
-      ></sp-blog-card>
+      <sp-blog-card :fetch="fetchData" readonly newTag></sp-blog-card>
     </el-aside>
     <!-- 博客 -->
     <el-aside width="30%" style="padding-left:40px;">
@@ -48,7 +41,11 @@ export default {
   data() {
     return {
       loading: 'false',
-      recommendPic: []
+      recommendPic: [],
+      blog: {
+        pageSize: 20,
+        pageIndex: 1
+      }
     };
   },
   created() {
@@ -67,9 +64,13 @@ export default {
       ];
       return sp.get(`api/recommendInfo/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=${JSON.stringify(searchList)}`);
     },
+    load() {
+      this.blog.pageSize += 10;
+      this.fetchData();
+    },
     fetchData() {
       return sp
-        .get(`api/blog2/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=`)
+        .get(`api/blog2/GetDataList?orderBy=createdon desc&pageSize=${this.blog.pageSize}&pageIndex=${this.blog.pageIndex}&searchList=`)
         .then(resp => resp)
         .catch(() => this.$message.error('加载出错了'));
     }
