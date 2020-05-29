@@ -1,5 +1,5 @@
 <template>
-  <div class="infinite-list" v-infinite-scroll="loadData" style="overflow:auto;">
+  <div class="infinite-list">
     <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
       <div class="profile">
         <div class="avatar"></div>
@@ -24,26 +24,14 @@ export default {
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
-      pageSize: 0,
-      firstLoad: true
+      pageSize: 5
     };
   },
   created() {
     this.loadData();
   },
-  computed: {
-    allowLoad() {
-      return this.pageSize <= this.total || this.firstLoad;
-    }
-  },
   methods: {
     loadData() {
-      if (this.loading || !this.allowLoad) {
-        return;
-      }
-      this.loading = true;
-      this.firstLoad = false;
-      this.pageSize += 5;
       let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       try {
         sp.get(url).then(resp => {
@@ -56,10 +44,6 @@ export default {
         });
       } catch (error) {
         this.$message.error(error);
-      } finally {
-        setTimeout(() => {
-          this.loading = false;
-        }, 200);
       }
     }
   }
