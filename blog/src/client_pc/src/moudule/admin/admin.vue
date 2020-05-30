@@ -45,6 +45,10 @@
       </el-dialog>
       <el-container>
         <el-header class="home-header">
+          <el-link type="primary" @click="goHome" style="float:left">
+            <i class="el-icon-back"></i>
+            返回首页
+          </el-link>
           <el-dropdown @command="handleCommand">
             <el-avatar :src="imageUrl" class="home-header-avatar"></el-avatar>
             <el-dropdown-menu slot="dropdown" placement="bottom-end">
@@ -84,6 +88,11 @@ export default {
     this.getMenu();
   },
   methods: {
+    goHome() {
+      this.$router.push({
+        name: 'home'
+      });
+    },
     getUserInfo() {
       return sp.get(`api/UserInfo/GetData?id=${sp.getUser()}`).then(resp => {
         this.imageUrl = sp.getBaseUrl() + resp.avatarUrl;

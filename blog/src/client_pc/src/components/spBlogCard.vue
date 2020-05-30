@@ -23,7 +23,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :span="5" style="min-width:400px;margin:10px;" v-if="!readonly">
+    <el-col :span="5" style="min-width:390px;margin:10px;" v-if="!readonly">
       <el-card class="blogCard" style="text-align:center">
         <el-button icon="el-icon-plus" circle style="font-size:50px;margin-top:30px" @click="createData"></el-button>
       </el-card>
