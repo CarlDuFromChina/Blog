@@ -1,7 +1,8 @@
 <template>
-  <div style="background:#edeef2">
+  <div class="index">
+    <el-backtop target=".index"></el-backtop>
     <!-- 菜单 -->
-    <sp-menu :menus="menus">
+    <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
         <li class="el-menu-item" style="float:right;" @click="login">登录</li>
         <li class="el-menu-item" style="float:right;" @click="register">注册</li>
@@ -17,7 +18,7 @@
       </div>
     </sp-menu>
     <!-- 菜单 -->
-    <div class="container">
+    <div id="container" class="container">
       <router-view></router-view>
     </div>
     <div class="footer">
@@ -39,28 +40,24 @@ export default {
         {
           name: '首页',
           click: () => {
-            document.body.scrollIntoView();
             this.$router.push({ name: 'home' });
           }
         },
         {
           name: '归档',
           click: () => {
-            document.body.scrollIntoView();
             this.$router.push({ name: 'archive' });
           }
         },
         {
           name: '友人帐',
           click: () => {
-            document.body.scrollIntoView();
             this.$router.push({ name: 'friends' });
           }
         },
         {
           name: '关于',
           click: () => {
-            document.body.scrollIntoView();
             this.$router.push({ name: 'aboutme' });
           }
         }
@@ -68,6 +65,7 @@ export default {
     };
   },
   methods: {
+    // 跳转登录页
     login() {
       this.$router.push({
         name: 'login'
@@ -76,14 +74,20 @@ export default {
     register() {
       this.$message.error('暂未开放注册');
     },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    // 菜单切换
+    menuChange() {
+      document.getElementById('container').scrollIntoView();
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.index {
+  background: #edeef2;
+  overflow-y: scroll;
+  height: 100%;
+}
 .header-img {
   height: 650px;
   position: relative;
@@ -131,9 +135,9 @@ export default {
 }
 .container {
   max-width: 80%;
-  min-height: 800px;
+  height: 100%;
   margin: 0 auto;
-  padding: 0 10px 50px 10px;
+  padding: 0 10px 0px 10px;
 }
 .footer {
   color: #888;

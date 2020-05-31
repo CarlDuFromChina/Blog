@@ -33,7 +33,17 @@ namespace SixpenceStudio.Blog.Blog
         {
             var sql = $@"
 SELECT
-	blog.*,
+	blog.blogid,
+	blog.title,
+	blog.blog_type,
+	blog.blog_typeName,
+	blog.content,
+	blog.createdBy,
+	blog.createdbyname,
+	blog.modifiedBy,
+	blog.modifiedbyname,
+	blog.createdOn,
+	blog.modifiedOn,
 	sys_file.sys_fileid AS imageId,
 	'{FileUtils.FILE_FOLDER}/' || sys_file.name AS imageSrc
 FROM
