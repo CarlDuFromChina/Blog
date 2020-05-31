@@ -2,7 +2,7 @@
   <div class="archive" v-infinite-scroll="loadMore">
     <el-timeline>
       <el-timeline-item v-for="item in data" :key="item.Id" :timestamp="$moment(item.createdOn).format('YYYY-MM-DD HH:mm')" placement="top">
-        <el-card>
+        <el-card class="blogCard" shadow="hover" @click.native.stop="goReadonly(item)">
           <h4>{{ item.title }}</h4>
           <p>{{ item.modifiedByName + ' 提交于 ' + $moment(item.createdOn).format('YYYY-MM-DD HH:mm') }}</p>
         </el-card>
@@ -51,6 +51,16 @@ export default {
     }
   },
   methods: {
+    goReadonly(row) {
+      if (!sp.isNullOrEmpty(row.Id)) {
+        this.$router.push({
+          name: 'blogReadonly',
+          params: { id: row.Id }
+        });
+      } else {
+        this.$message.error('查看失败');
+      }
+    },
     loadMore() {
       if (!this.noMore) {
         this.pageSize += 10;
@@ -95,5 +105,8 @@ export default {
     padding-bottom: 10px;
     font-size: 15px;
   }
+}
+/deep/.el-card.is-hover-shadow:hover {
+  box-shadow: 0 2px 12px 0 #6750d7;
 }
 </style>
