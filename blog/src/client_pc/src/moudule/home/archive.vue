@@ -9,6 +9,7 @@
       </el-timeline-item>
     </el-timeline>
     <p v-if="loading" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"></p>
+    <span v-if="noMore" class="noMore">没有更多了...</span>
   </div>
 </template>
 
@@ -86,6 +87,13 @@ export default {
     .el-timeline-item {
       font-size: 20px;
     }
+  }
+  .noMore {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 15px;
   }
 }
 </style>
