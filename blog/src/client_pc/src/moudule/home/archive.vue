@@ -89,6 +89,7 @@ export default {
 .archive {
   width: 100%;
   background: #fff;
+  min-height: 800px;
   /deep/ .el-timeline {
     padding: 20px;
     .el-timeline-item {
