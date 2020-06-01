@@ -85,8 +85,8 @@ export default {
 <style lang="less" scoped>
 .index {
   background: #edeef2;
-  overflow-y: scroll;
   height: 100%;
+  overflow-y: scroll;
 }
 .header-img {
   height: 650px;
@@ -135,7 +135,6 @@ export default {
 }
 .container {
   max-width: 80%;
-  height: 100%;
   margin: 0 auto;
   padding: 0 10px 0px 10px;
 }
@@ -145,7 +144,6 @@ export default {
   line-height: 1.5;
   text-align: center;
   width: 100%;
-  position: absolute;
   min-height: 50px;
   .footer-wrapper {
     width: 100%;

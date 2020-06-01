@@ -18,10 +18,11 @@ export default {
   name: 'archive',
   data() {
     return {
-      pageSize: 10,
+      pageSize: 0,
       pageIndex: 1,
       totalRecords: 0,
       loading: false,
+      noMore: false,
       data: [],
       activities: [
         {
@@ -45,11 +46,6 @@ export default {
   beforeDestroy() {
     this.$bus.$off('load-more');
   },
-  computed: {
-    noMore() {
-      return this.pageSize * this.pageIndex >= this.totalRecords;
-    }
-  },
   methods: {
     goReadonly(row) {
       if (!sp.isNullOrEmpty(row.Id)) {
@@ -63,7 +59,6 @@ export default {
     },
     loadMore() {
       if (!this.noMore) {
-        this.pageSize += 10;
         this.fetchData();
       }
     },
@@ -71,6 +66,7 @@ export default {
       if (this.loading) {
         return;
       }
+      this.pageSize += 10;
       this.loading = true;
       sp.get(`api/blog2/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`)
         .then(resp => {
@@ -81,6 +77,7 @@ export default {
         .finally(() => {
           setTimeout(() => {
             this.loading = false;
+            this.noMore = this.pageSize * this.pageIndex >= this.totalRecords;
           }, 200);
         });
     }
