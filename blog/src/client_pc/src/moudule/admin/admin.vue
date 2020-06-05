@@ -49,7 +49,13 @@
             <i class="el-icon-back"></i>
             返回首页
           </el-link>
-          <el-dropdown @command="handleCommand">
+          <el-dropdown @command="handleClick" class="header-dropdown">
+            <el-button @click="writeBlog" type="primary">写博客<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item :command="writeIdea">想法</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-dropdown @command="handleClick" class="header-dropdown">
             <el-avatar :src="imageUrl" class="home-header-avatar"></el-avatar>
             <el-dropdown-menu slot="dropdown" placement="bottom-end">
               <el-dropdown-item :command="editPassword">修改密码</el-dropdown-item>
@@ -123,10 +129,20 @@ export default {
         });
       });
     },
-    handleCommand(command) {
-      if (command && typeof command === 'function') {
-        command();
+    handleClick(cmd) {
+      if (cmd && typeof cmd === 'function') {
+        cmd();
       }
+    },
+    writeBlog() {
+      this.$router.push({
+        name: 'blogEdit'
+      });
+    },
+    writeIdea() {
+      this.$router.push({
+        name: 'idea'
+      });
     },
     editPassword() {
       this.editVisible = true;
@@ -181,6 +197,11 @@ export default {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom: 1px solid #ebeef5;
+  }
+  .header-dropdown {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
   }
   .home_wrapper {
     .menu {
