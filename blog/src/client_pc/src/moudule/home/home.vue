@@ -7,7 +7,7 @@
       <sp-blog-card ref="blog" :fetch="fetchData" readonly newTag v-infinite-scroll="loadMore"></sp-blog-card>
     </el-aside>
     <!-- 博客 -->
-    <el-aside width="30%" style="padding-left:40px;">
+    <el-aside width="30%" style="padding-left:40px;overflow:hidden">
       <!-- 推荐 -->
       <sp-section title="推荐书籍">
         <el-carousel height="300px">
