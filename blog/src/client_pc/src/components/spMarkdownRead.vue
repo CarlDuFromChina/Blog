@@ -4,7 +4,7 @@
     <div class="blog-body" :style="{ 'background-color': backgroudColor }">
       <div class="bodyWrapper">
         <el-container>
-          <el-aside width="60%">
+          <el-aside width="70%">
             <el-card>
               <div class="bodyWrapper-title">{{ title }}</div>
               <div class="bodyWrapper-content">

@@ -1,4 +1,5 @@
 ﻿using SixpenceStudio.BaseSite;
+using SixpenceStudio.Platform.Entity;
 using SixpenceStudio.Platform.WebApi;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,45 @@ namespace SixpenceStudio.Blog.Blog
         public void DeleteSurface([FromBody]string id)
         {
             new BlogService().DeleteSurface(id);
+        }
+
+        /// <summary>
+        /// 获取所有博客
+        /// </summary>
+        /// <param name="searchList"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public override IList<blog> GetDataList(string searchList = "", string orderBy = "", string viewId = "")
+        {
+            return base.GetDataList(searchList, orderBy, viewId);
+        }
+
+        /// <summary>
+        /// 分页获取博客
+        /// </summary>
+        /// <param name="searchList"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public override DataModel<blog> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "")
+        {
+            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId);
+        }
+
+        /// <summary>
+        /// 获取博客
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public override blog GetData(string id)
+        {
+            return base.GetData(id);
         }
     }
 }

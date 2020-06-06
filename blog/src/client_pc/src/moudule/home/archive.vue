@@ -68,7 +68,7 @@ export default {
       }
       this.pageSize += 10;
       this.loading = true;
-      sp.get(`api/blog2/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`)
+      sp.get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`)
         .then(resp => {
           this.totalRecords = resp.RecordCount;
           this.data = resp.DataList;

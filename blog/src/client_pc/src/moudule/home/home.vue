@@ -76,7 +76,7 @@ export default {
     },
     fetchData() {
       return sp
-        .get(`api/blog2/GetDataList?orderBy=createdon desc&pageSize=${this.blog.pageSize}&pageIndex=${this.blog.pageIndex}&searchList=`)
+        .get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.blog.pageSize}&pageIndex=${this.blog.pageIndex}&searchList=`)
         .then(resp => {
           this.blog.totalRecords = resp.RecordCount;
           return resp;
