@@ -4,14 +4,14 @@ import Vue from 'vue';
 import VueBus from 'vue-bus';
 import App from './App';
 import VueRouter from 'vue-router';
-import moduleRouter from './moudule';
+import moduleRouter from './module';
 import spComponents from 'sixpence.platform.pc.vue';
 import components from './components';
 import moment from 'vue-moment';
 import './assets/icons';
 import './style/index.less';
 import './directives';
-import menus from './moudule/menu';
+import menus from './module/menu';
 
 Vue.config.productionTip = false;
 
