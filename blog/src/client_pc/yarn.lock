@@ -6958,18 +6958,20 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.39:
-  version "1.0.39"
-  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.39.tgz#61f0fd0c2bbb07b2692ce61c5404726fa1216e70"
-  integrity sha512-vfki8lNMhIGeFlfLzRMHaZfIYUnmb6eSSO/reeuk+psCvHqTGvccAmzmP4/TdYi+JpDwxrPFviwW7aew97E9sA==
+sixpence.platform.pc.vue@1.0.48:
+  version "1.0.48"
+  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.48.tgz#829f61fa887c6b9ed4e9424d73196f3b3eb747c6"
+  integrity sha512-bYYjM93ZHv4uCdc7kUbhQNY5nZ/3snifGhuaDQ19EFkgratM+H2F1Ht4I0v5ZG4BngBCO/21t23zlUAYqBIQvQ==
   dependencies:
     axios "^0.19.0"
+    crypto-js "^4.0.0"
     element-ui "^2.13.2"
     less "^3.10.3"
     less-loader "^5.0.0"
     uuidjs "^4.2.4"
     vue "^2.5.2"
     vue-router "^3.0.1"
+    vuex "^3.4.0"
 
 slash@^1.0.0:
   version "1.0.0"
@@ -8027,6 +8029,11 @@ vue@^2.5.2:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuex@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
+  integrity sha512-ajtqwEW/QhnrBZQsZxCLHThZZaa+Db45c92Asf46ZDXu6uHXgbfVuBaJ4gzD2r4UX0oMJHstFwd2r2HM4l8umg==
 
 watchpack@^1.4.0:
   version "1.6.0"
