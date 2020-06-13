@@ -21,7 +21,7 @@ export default {
       }
     },
     fetchData() {
-      const searchList = [{ Name: 'blog_type', Value: this.$route.name }];
+      const searchList = [{ Name: 'blog_type', Value: this.$route.params.type }];
       return sp
         .get(`api/blog/GetDataList?orderBy=&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=${JSON.stringify(searchList)}`)
         .then(resp => {
