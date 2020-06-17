@@ -34,6 +34,7 @@
 <script>
 export default {
   name: 'spBlogCard',
+  inject: ['getType'],
   props: {
     fetch: { type: Function },
     readonly: {
@@ -98,7 +99,10 @@ export default {
     },
     createData() {
       this.$router.push({
-        name: 'blogEdit'
+        name: 'blogEdit',
+        params: {
+          blogType: this.getType()
+        }
       });
     },
     goReadonly(row) {

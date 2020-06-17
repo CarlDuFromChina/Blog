@@ -29,7 +29,6 @@ Vue.use(Vuex);
 // 合并平台路由
 let routes = platform.router.options.routes;
 routes = routes.concat(moduleRouter);
-console.log(admin);
 routes.forEach(item => {
   if (item.name === 'admin') {
     item.children = item.children.concat(admin);

@@ -81,6 +81,10 @@ export default {
     }
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
       this.blogType = resp;
+      if (this.$route.params.blogType) {
+        this.data.blog_type = this.$route.params.blogType;
+        this.handleTypeChange(this.data.blog_type);
+      }
     });
     this.baseUrl = window.localStorage.getItem('baseUrl');
     this.token = window.localStorage.getItem('Token');

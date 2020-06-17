@@ -5,6 +5,11 @@
 <script>
 export default {
   name: 'blogList',
+  provide() {
+    return {
+      getType: this.getType
+    };
+  },
   data() {
     return {
       loading: false,
@@ -14,6 +19,9 @@ export default {
     };
   },
   methods: {
+    getType() {
+      return this.$route.params.type;
+    },
     load() {
       if (this.pageSize * this.pageIndex < this.totalRecords) {
         this.pageSize += 8;
