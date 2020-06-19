@@ -32,6 +32,12 @@ Object.keys(languages).forEach(key => {
 
 export default {
   name: 'highlight',
+  inserted: (el) => {
+    let blocks = el.querySelectorAll('pre code');
+    blocks.forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  },
   update: (el) => {
     let blocks = el.querySelectorAll('pre code');
     blocks.forEach((block) => {
