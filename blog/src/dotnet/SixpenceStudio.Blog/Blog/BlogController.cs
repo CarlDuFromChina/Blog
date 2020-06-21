@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace SixpenceStudio.Blog.Blog
 {
     [RequestAuthorize]
-    public class BlogController : EntityController<blog, BlogService>
+    public class BlogController : EntityBaseController<blog, BlogService>
     {
         /// <summary>
         /// 查询所有博客菜单

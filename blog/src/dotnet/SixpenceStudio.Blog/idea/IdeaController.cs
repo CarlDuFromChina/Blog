@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace SixpenceStudio.Blog.idea
 {
     [RequestAuthorize]
-    public class IdeaController : EntityController<idea, IdeaSerivice>
+    public class IdeaController : EntityBaseController<idea, IdeaSerivice>
     {
         [HttpGet, AllowAnonymous]
         public override idea GetData(string id)

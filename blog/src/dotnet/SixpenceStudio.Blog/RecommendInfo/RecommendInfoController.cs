@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace SixpenceStudio.Blog.RecommendInfo
 {
     [RequestAuthorize]
-    public class RecommendInfoController : EntityController<recommend_info, RecommendInfoService>
+    public class RecommendInfoController : EntityBaseController<recommend_info, RecommendInfoService>
     {
         [HttpGet, AllowAnonymous]
         public override recommend_info GetData(string id)
