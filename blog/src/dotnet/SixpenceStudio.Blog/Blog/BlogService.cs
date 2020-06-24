@@ -37,7 +37,6 @@ SELECT
 	blog.title,
 	blog.blog_type,
 	blog.blog_typeName,
-	blog.content,
 	blog.createdBy,
 	blog.createdbyname,
 	blog.modifiedBy,
