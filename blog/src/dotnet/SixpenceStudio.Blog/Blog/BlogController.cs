@@ -71,5 +71,25 @@ namespace SixpenceStudio.Blog.Blog
         {
             return base.GetData(id);
         }
+
+        /// <summary>
+        /// 记录阅读次数
+        /// </summary>
+        /// <param name="blogId"></param>
+        [HttpGet, AllowAnonymous]
+        public void RecordReadingTimes(string blogId)
+        {
+            new BlogService().RecordReadingTimes(blogId);
+        }
+
+        /// <summary>
+        /// 点赞
+        /// </summary>
+        /// <param name="blogId"></param>
+        [HttpGet, AllowAnonymous]
+        public void Upvote(string blogId)
+        {
+            new BlogService().Upvote(blogId);
+        }
     }
 }

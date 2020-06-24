@@ -1,14 +1,9 @@
 ﻿using SixpenceStudio.BaseSite.SysFile;
 using SixpenceStudio.Platform.Command;
 using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
 using SixpenceStudio.Platform.Service;
 using SixpenceStudio.Platform.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.Blog
 {
@@ -43,6 +38,8 @@ SELECT
 	blog.modifiedbyname,
 	blog.createdOn,
 	blog.modifiedOn,
+	COALESCE(blog.reading_times, 0) reading_times,
+	COALESCE(blog.upvote_times, 0) upvote_times,
 	sys_file.sys_fileid AS imageId,
 	'{FileUtils.FILE_FOLDER}/' || sys_file.name AS imageSrc
 FROM
@@ -169,6 +166,30 @@ WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
             return _cmd.broker.DbClient.Query<string>(sql);
+        }
+
+        /// <summary>
+        /// 记录阅读次数
+        /// </summary>
+        /// <param name="blogId">博客 id</param>
+        public void RecordReadingTimes(string blogId)
+        {
+            var sql = @"
+UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
+";
+            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+        }
+
+        /// <summary>
+        /// 点赞
+        /// </summary>
+        /// <param name="blogId"></param>
+        public void Upvote(string blogId)
+        {
+            var sql = @"
+UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
+";
+            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
         }
     }
 }
