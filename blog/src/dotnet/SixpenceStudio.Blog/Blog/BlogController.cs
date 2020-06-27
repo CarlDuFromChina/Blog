@@ -41,9 +41,9 @@ namespace SixpenceStudio.Blog.Blog
         /// <param name="viewId"></param>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
-        public override IList<blog> GetDataList(string searchList = "", string orderBy = "", string viewId = "")
+        public override IList<blog> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, viewId);
+            return base.GetDataList(searchList, orderBy, viewId, searchValue);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace SixpenceStudio.Blog.Blog
         /// <param name="viewId"></param>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
-        public override DataModel<blog> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "")
+        public override DataModel<blog> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId);
+            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
         }
 
         /// <summary>

@@ -20,15 +20,15 @@ namespace SixpenceStudio.Blog.idea
         }
 
         [HttpGet, AllowAnonymous]
-        public override IList<idea> GetDataList(string searchList = "", string orderBy = "", string viewId = "")
+        public override IList<idea> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, viewId);
+            return base.GetDataList(searchList, orderBy, viewId, searchValue);
         }
 
         [HttpGet, AllowAnonymous]
-        public override DataModel<idea> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "")
+        public override DataModel<idea> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId);
+            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
         }
     }
 }

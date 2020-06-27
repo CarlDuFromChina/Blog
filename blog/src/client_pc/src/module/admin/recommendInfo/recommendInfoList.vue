@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     operations() {
-      return !this.isReadonly ? ['new', 'delete'] : [];
+      return !this.isReadonly ? ['new', 'delete', 'search'] : [];
     },
     columns() {
       const editColumns = [

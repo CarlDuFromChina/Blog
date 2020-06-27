@@ -23,6 +23,5 @@ namespace SixpenceStudio.Blog.RecommendInfo
         }
         #endregion
 
-
     }
 }
