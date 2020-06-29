@@ -63,12 +63,10 @@ export default {
       user: {}
     };
   },
-  created() {
-    sp.get(`api/UserInfo/GetData?id=${sp.getUser()}`).then(resp => {
-      this.user = resp;
-    });
-    this.imageUrl = localStorage.getItem('Avatar');
-    this.loadData();
+  async created() {
+    await this.loadData();
+    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
+    this.imageUrl = sp.getBaseUrl() + this.user.avatarUrl;
     this.recordReadingTimes();
   },
   watch: {
