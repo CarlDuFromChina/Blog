@@ -1,16 +1,17 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 import VueBus from 'vue-bus';
 import App from './App';
-import VueRouter from 'vue-router';
 import moduleRouter from './module';
 import admin from './module/admin';
 import platform from 'sixpence.platform.pc.vue';
 import components from './components';
-import moment from 'vue-moment';
 import './assets/icons';
 import './style/index.less';
 import './directives';
+
+const Vue = require('vue');
+const VueRouter = require('vue-router');
+const Vuex = require('vuex');
+const moment = require('moment');
 
 Vue.config.productionTip = false;
 
@@ -22,6 +23,7 @@ const install = _Vue => {
 
 Vue.use(install);
 Vue.use(platform.install);
+Vue.prototype.$moment = moment; // 赋值使用
 Vue.use(moment);
 Vue.use(VueBus);
 Vue.use(Vuex);

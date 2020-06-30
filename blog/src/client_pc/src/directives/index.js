@@ -1,6 +1,6 @@
-import Vue from 'vue';
-
 import heightLight from './highlight';
+
+const Vue = require('vue');
 
 const directives = [
   heightLight

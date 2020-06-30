@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import marked from 'marked';
 import 'mavon-editor/dist/css/index.css';
+const marked = require('marked');
 
 export default {
   name: 'blogReadonly',
