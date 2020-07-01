@@ -6811,8 +6811,8 @@ simple-swizzle@^0.2.2:
 
 sixpence.platform.pc.vue@1.0.66:
   version "1.0.66"
-  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.66.tgz#d421cc43d2ec35b276dbf357f0badbfe02d84d39"
-  integrity sha512-Uza9KAWiv+ReewczpePhbMR+iZyneIZY1dY39iYR/A9kTgjV7YQc/PILmUklBZLePclRj7kh/rjOZ7odL22Lxg==
+  resolved "https://registry.npm.taobao.org/sixpence.platform.pc.vue/download/sixpence.platform.pc.vue-1.0.66.tgz#d421cc43d2ec35b276dbf357f0badbfe02d84d39"
+  integrity sha1-1CHMQ9LsNbJ22/NX8Lrb/gLYTTk=
   dependencies:
     crypto-js "^4.0.0"
     less "^3.10.3"

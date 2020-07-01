@@ -23,10 +23,12 @@ const install = _Vue => {
 
 Vue.use(install);
 Vue.use(platform.install);
-Vue.prototype.$moment = moment; // 赋值使用
-Vue.use(moment);
 Vue.use(VueBus);
 Vue.use(Vuex);
+
+Vue.prototype.$moment = moment; // 赋值使用
+Vue.use(moment);
+Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
 
 // 合并平台路由
 let routes = platform.router.options.routes;
