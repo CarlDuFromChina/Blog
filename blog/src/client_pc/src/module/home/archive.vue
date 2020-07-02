@@ -23,21 +23,7 @@ export default {
       totalRecords: 0,
       loading: false,
       noMore: false,
-      data: [],
-      activities: [
-        {
-          content: '我和js',
-          timestamp: '2020-04-15'
-        },
-        {
-          content: '我和js',
-          timestamp: '2019-04-13'
-        },
-        {
-          content: '我和js',
-          timestamp: '2018-04-11'
-        }
-      ]
+      data: []
     };
   },
   created() {

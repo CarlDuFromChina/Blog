@@ -1,4 +1,3 @@
-import VueBus from 'vue-bus';
 import App from './App';
 import moduleRouter from './module';
 import admin from './module/admin';
@@ -23,8 +22,9 @@ const install = _Vue => {
 
 Vue.use(install);
 Vue.use(platform.install);
-Vue.use(VueBus);
 Vue.use(Vuex);
+
+Vue.prototype.$bus = new Vue();
 
 Vue.prototype.$moment = moment; // 赋值使用
 Vue.use(moment);
