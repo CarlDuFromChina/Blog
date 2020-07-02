@@ -1,5 +1,5 @@
 <template>
-  <div class="blog blog__readonly" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
+  <div id="blog" class="blog blog__readonly" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
     <div class="blog-header">
       <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
     </div>
@@ -39,6 +39,7 @@
                 </div>
               </div>
             </el-card>
+            <div id="content" class="block"></div>
           </el-aside>
         </el-container>
       </div>
@@ -50,6 +51,66 @@
 import 'mavon-editor/dist/css/index.css';
 const marked = require('marked');
 
+const renderer = new marked.Renderer();
+renderer.heading = function(text, level, raw) {
+  const anchor = tocObj.add(text, level);
+  return `<a id=${anchor} class="anchor-fix"></a><h${level}>${text}</h${level}>\n`;
+};
+
+marked.setOptions({
+  renderer: renderer
+});
+const tocObj = {
+  add: function(text, level) {
+    var anchor = `#toc${level}${++this.index}`;
+    this.toc.push({ anchor: anchor, level: level, text: text });
+    return anchor;
+  },
+  toHTML: function() {
+    let levelStack = [];
+    let result = '';
+    const addStartUL = () => {
+      result += '<ul>';
+    };
+    const addEndUL = () => {
+      result += '</ul>\n';
+    };
+    const addLI = (anchor, text) => {
+      result += '<li><a href="#' + anchor + '">' + text + '<a></li>\n';
+    };
+    this.toc.forEach(function(item) {
+      let levelIndex = levelStack.indexOf(item.level);
+      // 没有找到相应level的ul标签，则将li放入新增的ul中
+      if (levelIndex === -1) {
+        levelStack.unshift(item.level);
+        addStartUL();
+        addLI(item.anchor, item.text);
+      } else if (levelIndex === 0) {
+        // 找到了相应level的ul标签，并且在栈顶的位置则直接将li放在此ul下
+        addLI(item.anchor, item.text);
+      } else {
+        // 找到了相应level的ul标签，但是不在栈顶位置，需要将之前的所有level出栈并且打上闭合标签，最后新增li
+        while (levelIndex--) {
+          levelStack.shift();
+          addEndUL();
+        }
+        addLI(item.anchor, item.text);
+      }
+    });
+    // 如果栈中还有level，全部出栈打上闭合标签
+    while (levelStack.length) {
+      levelStack.shift();
+      addEndUL();
+    }
+    // 清理先前数据供下次使用
+    this.toc = [];
+    this.index = 0;
+    return result;
+  },
+  toc: [],
+  index: 0
+};
+
 export default {
   name: 'blogReadonly',
   data() {
@@ -60,7 +121,8 @@ export default {
       loading: false,
       imageUrl: '',
       formatterContent: '',
-      user: {}
+      user: {},
+      height: null
     };
   },
   async created() {
@@ -68,6 +130,9 @@ export default {
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     this.imageUrl = sp.getBaseUrl() + this.user.avatarUrl;
     this.recordReadingTimes();
+  },
+  mounted() {
+    document.getElementById('blog').addEventListener('scroll', this.handleScroll);
   },
   watch: {
     'data.content': {
@@ -77,11 +142,26 @@ export default {
           this.formatterContent = marked(newVal, {
             sanitize: true
           });
+          const content = document.getElementById('content');
+          content.innerHTML = tocObj.toHTML();
+          this.height = content.offsetTop;
         }
       }
     }
   },
   methods: {
+    handleScroll() {
+      const content = document.getElementById('content');
+      const blog = document.getElementById('blog');
+      if (this.height > blog.scrollTop) {
+        content.style.position = 'relative';
+        content.style.marginTop = 20;
+      } else {
+        content.style.position = 'fixed';
+        content.style.top = '0';
+        content.style.marginTop = 0;
+      }
+    },
     async loadData() {
       this.loading = true;
       try {
@@ -111,6 +191,7 @@ export default {
 
 <style lang="less" scoped>
 .block {
+  width: 300px;
   /deep/ .el-card__body {
     padding: 0px;
   }
@@ -129,6 +210,24 @@ export default {
         padding-right: 5px;
       }
     }
+  }
+}
+.block + .block {
+  margin-top: 20px;
+}
+.anchor-fix {
+  display: block;
+  height: 20px; /*same height as header*/
+  margin-top: -20px; /*same height as header*/
+  visibility: hidden;
+}
+/deep/ #content {
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #007fff;
   }
 }
 </style>
