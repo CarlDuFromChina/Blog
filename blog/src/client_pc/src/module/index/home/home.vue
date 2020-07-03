@@ -33,7 +33,7 @@
 
 <script>
 import recommendInfo from '../../admin/recommendInfo/recommendInfoList';
-import idea from '../../admin/idea/ideaCard';
+import idea from './idea';
 
 export default {
   name: 'home',

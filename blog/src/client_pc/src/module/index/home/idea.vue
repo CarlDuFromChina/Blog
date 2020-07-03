@@ -17,7 +17,7 @@
 import { pagination } from 'sixpence.platform.pc.vue';
 
 export default {
-  name: 'ideaCard',
+  name: 'idea',
   mixins: [pagination],
   data() {
     return {
