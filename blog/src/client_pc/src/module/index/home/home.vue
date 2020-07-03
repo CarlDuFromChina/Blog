@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import recommendInfo from '../admin/recommendInfo/recommendInfoList';
-import idea from '../admin/idea/ideaCard';
+import recommendInfo from '../../admin/recommendInfo/recommendInfoList';
+import idea from '../../admin/idea/ideaCard';
 
 export default {
   name: 'home',
