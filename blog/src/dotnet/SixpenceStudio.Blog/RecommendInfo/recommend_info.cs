@@ -195,5 +195,23 @@ namespace SixpenceStudio.Blog.RecommendInfo
             }
         }
 
+        /// <summary>
+        /// 阅读次数
+        /// </summary>
+        private int? _reading_times;
+        [DataMember]
+        public int? reading_times
+        {
+            get
+            {
+                return this._reading_times;
+            }
+            set
+            {
+                this._reading_times = value;
+                SetAttributeValue("reading_times", value);
+            }
+        }
+
     }
 }

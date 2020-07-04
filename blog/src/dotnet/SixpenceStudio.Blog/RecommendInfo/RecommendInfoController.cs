@@ -20,15 +20,19 @@ namespace SixpenceStudio.Blog.RecommendInfo
         }
 
         [HttpGet, AllowAnonymous]
-        public override IList<recommend_info> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
+        public IList<recommend_info> GetRecommendList()
         {
-            return base.GetDataList(searchList, orderBy, viewId, searchValue);
+            return new RecommendInfoService().GetRecommendList();
         }
 
+        /// <summary>
+        /// 记录阅读次数
+        /// </summary>
+        /// <param name="blogId"></param>
         [HttpGet, AllowAnonymous]
-        public override DataModel<recommend_info> GetDataList(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
+        public void RecordReadingTimes(string id)
         {
-            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+            new RecommendInfoService().RecordReadingTimes(id);
         }
     }
 }

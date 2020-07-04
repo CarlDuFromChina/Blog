@@ -19,7 +19,7 @@
       <!-- 推荐 -->
       <!-- 推荐博客 -->
       <sp-section title="推荐博客">
-        <recommend-info minHeight="300px" type="readonly" :pageSize="5"></recommend-info>
+        <recommand-list></recommand-list>
       </sp-section>
       <!-- 推荐博客 -->
       <!-- 想法 -->
@@ -32,12 +32,12 @@
 </template>
 
 <script>
-import recommendInfo from '../../admin/recommendInfo/recommendInfoList';
+import recommandList from './recommandList';
 import idea from './idea';
 
 export default {
   name: 'home',
-  components: { recommendInfo, idea },
+  components: { recommandList, idea },
   data() {
     return {
       loading: 'false',
