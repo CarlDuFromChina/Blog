@@ -10,11 +10,7 @@
     <el-aside width="30%" style="padding-left:40px;overflow:hidden">
       <!-- 推荐 -->
       <sp-section title="推荐书籍">
-        <el-carousel height="300px">
-          <el-carousel-item v-for="(item, index) in recommendPic" :key="index">
-            <el-image :src="item.src"></el-image>
-          </el-carousel-item>
-        </el-carousel>
+        <recommand-pictures></recommand-pictures>
       </sp-section>
       <!-- 推荐 -->
       <!-- 推荐博客 -->
@@ -33,15 +29,15 @@
 
 <script>
 import recommandList from './recommandList';
+import recommandPictures from './recommandPictures';
 import idea from './idea';
 
 export default {
   name: 'home',
-  components: { recommandList, idea },
+  components: { recommandList, recommandPictures, idea },
   data() {
     return {
       loading: 'false',
-      recommendPic: [],
       blog: {
         pageSize: 20,
         pageIndex: 1,
@@ -52,27 +48,12 @@ export default {
       }
     };
   },
-  created() {
-    this.getRecommendPictures().then(resp => {
-      this.recommendPic = resp.DataList.map(item => ({ src: item.url }));
-    });
-  },
   methods: {
     loadMore() {
       if (this.blog.allowLoad()) {
         this.blog.pageSize += 10;
         this.$refs.blog.loadData();
       }
-    },
-    // 获取推荐图片
-    getRecommendPictures() {
-      const searchList = [
-        {
-          Name: 'recommend_type',
-          Value: 'picture'
-        }
-      ];
-      return sp.get(`api/recommendInfo/GetDataList?orderBy=createdon&pageSize=10&pageIndex=1&searchList=${JSON.stringify(searchList)}`);
     },
     fetchData() {
       return sp

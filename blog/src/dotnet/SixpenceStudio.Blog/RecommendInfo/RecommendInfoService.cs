@@ -27,7 +27,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// 获取推荐信息
         /// </summary>
         /// <returns></returns>
-        public IList<recommend_info> GetRecommendList()
+        public IList<recommend_info> GetRecommendList(string type = "url")
         {
             var sql = $@"
 SELECT
@@ -35,12 +35,13 @@ SELECT
 FROM
 	recommend_info 
 WHERE
-	recommend_type = 'url' 
+	recommend_type = @type 
 ORDER BY
 	createdon DESC 
 	LIMIT 5
 ";
-            var data = _cmd.broker.RetrieveMultiple<recommend_info>(sql);
+            var paramList = new Dictionary<string, object>() { { "@type", type } };
+            var data = _cmd.broker.RetrieveMultiple<recommend_info>(sql, paramList);
             return data;
         }
 

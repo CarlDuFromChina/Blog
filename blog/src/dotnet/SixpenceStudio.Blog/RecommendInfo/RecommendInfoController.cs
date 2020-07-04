@@ -20,9 +20,9 @@ namespace SixpenceStudio.Blog.RecommendInfo
         }
 
         [HttpGet, AllowAnonymous]
-        public IList<recommend_info> GetRecommendList()
+        public IList<recommend_info> GetRecommendList(string type = "url")
         {
-            return new RecommendInfoService().GetRecommendList();
+            return new RecommendInfoService().GetRecommendList(type);
         }
 
         /// <summary>
