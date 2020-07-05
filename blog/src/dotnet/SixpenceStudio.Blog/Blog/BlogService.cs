@@ -70,39 +70,6 @@ WHERE 1=1
         }
 
         /// <summary>
-        /// 更新博客封面图片
-        /// </summary>
-        /// <param name="objectId"></param>
-        /// <param name="fileId"></param>
-        public void UpdateSurface(string objectId, string fileId)
-        {
-            var sql = @"
-UPDATE sys_file SET objectid = @objectid WHERE sys_fileid = @id
-";
-            _cmd.broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@objectid", objectId }, { "@id", fileId } });
-        }
-
-        public override string CreateData(blog t)
-        {
-            var id = "";
-            _cmd.broker.ExecuteTransaction(() =>
-            {
-                UpdateSurface(t.Id, t.imageId);
-                id = base.CreateData(t);
-            });
-            return id;
-        }
-
-        public override void UpdateData(blog t)
-        {
-            _cmd.broker.ExecuteTransaction(() =>
-            {
-                UpdateSurface(t.Id, t.imageId);
-                base.UpdateData(t);
-            });
-        }
-
-        /// <summary>
         /// 删除博客封面
         /// </summary>
         /// <param name="id"></param>

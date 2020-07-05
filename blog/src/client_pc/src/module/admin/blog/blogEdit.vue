@@ -137,6 +137,10 @@ export default {
           return soure.slice(0, start) + newStr + soure.slice(start);
         };
         this.data.content = insertStr(str, index, nStr);
+        if (sp.isNull(this.data.images) || this.data.images.length === 0) {
+          this.data.images = [];
+        }
+        this.data.images.push(resp.id);
       });
     },
     // 所有操作都会被解析重新渲染
