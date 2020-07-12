@@ -1,6 +1,6 @@
 import App from './App';
 import moduleRouter from './module';
-import admin from './module/admin';
+import { myAdmin, adminRouter } from './module/admin';
 import platform from 'sixpence.platform.pc.vue';
 import components from './components';
 import './assets/icons';
@@ -35,7 +35,8 @@ let routes = platform.router.options.routes;
 routes = routes.concat(moduleRouter);
 routes.forEach(item => {
   if (item.name === 'admin') {
-    item.children = item.children.concat(admin);
+    item.component = myAdmin;
+    item.children = item.children.concat(adminRouter);
   }
 });
 const router = new VueRouter({

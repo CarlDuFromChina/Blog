@@ -1,5 +1,6 @@
 import recommendInfo from './recommendInfo';
 import idea from './idea';
+import myAdmin from './myAdmin';
 
 const blog = [{
   path: '/admin/blog/:type',
@@ -7,4 +8,5 @@ const blog = [{
   component: () => import('./blog/blogList')
 }];
 
-export default [].concat(blog, recommendInfo, idea);
+const adminRouter = [].concat(blog, recommendInfo, idea);
+export { myAdmin, adminRouter };
