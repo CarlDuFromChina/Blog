@@ -6,26 +6,44 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.idea
+namespace SixpenceStudio.Blog.Draft
 {
-    [EntityName("idea")]
-    public partial class idea : BaseEntity
+    [EntityName("draft")]
+    public partial class draft : BaseEntity
     {
         /// <summary>
         /// 主键
         /// </summary>
-        private string _ideaid;
+        private string _draftid;
         [DataMember]
-        public string ideaId
+        public string draftId
         {
             get
             {
-                return this._ideaid;
+                return this._draftid;
             }
             set
             {
-                this._ideaid = value;
-                SetAttributeValue("ideaId", value);
+                this._draftid = value;
+                SetAttributeValue("draftId", value);
+            }
+        }
+
+        /// <summary>
+        /// 博客id
+        /// </summary>
+        private string _blogid;
+        [DataMember]
+        public string blogId
+        {
+            get
+            {
+                return this._blogid;
+            }
+            set
+            {
+                this._blogid = value;
+                SetAttributeValue("blogId", value);
             }
         }
 
@@ -44,6 +62,24 @@ namespace SixpenceStudio.Blog.idea
             {
                 this._content = value;
                 SetAttributeValue("content", value);
+            }
+        }
+
+        /// <summary>
+        /// 标题
+        /// </summary>
+        private string _title;
+        [DataMember]
+        public string title
+        {
+            get
+            {
+                return this._title;
+            }
+            set
+            {
+                this._title = value;
+                SetAttributeValue("title", value);
             }
         }
 

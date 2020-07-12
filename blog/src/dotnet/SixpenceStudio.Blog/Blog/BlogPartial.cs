@@ -14,8 +14,5 @@ namespace SixpenceStudio.Blog.Blog
 
         [DataMember]
         public string imageSrc { get; set; }
-
-        [DataMember]
-        public IList<string> images { get; set; }
     }
 }

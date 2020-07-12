@@ -1,8 +1,9 @@
 <template>
   <sp-markdown-edit :imgAdd="imgAdd" v-model="data.content" @change="change" ref="md">
     <div class="blog-header" slot="header">
-      <el-button icon="el-icon-back" @click="$router.back()">返回</el-button>
+      <el-button icon="el-icon-back" @click="goBack">返回</el-button>
       <el-button icon="el-icon-check" type="primary" @click="submit">提交</el-button>
+      <el-button icon="el-icon-refresh" type="info" v-show="showAutoSave" disabled>{{ seconds || 0 }}秒后备份</el-button>
     </div>
     <el-dialog title="发布文章" :visible.sync="editVisible" slot="dialog">
       <el-form ref="form" :model="data" label-width="50px">
@@ -31,14 +32,14 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="图片">
+            <el-form-item label="封页">
               <el-upload
                 :action="baseUrl"
                 :limit="1"
                 ref="files"
-                :http-request="uploadImage"
+                :http-request="uploadSurface"
                 :file-list="fileList"
-                :on-remove="removeImage"
+                :on-remove="removeSurface"
                 list-type="picture"
               >
                 <el-button size="small" type="primary">点击上传</el-button>
@@ -58,10 +59,11 @@
 
 <script>
 import { edit } from 'sixpence.platform.pc.vue';
+import draft from './draft';
 
 export default {
   name: 'blogEdit',
-  mixins: [edit],
+  mixins: [edit, draft],
   data() {
     return {
       html: '',
@@ -75,10 +77,12 @@ export default {
     };
   },
   created() {
+    // 编辑博客
     if (this.$route.params.id) {
       this.Id = this.$route.params.id;
       this.loadData();
     }
+    // 获取博客类型选项集
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
       this.blogType = resp;
       if (this.$route.params.blogType) {
@@ -86,10 +90,12 @@ export default {
         this.handleTypeChange(this.data.blog_type);
       }
     });
+    // 获取token和url
     this.baseUrl = window.localStorage.getItem('baseUrl');
     this.token = window.localStorage.getItem('Token');
   },
   computed: {
+    // 请求头
     headers() {
       return {
         Authorization: 'BasicAuth ' + this.token
@@ -108,14 +114,17 @@ export default {
           }
         ];
       }
+      this.openWatch();
     },
-    uploadImage(param) {
+    // 上传封页
+    uploadSurface(param) {
       const url = '/api/DataService/UploadImage?fileType=blog_surface';
       const formData = new FormData();
       formData.append('file', param.file);
       sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp.id));
     },
-    removeImage() {
+    // 移除封页
+    removeSurface() {
       if (sp.isNullOrEmpty(this.data.imageId)) {
         return Promise.resolve(true);
       }
@@ -125,7 +134,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/DataService/UploadImage?fileType=blog_content&objectId=' + this.Id;
+      const url = '/api/DataService/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId);
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -137,10 +146,6 @@ export default {
           return soure.slice(0, start) + newStr + soure.slice(start);
         };
         this.data.content = insertStr(str, index, nStr);
-        if (sp.isNull(this.data.images) || this.data.images.length === 0) {
-          this.data.images = [];
-        }
-        this.data.images.push(resp.id);
       });
     },
     // 所有操作都会被解析重新渲染
@@ -157,15 +162,27 @@ export default {
     submit() {
       this.editVisible = true;
     },
+    // 保存博客
     save() {
       this.editVisible = false;
-      this.data.Id = sp.isNullOrEmpty(this.data.Id) ? sp.newUUID() : this.data.Id;
+      this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
       sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
         .then(() => {
           this.$message.success('发布成功！');
           this.$router.back();
         })
         .catch(error => this.$message.error(error));
+    },
+    // 返回上页
+    goBack() {
+      if (this.preBack && typeof this.preBack === 'function') {
+        this.preBack(
+          () => this.$router.back(),
+          () => this.saveData()
+        );
+      } else {
+        this.$router.back();
+      }
     }
   }
 };

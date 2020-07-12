@@ -8,13 +8,9 @@ using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.RecommendInfo
 {
+    [EntityName("recommend_info")]
     public class recommend_info : BaseEntity
     {
-        public recommend_info()
-        {
-            this.EntityName = "recommend_info";
-        }
-
         /// <summary>
         /// 实体id
         /// </summary>

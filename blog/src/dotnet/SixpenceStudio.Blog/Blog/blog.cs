@@ -4,15 +4,9 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.Blog
 {
+    [EntityName("blog")]
     public partial class blog : BaseEntity
     {
-        #region 构造函数
-        public blog()
-        {
-            this.EntityName = "blog";
-        }
-        #endregion
-
         /// <summary>
         /// 实体id
         /// </summary>

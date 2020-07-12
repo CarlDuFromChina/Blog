@@ -56,6 +56,5 @@ UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE r
 ";
             _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }
-
     }
 }
