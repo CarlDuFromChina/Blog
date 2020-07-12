@@ -22,7 +22,7 @@ export default {
     };
   },
   created() {
-    sp.get('api/Draft/GetDataList').then(resp => {
+    sp.get('api/Draft/GetDrafts').then(resp => {
       this.drafts = resp.map((item, index) => ({
         title: `草稿${index + 1}`,
         id: item.blogId,

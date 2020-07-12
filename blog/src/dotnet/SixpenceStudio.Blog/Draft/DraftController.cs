@@ -25,9 +25,9 @@ namespace SixpenceStudio.Blog.Draft
         /// 获取博客草稿（新建）
         /// </summary>
         /// <returns></returns>
-        public IList<draft> GetDataList()
+        public IList<draft> GetDrafts()
         {
-            return new DraftService().GetDataList();
+            return new DraftService().GetDrafts();
         }
     }
 }

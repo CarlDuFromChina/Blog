@@ -24,7 +24,7 @@ namespace SixpenceStudio.Blog.Draft
         }
         #endregion
 
-        public IList<draft> GetDataList()
+        public IList<draft> GetDrafts()
         {
             var sql = @"
 SELECT * FROM draft
