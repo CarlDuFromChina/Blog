@@ -1,5 +1,5 @@
 import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
+import 'highlight.js/styles/monokai-sublime.css';
 import javascript from 'highlight.js/lib/languages/javascript';
 import java from 'highlight.js/lib/languages/java';
 import css from 'highlight.js/lib/languages/css';
@@ -7,7 +7,7 @@ import less from 'highlight.js/lib/languages/less';
 import go from 'highlight.js/lib/languages/go';
 import php from 'highlight.js/lib/languages/php';
 import python from 'highlight.js/lib/languages/python';
-import ruby from 'highlight.js/lib/languages/ruby';
+import csharp from 'highlight.js/lib/languages/csharp';
 import stylus from 'highlight.js/lib/languages/stylus';
 import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
@@ -20,7 +20,7 @@ const languages = {
   go,
   php,
   python,
-  ruby,
+  csharp,
   stylus,
   typescript,
   xml
