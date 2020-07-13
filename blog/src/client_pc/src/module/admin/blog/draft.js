@@ -69,7 +69,7 @@ export default {
             .catch(() => {
               this.$message({
                 type: 'info',
-                message: '已取消删除'
+                message: '已取消恢复'
               });
             });
         } else {
@@ -87,8 +87,13 @@ export default {
       this.draft.images = this.data.images;
       sp.post('api/Draft/CreateOrUpdateData', this.draft).then(() => {
         this.$message('草稿保存成功');
-        this.seconds = 60;
-      });
+      })
+        .catch(() => {
+          this.$message.error('草稿保存失败！');
+        })
+        .finally(() => {
+          this.seconds = 60;
+        });
     },
     /**
      * 监听页面是否修改
