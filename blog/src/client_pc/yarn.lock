@@ -4622,7 +4622,7 @@ math-expression-evaluator@^1.2.14:
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.22.tgz#c14dcb3d8b4d150e5dcea9c68c8dad80309b0d5e"
   integrity sha512-L0j0tFVZBQQLeEjmWOvDLoRciIY8gQGWahvkztXUal8jH8R5Rlqo9GCvgqvXcy9LQhEWdQCVvzqAbxgYNt4blQ==
 
-mavon-editor@^2.7.7:
+mavon-editor@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/mavon-editor/-/mavon-editor-2.9.0.tgz#e51bbcdcde18b9236333a9ceb12fed2d84542900"
   integrity sha512-eGEppkQwGg4Z9UOtCLwL5rcg1CQRw8HyaA8sWJeRJTjNJ4HwBMX6BH5XVnQeumUUVFqHr6cm7GjWgVkIxiSm+Q==

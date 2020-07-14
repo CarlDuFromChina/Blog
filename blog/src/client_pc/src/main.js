@@ -3,6 +3,7 @@ import moduleRouter from './module';
 import { myAdmin, adminRouter } from './module/admin';
 import platform from 'sixpence.platform.pc.vue';
 import components from './components';
+import 'mavon-editor/dist/css/index.css';
 import './assets/icons';
 import './style/index.less';
 import './directives';
