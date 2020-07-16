@@ -1,30 +1,25 @@
 <template>
-  <el-container>
+  <a-layout>
     <!-- 博客 -->
-    <el-aside width="60%">
+    <a-layout-sider width="60%" theme="light">
       <h3>最新博客</h3>
-      <el-divider></el-divider>
-      <sp-blog-card ref="blog" :fetch="fetchData" readonly newTag v-infinite-scroll="loadMore"></sp-blog-card>
-    </el-aside>
+      <!-- <sp-blog-card ref="blog" :fetch="fetchData" readonly newTag v-infinite-scroll="loadMore"></sp-blog-card> -->
+    </a-layout-sider>
     <!-- 博客 -->
-    <el-aside width="30%" style="padding-left:40px;overflow:hidden">
+    <a-layout-sider width="30%" style="overflow:hidden" theme="light">
       <!-- 推荐 -->
-      <sp-section title="推荐书籍">
-        <recommand-pictures></recommand-pictures>
-      </sp-section>
+      <recommand-pictures></recommand-pictures>
       <!-- 推荐 -->
+
       <!-- 推荐博客 -->
-      <sp-section title="推荐博客">
-        <recommand-list></recommand-list>
-      </sp-section>
+      <recommand-list></recommand-list>
       <!-- 推荐博客 -->
+
       <!-- 想法 -->
-      <sp-section title="想法">
-        <idea :pageSize="5"></idea>
-      </sp-section>
+      <idea :pageSize="5"></idea>
       <!-- 想法 -->
-    </el-aside>
-  </el-container>
+    </a-layout-sider>
+  </a-layout>
 </template>
 
 <script>
@@ -67,3 +62,9 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+/deep/ .ant-layout-sider-light {
+  background: #edeef2;
+}
+</style>

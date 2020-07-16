@@ -1,16 +1,18 @@
 <template>
-  <div class="infinite-list">
-    <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
-      <div class="profile">
-        <div class="avatar"></div>
-        <div class="user-info">
-          <span>{{ item.createdByName }}</span>
-          <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
+  <sp-section title="想法" :loading="loading">
+    <div class="infinite-list">
+      <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
+        <div class="profile">
+          <div class="avatar"></div>
+          <div class="user-info">
+            <span>{{ item.createdByName }}</span>
+            <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
+          </div>
         </div>
+        <div class="content">{{ item.content }}</div>
       </div>
-      <div class="content">{{ item.content }}</div>
     </div>
-  </div>
+  </sp-section>
 </template>
 
 <script>
@@ -24,7 +26,8 @@ export default {
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
-      pageSize: 5
+      pageSize: 5,
+      loading: false
     };
   },
   created() {
@@ -32,19 +35,26 @@ export default {
   },
   methods: {
     loadData() {
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
       let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
-      try {
-        sp.get(url).then(resp => {
+      sp.get(url)
+        .then(resp => {
           if (resp && resp.DataList) {
             this.dataList = resp.DataList;
             this.total = resp.RecordCount;
           } else {
             this.dataList = resp;
           }
+        })
+        .catch(error => {
+          this.$message.error(error);
+        })
+        .finally(() => {
+          this.loading = false;
         });
-      } catch (error) {
-        this.$message.error(error);
-      }
     }
   }
 };

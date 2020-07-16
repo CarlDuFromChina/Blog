@@ -54,24 +54,23 @@ export default {
       sp.get(`api/Draft/GetDataByBlogId?id=${this.Id}`).then(resp => {
         if (!sp.isNull(resp)) {
           this.draft = resp;
-          this.$confirm('发现您尚未保存该博客，是否恢复上次备份内容?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
-            .then(() => {
+          this.$confirm({
+            title: '是否恢复?',
+            content: '发现您尚未保存该博客，是否恢复上次备份内容？',
+            onOk() {
               const { blogId, content, title } = resp;
               this.data.blogId = blogId;
               this.data.content = content;
               this.data.title = title;
               sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
-            })
-            .catch(() => {
+            },
+            onCancel() {
               this.$message({
                 type: 'info',
                 message: '已取消恢复'
               });
-            });
+            }
+          });
         } else {
           this.draft.draftId = sp.newUUID();
           this.draft.blogId = this.Id;
@@ -125,23 +124,16 @@ export default {
         giveup();
         return;
       }
-      this.$confirm('检测到未保存的内容，是否在离开页面前保存修改？', '确认信息', {
-        distinguishCancelAndClose: true,
-        confirmButtonText: '保存',
-        cancelButtonText: '放弃修改'
-      })
-        .then(() => {
+      this.$confirm({
+        title: '是否保存修改?',
+        content: '检测到未保存的内容，是否在离开页面前保存修改？',
+        onOk() {
           save();
-        })
-        .catch(action => {
-          this.$message({
-            type: 'info',
-            message: action === 'cancel'
-              ? '放弃保存并离开页面'
-              : '停留在当前页面'
-          });
+        },
+        onCancel() {
           giveup();
-        });
+        }
+      });
     }
   }
 };

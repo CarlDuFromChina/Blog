@@ -1,68 +1,72 @@
 <template>
-  <sp-markdown-edit :imgAdd="imgAdd" v-model="data.content" @change="change" ref="md">
-    <div class="blog-header" slot="header">
-      <el-button icon="el-icon-back" @click="goBack">返回</el-button>
-      <el-button icon="el-icon-check" type="primary" @click="submit">提交</el-button>
-      <el-button icon="el-icon-refresh" type="info" v-show="showAutoSave" disabled>{{ seconds || 0 }}秒后备份</el-button>
+  <div class="blog blog__edit">
+    <div class="blog-header">
+      <a-button icon="rollback" @click="goBack">返回</a-button>
+      <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
+      <a-button icon="redo" type="info" v-show="showAutoSave" disabled>{{ seconds || 0 }}秒后备份</a-button>
     </div>
-    <el-dialog title="发布文章" :visible.sync="editVisible" slot="dialog">
-      <el-form ref="form" :model="data" label-width="50px">
-        <el-row>
-          <el-col>
-            <el-form-item label="标题">
-              <el-input type="text" v-model="data.title"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item label="分类">
-              <el-select v-model="data.blog_type" @change="handleTypeChange">
-                <el-option :label="item.Name" :value="item.Value" v-for="(item, index) in blogType" :key="index"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item label="标签">
-              <el-tag type="success">标签二</el-tag>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item label="封页">
-              <el-upload
+    <div class="blog-body">
+      <div class="blog-bodywrapper">
+        <div class="blog-bodywrapper-markdown">
+          <div class="blog-bodywrapper-markdown-container">
+            <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <a-modal title="发布文章" v-model="editVisible" @ok="editVisible = false">
+      <a-form-model ref="form" :model="data">
+        <a-row>
+          <a-col>
+            <a-form-model-item label="标题">
+              <a-input v-model="data.title"></a-input>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
+            <a-form-model-item label="分类">
+              <a-select v-model="data.blog_type" @change="handleTypeChange" labelInValue>
+                <a-select-option :value="item.Value" v-for="(item, index) in blogType" :key="index">{{ item.Name }}</a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
+            <a-form-model-item label="封面">
+              <a-upload
                 :action="baseUrl"
-                :limit="1"
                 ref="files"
-                :http-request="uploadSurface"
-                :file-list="fileList"
-                :on-remove="removeSurface"
+                :customRequest="uploadSurface"
+                :default-file-list="fileList"
+                :beforeUpload="beforeUpload"
+                :remove="removeSurface"
                 list-type="picture"
               >
-                <el-button size="small" type="primary">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-              </el-upload>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+                <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
+              </a-upload>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </a-form-model>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <a-button @click="editVisible = false">取 消</a-button>
+        <a-button type="primary" @click="save">确 定</a-button>
       </span>
-    </el-dialog>
-  </sp-markdown-edit>
+    </a-modal>
+  </div>
 </template>
 
 <script>
+import { mavonEditor } from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 import { edit } from 'sixpence.platform.pc.vue';
 import draft from './draft';
 
 export default {
   name: 'blogEdit',
+  components: { mavonEditor },
   mixins: [edit, draft],
   data() {
     return {
@@ -123,6 +127,11 @@ export default {
       formData.append('file', param.file);
       sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp.id));
     },
+    beforeUpload(file, fileList) {
+      if (fileList && fileList.length > 0) {
+        this.removeSurface();
+      }
+    },
     // 移除封页
     removeSurface() {
       if (sp.isNullOrEmpty(this.data.imageId)) {
@@ -158,10 +167,6 @@ export default {
         this.data.blog_typeName = arrs[0].Name;
       }
     },
-    // 提交
-    submit() {
-      this.editVisible = true;
-    },
     // 保存博客
     save() {
       this.editVisible = false;
@@ -187,3 +192,9 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+/deep/ .v-note-wrapper {
+  z-index: 100;
+}
+</style>

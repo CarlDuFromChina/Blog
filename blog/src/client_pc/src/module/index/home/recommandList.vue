@@ -1,15 +1,17 @@
 <template>
-  <el-card class="recommand">
-    <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
-      <div class="entry-title">{{ item.name }}</div>
-      <div class="entry-box">
-        <div class="entry-meta">
-          <sp-icon name="sp-blog-view" :size="15"></sp-icon>
-          <span>{{ item.reading_times || 0 }}</span>
+  <sp-section title="推荐博客" :loading="loading">
+    <el-card class="recommand">
+      <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
+        <div class="entry-title">{{ item.name }}</div>
+        <div class="entry-box">
+          <div class="entry-meta">
+            <sp-icon name="sp-blog-view" :size="15"></sp-icon>
+            <span>{{ item.reading_times || 0 }}</span>
+          </div>
         </div>
-      </div>
-    </a>
-  </el-card>
+      </a>
+    </el-card>
+  </sp-section>
 </template>
 
 <script>

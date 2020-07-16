@@ -1,27 +1,27 @@
 <template>
   <div id="blog" class="blog blog__readonly" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
     <div class="blog-header">
-      <el-button type="primary" icon="el-icon-back" @click="$router.back()">返回</el-button>
+      <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
     </div>
     <div class="blog-body" style="background-color:#e9ecef">
       <div class="bodyWrapper">
-        <el-container>
-          <el-aside width="70%">
-            <el-card>
+        <a-layout>
+          <a-layout-sider width="70%" theme="light">
+            <a-card>
               <div class="bodyWrapper-title">{{ data.title }}</div>
               <div class="bodyWrapper-content">
                 <div v-highlight v-html="formatterContent"></div>
               </div>
-            </el-card>
-          </el-aside>
-          <el-aside width="30%" style="margin-left:20px">
-            <el-card class="block">
+            </a-card>
+          </a-layout-sider>
+          <a-layout-sider width="30%" style="margin-left:20px" theme="light">
+            <a-card class="block">
               <div class="block-title">
                 关于作者
               </div>
               <div class="block-body">
                 <a style="display:flex;">
-                  <el-avatar :src="imageUrl" style="margin-right:10px;"></el-avatar>
+                  <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
                   <div>
                     <a>{{ user.name }}</a>
                     <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ user.introduction }}</div>
@@ -38,10 +38,10 @@
                   <span>{{ data.reading_times || 0 }}</span>
                 </div>
               </div>
-            </el-card>
+            </a-card>
             <div id="content" class="block"></div>
-          </el-aside>
-        </el-container>
+          </a-layout-sider>
+        </a-layout>
       </div>
     </div>
   </div>
@@ -192,7 +192,7 @@ export default {
 <style lang="less" scoped>
 .block {
   width: 300px;
-  /deep/ .el-card__body {
+  /deep/ .ant-card-body {
     padding: 0px;
   }
   .block-title {
@@ -229,5 +229,9 @@ export default {
   a:hover {
     color: #007fff;
   }
+}
+
+/deep/ .ant-layout-sider-light {
+  background: #e9ecef;
 }
 </style>

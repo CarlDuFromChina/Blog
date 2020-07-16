@@ -21,6 +21,8 @@ const install = _Vue => {
   });
 };
 
+const antd = require('antd');
+Vue.use(antd);
 Vue.use(install);
 Vue.use(platform.install);
 Vue.use(Vuex);

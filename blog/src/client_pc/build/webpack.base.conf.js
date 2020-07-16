@@ -31,7 +31,8 @@ module.exports = {
     'moment': 'moment',
     'axios': 'axios',
     'element-ui': 'ELEMENT',
-    'marked': 'marked'
+    'marked': 'marked',
+    'antd': 'antd'
   },
   output: {
     path: config.build.assetsRoot,

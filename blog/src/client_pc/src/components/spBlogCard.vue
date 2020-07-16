@@ -1,34 +1,25 @@
 <template>
-  <el-row>
-    <el-col :span="5" v-for="item in data" :key="item.Id" style="min-width:390px;margin:10px">
-      <el-card class="blogCard" shadow="hover" @click.native.stop="goReadonly(item)">
-        <div class="blogCard-badge" v-if="newTag && isNewBlog(item)">New</div>
-        <div style="display:inline-block;">
-          <strong
-            ><div class="blogCard-title">{{ item.title }}</div></strong
-          >
-          <p>
-            <span class="creator">{{ item.createdByName }}</span>
-          </p>
-          <p>
-            <span class="date">{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
-          </p>
-          <div class="clearfix" v-if="!readonly">
-            <el-button @click.stop="deleteData(item)" type="text" size="small" class="button">删除</el-button>
-            <el-button @click.stop="goEdit(item)" type="text" size="small" class="button">编辑</el-button>
-          </div>
-        </div>
-        <div style="display: inline-block; float : right;">
-          <img :src="`${baseUrl}/${item.imageSrc}`" class="image" />
-        </div>
-      </el-card>
-    </el-col>
-    <el-col :span="5" style="min-width:390px;margin:10px;" v-if="!readonly">
-      <el-card class="blogCard" style="text-align:center">
-        <el-button icon="el-icon-plus" circle style="font-size:50px;margin-top:30px" @click="createData"></el-button>
-      </el-card>
-    </el-col>
-  </el-row>
+  <a-row type="flex">
+    <a-col :span="6" v-for="item in data" :key="item.Id">
+      <!-- :src="`${baseUrl}/${item.imageSrc}`" -->
+      <a-card hoverable style="width: 100%;" @click.native.stop="goReadonly(item)">
+        <img slot="cover" alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+        <template slot="actions" class="ant-card-actions">
+          <a-icon key="delete" type="delete" @click.native.stop="deleteData(item)" />
+          <a-icon key="edit" type="edit" @click.native.stop="goEdit(item)" />
+          <a-icon key="eye" type="eye" @click.native.stop="goReadonly(item)" />
+        </template>
+        <a-card-meta :title="item.title" :description="`${item.createdByName} ${$moment(item.modifiedOn).format('YYYY-MM-DD HH:MM')}`">
+          <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+        </a-card-meta>
+      </a-card>
+    </a-col>
+    <a-col :span="6" style="100%" v-if="!readonly">
+      <a-card style="text-align:center">
+        <a-button type="primary" shape="circle" icon="plus" @click="createData" />
+      </a-card>
+    </a-col>
+  </a-row>
 </template>
 
 <script>
@@ -134,5 +125,8 @@ export default {
 <style lang="less" scoped>
 /deep/.el-card.is-hover-shadow:hover {
   box-shadow: 0 2px 12px 0 #6750d7;
+}
+.ant-col.ant-col-6 {
+  padding: 5px;
 }
 </style>
