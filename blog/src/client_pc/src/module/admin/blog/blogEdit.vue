@@ -181,10 +181,7 @@ export default {
     // 返回上页
     goBack() {
       if (this.preBack && typeof this.preBack === 'function') {
-        this.preBack(
-          () => this.$router.back(),
-          () => this.saveData()
-        );
+        this.preBack(() => this.saveData());
       } else {
         this.$router.back();
       }

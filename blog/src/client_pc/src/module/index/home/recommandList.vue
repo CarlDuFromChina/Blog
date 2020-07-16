@@ -1,6 +1,6 @@
 <template>
   <sp-section title="推荐博客" :loading="loading">
-    <el-card class="recommand" v-if="data && data.length > 0">
+    <a-card class="recommand" v-if="data && data.length > 0">
       <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
         <div class="entry-title">{{ item.name }}</div>
         <div class="entry-box">
@@ -10,7 +10,7 @@
           </div>
         </div>
       </a>
-    </el-card>
+    </a-card>
     <a-empty v-else />
   </sp-section>
 </template>
@@ -60,7 +60,7 @@ export default {
 
 <style lang="less" scoped>
 .recommand {
-  /deep/ .el-card__body {
+  /deep/ .ant-card-body {
     padding: 0px;
   }
   .item {

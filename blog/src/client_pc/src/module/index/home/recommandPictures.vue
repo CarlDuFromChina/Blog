@@ -1,10 +1,14 @@
 <template>
   <sp-section title="推荐书籍" :loading="loading">
-    <el-carousel height="300px" v-if="data && data.length > 0">
-      <el-carousel-item v-for="(item, index) in data" :key="index">
-        <el-image :src="item.src"></el-image>
-      </el-carousel-item>
-    </el-carousel>
+    <a-carousel arrows v-if="data && data.length > 0">
+      <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+        <a-icon type="left-circle" />
+      </div>
+      <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
+        <a-icon type="right-circle" />
+      </div>
+      <div v-for="(item, index) in data" :key="index"><img :src="item.src" height="300" /></div>
+    </a-carousel>
     <a-empty v-else />
   </sp-section>
 </template>
@@ -41,3 +45,20 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+.custom-slick-arrow {
+  width: 25px;
+  height: 25px;
+  font-size: 25px;
+  color: #fff;
+  background-color: rgba(31, 45, 61, 0.11);
+  opacity: 0.3;
+}
+.ant-carousel .custom-slick-arrow:before {
+  display: none;
+}
+.ant-carousel .custom-slick-arrow:hover {
+  opacity: 0.5;
+}
+</style>

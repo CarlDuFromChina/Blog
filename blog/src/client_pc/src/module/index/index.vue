@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-    <el-backtop :target="'.index'"></el-backtop>
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">

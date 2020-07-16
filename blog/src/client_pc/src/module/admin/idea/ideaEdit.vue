@@ -1,21 +1,21 @@
 <template>
-  <el-form ref="form" :model="data">
-    <el-row>
-      <el-col>
+  <a-model-form ref="form" :model="data">
+    <a-row>
+      <a-col>
         <h2 align="center">写下你的想法</h2>
-        <el-input type="textarea" maxlength="500" show-word-limit rows="10" v-model="data.content"></el-input>
-      </el-col>
-    </el-row>
+        <a-input type="textarea" maxlength="500" rows="10" v-model="data.content"></a-input>
+      </a-col>
+    </a-row>
     <p></p>
-    <el-row>
-      <el-col style="text-align:right">
+    <a-row>
+      <a-col style="text-align:right">
         <span class="dialog-footer">
-          <el-button @click="$emit('close')">取 消</el-button>
-          <el-button type="primary" @click="saveData">发 布</el-button>
+          <a-button @click="$emit('close')">取 消</a-button>
+          <a-button type="primary" @click="saveData">发 布</a-button>
         </span>
-      </el-col>
-    </el-row>
-  </el-form>
+      </a-col>
+    </a-row>
+  </a-model-form>
 </template>
 
 <script>
@@ -32,5 +32,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,45 +1,30 @@
 <template>
-  <el-form ref="form" :model="data" label-width="80px">
-    <el-row>
-      <el-col :span="12">
-        <el-form-item label="标题">
-          <el-input v-model="data.name"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="12">
-        <el-form-item label="分类">
-          <el-select v-model="data.recommend_type" @change="handleTypeChange">
-            <el-option :label="item.Name" :value="item.Value" v-for="(item, index) in recommentType" :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="12">
-        <el-form-item label="链接">
-          <el-input v-model="data.url"></el-input>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col>
-        <el-form-item label="图片">
-          <el-upload class="upload-demo" ref="upload" action="" list-type="picture" :file-list="fileList" :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col style="text-align:right">
-        <span class="dialog-footer">
-          <el-button @click="$emit('close')">取 消</el-button>
-          <el-button type="primary" @click="saveData">确 定</el-button>
-        </span>
-      </el-col>
-    </el-row>
-  </el-form>
+  <a-form-model ref="form" :layout="layout" :model="data">
+    <a-form-model-item label="标题">
+      <a-input v-model="data.name"></a-input>
+    </a-form-model-item>
+    <a-form-model-item label="分类">
+      <a-select v-model="data.recommend_type" @change="handleTypeChange" labelInValue>
+        <a-select-option :value="item.Value" v-for="(item, index) in recommentType" :key="index">{{ item.Name }}</a-select-option>
+      </a-select>
+    </a-form-model-item>
+    <a-form-model-item label="链接">
+      <a-input v-model="data.url"></a-input>
+    </a-form-model-item>
+    <a-form-model-item label="图片">
+      <a-upload class="upload-demo" ref="upload" action="" list-type="picture" :default-file-list="fileList">
+        <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
+      </a-upload>
+    </a-form-model-item>
+    <a-form-model-item :wrapper-col="{ span: 4, offset: 20 }">
+      <a-button type="primary" @click="saveData">
+        确 定
+      </a-button>
+      <a-button style="margin-left: 10px;" @click="$emit('close')">
+        取 消
+      </a-button>
+    </a-form-model-item>
+  </a-form-model>
 </template>
 
 <script>
@@ -54,7 +39,8 @@ export default {
       Id: '',
       data: {},
       recommentType: [],
-      fileList: []
+      fileList: [],
+      layout: 'horizontal'
     };
   },
   created() {

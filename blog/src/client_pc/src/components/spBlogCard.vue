@@ -76,13 +76,13 @@ export default {
       this.$confirm({
         title: '是否删除',
         content: '此操作将永久删除该博客, 是否继续?',
-        ok() {
+        onOk() {
           sp.post('api/Blog/DeleteData', [item.Id]).then(() => {
             this.$message.success('删除成功');
             this.loadData();
           });
         },
-        cancel() {
+        onCancel() {
           this.$message({
             type: 'info',
             message: '已取消删除'
