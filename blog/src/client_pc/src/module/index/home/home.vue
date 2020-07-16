@@ -3,10 +3,10 @@
     <!-- 博客 -->
     <a-layout-sider width="60%" theme="light">
       <h3>最新博客</h3>
-      <!-- <sp-blog-card ref="blog" :fetch="fetchData" readonly newTag v-infinite-scroll="loadMore"></sp-blog-card> -->
+      <blog-list></blog-list>
     </a-layout-sider>
     <!-- 博客 -->
-    <a-layout-sider width="30%" style="overflow:hidden" theme="light">
+    <a-layout-sider width="40%" style="overflow:hidden" theme="light">
       <!-- 推荐 -->
       <recommand-pictures></recommand-pictures>
       <!-- 推荐 -->
@@ -26,10 +26,11 @@
 import recommandList from './recommandList';
 import recommandPictures from './recommandPictures';
 import idea from './idea';
+import blogList from './blogList';
 
 export default {
   name: 'home',
-  components: { recommandList, recommandPictures, idea },
+  components: { recommandList, recommandPictures, idea, blogList },
   data() {
     return {
       loading: 'false',
@@ -49,15 +50,6 @@ export default {
         this.blog.pageSize += 10;
         this.$refs.blog.loadData();
       }
-    },
-    fetchData() {
-      return sp
-        .get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.blog.pageSize}&pageIndex=${this.blog.pageIndex}&searchList=`)
-        .then(resp => {
-          this.blog.totalRecords = resp.RecordCount;
-          return resp;
-        })
-        .catch(() => this.$message.error('加载出错了'));
     }
   }
 };

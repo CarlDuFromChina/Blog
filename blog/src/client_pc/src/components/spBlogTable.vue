@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     buttons() {
-      return [{ name: 'new', icon: 'el-icon-plus', operate: this.createData }];
+      return [{ name: 'new', icon: 'plus', operate: this.createData }];
     }
   },
   methods: {

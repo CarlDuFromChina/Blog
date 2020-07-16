@@ -1,10 +1,11 @@
 <template>
   <sp-section title="推荐书籍" :loading="loading">
-    <el-carousel height="300px">
+    <el-carousel height="300px" v-if="data && data.length > 0">
       <el-carousel-item v-for="(item, index) in data" :key="index">
         <el-image :src="item.src"></el-image>
       </el-carousel-item>
     </el-carousel>
+    <a-empty v-else />
   </sp-section>
 </template>
 

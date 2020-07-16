@@ -57,14 +57,14 @@ export default {
           this.$confirm({
             title: '是否恢复?',
             content: '发现您尚未保存该博客，是否恢复上次备份内容？',
-            onOk() {
+            ok() {
               const { blogId, content, title } = resp;
               this.data.blogId = blogId;
               this.data.content = content;
               this.data.title = title;
               sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
             },
-            onCancel() {
+            cancel() {
               this.$message({
                 type: 'info',
                 message: '已取消恢复'
@@ -127,10 +127,10 @@ export default {
       this.$confirm({
         title: '是否保存修改?',
         content: '检测到未保存的内容，是否在离开页面前保存修改？',
-        onOk() {
+        ok() {
           save();
         },
-        onCancel() {
+        cancel() {
           giveup();
         }
       });

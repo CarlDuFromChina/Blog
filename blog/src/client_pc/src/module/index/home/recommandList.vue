@@ -1,6 +1,6 @@
 <template>
   <sp-section title="推荐博客" :loading="loading">
-    <el-card class="recommand">
+    <el-card class="recommand" v-if="data && data.length > 0">
       <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
         <div class="entry-title">{{ item.name }}</div>
         <div class="entry-box">
@@ -11,6 +11,7 @@
         </div>
       </a>
     </el-card>
+    <a-empty v-else />
   </sp-section>
 </template>
 
