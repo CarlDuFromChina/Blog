@@ -1,13 +1,5 @@
 <template>
-  <admin ref="admin">
-    <el-dropdown @command="handleClick" class="header-dropdown" slot="custom-area">
-      <el-button @click="writeBlog" type="primary">写博客<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item :command="writeIdea">想法</el-dropdown-item>
-        <el-dropdown-item v-for="item in drafts" :command="item.click" :key="item.id">{{ item.title }}</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
-  </admin>
+  <admin ref="admin"> </admin>
 </template>
 
 <script>

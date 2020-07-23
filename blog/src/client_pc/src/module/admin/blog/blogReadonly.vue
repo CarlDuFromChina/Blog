@@ -1,50 +1,52 @@
 <template>
-  <div id="blog" class="blog blog__readonly" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading">
-    <div class="blog-header">
-      <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
-    </div>
-    <div class="blog-body" style="background-color:#e9ecef">
-      <div class="bodyWrapper">
-        <a-layout>
-          <a-layout-sider width="70%" theme="light">
-            <a-card>
-              <div class="bodyWrapper-title">{{ data.title }}</div>
-              <div class="bodyWrapper-content">
-                <div v-highlight v-html="formatterContent"></div>
-              </div>
-            </a-card>
-          </a-layout-sider>
-          <a-layout-sider width="30%" style="margin-left:20px" theme="light">
-            <a-card class="block">
-              <div class="block-title">
-                关于作者
-              </div>
-              <div class="block-body">
-                <a style="display:flex;">
-                  <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
-                  <div>
-                    <a>{{ user.name }}</a>
-                    <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ user.introduction }}</div>
+  <a-spin tip="Loading..." :spinning="loading">
+    <div id="blog" class="blog blog__readonly">
+      <div class="blog-header">
+        <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
+      </div>
+      <div class="blog-body" style="background-color:#e9ecef">
+        <div class="bodyWrapper">
+          <a-layout>
+            <a-layout-sider width="70%" theme="light">
+              <a-card>
+                <div class="bodyWrapper-title">{{ data.title }}</div>
+                <div class="bodyWrapper-content">
+                  <div v-highlight v-html="formatterContent"></div>
+                </div>
+              </a-card>
+            </a-layout-sider>
+            <a-layout-sider width="30%" style="margin-left:20px" theme="light">
+              <a-card class="block">
+                <div class="block-title">
+                  关于作者
+                </div>
+                <div class="block-body">
+                  <a style="display:flex;">
+                    <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
+                    <div>
+                      <a>{{ user.name }}</a>
+                      <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ user.introduction }}</div>
+                    </div>
+                  </a>
+                  <div class="block-content" style="padding-top:20px">
+                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px" @click="upvote"></sp-icon>
+                    <span>获得点赞</span>
+                    <span>{{ data.upvote_times || 0 }}</span>
                   </div>
-                </a>
-                <div class="block-content" style="padding-top:20px">
-                  <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px" @click="upvote"></sp-icon>
-                  <span>获得点赞</span>
-                  <span>{{ data.upvote_times || 0 }}</span>
+                  <div class="block-content">
+                    <sp-icon name="sp-blog-view" :size="30" style="padding-right:10px"></sp-icon>
+                    <span>文章被阅读</span>
+                    <span>{{ data.reading_times || 0 }}</span>
+                  </div>
                 </div>
-                <div class="block-content">
-                  <sp-icon name="sp-blog-view" :size="30" style="padding-right:10px"></sp-icon>
-                  <span>文章被阅读</span>
-                  <span>{{ data.reading_times || 0 }}</span>
-                </div>
-              </div>
-            </a-card>
-            <div id="content" class="block"></div>
-          </a-layout-sider>
-        </a-layout>
+              </a-card>
+              <div id="content" class="block"></div>
+            </a-layout-sider>
+          </a-layout>
+        </div>
       </div>
     </div>
-  </div>
+  </a-spin>
 </template>
 
 <script>

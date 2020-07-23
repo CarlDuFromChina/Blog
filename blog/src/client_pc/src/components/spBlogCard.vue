@@ -48,7 +48,7 @@ export default {
   },
   created() {
     this.baseUrl = localStorage.getItem('baseUrl');
-    // this.loadData();
+    this.loadData();
   },
   computed: {
     buttons() {
@@ -125,9 +125,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/.el-card.is-hover-shadow:hover {
-  box-shadow: 0 2px 12px 0 #6750d7;
-}
 /deep/.ant-col.ant-col-6 {
   padding: 5px;
 }

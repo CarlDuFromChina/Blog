@@ -1,12 +1,12 @@
 <template>
   <a-layout>
     <!-- 博客 -->
-    <a-layout-sider width="60%" theme="light">
+    <a-layout-sider width="70%" theme="light">
       <h3>最新博客</h3>
       <blog-list></blog-list>
     </a-layout-sider>
     <!-- 博客 -->
-    <a-layout-sider width="40%" style="overflow:hidden" theme="light">
+    <a-layout-sider width="30%" style="overflow:hidden" theme="light">
       <!-- 推荐 -->
       <recommand-pictures></recommand-pictures>
       <!-- 推荐 -->

@@ -43,12 +43,6 @@ export default {
           }
         },
         {
-          name: '归档',
-          click: () => {
-            this.$router.push({ name: 'archive' });
-          }
-        },
-        {
           name: '友人帐',
           click: () => {
             this.$router.push({ name: 'friends' });
