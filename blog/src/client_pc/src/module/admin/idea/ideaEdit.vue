@@ -6,15 +6,6 @@
         <a-input type="textarea" maxlength="500" rows="10" v-model="data.content"></a-input>
       </a-col>
     </a-row>
-    <p></p>
-    <a-row>
-      <a-col style="text-align:right">
-        <span class="dialog-footer">
-          <a-button @click="$emit('close')">取 消</a-button>
-          <a-button type="primary" @click="saveData">发 布</a-button>
-        </span>
-      </a-col>
-    </a-row>
   </a-model-form>
 </template>
 
