@@ -20,7 +20,9 @@ export default {
     } else if (this.pageState === 'create') {
       this.draft.blogId = sp.newUUID();
       this.draft.draftId = sp.newUUID();
-      this.openWatch(); // 打开监听
+      setTimeout(() => {
+        this.openWatch(); // 打开监听
+      }, 200);
     } else {
       this.getDraft(); // 获取草稿
     }

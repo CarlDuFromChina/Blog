@@ -1,5 +1,7 @@
 <template>
-  <admin ref="admin"> </admin>
+  <admin ref="admin">
+    <a-button type="primary" icon="edit" @click="writeBlog" style="margin-right:20px;">写博客</a-button>
+  </admin>
 </template>
 
 <script>

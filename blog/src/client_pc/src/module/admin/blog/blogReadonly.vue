@@ -1,26 +1,28 @@
 <template>
-  <a-spin tip="Loading..." :spinning="loading">
-    <div id="blog" class="blog blog__readonly">
-      <div class="blog-header">
-        <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
-      </div>
-      <div class="blog-body" style="background-color:#e9ecef">
-        <div class="bodyWrapper">
-          <a-layout>
-            <a-layout-sider width="70%" theme="light">
-              <a-card>
+  <div id="blog" class="blog blog__readonly">
+    <div class="blog-header">
+      <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
+    </div>
+    <div class="blog-body" style="background-color:#e9ecef">
+      <div class="bodyWrapper">
+        <a-layout>
+          <a-layout-sider width="70%" theme="light">
+            <a-card>
+              <a-skeleton :loading="loading">
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div class="bodyWrapper-content">
                   <div v-highlight v-html="formatterContent"></div>
                 </div>
-              </a-card>
-            </a-layout-sider>
-            <a-layout-sider width="30%" style="margin-left:20px" theme="light">
-              <a-card class="block">
-                <div class="block-title">
-                  关于作者
-                </div>
-                <div class="block-body">
+              </a-skeleton>
+            </a-card>
+          </a-layout-sider>
+          <a-layout-sider width="30%" style="margin-left:20px" theme="light">
+            <a-card class="block">
+              <div class="block-title">
+                关于作者
+              </div>
+              <div class="block-body">
+                <a-skeleton :loading="loading">
                   <a style="display:flex;">
                     <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
                     <div>
@@ -38,15 +40,15 @@
                     <span>文章被阅读</span>
                     <span>{{ data.reading_times || 0 }}</span>
                   </div>
-                </div>
-              </a-card>
-              <div id="content" class="block"></div>
-            </a-layout-sider>
-          </a-layout>
-        </div>
+                </a-skeleton>
+              </div>
+            </a-card>
+            <div id="content" class="block"></div>
+          </a-layout-sider>
+        </a-layout>
       </div>
     </div>
-  </a-spin>
+  </div>
 </template>
 
 <script>

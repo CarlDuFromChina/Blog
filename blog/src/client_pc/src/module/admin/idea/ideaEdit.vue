@@ -1,12 +1,12 @@
 <template>
-  <a-model-form ref="form" :model="data">
+  <a-form-model ref="form" :model="data">
     <a-row>
       <a-col>
         <h2 align="center">写下你的想法</h2>
         <a-input type="textarea" maxlength="500" rows="10" v-model="data.content"></a-input>
       </a-col>
     </a-row>
-  </a-model-form>
+  </a-form-model>
 </template>
 
 <script>
