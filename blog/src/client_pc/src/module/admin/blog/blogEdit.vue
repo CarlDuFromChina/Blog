@@ -26,7 +26,7 @@
         <a-row>
           <a-col>
             <a-form-model-item label="分类">
-              <a-select v-model="data.blog_type" @change="handleTypeChange" labelInValue>
+              <a-select v-model="data.blog_type" @change="handleTypeChange">
                 <a-select-option :value="item.Value" v-for="(item, index) in blogType" :key="index">{{ item.Name }}</a-select-option>
               </a-select>
             </a-form-model-item>
@@ -162,9 +162,9 @@ export default {
       this.html = render; // render 为 markdown 解析后的结果[html]
     },
     handleTypeChange(value) {
-      const arrs = this.blogType.filter(item => item.Value === value);
-      if (arrs.length > 0) {
-        this.data.blog_typeName = arrs[0].Name;
+      const item = this.blogType.find(item => item.Value === value);
+      if (item) {
+        this.data.blog_typeName = item.Name;
       }
     },
     // 保存博客

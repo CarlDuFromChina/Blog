@@ -21,7 +21,7 @@ UPDATE sys_file SET objectid = @objectid WHERE sys_fileid = @id
 ";
                     var paramList = new Dictionary<string, object>()
                     {
-                        { "@id", entity.GetType().GetProperty("imageId").GetValue(entity).ToString() },
+                        { "@id", entity.GetType().GetProperty("imageId")?.GetValue(entity)?.ToString() },
                         { "@objectid", id }
                     };
                     context.Broker.Execute(sql,  paramList);
