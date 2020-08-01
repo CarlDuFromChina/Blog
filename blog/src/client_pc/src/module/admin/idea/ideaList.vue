@@ -4,11 +4,9 @@
 
 <script>
 import ideaEdit from './ideaEdit';
-import spList from './spList';
 
 export default {
   name: 'ideaList',
-  components: { spList },
   data() {
     return {
       controllerName: 'idea',

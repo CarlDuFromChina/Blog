@@ -1,5 +1,4 @@
 <template>
-  <!-- <sp-blog-card ref="blog" :fetch="fetchData" v-infinite-scroll="load" style="overflow:auto;"></sp-blog-card> -->
   <a-list :loading="loading" item-layout="horizontal" :pagination="pagination" :data-source="data" rowKey="Id">
     <a-list-item slot="renderItem" slot-scope="item">
       <a slot="actions" @click="goEdit(item)">编辑</a>
