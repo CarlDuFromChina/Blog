@@ -49,8 +49,7 @@ const router = new VueRouter({
       // 顶层
       path: '/',
       component: App,
-      children: routes,
-      redirect: 'index'
+      children: routes
     }
   ]
 });

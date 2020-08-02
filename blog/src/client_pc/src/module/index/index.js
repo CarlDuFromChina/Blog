@@ -11,6 +11,10 @@ export default [
     children: [].concat(home, aboutme, friends)
   },
   {
+    path: '/',
+    redirect: 'index'
+  },
+  {
     path: '/blogReadonly/:id?',
     name: 'blogReadonly',
     component: () => import('../admin/blog/blogReadonly')
