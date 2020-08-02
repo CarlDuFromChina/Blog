@@ -1,12 +1,5 @@
 <template>
-  <sp-list
-    ref="list"
-    :controllerName="controllerName"
-    :operations="operations"
-    :columns="columns"
-    :editComponent="editComponent"
-    allow-select
-  ></sp-list>
+  <sp-list ref="list" :controllerName="controllerName" :operations="operations" :columns="columns" :editComponent="editComponent"></sp-list>
 </template>
 
 <script>

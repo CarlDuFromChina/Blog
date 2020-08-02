@@ -69,9 +69,11 @@ export default {
               sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
             },
             onCancel: () => {
-              this.$message({
-                type: 'info',
-                message: '已取消恢复'
+              sp.post('api/Draft/DeleteData', [this.draft.Id]).then(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已删除草稿'
+                });
               });
             }
           });
@@ -85,7 +87,7 @@ export default {
      * 保存草稿
      */
     saveDraft() {
-      this.draft.title = this.data.title;
+      this.draft.title = this.data.title || '草稿';
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
       sp.post('api/Draft/CreateOrUpdateData', this.draft).then(() => {

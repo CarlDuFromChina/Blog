@@ -3,7 +3,7 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
-      <a-button icon="redo" type="info" v-show="showAutoSave" disabled>{{ seconds || 0 }}秒后备份</a-button>
+      <a-button icon="redo" type="info" v-show="showAutoSave" @click="saveDraft">{{ seconds || 0 }}秒后备份</a-button>
     </div>
     <div class="blog-body">
       <div class="blog-bodywrapper">
