@@ -9,5 +9,10 @@ export default [
     component: () => import('./index.vue'),
     redirect: '/index/home',
     children: [].concat(home, aboutme, friends)
+  },
+  {
+    path: '/blogReadonly/:id?',
+    name: 'blogReadonly',
+    component: () => import('../admin/blog/blogReadonly')
   }
 ];

@@ -1,10 +1,12 @@
-export default [{
-  path: '/blogReadonly/:id?',
-  name: 'blogReadonly',
-  component: () => import('./blogReadonly')
-},
-{
-  path: '/blogEdit/:id?',
-  name: 'blogEdit',
-  component: () => import('./blogEdit')
-}];
+export default [
+  {
+    path: '/admin/blogEdit/:id?',
+    name: 'blogEdit',
+    component: () => import('./blogEdit')
+  },
+  {
+    path: '/admin/blogs',
+    name: 'blogList',
+    component: () => import('./blogList')
+  }
+];

@@ -17,10 +17,8 @@
       padding-top: 24px;
       padding-bottom: 40px;
       .bodyWrapper {
-        width: 80%;
         min-height: 800px;
         margin: 0 auto;
-        padding: 20px;
         .bodyWrapper-title {
           font-size: 2.5rem;
           text-align: center;
@@ -43,23 +41,14 @@
       box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     }
     .blog-body {
-      height: calc(100% - 60px);
       background-color: #e9ecef;
       color: #212529;
-      padding: 24px 0;
+      padding-top: 24px;
       .blog-bodywrapper {
-        width: calc(100% - 40px);
-        height: calc(100% - 30px);
-        padding: 0px;
-        margin: 0px 20px;
         background-color: #fff;
-        .blog-bodywrapper-form {
-          height: 100px;
-        }
         .blog-bodywrapper-markdown {
-          height: 100%;
-          .blog-bodywrapper-markdown-container {
-            height: 100%;
+          /deep/ .v-note-wrapper {
+            min-height: 740px;
           }
         }
       }

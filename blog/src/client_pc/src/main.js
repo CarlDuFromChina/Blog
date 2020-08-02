@@ -35,7 +35,8 @@ Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(
 
 // 合并平台路由
 let routes = platform.router.options.routes;
-routes = routes.concat(moduleRouter);
+routes = moduleRouter.concat(routes);
+
 routes.forEach(item => {
   if (item.name === 'admin') {
     item.component = myAdmin;

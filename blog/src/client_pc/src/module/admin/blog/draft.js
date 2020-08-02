@@ -59,6 +59,8 @@ export default {
           this.$confirm({
             title: '是否恢复?',
             content: '发现您尚未保存该博客，是否恢复上次备份内容？',
+            okText: '确认',
+            cancelText: '取消',
             onOk: () => {
               const { blogId, content, title } = resp;
               this.data.blogId = blogId;
@@ -128,6 +130,8 @@ export default {
       this.$confirm({
         title: '是否保存修改?',
         content: '检测到未保存的内容，是否在离开页面前保存修改？',
+        okText: '确认',
+        cancelText: '取消',
         onOk: () => {
           save();
         },

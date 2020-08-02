@@ -8,9 +8,7 @@
     <div class="blog-body">
       <div class="blog-bodywrapper">
         <div class="blog-bodywrapper-markdown">
-          <div class="blog-bodywrapper-markdown-container">
-            <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" style="min-height: 600px;height:100%" />
-          </div>
+          <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" />
         </div>
       </div>
     </div>

@@ -53,6 +53,7 @@ WHERE 1=1
                 {
                     Sql = sql,
                     ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
+                    CustomFilter = new List<string>() { "title" },
                     Name = "全部博客",
                     OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
                 }

@@ -1,5 +1,5 @@
 <template>
-  <sp-list ref="list" :controllerName="controllerName" :operations="operations" :columns="columns" :editComponent="editComponent"></sp-list>
+  <sp-list :controller-name="controllerName" :operations="operations" :columns="columns" :edit-component="editComponent"></sp-list>
 </template>
 
 <script>
@@ -10,20 +10,14 @@ export default {
   data() {
     return {
       controllerName: 'idea',
-      editComponent: ideaEdit
-    };
-  },
-  computed: {
-    operations() {
-      return ['new', 'delete'];
-    },
-    columns() {
-      return [
+      editComponent: ideaEdit,
+      operations: ['new', 'delete'],
+      columns: [
         { prop: 'content', label: '内容' },
         { prop: 'createdByName', label: '创建人' },
         { prop: 'createdOn', label: '创建日期', type: 'datetime' }
-      ];
-    }
+      ]
+    };
   }
 };
 </script>
