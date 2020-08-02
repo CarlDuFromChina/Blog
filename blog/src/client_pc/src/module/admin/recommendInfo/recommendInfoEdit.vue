@@ -4,8 +4,8 @@
       <a-input v-model="data.name"></a-input>
     </a-form-model-item>
     <a-form-model-item label="分类">
-      <a-select v-model="data.recommend_type" @change="handleTypeChange" labelInValue>
-        <a-select-option :value="item.Value" v-for="(item, index) in recommentType" :key="index">{{ item.Name }}</a-select-option>
+      <a-select v-model="data.recommend_type" @change="handleTypeChange">
+        <a-select-option v-model="item.Value" v-for="(item, index) in recommentType" :key="index">{{ item.Name }}</a-select-option>
       </a-select>
     </a-form-model-item>
     <a-form-model-item label="链接">
