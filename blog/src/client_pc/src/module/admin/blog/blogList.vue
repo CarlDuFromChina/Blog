@@ -36,7 +36,7 @@ export default {
     goEdit(item) {
       this.$router.push({
         name: 'blogEdit',
-        params: { id: item.Id }
+        params: { id: (item || {}).Id || '' }
       });
     }
   }
