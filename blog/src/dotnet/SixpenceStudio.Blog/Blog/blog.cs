@@ -240,5 +240,23 @@ namespace SixpenceStudio.Blog.Blog
                 SetAttributeValue("upvote_times", value);
             }
         }
+
+        /// <summary>
+        /// 是否是系列
+        /// </summary>
+        private int? _is_series;
+        [DataMember]
+        public int? is_series
+        {
+            get
+            {
+                return this._is_series;
+            }
+            set
+            {
+                this._is_series = value;
+                SetAttributeValue("is_series", value);
+            }
+        }
     }
 }

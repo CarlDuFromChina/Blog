@@ -31,6 +31,15 @@
           </a-col>
         </a-row>
         <a-row>
+          <al-col>
+            <a-col :span="8">
+              <a-form-model-item label="系列">
+                <a-switch v-model="isSeries"></a-switch>
+              </a-form-model-item>
+            </a-col>
+          </al-col>
+        </a-row>
+        <a-row>
           <a-col>
             <a-form-model-item label="封面">
               <a-upload
@@ -75,7 +84,8 @@ export default {
       blogType: [],
       fileList: [],
       baseUrl: '',
-      token: ''
+      token: '',
+      is_series: false
     };
   },
   created() {
@@ -83,6 +93,8 @@ export default {
     if (this.$route.params.id) {
       this.Id = this.$route.params.id;
       this.loadData();
+    } else {
+      this.data.is_series = 0;
     }
     // 获取博客类型选项集
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
@@ -97,6 +109,15 @@ export default {
     this.token = window.localStorage.getItem('Token');
   },
   computed: {
+    isSeries: {
+      get() {
+        return this.is_series || this.data.is_series;
+      },
+      set(val) {
+        this.data.is_series = val ? 1 : 0;
+        this.is_series = val;
+      }
+    },
     // 请求头
     headers() {
       return {
