@@ -45,6 +45,7 @@ export default {
       operations: ['new', 'delete', 'search', 'more'],
       columns: [
         { prop: 'title', label: '标题' },
+        { prop: 'tags', label: '标签', type: 'tag' },
         { prop: 'modifiedByName', label: '最后修改人' },
         { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' },
         { prop: 'createdByName', label: '创建人' },

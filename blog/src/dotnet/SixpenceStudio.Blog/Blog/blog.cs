@@ -1,4 +1,5 @@
-﻿using SixpenceStudio.Platform.Entity;
+﻿using Newtonsoft.Json.Linq;
+using SixpenceStudio.Platform.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -256,6 +257,24 @@ namespace SixpenceStudio.Blog.Blog
             {
                 this._is_series = value;
                 SetAttributeValue("is_series", value);
+            }
+        }
+
+        /// <summary>
+        /// 标签
+        /// </summary>
+        private JToken _tags;
+        [DataMember]
+        public JToken tags
+        {
+            get
+            {
+                return this._tags;
+            }
+            set
+            {
+                this._tags = value;
+                SetAttributeValue("tags", value);
             }
         }
     }

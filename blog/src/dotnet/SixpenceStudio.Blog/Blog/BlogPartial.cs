@@ -14,5 +14,14 @@ namespace SixpenceStudio.Blog.Blog
 
         [DataMember]
         public string imageSrc { get; set; }
+
+        [DataMember]
+        public string isSeriesName
+        {
+            get
+            {
+                return this.is_series == 0 ? "否" : "是";
+            }
+        }
     }
 }

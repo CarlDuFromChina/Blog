@@ -38,6 +38,8 @@ SELECT
 	blog.modifiedbyname,
 	blog.createdOn,
 	blog.modifiedOn,
+	blog.is_series,
+	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
 	COALESCE(blog.upvote_times, 0) upvote_times,
 	sys_file.sys_fileid AS imageId,

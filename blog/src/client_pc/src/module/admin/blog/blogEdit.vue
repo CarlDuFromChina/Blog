@@ -31,13 +31,18 @@
           </a-col>
         </a-row>
         <a-row>
-          <al-col>
-            <a-col :span="8">
-              <a-form-model-item label="系列">
-                <a-switch v-model="isSeries"></a-switch>
-              </a-form-model-item>
-            </a-col>
-          </al-col>
+          <a-col>
+            <a-form-model-item label="系列">
+              <a-switch v-model="isSeries"></a-switch>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
+            <a-form-model-item label="标签">
+              <sp-tag :tags="tags" @change="changeTags"></sp-tag>
+            </a-form-model-item>
+          </a-col>
         </a-row>
         <a-row>
           <a-col>
@@ -85,6 +90,7 @@ export default {
       fileList: [],
       baseUrl: '',
       token: '',
+      tags: [],
       is_series: false
     };
   },
@@ -111,7 +117,7 @@ export default {
   computed: {
     isSeries: {
       get() {
-        return this.is_series || this.data.is_series;
+        return this.is_series || !!this.data.is_series;
       },
       set(val) {
         this.data.is_series = val ? 1 : 0;
@@ -136,6 +142,10 @@ export default {
             url: this.baseUrl + '/' + this.data.imageSrc
           }
         ];
+      }
+      if (!sp.isNullOrEmpty(this.data.tags)) {
+        this.data.tags = JSON.parse(this.data.tags);
+        this.tags = this.data.tags;
       }
       this.openWatch();
     },
@@ -190,6 +200,9 @@ export default {
     save() {
       this.editVisible = false;
       this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+      if (this.tags) {
+        this.data.tags = this.tags;
+      }
       sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
         .then(() => {
           this.$message.success('发布成功！');
@@ -204,6 +217,9 @@ export default {
       } else {
         this.$router.back();
       }
+    },
+    changeTags(val) {
+      this.tags = val;
     }
   }
 };
