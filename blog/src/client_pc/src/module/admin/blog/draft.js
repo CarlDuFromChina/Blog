@@ -91,7 +91,7 @@ export default {
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
       sp.post('api/Draft/CreateOrUpdateData', this.draft).then(() => {
-        this.$message('草稿保存成功');
+        this.$message.success('草稿保存成功');
       })
         .catch(() => {
           this.$message.error('草稿保存失败！');
