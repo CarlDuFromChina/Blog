@@ -1,5 +1,6 @@
 <template>
   <admin ref="admin">
+    <a-button class="button-back" icon="rollback" @click="goIndex">首页</a-button>
     <a-button type="primary" icon="edit" @click="writeBlog" style="margin-right:20px;">写博客</a-button>
     <!-- 悬浮菜单 -->
     <div class="hover-menu">
@@ -25,6 +26,11 @@ export default {
       if (cmd && typeof cmd === 'function') {
         cmd();
       }
+    },
+    goIndex() {
+      this.$router.push({
+        name: 'index'
+      });
     },
     writeBlog() {
       this.$router.push({
