@@ -91,10 +91,11 @@ export default {
       this.searchData.date = [];
     },
     goReadonly(item) {
-      this.$router.push({
+      const { href } = this.$router.resolve({
         name: 'blogReadonly',
         params: { id: item.Id }
       });
+      window.open(href, '_blank');
     },
     goEdit(item) {
       this.$router.push({

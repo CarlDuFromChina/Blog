@@ -1,8 +1,6 @@
 <template>
   <div id="blog" class="blog blog__readonly">
-    <div class="blog-header">
-      <a-button type="primary" icon="rollback" @click="$router.back()">返回</a-button>
-    </div>
+    <div class="blog-header"></div>
     <div class="blog-body" style="background-color:#e9ecef">
       <div class="bodyWrapper">
         <a-layout>
