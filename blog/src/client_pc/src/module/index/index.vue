@@ -29,27 +29,10 @@
     <transition name="hehe">
       <div class="ant-back-top" v-if="btnFlag">
         <div class="ant-back-top-content" @click="backTop">
-          <div class="ant-back-top-icon">
-          </div>
+          <div class="ant-back-top-icon"></div>
         </div>
       </div>
     </transition>
-    <!-- 固钉 -->
-    <transition name="hehe">
-      <a-affix :offset-bottom="bottom" style="margin-left: 20px" v-if="btnFlag">
-        <div>
-          <a-card style="width: 120px;background-color: #e5e5ee">
-            <a-button type="primary" @click="login">
-              写博客
-            </a-button>
-            <a-button type="primary" @click="login" style="margin-top: 10px">
-              写博客
-            </a-button>
-          </a-card>
-        </div>
-      </a-affix>
-    </transition>
-    <!-- 固钉 -->
   </div>
 </template>
 
@@ -84,33 +67,32 @@ export default {
       ]
     };
   },
-  mounted () {
+  mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
   },
   methods: {
     // 点击图片回到顶部方法，加计时器是为了过渡顺滑
-    backTop () {
-      const that = this;
+    backTop() {
       let timer = setInterval(() => {
-        let ispeed = Math.floor(-that.scrollTop / 5);
-        document.querySelector('.index').scrollTop = document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed;
-        if (that.scrollTop === 0) {
+        let ispeed = Math.floor(-this.scrollTop / 5);
+        document.querySelector('.index').scrollTop = document.documentElement.scrollTop = document.body.scrollTop = this.scrollTop + ispeed;
+        if (this.scrollTop === 0) {
           clearInterval(timer);
         }
       }, 16);
     },
     // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
-    scrollToTop () {
-      const that = this;
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.querySelector('.index').scrollTop;
-      that.scrollTop = scrollTop;
-      if (that.scrollTop > 300) {
-        that.btnFlag = true;
+    scrollToTop() {
+      let scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.querySelector('.index').scrollTop;
+      this.scrollTop = scrollTop;
+      if (this.scrollTop > 300) {
+        this.btnFlag = true;
       } else {
-        that.btnFlag = false;
+        this.btnFlag = false;
       }
     },
     // 跳转登录页
@@ -131,13 +113,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.hehe-enter,.hehe-leave-to{
+.hehe-enter,
+.hehe-leave-to {
   opacity: 0;
 }
-.hehe-enter-to,.hehe-leave{
+.hehe-enter-to,
+.hehe-leave {
   opacity: 1;
 }
-.hehe-enter-active,.hehe-leave-active{
+.hehe-enter-active,
+.hehe-leave-active {
   transition: all 1s;
 }
 .index {

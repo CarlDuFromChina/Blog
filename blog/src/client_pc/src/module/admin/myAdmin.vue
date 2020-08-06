@@ -1,6 +1,16 @@
 <template>
   <admin ref="admin">
     <a-button type="primary" icon="edit" @click="writeBlog" style="margin-right:20px;">写博客</a-button>
+    <!-- 悬浮菜单 -->
+    <div class="hover-menu">
+      <a-dropdown>
+        <a-menu slot="overlay">
+          <a-menu-item key="1" @click="writeIdea">创建想法</a-menu-item>
+        </a-menu>
+        <a-button type="primary" size="large" icon="edit" shape="circle" @click="writeBlog"></a-button>
+      </a-dropdown>
+    </div>
+    <!-- 悬浮菜单 -->
   </admin>
 </template>
 
@@ -30,4 +40,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.hover-menu {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  z-index: 10;
+}
+</style>
