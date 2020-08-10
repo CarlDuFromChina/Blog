@@ -11,10 +11,15 @@ export default {
       draftId: '',
       draft: {},
       isDirty: false,
-      seconds: 60
+      seconds: 60,
+      configCode: 'enable_draft'
     };
   },
-  mounted() {
+  async mounted() {
+    const enable = await sp.get(`/api/SysConfig/GetValue?code=${this.configCode}`);
+    if (enable !== 'true') {
+      return Promise.resolve(true);
+    }
     if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
       this.popDraft(this.$route.params.draftId); // 打开草稿
     } else if (this.pageState === 'create') {
