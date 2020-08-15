@@ -13,10 +13,5 @@ export default [
   {
     path: '/',
     redirect: 'index'
-  },
-  {
-    path: '/blogReadonly/:id?',
-    name: 'blogReadonly',
-    component: () => import('../admin/blog/blogReadonly')
   }
 ];

@@ -79,7 +79,7 @@ const tocObj = {
       result += '</ul>\n';
     };
     const addLI = (anchor, text) => {
-      result += '<li><a href="#' + anchor + '">' + text + '<a></li>\n';
+      result += '<li class="content-item" @click="goAnchor(\'' + anchor + '\')"><a href="javascript:void(0)">' + text + '</a></li>\n';
     };
     this.toc.forEach(function(item) {
       let levelIndex = levelStack.indexOf(item.level);
@@ -145,8 +145,34 @@ export default {
           this.formatterContent = marked(newVal, {
             sanitize: true
           });
-          const content = document.getElementById('content');
-          content.innerHTML = tocObj.toHTML();
+          const content = document.querySelector('#content');
+          const Vue = require('vue');
+          const MyComponent = Vue.extend({
+            template: tocObj.toHTML(),
+            data() {
+              return {
+                activeList: []
+              };
+            },
+            methods: {
+              goAnchor(id) {
+                const classList = event.srcElement.classList;
+                if (!this.activeList.includes(classList)) {
+                  this.activeList.push(classList);
+                }
+                this.activeList.forEach(item => {
+                  item.remove('active');
+                });
+                classList.add('active');
+                const node = document.getElementById(id);
+                if (node) {
+                  node.scrollIntoView();
+                }
+              }
+            }
+          });
+          const component = new MyComponent().$mount();
+          content.appendChild(component.$el);
           this.height = content.offsetTop;
         }
       }
@@ -222,13 +248,22 @@ export default {
   margin-top: -20px; /*same height as header*/
   visibility: hidden;
 }
-/deep/ #content {
+
+/deep/ .block {
+  .content-item {
+    color: #000000;
+    &:hover {
+      color: #007fff;
+    }
+    & .active {
+      color: #007fff;
+    }
+  }
   a {
     color: #000000;
-    text-decoration: none;
-  }
-  a:hover {
-    color: #007fff;
+    &:hover {
+      color: #007fff;
+    }
   }
 }
 
