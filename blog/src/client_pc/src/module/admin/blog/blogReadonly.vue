@@ -65,7 +65,7 @@ marked.setOptions({
 });
 const tocObj = {
   add: function(text, level) {
-    var anchor = `#toc${level}${++this.index}`;
+    var anchor = `toc${level}${++this.index}`;
     this.toc.push({ anchor: anchor, level: level, text: text });
     return anchor;
   },
@@ -195,6 +195,7 @@ export default {
 <style lang="less" scoped>
 .block {
   width: 300px;
+  margin-bottom: 20px;
   /deep/ .ant-card-body {
     padding: 0px;
   }
@@ -214,9 +215,6 @@ export default {
       }
     }
   }
-}
-.block + .block {
-  margin-top: 20px;
 }
 .anchor-fix {
   display: block;

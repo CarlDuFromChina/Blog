@@ -44,6 +44,7 @@ routes.forEach(item => {
   }
 });
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       // 顶层
