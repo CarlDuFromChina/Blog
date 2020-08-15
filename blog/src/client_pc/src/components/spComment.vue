@@ -47,7 +47,8 @@ export default {
   },
   methods: {
     getDataList() {
-      sp.get(`api/${this.controllerName}/GetDataList?searchList&orderBy=createdOn desc`).then(resp => {
+      const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
+      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {
         this.comments = resp;
       });
     },

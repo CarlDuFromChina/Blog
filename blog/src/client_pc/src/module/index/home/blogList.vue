@@ -56,12 +56,11 @@ export default {
       });
     },
     readBlog(item) {
-      this.$router.push({
+      const { href } = this.$router.resolve({
         name: 'blogReadonly',
-        params: {
-          id: item.Id
-        }
+        params: { id: item.Id }
       });
+      window.open(href, '_blank');
     }
   }
 };
