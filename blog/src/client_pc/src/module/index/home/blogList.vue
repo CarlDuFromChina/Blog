@@ -1,5 +1,5 @@
 <template>
-  <div class="blog">
+  <div class="blog-list">
     <a-list item-layout="vertical" size="large" :data-source="listData">
       <a-list-item slot="renderItem" key="item.title" slot-scope="item">
         <template slot="actions">
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.blog {
+.blog-list {
   border-bottom: 1px solid #ebedf0;
   padding: 10px 20px 24px 20px;
   color: rgba(0, 0, 0, 0.65);
