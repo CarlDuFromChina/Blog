@@ -42,6 +42,7 @@ SELECT
 	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
 	COALESCE(blog.upvote_times, 0) upvote_times,
+	(SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid) message,
 	sys_file.sys_fileid AS imageId,
 	'{FileUtils.FILE_FOLDER}/' || sys_file.name AS imageSrc
 FROM

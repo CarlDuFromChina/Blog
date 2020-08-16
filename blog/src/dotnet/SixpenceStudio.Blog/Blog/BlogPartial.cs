@@ -23,5 +23,8 @@ namespace SixpenceStudio.Blog.Blog
                 return this.is_series == 0 ? "否" : "是";
             }
         }
+
+        [DataMember]
+        public int message { get; set; }
     }
 }
