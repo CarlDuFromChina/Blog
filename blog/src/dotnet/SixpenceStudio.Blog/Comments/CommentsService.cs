@@ -37,7 +37,7 @@ namespace SixpenceStudio.Blog.Comments
                 t.createdByName = anonymous.name;
                 t.createdOn = DateTime.Now;
                 t.modifiedOn = DateTime.Now;
-                return _cmd.broker.Save(t);
+                return _cmd.broker.Create(t);
             }
             return base.CreateData(t);
         }
