@@ -10,7 +10,7 @@
         <a-comment :author="item.name" :avatar="item.avatar" :content="item.comment" :datetime="item.createdOn | moment('YYYY-MM-DD HH:mm')" />
       </a-list-item>
     </a-list>
-    <a-comment>
+    <a-comment v-if="!disabled">
       <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
       <div slot="content">
         <a-form-item>
@@ -32,6 +32,10 @@ export default {
     objectId: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

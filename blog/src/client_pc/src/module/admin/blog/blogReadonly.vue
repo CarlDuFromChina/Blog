@@ -13,7 +13,7 @@
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comment :object-id="Id"></sp-comment>
+            <sp-comment :object-id="Id" :disabled="!!data.disable_comment"></sp-comment>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left:20px" theme="light">
             <a-card class="block">

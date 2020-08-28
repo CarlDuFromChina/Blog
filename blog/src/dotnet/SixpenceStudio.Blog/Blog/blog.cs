@@ -277,5 +277,23 @@ namespace SixpenceStudio.Blog.Blog
                 SetAttributeValue("tags", value);
             }
         }
+
+        /// <summary>
+        /// 禁止评论
+        /// </summary>
+        private int? _disable_comment;
+        [DataMember]
+        public int? disable_comment
+        {
+            get
+            {
+                return this._disable_comment;
+            }
+            set
+            {
+                this._disable_comment = value;
+                SetAttributeValue("disable_comment", value);
+            }
+        }
     }
 }

@@ -39,6 +39,13 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="允许评论">
+              <a-switch v-model="enableComment"></a-switch>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
             <a-form-model-item label="标签">
               <sp-tag :tags="tags" @change="changeTags"></sp-tag>
             </a-form-model-item>
@@ -91,7 +98,8 @@ export default {
       baseUrl: '',
       token: '',
       tags: [],
-      is_series: false
+      is_series: false,
+      enable_comment: true
     };
   },
   created() {
@@ -101,6 +109,7 @@ export default {
       this.loadData();
     } else {
       this.data.is_series = 0;
+      this.data.disable_comment = 0;
     }
     // 获取博客类型选项集
     sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
@@ -122,6 +131,15 @@ export default {
       set(val) {
         this.data.is_series = val ? 1 : 0;
         this.is_series = val;
+      }
+    },
+    enableComment: {
+      get() {
+        return this.enable_comment || !this.data.disable_comment;
+      },
+      set(val) {
+        this.data.disable_comment = val ? 0 : 1;
+        this.enable_comment = val;
       }
     },
     // 请求头
