@@ -165,6 +165,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classfication\classfication.cs" />
+    <Compile Include="Classfication\ClassficationController.cs" />
+    <Compile Include="Classfication\ClassficationPartial.cs" />
+    <Compile Include="Classfication\ClassficationService.cs" />
     <Compile Include="Comments\CommentsController.cs" />
     <Compile Include="Comments\CommentsService.cs" />
     <Compile Include="Blog\blog.cs" />
