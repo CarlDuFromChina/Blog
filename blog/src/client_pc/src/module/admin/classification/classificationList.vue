@@ -3,18 +3,18 @@
 </template>
 
 <script>
-import editComponent from './classficationEdit';
+import editComponent from './classificationEdit';
 
 export default {
-  name: 'classfication-list',
+  name: 'classification-list',
   data() {
     return {
-      controllerName: 'Classfication',
+      controllerName: 'Classification',
       editComponent,
       columns: [
         { prop: 'name', label: '名称' },
-        { prop: 'is_free', label: '是否付费' },
-        { prop: 'is_show', label: '是否前台显示' }
+        { prop: 'is_freeName', label: '是否付费' },
+        { prop: 'is_showName', label: '是否前台显示' }
       ],
       operations: ['new', 'delete', 'search']
     };

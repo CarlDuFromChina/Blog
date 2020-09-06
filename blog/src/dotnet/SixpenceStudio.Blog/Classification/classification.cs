@@ -4,26 +4,26 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace SixpenceStudio.Blog.Classfication
+namespace SixpenceStudio.Blog.Classification
 {
-    [EntityName("classfication")]
-    public partial class classfication : BaseEntity
+    [EntityName("classification")]
+    public partial class classification : BaseEntity
     {
         /// <summary>
         /// 实体id
         /// </summary>
-        private string _classficationid;
+        private string _classificationid;
         [DataMember]
-        public string classficationId
+        public string classificationId
         {
             get
             {
-                return this._classficationid;
+                return this._classificationid;
             }
             set
             {
-                this._classficationid = value;
-                SetAttributeValue("classficationId", value);
+                this._classificationid = value;
+                SetAttributeValue("classificationId", value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _createdby;
         [DataMember]
-        public string createdby
+        public string createdBy
         {
             get
             {
@@ -99,7 +99,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._createdby = value;
-                SetAttributeValue("createdby", value);
+                SetAttributeValue("createdBy", value);
             }
         }
 
@@ -109,7 +109,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _createdbyname;
         [DataMember]
-        public string createdbyname
+        public string createdByName
         {
             get
             {
@@ -118,7 +118,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._createdbyname = value;
-                SetAttributeValue("createdbyname", value);
+                SetAttributeValue("createdByName", value);
             }
         }
 
@@ -128,7 +128,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _createdon;
         [DataMember]
-        public string createdon
+        public string createdOn
         {
             get
             {
@@ -137,7 +137,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._createdon = value;
-                SetAttributeValue("createdon", value);
+                SetAttributeValue("createdOn", value);
             }
         }
 
@@ -147,7 +147,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _modifiedby;
         [DataMember]
-        public string modifiedby
+        public string modifiedBy
         {
             get
             {
@@ -156,7 +156,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._modifiedby = value;
-                SetAttributeValue("modifiedby", value);
+                SetAttributeValue("modifiedBy", value);
             }
         }
 
@@ -166,7 +166,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _modifiedbyname;
         [DataMember]
-        public string modifiedbyname
+        public string modifiedByName
         {
             get
             {
@@ -175,7 +175,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._modifiedbyname = value;
-                SetAttributeValue("modifiedbyname", value);
+                SetAttributeValue("modifiedByName", value);
             }
         }
 
@@ -185,7 +185,7 @@ namespace SixpenceStudio.Blog.Classfication
         /// </summary>
         private string _modifiedon;
         [DataMember]
-        public string modifiedon
+        public string modifiedOn
         {
             get
             {
@@ -194,7 +194,7 @@ namespace SixpenceStudio.Blog.Classfication
             set
             {
                 this._modifiedon = value;
-                SetAttributeValue("modifiedon", value);
+                SetAttributeValue("modifiedOn", value);
             }
         }
 

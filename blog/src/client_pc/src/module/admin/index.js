@@ -3,7 +3,7 @@ import idea from './idea';
 import myAdmin from './myAdmin';
 import blog from './blog';
 import draft from './draft';
-import classfication from './classfication';
+import classification from './classification';
 
-const adminRouter = [].concat(recommendInfo, idea, blog, draft, classfication);
+const adminRouter = [].concat(recommendInfo, idea, blog, draft, classification);
 export { myAdmin, adminRouter };

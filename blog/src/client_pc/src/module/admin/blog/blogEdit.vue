@@ -112,8 +112,13 @@ export default {
       this.data.disable_comment = 0;
     }
     // 获取博客类型选项集
-    sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
-      this.blogType = resp;
+    sp.get('api/classification/GetDataList').then(resp => {
+      this.blogType = resp.map(item => {
+        return {
+          Name: item.name,
+          Value: item.code
+        };
+      });
       if (this.$route.params.blogType) {
         this.data.blog_type = this.$route.params.blogType;
         this.handleTypeChange(this.data.blog_type);

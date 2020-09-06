@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.Classfication
+namespace SixpenceStudio.Blog.Classification
 {
-    public class ClassficationController : EntityBaseController<classfication, ClassficationService>
+    public class ClassificationController : EntityBaseController<classification, ClassificationService>
     {
 
     }

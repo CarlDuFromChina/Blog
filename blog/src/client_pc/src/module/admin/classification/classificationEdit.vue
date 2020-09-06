@@ -19,7 +19,7 @@
 import { edit } from 'sixpence.platform.pc.vue';
 
 export default {
-  name: 'classfication-edit',
+  name: 'classification-edit',
   mixins: [edit],
   data() {
     return {
