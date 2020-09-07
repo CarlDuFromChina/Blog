@@ -184,6 +184,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\SyncJobs\FriendBlogService.cs" />
+    <Compile Include="Blog\SyncJobs\friend_blog.cs" />
+    <Compile Include="Blog\SyncJobs\SyncBlogJob.cs" />
     <Compile Include="Classification\classification.cs" />
     <Compile Include="Classification\ClassificationController.cs" />
     <Compile Include="Classification\ClassificationPartial.cs" />
