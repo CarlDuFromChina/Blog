@@ -23,7 +23,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'Classfication',
+      controllerName: 'Classification',
       is_free: false,
       is_show: true,
       data: {
