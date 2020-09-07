@@ -48,6 +48,7 @@ SELECT
 FROM
 	blog
 LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
+INNER JOIN classification ON classification.code = blog.blog_type AND classification.is_show = 1
 WHERE 1=1
 ";
             return new List<EntityView<blog>>()

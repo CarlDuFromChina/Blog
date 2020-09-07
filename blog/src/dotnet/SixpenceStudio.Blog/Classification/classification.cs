@@ -126,9 +126,9 @@ namespace SixpenceStudio.Blog.Classification
         /// <summary>
         /// 创建日期
         /// </summary>
-        private string _createdon;
+        private DateTime _createdon;
         [DataMember]
-        public string createdOn
+        public DateTime createdOn
         {
             get
             {
@@ -183,9 +183,9 @@ namespace SixpenceStudio.Blog.Classification
         /// <summary>
         /// 修改日期
         /// </summary>
-        private string _modifiedon;
+        private DateTime _modifiedon;
         [DataMember]
-        public string modifiedOn
+        public DateTime modifiedOn
         {
             get
             {
