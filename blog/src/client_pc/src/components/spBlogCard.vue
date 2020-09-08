@@ -84,8 +84,10 @@ export default {
     },
     goReadonly(row) {
       this.editVisible = true;
-      const read = document.getElementById('blogRead');
-      read.innerHTML = row.content;
+      setTimeout(() => {
+        const read = document.getElementById('blogRead');
+        read.innerHTML = row.content;
+      }, 40);
     }
   }
 };
