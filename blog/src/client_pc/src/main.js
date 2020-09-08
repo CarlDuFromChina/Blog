@@ -33,6 +33,8 @@ Vue.prototype.$moment = moment; // 赋值使用
 Vue.use(moment);
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
 
+Vue.prototype.$bus = new Vue();
+
 // 合并平台路由
 let routes = platform.router.options.routes;
 routes = moduleRouter.concat(routes);

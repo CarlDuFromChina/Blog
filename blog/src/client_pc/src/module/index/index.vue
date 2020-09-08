@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" v-infinite-scroll="loadMore">
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import infiniteScroll from 'vue-infinite-scroll';
+
 export default {
   name: 'index',
+  directives: { infiniteScroll },
   data() {
     return {
       bottom: 100,
@@ -107,6 +110,9 @@ export default {
     // 菜单切换
     menuChange() {
       document.getElementById('container').scrollIntoView();
+    },
+    loadMore() {
+      this.$bus.$emit('load-more');
     }
   }
 };

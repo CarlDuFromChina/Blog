@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SixpenceStudio.Blog.Blog.FriendBlog;
 using SixpenceStudio.Platform.Data;
 using SixpenceStudio.Platform.Job;
 using SixpenceStudio.Platform.Logging;
@@ -38,6 +39,7 @@ namespace SixpenceStudio.Blog.Blog.SyncJobs
                             createdOn = ConvertLongToDateTime(item.createTime),
                             modifiedOn = ConvertLongToDateTime(item.updateTime),
                             first_picture = item.firstPicture,
+                            author = "谢振国",
                             Id = item.id.ToString()
                         };
                         broker.Save(blog);

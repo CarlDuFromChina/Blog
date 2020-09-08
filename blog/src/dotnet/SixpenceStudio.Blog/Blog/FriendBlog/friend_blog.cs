@@ -4,7 +4,7 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace SixpenceStudio.Blog.Blog.SyncJobs
+namespace SixpenceStudio.Blog.Blog.FriendBlog
 {
     [EntityName("friend_blog")]
     public partial class friend_blog : BaseEntity
@@ -103,6 +103,23 @@ namespace SixpenceStudio.Blog.Blog.SyncJobs
             }
         }
 
+        /// <summary>
+        /// 作者
+        /// </summary>
+        private string _author;
+        [DataMember]
+        public string author
+        {
+            get
+            {
+                return this._author;
+            }
+            set
+            {
+                this._author = value;
+                SetAttributeValue("author", value);
+            }
+        }
 
     }
 }
