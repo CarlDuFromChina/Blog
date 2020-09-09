@@ -6921,10 +6921,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.84:
-  version "1.0.84"
-  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.84.tgz#67436a8fe744507888dac75f653fd2c006e02085"
-  integrity sha512-nHu1ezzJGKqRsvBe3AaCzQ1TO91ekWX1s5gfgKLv2RZ3g+m0HU5e6QXKr0/5i8dWGUl8e8VHAv+GK0JxcUL++w==
+sixpence.platform.pc.vue@1.0.85:
+  version "1.0.85"
+  resolved "https://registry.yarnpkg.com/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.85.tgz#4fbc0527ac756482d8e43ef3b29c805d0d689f80"
+  integrity sha512-2vs2T6tUo9nKr5F7Qm5/HLXtPPgq/JPMqzmXefZnGBFMKox1vBIuD2kSXeI0fvdQ0uky9qAufSsvtyESSDZ3Dg==
   dependencies:
     crypto-js "^4.0.0"
     less "^3.10.3"

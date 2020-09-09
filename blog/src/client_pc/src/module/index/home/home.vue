@@ -8,11 +8,11 @@
     <!-- 博客 -->
     <a-layout-sider width="30%" style="overflow:hidden" theme="light">
       <!-- 推荐 -->
-      <recommand-pictures></recommand-pictures>
+      <recommand-pictures style="margin-bottom:20px;"></recommand-pictures>
       <!-- 推荐 -->
 
       <!-- 推荐博客 -->
-      <recommand-list></recommand-list>
+      <recommand-list style="margin-bottom:20px;"></recommand-list>
       <!-- 推荐博客 -->
 
       <!-- 想法 -->
