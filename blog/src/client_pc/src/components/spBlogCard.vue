@@ -1,9 +1,8 @@
 <template>
-  <div :infinite-scroll-disabled="busy" :infinite-scroll-distance="10">
-    <a-row type="flex" v-if="data && data.length > 0">
-      <a-col :span="6" v-for="item in data" :key="item.Id">
-        <!-- :src="`${baseUrl}/${item.imageSrc}`" -->
-        <a-card hoverable @click.native.stop="goReadonly(item)">
+  <div :infinite-scroll-disabled="busy" style="width:1200px;margin: 0 auto;">
+    <a-row v-if="data && data.length > 0">
+      <a-col :span="8" v-for="item in data" :key="item.Id">
+        <a-card hoverable @click.native.stop="goReadonly(item)" style="width:380px;margin:10px auto;">
           <div slot="cover" style="height:116px">
             <img alt="example" :src="item.first_picture" />
             <span style="display: inline-block;padding-left: 10px;max-width: calc(100% - 216px);height:100%">
@@ -45,7 +44,9 @@ export default {
       isFirstLoad: true,
       busy: false,
       editVisible: false,
-      data: []
+      data: [],
+      pageSize: 15,
+      loading: false
     };
   },
   mounted() {
@@ -54,32 +55,47 @@ export default {
   },
   beforeDestroy() {
     this.$bus.$off('load-more');
+    this.$bus.$emit('reset');
   },
   methods: {
     isNewBlog(item) {
       return this.$moment().diff(this.$moment(item.createdOn), 'day') < 5;
     },
     loadData() {
+      if (this.loading) {
+        this.$bus.$emit('loading-finish');
+        return;
+      }
+      this.loading = true;
+
       if (sp.isNullOrEmpty(this.getDataApi)) {
+        this.$bus.$emit('loading-finish');
+        this.$bus.$emit('loaded-all');
         return;
       }
 
       if (this.pageSize * this.pageIndex >= this.total && !this.isFirstLoad) {
+        this.$bus.$emit('loading-finish');
+        this.$bus.$emit('loaded-all');
         return;
       }
 
       this.busy = true;
       this.$emit('loading');
+      if (!this.isFirstLoad) {
+        this.pageIndex += 1;
+      }
       sp.get(this.getDataApi.replace('$pageSize', this.pageSize).replace('$pageIndex', this.pageIndex))
         .then(resp => {
           this.data = this.data.concat(resp.DataList);
           this.total = resp.RecordCount;
           this.isFirstLoad = false;
           this.busy = false;
-          this.pageIndex += 1;
         })
         .finally(() => {
+          this.loading = false;
           this.$emit('loading-close');
+          this.$bus.$emit('loading-finish');
         });
     },
     goReadonly(row) {
