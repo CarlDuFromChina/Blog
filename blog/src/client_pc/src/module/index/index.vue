@@ -19,9 +19,6 @@
     <!-- 菜单 -->
     <div id="container" class="container">
       <router-view></router-view>
-      <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
-        <spam v-if="isLoadedAll">到底了....</spam>
-      </a-spin>
     </div>
     <div class="footer">
       <div class="footer-wrapper">
@@ -70,22 +67,11 @@ export default {
             this.$router.push({ name: 'aboutme' });
           }
         }
-      ],
-      loading: false,
-      isLoadedAll: false
+      ]
     };
   },
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
-    this.$bus.$on('loading-finish', () => {
-      this.loading = false;
-    });
-    this.$bus.$on('loaded-all', () => {
-      this.isLoadedAll = true;
-    });
-    this.$bus.$on('reset', () => {
-      this.isLoadedAll = false;
-    });
   },
   destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
@@ -126,13 +112,7 @@ export default {
       document.getElementById('container').scrollIntoView();
     },
     loadMore() {
-      if (this.isLoadedAll) {
-        return;
-      }
-      this.loading = true;
-      setTimeout(() => {
-        this.$bus.$emit('load-more');
-      }, 300);
+      this.$bus.$emit('load-more');
     }
   }
 };

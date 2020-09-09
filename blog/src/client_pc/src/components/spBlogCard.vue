@@ -51,10 +51,8 @@ export default {
   },
   mounted() {
     this.loadData();
-    this.$bus.$on('load-more', () => this.loadData());
   },
   beforeDestroy() {
-    this.$bus.$off('load-more');
     this.$bus.$emit('reset');
   },
   methods: {
