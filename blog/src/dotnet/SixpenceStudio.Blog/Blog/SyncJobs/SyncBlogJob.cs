@@ -25,7 +25,7 @@ namespace SixpenceStudio.Blog.Blog.SyncJobs
             LogUtils.DebugLog("开始同步谢振国博客");
             try
             {
-                var result = HttpUtils.Get("http://122.51.132.149:8081/index?index=0&offset=5000");
+                var result = HttpUtil.Get("http://122.51.132.149:8081/index?index=0&offset=5000");
                 var blogModel = JsonConvert.DeserializeObject<BlogModel>(result);
                 if (result != null && blogModel.statuscode == 200)
                 {
