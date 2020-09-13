@@ -18,7 +18,9 @@
     </sp-menu>
     <!-- 菜单 -->
     <div id="container" class="container">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
     <div class="footer">
       <div class="footer-wrapper">
