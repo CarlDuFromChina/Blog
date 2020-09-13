@@ -22,6 +22,9 @@
         </a-list-item-meta>
       </a-list-item>
     </a-list>
+    <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
+      <span v-if="isLoadedAll">到底了....</span>
+    </a-spin>
   </div>
 </template>
 
@@ -36,22 +39,37 @@ export default {
       baseUrl: sp.getBaseUrl(),
       listData: [],
       loading: false,
+      isLoadedAll: false,
       actions: [{ type: 'eye' }, { type: 'like-o' }, { type: 'message' }]
     };
   },
   created() {
     this.fetchData();
-  },
-  methods: {
-    fetchData() {
+    this.$bus.$on('load-more', () => {
+      if (this.isLoadedAll) {
+        return;
+      }
       if (this.loading) {
         return;
       }
       this.loading = true;
-      sp.get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`).then(resp => {
-        this.total = resp.RecordCount;
-        this.listData = resp.DataList;
-      });
+      setTimeout(() => {
+        this.fetchData();
+      }, 500);
+    });
+  },
+  methods: {
+    fetchData() {
+      try {
+        sp.get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`).then(resp => {
+          this.total = resp.RecordCount;
+          this.listData = this.listData.concat(resp.DataList);
+          this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
+          this.pageIndex++;
+        });
+      } finally {
+        this.loading = false;
+      }
     },
     readBlog(item) {
       const { href } = this.$router.resolve({
