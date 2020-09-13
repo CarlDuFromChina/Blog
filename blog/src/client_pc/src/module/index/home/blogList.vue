@@ -16,7 +16,6 @@
             {{ item.message || 0 }}
           </span>
         </template>
-        <img slot="extra" style="width:272px;height:168px;" alt="surface" :src="baseUrl + item.imageSrc" />
         <a-list-item-meta :description="item.description">
           <a slot="title" @click="readBlog(item)">{{ item.title }}</a>
           <a-avatar slot="avatar" src="http://www.dumiaoxin.top:8002/temp/1B715131BA7631E818D1713D3E6766E541717022.png" />
