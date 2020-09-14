@@ -18,7 +18,7 @@
         </template>
         <a-list-item-meta :description="item.description">
           <a slot="title" @click="readBlog(item)">{{ item.title }}</a>
-          <a-avatar slot="avatar" src="http://www.dumiaoxin.top:8002/temp/1B715131BA7631E818D1713D3E6766E541717022.png" />
+          <a-avatar slot="avatar" src="http://www.dumiaoxin.top:8002/storage/1B715131BA7631E818D1713D3E6766E541717022.png" />
         </a-list-item-meta>
       </a-list-item>
     </a-list>
