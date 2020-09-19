@@ -14,7 +14,9 @@ namespace SixpenceStudio.Blog.Blog.FriendBlog
         #region 构造函数
         public FriendBlogService()
         {
-            this._cmd = new EntityCommand<friend_blog>();
+            // 使用从库
+            var broker = new PersistBroker(true);
+            this._cmd = new EntityCommand<friend_blog>(broker);
         }
 
         public FriendBlogService(IPersistBroker broker)
