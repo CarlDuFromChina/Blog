@@ -201,7 +201,7 @@
     <Compile Include="Blog\BlogService.cs" />
     <Compile Include="Comments\comments.cs" />
     <Compile Include="Draft\draft.cs" />
-    <Compile Include="Draft\DraftConfig.cs" />
+    <Compile Include="Draft\DraftSysConfig.cs" />
     <Compile Include="Draft\DraftController.cs" />
     <Compile Include="Draft\DraftService.cs" />
     <Compile Include="idea\idea.cs" />
