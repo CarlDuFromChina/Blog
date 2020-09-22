@@ -24,8 +24,8 @@
     </div>
     <div class="footer">
       <div class="footer-wrapper">
-        <p>没事，我还顶得住</p>
         <p>Made By Karl Du</p>
+        <a href="http://www.miitbeian.gov.cn">苏ICP备2020054977号</a>
       </div>
     </div>
     <transition name="hehe">
