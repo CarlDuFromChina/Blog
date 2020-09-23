@@ -3,7 +3,7 @@
     <div class="infinite-list">
       <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
         <div class="profile">
-          <div class="avatar"></div>
+          <div class="avatar" :style="{ backgroundImage: avatar }"></div>
           <div class="user-info">
             <span>{{ item.createdByName }}</span>
             <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
@@ -32,6 +32,11 @@ export default {
   },
   created() {
     this.loadData();
+  },
+  computed: {
+    avatar() {
+      return `${location.origin}/api/SysFile/Download?objectId=5B4A52AF-052E-48F0-82BB-108CC834E864`;
+    }
   },
   methods: {
     loadData() {
@@ -76,7 +81,6 @@ export default {
       background-color: #fff;
       font-size: 13px;
       .avatar {
-        background-image: url('http://karldu.cn/storage/1B715131BA7631E818D1713D3E6766E541717022.png');
         width: 50px;
         height: 50px;
         border-radius: 50%;

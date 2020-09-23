@@ -18,7 +18,7 @@
         </template>
         <a-list-item-meta :description="item.description">
           <a slot="title" @click="readBlog(item)">{{ item.title }}</a>
-          <a-avatar slot="avatar" :src="`http://karldu.cn/storage/1B715131BA7631E818D1713D3E6766E541717022.png`" />
+          <a-avatar slot="avatar" :src="avatar" />
         </a-list-item-meta>
       </a-list-item>
     </a-list>
@@ -57,6 +57,11 @@ export default {
         this.fetchData();
       }, 500);
     });
+  },
+  computed: {
+    avatar() {
+      return `${location.origin}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+    }
   },
   methods: {
     fetchData() {
