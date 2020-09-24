@@ -9,7 +9,7 @@
               <a-skeleton :loading="loading">
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div class="bodyWrapper-content">
-                  <div v-highlight v-html="formatterContent"></div>
+                  <div id="blog-content" v-highlight v-html="formatterContent"></div>
                 </div>
               </a-skeleton>
             </a-card>
@@ -133,6 +133,11 @@ export default {
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     this.imageUrl = sp.getBaseUrl() + this.user.avatarUrl;
     this.recordReadingTimes();
+    const content = document.getElementById('blog-content');
+    const nodes = content.getElementsByTagName('a');
+    nodes.forEach(node => {
+      node.target = '_blank';
+    });
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
