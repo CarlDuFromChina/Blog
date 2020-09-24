@@ -3,7 +3,7 @@
     <div class="infinite-list">
       <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
         <div class="profile">
-          <div class="avatar" :style="{ backgroundImage: avatar }"></div>
+          <div class="avatar" :style="{ backgroundImage: `url(${avatar})` }"></div>
           <div class="user-info">
             <span>{{ item.createdByName }}</span>
             <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
@@ -23,6 +23,7 @@ export default {
   mixins: [pagination],
   data() {
     return {
+      baseUrl: sp.getBaseUrl(),
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
@@ -35,7 +36,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `${location.origin}/api/SysFile/Download?objectId=5B4A52AF-052E-48F0-82BB-108CC834E864`;
+      return `${this.baseUrl}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
     }
   },
   methods: {

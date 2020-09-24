@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `${location.origin}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+      return `${this.baseUrl}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
     }
   },
   methods: {

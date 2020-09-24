@@ -200,7 +200,7 @@ export default {
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
         let oStr = `(${pos})`;
-        let nStr = `(${this.baseUrl}/${resp.path})`;
+        let nStr = `(${this.baseUrl}/${resp.downloadUrl})`;
         let index = this.data.content.indexOf(oStr);
         let str = this.data.content.replace(oStr, '');
         let insertStr = (soure, start, newStr) => {
