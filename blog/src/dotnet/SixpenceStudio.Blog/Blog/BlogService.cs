@@ -26,11 +26,7 @@ namespace SixpenceStudio.Blog.Blog
 
         public override IList<EntityView<blog>> GetViewList()
         {
-            return new List<EntityView<blog>>()
-            {
-                new EntityView<blog>()
-                {
-                    Sql = $@"
+            var sql = $@"
 SELECT
 	blog.blogid,
 	blog.title,
@@ -54,10 +50,23 @@ FROM
 LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
 INNER JOIN classification ON classification.code = blog.blog_type AND classification.is_show = 1
 WHERE 1=1
-",
+";
+            return new List<EntityView<blog>>()
+            {
+                new EntityView<blog>()
+                {
+                    Sql = $@"{sql} AND blog.is_series = 0",
                     ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
                     CustomFilter = new List<string>() { "title" },
                     Name = "全部博客",
+                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                },
+                new EntityView<blog>()
+                {
+                    Sql = $@"{sql} AND blog.is_series = 1",
+                    ViewId = "ACCE50D6-81A5-4240-BD82-126A50764FAB",
+                    CustomFilter = new List<string>() { "title" },
+                    Name = "全部系列",
                     OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
                 }
             };
