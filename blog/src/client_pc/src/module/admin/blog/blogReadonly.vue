@@ -29,7 +29,7 @@
                       <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ user.introduction }}</div>
                     </div>
                   </a>
-                  <div class="block-content" style="padding-top:20px">
+                  <div id="block-content" style="padding-top:20px">
                     <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px" @click="upvote"></sp-icon>
                     <span>获得点赞</span>
                     <span>{{ data.upvote_times || 0 }}</span>
@@ -131,13 +131,8 @@ export default {
   async created() {
     await this.loadData();
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
-    this.imageUrl = sp.getBaseUrl() + this.user.avatarUrl;
+    this.imageUrl = `${sp.getBaseUrl()}/api/SysFile/Download?objectId=1B715131BA7631E818D1713D3E6766E541717022`;
     this.recordReadingTimes();
-    const content = document.getElementById('blog-content');
-    const nodes = content.getElementsByTagName('a');
-    nodes.forEach(node => {
-      node.target = '_blank';
-    });
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
@@ -195,6 +190,16 @@ export default {
         content.style.top = '0';
         content.style.marginTop = 0;
       }
+    },
+    handleLinkClick() {
+      const content = document.getElementById('blog-content');
+      const nodes = content.getElementsByTagName('a');
+      nodes.forEach(node => {
+        node.target = '_blank';
+      });
+    },
+    loadComplete() {
+      this.handleLinkClick();
     },
     async loadData() {
       this.loading = true;
