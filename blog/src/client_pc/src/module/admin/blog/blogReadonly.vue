@@ -208,9 +208,6 @@ export default {
         if (this.loadComplete && typeof this.loadComplete === 'function') {
           this.loadComplete();
         }
-      } catch (error) {
-        this.$message.error('加载失败');
-        this.$router.back();
       } finally {
         setTimeout(() => {
           this.loading = false;
