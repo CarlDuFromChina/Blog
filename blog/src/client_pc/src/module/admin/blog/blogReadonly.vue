@@ -8,8 +8,8 @@
             <a-card>
               <a-skeleton :loading="loading">
                 <div class="bodyWrapper-title">{{ data.title }}</div>
-                <div class="bodyWrapper-content">
-                  <div id="blog-content" v-highlight v-html="formatterContent"></div>
+                <div id="blog_content" class="bodyWrapper-content">
+                  <div v-highlight v-html="formatterContent"></div>
                 </div>
               </a-skeleton>
             </a-card>
@@ -131,7 +131,7 @@ export default {
   async created() {
     await this.loadData();
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
-    this.imageUrl = `${sp.getBaseUrl()}/api/SysFile/Download?objectId=1B715131BA7631E818D1713D3E6766E541717022`;
+    this.imageUrl = `${sp.getBaseUrl()}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
     this.recordReadingTimes();
   },
   mounted() {
@@ -192,25 +192,22 @@ export default {
       }
     },
     handleLinkClick() {
-      const content = document.getElementById('blog-content');
+      const content = document.getElementById('blog_content');
       const nodes = content.getElementsByTagName('a');
-      nodes.forEach(node => {
+      for (const node of nodes) {
         node.target = '_blank';
-      });
-    },
-    loadComplete() {
-      this.handleLinkClick();
+      }
     },
     async loadData() {
       this.loading = true;
       try {
         this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`);
-        if (this.loadComplete && typeof this.loadComplete === 'function') {
-          this.loadComplete();
-        }
       } finally {
         setTimeout(() => {
           this.loading = false;
+          this.$nextTick(() => {
+            this.handleLinkClick();
+          });
         }, 200);
       }
     },
