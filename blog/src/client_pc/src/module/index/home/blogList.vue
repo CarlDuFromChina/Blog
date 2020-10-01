@@ -17,7 +17,10 @@
           </span>
         </template>
         <a-list-item-meta :description="item.description">
-          <a slot="title" @click="readBlog(item)">{{ item.title }}</a>
+          <span slot="title" style="font-size:14px;">
+            <a @click="readBlog(item)">{{ item.title }}</a>
+            <div>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+          </span>
           <a-avatar slot="avatar" :src="avatar" />
         </a-list-item-meta>
       </a-list-item>
@@ -94,5 +97,17 @@ export default {
   color: rgba(0, 0, 0, 0.65);
   background: #ffffff;
   margin-right: 50px;
+}
+
+.ant-list-item-meta-content {
+  margin-top: -10px;
+}
+
+.ant-list-vertical .ant-list-item-meta {
+  margin-bottom: 0px;
+}
+
+.ant-list-vertical .ant-list-item-meta-title {
+  margin-bottom: 0px;
 }
 </style>
