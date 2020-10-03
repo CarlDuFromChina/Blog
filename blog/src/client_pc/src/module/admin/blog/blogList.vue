@@ -10,12 +10,12 @@
   >
     <a-form-model :model="searchData" slot="more" layout="horizontal" v-bind="{ labelCol: { span: 4 }, wrapperCol: { span: 20 } }" label-align="left">
       <a-row :gutter="24" style="padding: 0 10px">
-        <a-col :span="12">
+        <a-col :span="10">
           <a-form-model-item label="起始日期">
             <a-range-picker v-model="searchData.date" />
           </a-form-model-item>
         </a-col>
-        <a-col :span="6">
+        <a-col :span="10">
           <a-form-model-item label="博客分类">
             <a-select mode="multiple" style="width: 100%" placeholder="Please select" v-model="searchData.type">
               <a-select-option v-for="item in blogType" :key="item.Value">
@@ -24,7 +24,7 @@
             </a-select>
           </a-form-model-item>
         </a-col>
-        <a-col :span="6" style="text-align:right">
+        <a-col :span="4" style="text-align:right">
           <a-button @click="reset">重置</a-button>
           <a-button type="primary" style="margin-left:10px;" @click="search">查询</a-button>
         </a-col>
