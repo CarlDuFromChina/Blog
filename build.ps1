@@ -1,27 +1,6 @@
 # loading helper functions
 . ".\help.ps1"
 
-# Restore Dotnet Packages
-Write-Section-Message "Restore Dotnet Packages"
-nuget restore blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln
-Write-Success-Message "OK."
-
-# Build Dotnet files
-Write-Section-Message "Build Dotnet files"
-$buildException = MSBuild.exe "blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"  /t:rebuild  /p:Configuration=Release
-If (! $?) { Throw $buildException }
-Write-Success-Message "OK."
-
-# Build pc.vue
-Write-Section-Message "Build pc.vue."
-Push-Location "blog\src\client_pc"
-$npmInstallException = yarn.cmd install
-If (!$?) { Throw $npmInstallException }
-$buildException = yarn build
-If (!$?) { Throw $buildException }
-Pop-Location
-Write-Success-Message "OK."
-
 # Reset Build folder
 If (Test-Path blog\build) {
   Remove-Item -Recurse -Force "blog\build\*"
@@ -31,13 +10,43 @@ else
   New-Item -ItemType directory "blog\build\"
 }
 
-New-Item -ItemType directory "blog\build\bin"
+# Restore Dotnet Packages
+@'
+. ".\help.ps1"
+Write-Section-Message "Build dotnet"
+nuget restore "blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"
 
-$release = 'blog\src\dotnet\build\*'
-$release2 = 'blog\src\client_pc\dist\*'
-Copy-Item -Force -Recurse $release 'blog\build\bin\'
-Copy-Item -Force -Recurse $release2 'blog\build\'
+# Build Dotnet files
+$buildException = MSBuild.exe "blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"  /t:rebuild  /p:Configuration=Release
+If (! $?) { Throw $buildException }
+New-Item -ItemType directory "blog\build\bin"
+$release = "blog\src\dotnet\build\*"
+Copy-Item -Force -Recurse $release "blog\build\bin\"
 Remove-Item -Recurse -Force "blog\build\bin\*.pdb"
+Write-Success-Message "OK."
+'@ > DotNetBuild.ps1
+
+start powershell .\DotNetBuild.ps1
+
+# Build pc.vue
+@'
+. ".\help.ps1"
+Write-Section-Message "Build pc.vue."
+Push-Location "blog\src\client_pc"
+$npmInstallException = yarn.cmd install
+If (!$?) { Throw $npmInstallException }
+$buildException = yarn build
+If (!$?) { Throw $buildException }
+Pop-Location
+Write-Success-Message "OK."
+
+$release2 = "blog\src\client_pc\dist\*"
+Copy-Item -Force -Recurse $release2 "blog\build\"
+'@ > ClientPCBuild.ps1
+
+start powershell .\ClientPCBuild.ps1 -wait
 
 # Done
+Remove-Item -Recurse -Force ".\DotNetBuild.ps1"
+Remove-Item -Recurse -Force ".\ClientPCBuild.ps1"
 Write-Section-Message "Finished!"
