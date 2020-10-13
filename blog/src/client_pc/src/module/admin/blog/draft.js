@@ -12,7 +12,24 @@ export default {
       draft: {},
       isDirty: false,
       seconds: 60,
-      configCode: 'enable_draft'
+      configCode: 'enable_draft',
+      saveStatusValue: '',
+      statusList: [{
+        value: 'wait',
+        icon: 'redo',
+        text: '60秒后备份',
+        color: '#000000a6'
+      }, {
+        value: 'success',
+        icon: 'check-circle',
+        text: '草稿保存成功',
+        color: '#52c41a'
+      }, {
+        value: 'fail',
+        icon: 'close-circle',
+        text: '草稿保存失败',
+        color: '#ff4d4f'
+      }]
     };
   },
   async mounted() {
@@ -37,7 +54,10 @@ export default {
   },
   computed: {
     showAutoSave() {
-      return this.isDirty;
+      return !!this.saveStatusValue;
+    },
+    saveStatus() {
+      return this.statusList.find(item => item.value === this.saveStatusValue);
     }
   },
   methods: {
@@ -96,10 +116,11 @@ export default {
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
       sp.post('api/Draft/CreateOrUpdateData', this.draft).then(() => {
-        this.$message.success('草稿保存成功');
+        this.saveStatusValue = 'success';
+        this.isDirty = false;
       })
         .catch(() => {
-          this.$message.error('草稿保存失败！');
+          this.saveStatusValue = 'fail';
         })
         .finally(() => {
           this.seconds = 60;
@@ -113,11 +134,13 @@ export default {
         // 倒计时保存草稿
         if (!this.isDirty) {
           this.isDirty = true;
+          this.saveStatusValue = 'wait';
           this.secondId = setInterval(() => {
             if (this.seconds === 0) {
               this.saveDraft();
             } else {
               this.seconds -= 1;
+              this.statusList[0].text = `${this.seconds}秒后备份`;
             }
           }, 1000);
         }

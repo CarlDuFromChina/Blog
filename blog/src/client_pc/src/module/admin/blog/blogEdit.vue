@@ -3,7 +3,12 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
-      <a-button icon="redo" type="info" v-show="showAutoSave" @click="saveDraft">{{ seconds || 0 }}秒后备份</a-button>
+      <a-popover v-if="showAutoSave">
+        <template slot="content">
+          <p>{{ saveStatus.text }}</p>
+        </template>
+        <a-button :icon="saveStatus.icon" type="dashed" @click="saveDraft" :style="{ color: saveStatus.color }"> </a-button>
+      </a-popover>
     </div>
     <div class="blog-body">
       <div class="blog-bodywrapper">
