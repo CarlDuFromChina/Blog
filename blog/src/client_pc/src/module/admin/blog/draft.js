@@ -136,7 +136,6 @@ export default {
         if (!this.isDirty) {
           this.isDirty = true;
           this.saveStatusValue = 'wait';
-          alert('执行1');
           this.secondId = setInterval(() => {
             if (this.seconds === 0) {
               this.saveDraft();
