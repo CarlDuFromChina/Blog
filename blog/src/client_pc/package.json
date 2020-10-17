@@ -13,7 +13,7 @@
   "dependencies": {
     "highlight.js": "^10.1.1",
     "mavon-editor": "^2.9.0",
-    "sixpence.platform.pc.vue": "1.0.96",
+    "sixpence.platform.pc.vue": "1.0.98",
     "svg-sprite-loader": "^4.1.3",
     "vue-infinite-scroll": "^2.0.2"
   },
