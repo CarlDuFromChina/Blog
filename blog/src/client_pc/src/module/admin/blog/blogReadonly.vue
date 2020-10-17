@@ -30,7 +30,7 @@
                     </div>
                   </a>
                   <div id="block-content" style="padding-top:20px">
-                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px" @click="upvote"></sp-icon>
+                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px"></sp-icon>
                     <span>获得点赞</span>
                     <span>{{ data.upvote_times || 0 }}</span>
                   </div>
