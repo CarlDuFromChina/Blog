@@ -30,6 +30,10 @@ export default {
     this.editor.create();
   },
   methods: {
+    preSave() {
+      this.data.name = `${this.$moment().format('YYYY-MM-DD HH:mm:ss')} 想法`;
+      return true;
+    },
     loadComplete() {
       this.editor.txt.html(this.data.content);
     }

@@ -9,7 +9,7 @@
             <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
           </div>
         </div>
-        <div class="content">{{ item.content }}</div>
+        <div class="content" v-html="item.content"></div>
       </div>
     </div>
   </sp-section>

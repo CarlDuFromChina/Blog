@@ -13,7 +13,7 @@ export default {
       editComponent: ideaEdit,
       operations: ['new', 'delete'],
       columns: [
-        { prop: 'content', label: '内容' },
+        { prop: 'name', label: '内容' },
         { prop: 'createdByName', label: '创建人' },
         { prop: 'createdOn', label: '创建日期', type: 'datetime' }
       ]
