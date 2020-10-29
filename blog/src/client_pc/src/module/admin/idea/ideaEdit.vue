@@ -3,7 +3,7 @@
     <a-row>
       <a-col>
         <h2 align="center">写下你的想法</h2>
-        <sp-editor v-model="data.content"></sp-editor>
+        <sp-editor v-model="data.content" :uploadImgParams="uploadImgParams"></sp-editor>
       </a-col>
     </a-row>
   </a-form-model>
@@ -19,6 +19,14 @@ export default {
     return {
       controllerName: 'idea'
     };
+  },
+  computed: {
+    uploadImgParams() {
+      return {
+        fileType: 'idea',
+        objectId: this.data.Id
+      };
+    }
   },
   methods: {
     preSave() {
