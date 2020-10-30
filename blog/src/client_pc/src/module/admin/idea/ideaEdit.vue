@@ -3,7 +3,7 @@
     <a-row>
       <a-col>
         <h2 align="center">写下你的想法</h2>
-        <sp-editor v-model="data.content" :uploadImgParams="uploadImgParams"></sp-editor>
+        <sp-editor v-model="data.content" :uploadImgParams="uploadImgParams" :disabledMenu="['image', 'video']"></sp-editor>
       </a-col>
     </a-row>
   </a-form-model>

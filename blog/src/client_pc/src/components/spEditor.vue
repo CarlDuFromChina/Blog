@@ -15,6 +15,10 @@ export default {
     uploadImgParams: {
       type: Object,
       default: () => {}
+    },
+    disabledMenu: {
+      type: Array,
+      default: () => []
     }
   },
   model: {
@@ -39,6 +43,7 @@ export default {
     this.editor.config.onchange = html => {
       this.$emit('input', html);
     };
+    this.editor.config.menus = this.editor.config.menus.filter(item => !this.disabledMenu.includes(item));
     this.editor.config.uploadImgParamsWithUrl = true;
     this.editor.config.uploadImgHeaders = {
       Authorization: `BasicAuth ${localStorage.getItem('Token') || ''}`
