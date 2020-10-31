@@ -1,3 +1,8 @@
+<!--
+ * @FileDescription: 富文本编辑器（wangEditor）
+ * @Author: Karl Du
+ * @Date: 2020/10/29
+ -->
 <template>
   <div ref="editor"></div>
 </template>
@@ -12,10 +17,12 @@ export default {
       type: String,
       default: ''
     },
+    // 请求额外参数
     uploadImgParams: {
       type: Object,
       default: () => {}
     },
+    // 禁用功能
     disabledMenu: {
       type: Array,
       default: () => []
