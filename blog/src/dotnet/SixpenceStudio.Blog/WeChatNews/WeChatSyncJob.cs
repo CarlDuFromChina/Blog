@@ -29,7 +29,7 @@ namespace SixpenceStudio.Blog.WeChatNews
 
         private void SyncWeChatNews(IPersistBroker broker)
         {
-            LogUtils.DebugLog("开始同步微信公众号图文素材");
+            LogUtils.Debug("开始同步微信公众号图文素材");
             try
             {
                 var result = WeChatService.GetWeChatNewsMaterial("news", 1, 5000);
@@ -59,11 +59,11 @@ namespace SixpenceStudio.Blog.WeChatNews
                 {
                     broker.Save(item);
                 });
-                LogUtils.DebugLog("同步微信公众号图文素材成功");
+                LogUtils.Debug("同步微信公众号图文素材成功");
             }
             catch (Exception e)
             {
-                LogUtils.ErrorLog("同步微信公众号图文素材失败", e);
+                LogUtils.Error("同步微信公众号图文素材失败", e);
             }
         }
     }
