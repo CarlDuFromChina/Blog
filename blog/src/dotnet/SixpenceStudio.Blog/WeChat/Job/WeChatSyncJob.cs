@@ -1,18 +1,18 @@
 ﻿using Minio.DataModel;
 using Newtonsoft.Json;
 using SixpenceStudio.BaseSite.UserInfo;
-using SixpenceStudio.BaseSite.WeChat;
-using SixpenceStudio.BaseSite.WeChat.ResponseModel;
 using SixpenceStudio.Platform.Data;
 using SixpenceStudio.Platform.Job;
 using SixpenceStudio.Platform.Logging;
+using SixpenceStudio.WeChat;
+using SixpenceStudio.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.WeChatNews
+namespace SixpenceStudio.Blog.WeChat.Job
 {
     public class WeChatSyncJob : JobBase
     {

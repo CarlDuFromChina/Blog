@@ -6951,16 +6951,17 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.99:
-  version "1.0.99"
-  resolved "http://karldu.cn:8002/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.99.tgz#c10e02128a710f11dede251a8728de32ac8792d2"
-  integrity sha512-et6hIo7qYWdrhaKsfILYS9eT+K0HMJM+hkEoqpEnN04hJXFmnBUVuiVezNdsBNlz5lJqlguf1Bvxy6PaCysX7w==
+sixpence.platform.pc.vue@1.0.100:
+  version "1.0.100"
+  resolved "http://karldu.cn:8002/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.100.tgz#18d4f05c6c15d1afd528cda153122da5acc0150c"
+  integrity sha512-Om+tgP7KpmbllpnG91wSbtjWPuDj/UFWT2D03g/No2LXZqnH+OpQyliZsgHSCF0WKsP3MSGaA2aAPFmE93sOhw==
   dependencies:
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0-rc.1"
     less "^3.10.3"
     less-loader "^5.0.0"
     uuidjs "^4.2.5"
+    wangeditor "^4.1.0"
 
 slash@^1.0.0:
   version "1.0.0"
@@ -7978,10 +7979,10 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-wangeditor@^4.0.5:
-  version "4.0.5"
-  resolved "http://karldu.cn:8002/wangeditor/-/wangeditor-4.0.5.tgz#0a7d19a068a9fe3af3de316a320d678cc1145e5d"
-  integrity sha512-/jyHhlo8mbCbW9dP8/qq+P2WaAT4fR7vA2ilKZAAQZSqDUdaxfTiTOGRPei37DaqR3ipjVv5gocOPhxljdKTZQ==
+wangeditor@^4.1.0:
+  version "4.1.0"
+  resolved "http://karldu.cn:8002/wangeditor/-/wangeditor-4.1.0.tgz#2522154d0c38b6e7f4da75a00c12ee2491e4bb32"
+  integrity sha512-atWEcIudsaS7riqEdsxS+P8LZq997XFsVzkK7Arv3ERBzPQbxPbj9L4+fTgb4M+q6l/jnv4AbGPSSuylemam5g==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@babel/runtime-corejs3" "^7.11.2"

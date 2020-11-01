@@ -107,10 +107,13 @@
       <HintPath>packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.BaseSite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.BaseSite.1.0.85\lib\net461\SixpenceStudio.BaseSite.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.BaseSite.1.0.87\lib\net461\SixpenceStudio.BaseSite.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.Platform.1.0.85\lib\net461\SixpenceStudio.Platform.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.Platform.1.0.87\lib\net461\SixpenceStudio.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="SixpenceStudio.WeChat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\SixpenceStudio.WeChat.1.0.87\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -211,10 +214,7 @@
     <Compile Include="RecommendInfo\RecommendInfoController.cs" />
     <Compile Include="RecommendInfo\RecommendInfoService.cs" />
     <Compile Include="RecommendInfo\recommend_info.cs" />
-    <Compile Include="WeChatNews\WeChatNewsController.cs" />
-    <Compile Include="WeChatNews\WeChatNewsService.cs" />
-    <Compile Include="WeChatNews\WeChatSyncJob.cs" />
-    <Compile Include="WeChatNews\wechat_news.cs" />
+    <Compile Include="WeChat\Job\WeChatSyncJob.cs" />
     <Compile Include="WeChatReply\WeChatTextKeyWord.cs" />
   </ItemGroup>
   <ItemGroup>
