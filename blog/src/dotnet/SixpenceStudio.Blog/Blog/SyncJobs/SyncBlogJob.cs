@@ -20,7 +20,7 @@ namespace SixpenceStudio.Blog.Blog.SyncJobs
 
         public override string CronExperssion => "0 0 4 * * ?";
 
-        public override void Run(IPersistBroker broker)
+        public override void Execute(IPersistBroker broker)
         {
             LogUtils.Debug("开始同步谢振国博客");
             try
