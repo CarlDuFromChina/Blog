@@ -3,6 +3,7 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
+      <a-button icon="sync" type="primary" @click="sync2Wechat()">同步到微信</a-button>
       <a-popover v-if="showAutoSave">
         <template slot="content">
           <p>{{ saveStatus.text }}</p>
@@ -13,7 +14,7 @@
     <div class="blog-body">
       <div class="blog-bodywrapper">
         <div class="blog-bodywrapper-markdown">
-          <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" />
+          <mavon-editor v-model="data.content" ref="md" @imgAdd="imgAdd" @change="change" @save="editVisible = true" />
         </div>
       </div>
     </div>
@@ -248,6 +249,20 @@ export default {
     },
     changeTags(val) {
       this.tags = val;
+    },
+    sync2Wechat() {
+      this.$confirm({
+        title: '微信同步',
+        content: '是否同步到微信图文素材库?',
+        okText: '确定',
+        cancelText: '取消',
+        onOk: () => {
+          sp.post(`api/Blog/SyncToWeChat?id=${this.data.Id}`, `=${this.html}`);
+        },
+        onCancel: () => {
+          this.$message.info('已取消');
+        }
+      });
     }
   }
 };

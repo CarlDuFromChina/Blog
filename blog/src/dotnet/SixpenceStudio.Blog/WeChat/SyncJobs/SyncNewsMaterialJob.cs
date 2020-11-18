@@ -12,13 +12,9 @@ using SixpenceStudio.BaseSite.UserInfo;
 using SixpenceStudio.Platform.Data;
 using SixpenceStudio.Platform.Job;
 using SixpenceStudio.Platform.Logging;
-using SixpenceStudio.WeChat.Material;
 using SixpenceStudio.WeChat.WeChatNews;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.WeChat.SyncJobs
 {
@@ -36,13 +32,13 @@ namespace SixpenceStudio.Blog.WeChat.SyncJobs
             logger.Debug("开始同步微信公众号图文素材");
             try
             {
-                var result = new WeChatMaterialService().GetNewsMaterial(1, 5000);
+                var result = new WeChatNewsService().GetNewsMaterial(1, 5000);
                 var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
                 var dataList = from item in result.item
                                select new wechat_news()
                                {
                                    wechat_newsId = item.media_id,
-                                   content = JsonConvert.SerializeObject(item.content),
+                                   content = JsonConvert.SerializeObject(item.content.news_item.FirstOrDefault()?.content),
                                    media_id = item.media_id,
                                    update_time = item.update_time,
                                    name = item.content.news_item.FirstOrDefault()?.title,

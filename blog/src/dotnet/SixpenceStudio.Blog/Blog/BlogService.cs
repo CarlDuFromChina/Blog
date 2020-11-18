@@ -3,6 +3,9 @@ using SixpenceStudio.Platform.Command;
 using SixpenceStudio.Platform.Data;
 using SixpenceStudio.Platform.Service;
 using SixpenceStudio.Platform.Utils;
+using SixpenceStudio.WeChat;
+using SixpenceStudio.WeChat.Material;
+using SixpenceStudio.WeChat.WeChatNews;
 using System.Collections.Generic;
 
 namespace SixpenceStudio.Blog.Blog
@@ -170,6 +173,21 @@ UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @i
 UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
 ";
             _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+        }
+
+        /// <summary>
+        /// 同步到微信图文素材
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="htmlContent"></param>
+        public void SyncToWeChat(string id, string htmlContent)
+        {
+            _cmd.broker.ExecuteTransaction(() =>
+            {
+                var data = GetData(id);
+                var media = new WeChatMaterialService().AddMaterial(WeChatMaterialExtension.MaterialType.image, data.imageId);
+                new WeChatNewsService(Broker).AddNews(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+            });
         }
     }
 }

@@ -91,5 +91,11 @@ namespace SixpenceStudio.Blog.Blog
         {
             new BlogService().Upvote(blogId);
         }
+
+        [HttpPost]
+        public void SyncToWeChat([FromUri]string id, [FromBody]string htmlContent)
+        {
+            new BlogService().SyncToWeChat(id, htmlContent);
+        }
     }
 }
