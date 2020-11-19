@@ -45,8 +45,7 @@ SELECT
 	COALESCE(blog.reading_times, 0) reading_times,
 	COALESCE(blog.upvote_times, 0) upvote_times,
 	(SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid) message,
-	sys_file.sys_fileid AS imageId,
-	'{FileUtil.storage}/' || sys_file.name AS imageSrc
+	sys_file.sys_fileid AS imageId
 FROM
 	blog
 LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
@@ -119,7 +118,6 @@ SELECT * FROM sys_file WHERE objectid = @id and file_type = '{BLOG_SURFACE_NAME}
             // 获取博客封面
             var image = _cmd.broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
             data.imageId = image?.Id;
-            data.imageSrc = $"{FileUtil.storage}/" + image?.name;
             return data;
         }
 

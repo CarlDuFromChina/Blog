@@ -13,9 +13,6 @@ namespace SixpenceStudio.Blog.Blog
         public string imageId { get; set; }
 
         [DataMember]
-        public string imageSrc { get; set; }
-
-        [DataMember]
         public string isSeriesName
         {
             get

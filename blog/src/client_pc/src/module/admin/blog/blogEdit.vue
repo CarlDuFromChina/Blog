@@ -163,12 +163,12 @@ export default {
   methods: {
     loadComplete() {
       if (!sp.isNullOrEmpty(this.data.imageId)) {
-        const arr = (this.data.imageSrc || '').split('/');
-        const name = arr.length > 0 ? arr[arr.length - 1] : '';
         this.fileList = [
           {
-            name: name,
-            url: this.baseUrl + '/' + this.data.imageSrc
+            uid: '0',
+            status: 'done',
+            name: 'surface.png',
+            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.imageId}`
           }
         ];
       }
