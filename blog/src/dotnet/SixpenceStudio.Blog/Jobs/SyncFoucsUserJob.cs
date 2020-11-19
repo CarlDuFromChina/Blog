@@ -18,7 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.WeChat.SyncJobs
+namespace SixpenceStudio.Blog.Jobs
 {
     public class SyncFoucsUserJob : JobBase
     {

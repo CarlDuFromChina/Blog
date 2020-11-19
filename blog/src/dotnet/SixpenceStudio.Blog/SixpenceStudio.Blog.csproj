@@ -107,13 +107,13 @@
       <HintPath>packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.BaseSite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.BaseSite.1.0.103\lib\net461\SixpenceStudio.BaseSite.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.BaseSite.1.0.104\lib\net461\SixpenceStudio.BaseSite.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.Platform.1.0.103\lib\net461\SixpenceStudio.Platform.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.Platform.1.0.104\lib\net461\SixpenceStudio.Platform.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.WeChat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.WeChat.1.0.103\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.WeChat.1.0.104\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -187,10 +187,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blog\FriendBlog\FriendBlogController.cs" />
-    <Compile Include="Blog\FriendBlog\FriendBlogService.cs" />
-    <Compile Include="Blog\FriendBlog\friend_blog.cs" />
-    <Compile Include="Blog\SyncJobs\SyncBlogJob.cs" />
+    <Compile Include="FriendBlog\FriendBlogController.cs" />
+    <Compile Include="FriendBlog\FriendBlogService.cs" />
+    <Compile Include="FriendBlog\friend_blog.cs" />
+    <Compile Include="Jobs\SyncBlogJob.cs" />
     <Compile Include="Classification\classification.cs" />
     <Compile Include="Classification\ClassificationController.cs" />
     <Compile Include="Classification\ClassificationPartial.cs" />
@@ -214,9 +214,9 @@
     <Compile Include="RecommendInfo\RecommendInfoController.cs" />
     <Compile Include="RecommendInfo\RecommendInfoService.cs" />
     <Compile Include="RecommendInfo\recommend_info.cs" />
-    <Compile Include="WeChat\SyncJobs\SyncFoucsUserJob.cs" />
-    <Compile Include="WeChat\SyncJobs\SyncMaterialJob.cs" />
-    <Compile Include="WeChat\SyncJobs\SyncNewsMaterialJob.cs" />
+    <Compile Include="Jobs\SyncFoucsUserJob.cs" />
+    <Compile Include="Jobs\SyncMaterialJob.cs" />
+    <Compile Include="Jobs\SyncNewsMaterialJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

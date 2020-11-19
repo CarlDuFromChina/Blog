@@ -1,13 +1,12 @@
-﻿using SixpenceStudio.Platform.Command;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Service;
+﻿using SixpenceStudio.Platform.Data;
+using SixpenceStudio.Platform.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.Blog.FriendBlog
+namespace SixpenceStudio.Blog.FriendBlog
 {
     public class FriendBlogService : EntityService<friend_blog>
     {

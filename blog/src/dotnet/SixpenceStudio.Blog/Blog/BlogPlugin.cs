@@ -1,6 +1,6 @@
 ﻿using SixpenceStudio.Blog.Draft;
-using SixpenceStudio.Platform.Command;
 using SixpenceStudio.Platform.Data;
+using SixpenceStudio.Platform.Entity;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,8 +12,8 @@ namespace SixpenceStudio.Blog.Blog
         {
             switch (context.Action)
             {
-                case Action.PostCreate:
-                case Action.PostUpdate:
+                case EntityAction.PostCreate:
+                case EntityAction.PostUpdate:
                     var entity = context.Entity;
                     var id = context.Entity.Id;
                     var sql = @"

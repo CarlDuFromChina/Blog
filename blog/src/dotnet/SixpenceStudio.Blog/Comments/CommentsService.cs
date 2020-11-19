@@ -1,7 +1,6 @@
 ﻿using SixpenceStudio.BaseSite.UserInfo;
-using SixpenceStudio.Platform.Command;
 using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Service;
+using SixpenceStudio.Platform.Entity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

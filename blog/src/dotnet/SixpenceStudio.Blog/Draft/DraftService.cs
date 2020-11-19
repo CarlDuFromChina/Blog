@@ -1,6 +1,5 @@
-﻿using SixpenceStudio.Platform.Command;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Service;
+﻿using SixpenceStudio.Platform.Data;
+using SixpenceStudio.Platform.Entity;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;

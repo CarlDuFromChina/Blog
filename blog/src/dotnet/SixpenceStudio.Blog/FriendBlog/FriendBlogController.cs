@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace SixpenceStudio.Blog.Blog.FriendBlog
+namespace SixpenceStudio.Blog.FriendBlog
 {
     public class FriendBlogController : EntityBaseController<friend_blog, FriendBlogService>
     {

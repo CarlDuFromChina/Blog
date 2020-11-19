@@ -4,7 +4,7 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace SixpenceStudio.Blog.Blog.FriendBlog
+namespace SixpenceStudio.Blog.FriendBlog
 {
     [EntityName("friend_blog")]
     public partial class friend_blog : BaseEntity

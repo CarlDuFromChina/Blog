@@ -15,7 +15,7 @@ using SixpenceStudio.WeChat;
 using SixpenceStudio.WeChat.Material;
 using System;
 
-namespace SixpenceStudio.Blog.WeChat.SyncJobs
+namespace SixpenceStudio.Blog.Jobs
 {
     public class SyncMaterialJob : JobBase
     {

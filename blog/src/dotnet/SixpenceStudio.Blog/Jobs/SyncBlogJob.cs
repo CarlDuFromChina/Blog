@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SixpenceStudio.Blog.Blog.FriendBlog;
+using SixpenceStudio.Blog.FriendBlog;
 using SixpenceStudio.Platform.Data;
 using SixpenceStudio.Platform.Job;
 using SixpenceStudio.Platform.Logging;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SixpenceStudio.Blog.Blog.SyncJobs
+namespace SixpenceStudio.Blog.Jobs
 {
     public class SyncBlogJob : JobBase
     {
