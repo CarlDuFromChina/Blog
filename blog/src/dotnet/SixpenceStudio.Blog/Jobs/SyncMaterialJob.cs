@@ -32,7 +32,7 @@ namespace SixpenceStudio.Blog.Jobs
             var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
             try
             {
-                var images = new WeChatMaterialService().GetMaterial(WeChatMaterialExtension.MaterialType.image.ToMaterialTypeString(), 1, 5000);
+                var images = new WeChatMaterialService().GetMaterial(MaterialType.image.ToMaterialTypeString(), 1, 5000);
                 images.item.ForEach(item =>
                 {
                     var material = new wechat_material()
@@ -42,7 +42,7 @@ namespace SixpenceStudio.Blog.Jobs
                         url = item.url,
                         sys_fileid = "",
                         name = item.name,
-                        type = WeChatMaterialExtension.MaterialType.image.ToMaterialTypeString(),
+                        type = MaterialType.image.ToMaterialTypeString(),
                         createdBy = user.Id,
                         createdByName = user.name,
                         modifiedBy = user.Id,
@@ -55,7 +55,7 @@ namespace SixpenceStudio.Blog.Jobs
                 });
                 logger.Debug("微信图片素材同步成功");
 
-                var voices = new WeChatMaterialService().GetMaterial(WeChatMaterialExtension.MaterialType.voice.ToMaterialTypeString(), 1, 5000);
+                var voices = new WeChatMaterialService().GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
                 voices.item.ForEach(item =>
                 {
                     var material = new wechat_material()
@@ -65,7 +65,7 @@ namespace SixpenceStudio.Blog.Jobs
                         url = item.url,
                         sys_fileid = "",
                         name = item.name,
-                        type = WeChatMaterialExtension.MaterialType.voice.ToMaterialTypeString(),
+                        type = MaterialType.voice.ToMaterialTypeString(),
                         createdBy = user.Id,
                         createdByName = user.name,
                         modifiedBy = user.Id,
@@ -78,7 +78,7 @@ namespace SixpenceStudio.Blog.Jobs
                 });
                 logger.Debug("微信语音素材同步成功");
 
-                var videos = new WeChatMaterialService().GetMaterial(WeChatMaterialExtension.MaterialType.voice.ToMaterialTypeString(), 1, 5000);
+                var videos = new WeChatMaterialService().GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
                 videos.item.ForEach(item =>
                 {
                     var material = new wechat_material()
@@ -88,7 +88,7 @@ namespace SixpenceStudio.Blog.Jobs
                         url = item.url,
                         sys_fileid = "",
                         name = item.name,
-                        type = WeChatMaterialExtension.MaterialType.video.ToMaterialTypeString(),
+                        type = MaterialType.video.ToMaterialTypeString(),
                         createdBy = user.Id,
                         createdByName = user.name,
                         modifiedBy = user.Id,

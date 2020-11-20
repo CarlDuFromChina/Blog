@@ -182,7 +182,7 @@ UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
             _cmd.broker.ExecuteTransaction(() =>
             {
                 var data = GetData(id);
-                var media = new WeChatMaterialService().AddMaterial(WeChatMaterialExtension.MaterialType.image, data.imageId);
+                var media = new WeChatMaterialService().AddMaterial(MaterialType.image, data.imageId);
                 new WeChatNewsService(Broker).AddNews(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
             });
         }
