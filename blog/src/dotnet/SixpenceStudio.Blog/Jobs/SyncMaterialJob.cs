@@ -7,10 +7,10 @@ Description：同步微信素材Job
 ********************************************************/
 #endregion
 
-using SixpenceStudio.BaseSite.UserInfo;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Job;
-using SixpenceStudio.Platform.Logging;
+using SixpenceStudio.Core.UserInfo;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Job;
+using SixpenceStudio.Core.Logging;
 using SixpenceStudio.WeChat;
 using SixpenceStudio.WeChat.Material;
 using System;
@@ -21,9 +21,9 @@ namespace SixpenceStudio.Blog.Jobs
     {
         public override string Name => "同步微信素材";
 
-        public override string Description => "同步微信素材（手动）";
+        public override string Description => "同步微信素材";
 
-        public override string CronExperssion => "";
+        public override string CronExperssion => "0 0 4 * * ?";
 
         public override void Execute(IPersistBroker broker)
         {
@@ -33,73 +33,98 @@ namespace SixpenceStudio.Blog.Jobs
             try
             {
                 var images = new WeChatMaterialService().GetMaterial(MaterialType.image.ToMaterialTypeString(), 1, 5000);
-                images.item.ForEach(item =>
+                if (images.item_count == 0)
                 {
-                    var material = new wechat_material()
+                    logger.Debug($"未发现图片待同步");
+                }
+                else
+                {
+                    logger.Debug($"发现共{images.item_count}张图片待同步");
+                    images.item.ForEach(item =>
                     {
-                        wechat_materialId = item.media_id,
-                        media_id = item.media_id,
-                        url = item.url,
-                        sys_fileid = "",
-                        name = item.name,
-                        type = MaterialType.image.ToMaterialTypeString(),
-                        createdBy = user.Id,
-                        createdByName = user.name,
-                        modifiedBy = user.Id,
-                        modifiedByName = user.name,
-                        modifiedOn = DateTime.Now,
-                        createdOn = DateTime.Now
-                    };
-                    broker.Save(material);
-                    logger.Debug($"同步图片{item.name}成功");
-                });
-                logger.Debug("微信图片素材同步成功");
+                        var material = new wechat_material()
+                        {
+                            wechat_materialId = item.media_id,
+                            media_id = item.media_id,
+                            url = item.url,
+                            name = item.name,
+                            type = MaterialType.image.ToMaterialTypeString(),
+                            createdBy = user.Id,
+                            createdByName = user.name,
+                            modifiedBy = user.Id,
+                            modifiedByName = user.name,
+                            modifiedOn = DateTime.Now,
+                            createdOn = DateTime.Now
+                        };
+                        broker.Save(material);
+                        logger.Debug($"同步图片{item.name}成功");
+                    });
+                    logger.Debug($"微信图片素材同步成功，共同步{images.item_count}个");
+                }
+
 
                 var voices = new WeChatMaterialService().GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
-                voices.item.ForEach(item =>
+                if (voices.item_count == 0)
                 {
-                    var material = new wechat_material()
+                    logger.Debug($"未发现语音待同步");
+                }
+                else
+                {
+                    logger.Debug($"发现共{images.item_count}个语音待同步");
+                    voices.item.ForEach(item =>
                     {
-                        wechat_materialId = item.media_id,
-                        media_id = item.media_id,
-                        url = item.url,
-                        sys_fileid = "",
-                        name = item.name,
-                        type = MaterialType.voice.ToMaterialTypeString(),
-                        createdBy = user.Id,
-                        createdByName = user.name,
-                        modifiedBy = user.Id,
-                        modifiedByName = user.name,
-                        modifiedOn = DateTime.Now,
-                        createdOn = DateTime.Now
-                    };
-                    broker.Save(material);
-                    logger.Debug($"同步语音{item.name}成功");
-                });
-                logger.Debug("微信语音素材同步成功");
+                        var material = new wechat_material()
+                        {
+                            wechat_materialId = item.media_id,
+                            media_id = item.media_id,
+                            url = item.url,
+                            sys_fileid = "",
+                            name = item.name,
+                            type = MaterialType.voice.ToMaterialTypeString(),
+                            createdBy = user.Id,
+                            createdByName = user.name,
+                            modifiedBy = user.Id,
+                            modifiedByName = user.name,
+                            modifiedOn = DateTime.Now,
+                            createdOn = DateTime.Now
+                        };
+                        broker.Save(material);
+                        logger.Debug($"同步语音{item.name}成功");
+                    });
+                    logger.Debug($"微信语音素材同步成功，共同步{images.item_count}个");
+                }
 
-                var videos = new WeChatMaterialService().GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
-                videos.item.ForEach(item =>
+
+                var videos = new WeChatMaterialService().GetMaterial(MaterialType.video.ToMaterialTypeString(), 1, 5000);
+                if (voices.item_count == 0)
                 {
-                    var material = new wechat_material()
+                    logger.Debug($"未发现视频待同步");
+                }
+                else
+                {
+                    logger.Debug($"发现共{images.item_count}个视频待同步");
+                    videos.item.ForEach(item =>
                     {
-                        wechat_materialId = item.media_id,
-                        media_id = item.media_id,
-                        url = item.url,
-                        sys_fileid = "",
-                        name = item.name,
-                        type = MaterialType.video.ToMaterialTypeString(),
-                        createdBy = user.Id,
-                        createdByName = user.name,
-                        modifiedBy = user.Id,
-                        modifiedByName = user.name,
-                        modifiedOn = DateTime.Now,
-                        createdOn = DateTime.Now
-                    };
-                    logger.Debug($"同步视频{item.name}成功");
-                    broker.Save(material);
-                });
-                logger.Debug("微信视频素材同步成功");
+                        var material = new wechat_material()
+                        {
+                            wechat_materialId = item.media_id,
+                            media_id = item.media_id,
+                            url = item.url,
+                            sys_fileid = "",
+                            name = item.name,
+                            type = MaterialType.video.ToMaterialTypeString(),
+                            createdBy = user.Id,
+                            createdByName = user.name,
+                            modifiedBy = user.Id,
+                            modifiedByName = user.name,
+                            modifiedOn = DateTime.Now,
+                            createdOn = DateTime.Now
+                        };
+                        logger.Debug($"同步视频{item.name}成功");
+                        broker.Save(material);
+                    });
+                    logger.Debug($"微信视频素材同步成功，共同步{videos.item_count}个");
+                }
             }
             catch (Exception ex)
             {

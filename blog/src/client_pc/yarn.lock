@@ -6951,16 +6951,17 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.119:
-  version "1.0.119"
-  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.119.tgz#0c49e6b1bd00d5358e6d625636e0129b53537bc1"
-  integrity sha512-NRDngu+SWV1flNIW9Ohv3DH3XCYb/cWu0EPS3zBPU/yImT1d8cO9Y0M4SdHlAfLsOqzu+Hnv+cOuNhRCEx6DzA==
+sixpence.platform.pc.vue@1.0.120:
+  version "1.0.120"
+  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.120.tgz#9127a26b0f07336cf8daa23ca9fa5f94af80b9db"
+  integrity sha512-/4V29XNBrFd1dYnLcIQMuMhgNSvlcN566oZyemVlH5HJzPcvHzdyBbMJGUDw8D3YiPui0k8AIVbJsS7edeLfdg==
   dependencies:
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0-rc.1"
     less "^3.10.3"
     less-loader "^5.0.0"
     uuidjs "^4.2.5"
+    vue-infinite-scroll "^2.0.2"
     wangeditor "^4.1.0"
 
 slash@^1.0.0:

@@ -1,11 +1,12 @@
-﻿using SixpenceStudio.BaseSite;
-using SixpenceStudio.Platform.Entity;
-using SixpenceStudio.Platform.WebApi;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.Entity;
+using SixpenceStudio.Core.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace SixpenceStudio.Blog.Blog
@@ -95,7 +96,8 @@ namespace SixpenceStudio.Blog.Blog
         [HttpPost]
         public void SyncToWeChat([FromUri]string id, [FromBody]string htmlContent)
         {
-            new BlogService().SyncToWeChat(id, htmlContent);
+            var content = HttpUtility.UrlDecode(htmlContent, Encoding.UTF8);
+            new BlogService().SyncToWeChat(id, content);
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,11 @@ namespace SixpenceStudio.Blog.FriendBlog
         }
         #endregion
 
-        public override IList<EntityView<friend_blog>> GetViewList()
+        public override IList<EntityView> GetViewList()
         {
-            return new List<EntityView<friend_blog>>()
+            return new List<EntityView>()
             {
-                new EntityView<friend_blog>()
+                new EntityView()
                 {
                     Sql = $@"
 SELECT

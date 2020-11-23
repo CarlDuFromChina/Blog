@@ -1,4 +1,4 @@
-﻿using SixpenceStudio.BaseSite.SysConfig;
+﻿using SixpenceStudio.Core.SysConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,6 @@
-﻿using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace SixpenceStudio.Blog.Draft
             this._cmd = new EntityCommand<draft>();
         }
 
-        public DraftService(IPersistBroker broker)
+        public DraftService(IPersistBroker Broker)
         {
-            this._cmd = new EntityCommand<draft>(broker);
+            this._cmd = new EntityCommand<draft>(Broker);
         }
         #endregion
 
@@ -31,7 +32,7 @@ WHERE blogid NOT IN (
 	SELECT blogid FROM blog
 )
 ";
-            return _cmd.broker.RetrieveMultiple<draft>(sql);
+            return _cmd.Broker.RetrieveMultiple<draft>(sql);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ WHERE blogid NOT IN (
 SELECT * FROM draft
 WHERE blogid = @blogid
 ";
-            return _cmd.broker.Retrieve<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            return _cmd.Broker.Retrieve<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ WHERE blogid = @blogid
 DELETE FROM draft
 WHERE blogid = @blogid
 ";
-            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

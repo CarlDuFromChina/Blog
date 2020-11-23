@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using SixpenceStudio.Platform.Entity;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.Runtime.Serialization;
 

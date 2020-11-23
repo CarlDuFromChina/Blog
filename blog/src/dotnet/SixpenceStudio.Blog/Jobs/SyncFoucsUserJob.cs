@@ -8,9 +8,9 @@ Description：同步微信关注用户Job
 #endregion
 
 using Newtonsoft.Json;
-using SixpenceStudio.BaseSite.UserInfo;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Job;
+using SixpenceStudio.Core.UserInfo;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Job;
 using SixpenceStudio.WeChat.FocusUser;
 using System;
 using System.Collections.Generic;

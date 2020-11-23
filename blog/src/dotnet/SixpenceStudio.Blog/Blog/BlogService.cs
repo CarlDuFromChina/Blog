@@ -1,7 +1,8 @@
-﻿using SixpenceStudio.BaseSite.SysFile;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
-using SixpenceStudio.Platform.Utils;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.SysFile;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
+using SixpenceStudio.Core.Utils;
 using SixpenceStudio.WeChat;
 using SixpenceStudio.WeChat.Material;
 using SixpenceStudio.WeChat.WeChatNews;
@@ -26,7 +27,7 @@ namespace SixpenceStudio.Blog.Blog
         }
         #endregion
 
-        public override IList<EntityView<blog>> GetViewList()
+        public override IList<EntityView> GetViewList()
         {
             var sql = $@"
 SELECT
@@ -52,9 +53,9 @@ LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '
 INNER JOIN classification ON classification.code = blog.blog_type AND classification.is_show = 1
 WHERE 1=1
 ";
-            return new List<EntityView<blog>>()
+            return new List<EntityView>()
             {
-                new EntityView<blog>()
+                new EntityView()
                 {
                     Sql = $@"{sql} AND blog.is_series = 0",
                     ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
@@ -62,7 +63,7 @@ WHERE 1=1
                     Name = "全部博客",
                     OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
                 },
-                new EntityView<blog>()
+                new EntityView()
                 {
                     Sql = $@"{sql} AND blog.is_series = 1",
                     ViewId = "ACCE50D6-81A5-4240-BD82-126A50764FAB",
@@ -76,7 +77,7 @@ WHERE 1=1
         #region CRUD
         public override void DeleteData(List<string> ids)
         {
-            _cmd.broker.ExecuteTransaction(() =>
+            _cmd.Broker.ExecuteTransaction(() =>
             {
                 ids.ForEach(item => DeleteBlogImages(item));
                 base.DeleteData(ids);
@@ -101,7 +102,7 @@ WHERE 1=1
             var sql = @"
 DELETE from sys_file WHERE objectid = @id;
 ";
-            _cmd.broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
+            _cmd.Broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ DELETE from sys_file WHERE objectid = @id;
 SELECT * FROM sys_file WHERE objectid = @id and file_type = '{BLOG_SURFACE_NAME}';
 ";
             // 获取博客封面
-            var image = _cmd.broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
+            var image = _cmd.Broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
             data.imageId = image?.Id;
             return data;
         }
@@ -145,7 +146,7 @@ FROM
 WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
-            return _cmd.broker.DbClient.Query<string>(sql);
+            return _cmd.Broker.DbClient.Query<string>(sql);
         }
 
         /// <summary>
@@ -157,7 +158,7 @@ WHERE
             var sql = @"
 UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
 ";
-            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @i
             var sql = @"
 UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
 ";
-            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
         }
 
         /// <summary>
@@ -179,11 +180,11 @@ UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
         /// <param name="htmlContent"></param>
         public void SyncToWeChat(string id, string htmlContent)
         {
-            _cmd.broker.ExecuteTransaction(() =>
+            _cmd.Broker.ExecuteTransaction(() =>
             {
                 var data = GetData(id);
-                var media = new WeChatMaterialService().AddMaterial(MaterialType.image, data.imageId);
-                new WeChatNewsService(Broker).AddNews(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+                var media = new WeChatMaterialService(_cmd.Broker).CreateData(MaterialType.image, data.imageId);
+                new WeChatNewsService(_cmd.Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
             });
         }
     }

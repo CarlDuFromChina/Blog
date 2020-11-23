@@ -1,6 +1,6 @@
 ﻿using SixpenceStudio.Blog.Draft;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System.Collections.Generic;
 using System.Linq;
 

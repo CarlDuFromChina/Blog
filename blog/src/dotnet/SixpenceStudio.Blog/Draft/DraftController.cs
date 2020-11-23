@@ -1,5 +1,5 @@
-﻿using SixpenceStudio.BaseSite;
-using SixpenceStudio.Platform.WebApi;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;

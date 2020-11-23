@@ -1,5 +1,6 @@
-﻿using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace SixpenceStudio.Blog.RecommendInfo
             _cmd = new EntityCommand<recommend_info>();
         }
 
-        public RecommendInfoService(IPersistBroker broker)
+        public RecommendInfoService(IPersistBroker Broker)
         {
-            _cmd = new EntityCommand<recommend_info>(broker);
+            _cmd = new EntityCommand<recommend_info>(Broker);
         }
         #endregion
 
@@ -40,7 +41,7 @@ ORDER BY
 	LIMIT 5
 ";
             var paramList = new Dictionary<string, object>() { { "@type", type } };
-            var data = _cmd.broker.RetrieveMultiple<recommend_info>(sql, paramList);
+            var data = _cmd.Broker.RetrieveMultiple<recommend_info>(sql, paramList);
             return data;
         }
 
@@ -53,7 +54,7 @@ ORDER BY
             var sql = @"
 UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE recommend_infoid = @id
 ";
-            _cmd.broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
+            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }
     }
 }

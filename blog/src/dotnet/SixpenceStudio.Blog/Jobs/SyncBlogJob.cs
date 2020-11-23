@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using SixpenceStudio.Blog.FriendBlog;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Job;
-using SixpenceStudio.Platform.Logging;
-using SixpenceStudio.Platform.Utils;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Job;
+using SixpenceStudio.Core.Logging;
+using SixpenceStudio.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

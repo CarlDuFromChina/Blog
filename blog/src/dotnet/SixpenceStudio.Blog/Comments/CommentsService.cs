@@ -1,6 +1,8 @@
-﻿using SixpenceStudio.BaseSite.UserInfo;
-using SixpenceStudio.Platform.Data;
-using SixpenceStudio.Platform.Entity;
+﻿using SixpenceStudio.Core;
+using SixpenceStudio.Core.AuthUser;
+using SixpenceStudio.Core.UserInfo;
+using SixpenceStudio.Core.Data;
+using SixpenceStudio.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,16 +29,16 @@ namespace SixpenceStudio.Blog.Comments
         public override string CreateData(comments t)
         {
             // 匿名
-            if (string.IsNullOrEmpty(_cmd.GetCurrentUser().userId))
+            if (string.IsNullOrEmpty(_cmd.Broker.GetCurrentUser().Id))
             {
-                var anonymous = _cmd.broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
+                var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
                 t.modifiedBy = anonymous.Id;
                 t.modifiedByName = anonymous.name;
                 t.createdBy = anonymous.Id;
                 t.createdByName = anonymous.name;
                 t.createdOn = DateTime.Now;
                 t.modifiedOn = DateTime.Now;
-                return _cmd.broker.Create(t);
+                return _cmd.Broker.Create(t);
             }
             return base.CreateData(t);
         }
@@ -44,13 +46,13 @@ namespace SixpenceStudio.Blog.Comments
         public override void UpdateData(comments t)
         {
             // 匿名
-            if (string.IsNullOrEmpty(_cmd.GetCurrentUser().userId))
+            if (string.IsNullOrEmpty(_cmd.Broker.GetCurrentUser().Id))
             {
-                var anonymous = _cmd.broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
+                var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
                 t.createdBy = anonymous.Id;
                 t.createdByName = anonymous.name;
                 t.modifiedOn = DateTime.Now;
-                _cmd.broker.Update(t);
+                _cmd.Broker.Update(t);
                 return;
             }
             base.UpdateData(t);
