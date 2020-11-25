@@ -128,7 +128,7 @@ namespace SixpenceStudio.Blog.Jobs
             }
             catch (Exception ex)
             {
-                logger.Error("微信素材同步失败：\r\n" + ex.Message);
+                logger.Error($"微信素材同步失败：\r\n{ex.Message}\r\n{ex.StackTrace}");
             }
         }
     }
