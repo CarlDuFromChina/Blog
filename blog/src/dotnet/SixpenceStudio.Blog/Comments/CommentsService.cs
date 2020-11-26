@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using SixpenceStudio.Core.Auth;
 
 namespace SixpenceStudio.Blog.Comments
 {
@@ -29,7 +30,7 @@ namespace SixpenceStudio.Blog.Comments
         public override string CreateData(comments t)
         {
             // 匿名
-            if (string.IsNullOrEmpty(_cmd.Broker.GetCurrentUser().Id))
+            if (string.IsNullOrEmpty(UserIdentityUtil.GetCurrentUser().Id))
             {
                 var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
                 t.modifiedBy = anonymous.Id;
@@ -46,7 +47,7 @@ namespace SixpenceStudio.Blog.Comments
         public override void UpdateData(comments t)
         {
             // 匿名
-            if (string.IsNullOrEmpty(_cmd.Broker.GetCurrentUser().Id))
+            if (string.IsNullOrEmpty(UserIdentityUtil.GetCurrentUser().Id))
             {
                 var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
                 t.createdBy = anonymous.Id;

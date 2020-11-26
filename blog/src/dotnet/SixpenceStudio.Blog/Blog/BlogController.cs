@@ -11,7 +11,6 @@ using System.Web.Http;
 
 namespace SixpenceStudio.Blog.Blog
 {
-    [RequestAuthorize]
     public class BlogController : EntityBaseController<blog, BlogService>
     {
         /// <summary>

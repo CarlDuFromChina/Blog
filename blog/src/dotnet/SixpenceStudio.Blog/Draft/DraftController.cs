@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.Draft
 {
-    [RequestAuthorize]
     public class DraftController : EntityBaseController<draft, DraftService>
     {
         /// <summary>

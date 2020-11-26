@@ -10,7 +10,6 @@ using System.Web.Http;
 
 namespace SixpenceStudio.Blog.idea
 {
-    [RequestAuthorize]
     public class IdeaController : EntityBaseController<idea, IdeaSerivice>
     {
         [HttpGet, AllowAnonymous]

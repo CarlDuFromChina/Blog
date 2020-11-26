@@ -10,7 +10,6 @@ using System.Web.Http;
 
 namespace SixpenceStudio.Blog.RecommendInfo
 {
-    [RequestAuthorize]
     public class RecommendInfoController : EntityBaseController<recommend_info, RecommendInfoService>
     {
         [HttpGet, AllowAnonymous]

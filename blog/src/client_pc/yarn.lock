@@ -6951,10 +6951,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.120:
-  version "1.0.120"
-  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.120.tgz#9127a26b0f07336cf8daa23ca9fa5f94af80b9db"
-  integrity sha512-/4V29XNBrFd1dYnLcIQMuMhgNSvlcN566oZyemVlH5HJzPcvHzdyBbMJGUDw8D3YiPui0k8AIVbJsS7edeLfdg==
+sixpence.platform.pc.vue@1.0.121:
+  version "1.0.121"
+  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.121.tgz#6d8caf3feac2860447e40f7e7e252797f6d659fe"
+  integrity sha512-SXwfDlhZ3yb0CPXd/XSApOHEYicx+DKMo7XHyC3AtzipBwkl3iU5XXYpHqCrfwkTxD2RNaSi5d+X223JViz07Q==
   dependencies:
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0-rc.1"
@@ -6962,6 +6962,7 @@ sixpence.platform.pc.vue@1.0.120:
     less-loader "^5.0.0"
     uuidjs "^4.2.5"
     vue-infinite-scroll "^2.0.2"
+    vue-waterfall "^1.0.6"
     wangeditor "^4.1.0"
 
 slash@^1.0.0:
@@ -7979,6 +7980,11 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
+
+vue-waterfall@^1.0.6:
+  version "1.0.6"
+  resolved "http://npm.karldu.cn/vue-waterfall/-/vue-waterfall-1.0.6.tgz#00324a8f97f449bf6f8cdebb4974b60cffac9eed"
+  integrity sha1-ADJKj5f0Sb9vjN67SXS2DP+snu0=
 
 wangeditor@^4.1.0:
   version "4.1.0"
