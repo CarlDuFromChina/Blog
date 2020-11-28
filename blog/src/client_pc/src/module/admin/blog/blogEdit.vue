@@ -3,7 +3,7 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
-      <a-button icon="sync" type="primary" @click="sync2Wechat()">同步到微信</a-button>
+      <a-button icon="sync" type="primary" @click="sync2Wechat()" :disabled="!Id">同步到微信</a-button>
       <a-popover v-if="showAutoSave">
         <template slot="content">
           <p>{{ saveStatus.text }}</p>
@@ -251,6 +251,10 @@ export default {
       this.tags = val;
     },
     sync2Wechat() {
+      if (sp.isNullOrEmpty(this.Id)) {
+        this.$message.error('请先保存博客，再同步到微信图文素材');
+        return;
+      }
       this.$confirm({
         title: '微信同步',
         content: '是否同步到微信图文素材库?',
