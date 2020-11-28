@@ -9,7 +9,7 @@
               <a-skeleton :loading="loading">
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
-                  <div v-highlight v-html="formatterContent"></div>
+                  <article v-highlight v-html="formatterContent" class="markdown-body"></article>
                 </div>
               </a-skeleton>
             </a-card>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import 'mavon-editor/dist/css/index.css';
+import 'mavon-editor/src/lib/css/markdown.css';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
