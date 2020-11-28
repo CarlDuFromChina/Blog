@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list">
+  <sp-card class="blog-list">
     <a-list item-layout="vertical" size="large" :data-source="listData">
       <a-list-item slot="renderItem" key="item.title" slot-scope="item">
         <template slot="actions">
@@ -28,7 +28,7 @@
     <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
       <span v-if="isLoadedAll">到底了....</span>
     </a-spin>
-  </div>
+  </sp-card>
 </template>
 
 <script>
@@ -92,10 +92,7 @@ export default {
 
 <style lang="less" scoped>
 .blog-list {
-  border-bottom: 1px solid #ebedf0;
   padding: 10px 20px 24px 20px;
-  color: rgba(0, 0, 0, 0.65);
-  background: #ffffff;
   margin-right: 50px;
 }
 

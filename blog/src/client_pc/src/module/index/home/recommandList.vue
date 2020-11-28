@@ -1,18 +1,12 @@
 <template>
-  <sp-section title="推荐博客" :loading="loading">
-    <a-card class="recommand" v-if="data && data.length > 0">
-      <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
-        <div class="entry-title">{{ item.name }}</div>
-        <div class="entry-box">
-          <div class="entry-meta">
-            <sp-icon name="sp-blog-view" :size="15"></sp-icon>
-            <span>{{ item.reading_times || 0 }}</span>
-          </div>
-        </div>
-      </a>
-    </a-card>
-    <a-empty v-else />
-  </sp-section>
+  <sp-card :loading="loading" class="recommand" title="好文推荐" :empty="!data || data.length == 0">
+    <a class="item" v-for="(item, index) in data" :key="index" @click="read(item)">
+      <div class="item-start">{{ item.name }}</div>
+      <div class="item-end">
+        <span><a-icon type="eye" style="margin-right: 8px" />{{ item.reading_times || 0 }}</span>
+      </div>
+    </a>
+  </sp-card>
 </template>
 
 <script>
@@ -64,17 +58,16 @@ export default {
     padding: 0px;
   }
   .item {
-    display: block;
+    display: flex;
     padding: 10px;
     cursor: pointer;
-    .entry-title {
+    align-items: center;
+    justify-content: space-between;
+    &-start {
       color: #000000;
     }
-    .entry-box {
-      margin-top: 5px;
-      .entry-meta {
-        color: #c2c2c2;
-      }
+    &-end {
+      color: #4a4a4a;
     }
   }
   .item:hover {

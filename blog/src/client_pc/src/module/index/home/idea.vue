@@ -1,18 +1,12 @@
 <template>
-  <sp-section title="想法" :loading="loading">
-    <div class="infinite-list">
-      <div v-for="(item, index) in dataList" :key="index" class="infinite-list-item">
-        <div class="profile">
-          <div class="avatar" :style="{ backgroundImage: `url(${avatar})` }"></div>
-          <div class="user-info">
-            <span>{{ item.createdByName }}</span>
-            <span class="time">{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
-          </div>
-        </div>
-        <div class="content" v-html="item.content"></div>
-      </div>
-    </div>
-  </sp-section>
+  <sp-card title="想法" :loading="loading">
+    <a-timeline>
+      <a-timeline-item v-for="(item, index) in dataList" :key="index">
+        <span>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
+        <span v-html="item.content"></span>
+      </a-timeline-item>
+    </a-timeline>
+  </sp-card>
 </template>
 
 <script>
@@ -65,55 +59,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-.infinite-list {
-  height: 600px;
-  .infinite-list-item {
-    display: inline-block;
-    min-height: 120px;
-    width: 100%;
-    background: #fff;
-    color: #17181a;
-    margin: 10px 0px;
-    .profile {
-      display: flex;
-      padding: 10px;
-      background-color: #fff;
-      font-size: 13px;
-      .avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: inline-block;
-        position: relative;
-        background-position: 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-color: #eee;
-      }
-      .user-info {
-        display: flex;
-        flex-direction: column;
-        padding-left: 10px;
-        background-color: #fff;
-        font-size: 13px;
-        > span {
-          line-height: 28px;
-          font-size: 15px;
-          font-weight: 600;
-          &.time {
-            font-size: 13px;
-            font-weight: 400;
-            color: #8f969c;
-          }
-        }
-      }
-    }
-    .content {
-      padding: 0 20px 10px 20px;
-      line-height: 1.6;
-    }
-  }
-}
-</style>

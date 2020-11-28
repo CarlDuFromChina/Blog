@@ -2,7 +2,6 @@
   <a-layout>
     <!-- 博客 -->
     <a-layout-sider width="70%" theme="light">
-      <h3>最新博客</h3>
       <blog-list></blog-list>
     </a-layout-sider>
     <!-- 博客 -->
