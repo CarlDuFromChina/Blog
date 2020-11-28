@@ -7,7 +7,7 @@
     <!-- 博客 -->
     <a-layout-sider width="30%" style="overflow:hidden" theme="light">
       <!-- 推荐 -->
-      <recommand-pictures style="margin-bottom:20px;"></recommand-pictures>
+      <links style="margin-bottom:20px;"></links>
       <!-- 推荐 -->
 
       <!-- 推荐博客 -->
@@ -23,13 +23,13 @@
 
 <script>
 import recommandList from './recommandList';
-import recommandPictures from './recommandPictures';
+import links from './links';
 import idea from './idea';
 import blogList from './blogList';
 
 export default {
   name: 'home',
-  components: { recommandList, recommandPictures, idea, blogList },
+  components: { recommandList, links, idea, blogList },
   data() {
     return {
       loading: 'false',

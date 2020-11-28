@@ -6951,10 +6951,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.121:
-  version "1.0.121"
-  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.121.tgz#6d8caf3feac2860447e40f7e7e252797f6d659fe"
-  integrity sha512-SXwfDlhZ3yb0CPXd/XSApOHEYicx+DKMo7XHyC3AtzipBwkl3iU5XXYpHqCrfwkTxD2RNaSi5d+X223JViz07Q==
+sixpence.platform.pc.vue@1.0.122:
+  version "1.0.122"
+  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.122.tgz#0e58d686ef70fe4e1c62b8c553b156f5f7a61943"
+  integrity sha512-HWbWkmxXdZ5nR+4Y9qr1qAhHJpP50M5m/EG2Mvo1HMA+s9mCGqUAIqgD6C3J4+L4yUg+7tB3eAbqedOwDZlPRg==
   dependencies:
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0-rc.1"
