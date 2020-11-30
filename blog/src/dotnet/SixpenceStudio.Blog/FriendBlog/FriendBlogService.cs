@@ -37,7 +37,8 @@ SELECT
 	first_picture,
 	createdon,
 	modifiedon,
-	author
+	author,
+	description
 FROM friend_blog
 WHERE 1=1
 ",

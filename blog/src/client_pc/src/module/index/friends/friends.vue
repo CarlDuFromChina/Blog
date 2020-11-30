@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sp-blog-card ref="blog" :getDataApi="getDataApi"></sp-blog-card>
+    <sp-blog-card ref="blog" :getDataApi="getDataApi" :pageSize="10"></sp-blog-card>
     <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
       <span v-if="isLoadedAll">到底了....</span>
     </a-spin>

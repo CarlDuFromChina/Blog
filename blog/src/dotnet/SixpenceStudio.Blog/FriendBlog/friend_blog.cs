@@ -121,6 +121,24 @@ namespace SixpenceStudio.Blog.FriendBlog
             }
         }
 
+        /// <summary>
+        /// 摘要
+        /// </summary>
+        private string _description;
+        [DataMember]
+        public string description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                SetAttributeValue("description", value);
+            }
+        }
+
     }
 }
 

@@ -36,6 +36,7 @@ namespace SixpenceStudio.Blog.Jobs
                         {
                             name = item.title,
                             content = item.content,
+                            description = item.description,
                             createdOn = ConvertLongToDateTime(item.createTime),
                             modifiedOn = ConvertLongToDateTime(item.updateTime),
                             first_picture = item.firstPicture,
@@ -80,5 +81,6 @@ namespace SixpenceStudio.Blog.Jobs
         public string firstPicture { get; set; }
         public long createTime { get; set; }
         public long updateTime { get; set; }
+        public string description { get; set; }
     }
 }

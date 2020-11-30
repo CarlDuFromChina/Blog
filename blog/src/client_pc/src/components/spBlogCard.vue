@@ -1,17 +1,23 @@
 <template>
-  <div :infinite-scroll-disabled="busy" style="width:1200px;margin: 0 auto;">
+  <div :infinite-scroll-disabled="busy" class="card-list">
     <a-row v-if="data && data.length > 0">
-      <a-col :span="8" v-for="item in data" :key="item.Id">
-        <a-card hoverable @click.native.stop="goReadonly(item)" style="width:380px;margin:10px auto;">
-          <div slot="cover" style="height:116px">
+      <a-col :span="24" v-for="item in data" :key="item.Id">
+        <sp-card class="card-item">
+          <div class="card-item-wrapper">
             <img alt="example" :src="item.first_picture" />
-            <span style="display: inline-block;padding-left: 10px;max-width: calc(100% - 216px);height:100%">
-              <div style="font-size: 16px;font-weight: 500;">{{ item.name }}</div>
-              <div>{{ item.author }}</div>
-              <div>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</div>
-            </span>
+            <div class="content">
+              <h2 class="title">{{ item.name }}</h2>
+              <div>
+                <sp-icon name="sp-blog-author" :size="15"></sp-icon><span>{{ item.author }}</span>
+              </div>
+              <div>
+                <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
+              </div>
+              <div>{{ item.description }}</div>
+              <div><a-button type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
+            </div>
           </div>
-        </a-card>
+        </sp-card>
       </a-col>
     </a-row>
     <a-empty v-else style="padding-top:30%" />
@@ -34,6 +40,10 @@ export default {
       type: String,
       default: ''
     },
+    pageSize: {
+      type: Number,
+      default: 15
+    },
     newTag: {
       type: Boolean,
       default: false
@@ -45,7 +55,6 @@ export default {
       busy: false,
       editVisible: false,
       data: [],
-      pageSize: 15,
       loading: false
     };
   },
@@ -116,11 +125,34 @@ export default {
   width: 206px;
   height: 116px;
 }
-.demo-infinite-container {
-  border: 1px solid #e8e8e8;
-  border-radius: 4px;
-  overflow: auto;
-  padding: 8px 24px;
-  height: 300px;
+
+.card-list {
+  width: 1200px;
+  margin: 0 auto;
+  .card-item {
+    width: 100%;
+    margin: 10px auto;
+    &-wrapper {
+      height: 150px;
+      display: flex;
+      img {
+        width: 200px;
+        height: 100%;
+        max-width: 200px;
+        max-height: 100%;
+      }
+      .content {
+        max-height: 200px;
+        margin-left: 10px;
+        .title {
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .svg-icon {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
 }
 </style>
