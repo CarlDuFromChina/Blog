@@ -14,7 +14,7 @@
                 <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
               </div>
               <div>{{ item.description }}</div>
-              <div><a-button type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
+              <div><a-button class="readme" type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
             </div>
           </div>
         </sp-card>
@@ -142,6 +142,7 @@ export default {
         max-height: 100%;
       }
       .content {
+        position: relative;
         max-height: 200px;
         margin-left: 10px;
         .title {
@@ -150,6 +151,10 @@ export default {
         }
         .svg-icon {
           padding-right: 10px;
+        }
+        .readme {
+          position: absolute;
+          bottom: 0px;
         }
       }
     }
