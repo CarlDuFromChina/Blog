@@ -107,10 +107,10 @@
       <HintPath>packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.Core.1.1.15\lib\net461\SixpenceStudio.Core.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.Core.1.1.16\lib\net461\SixpenceStudio.Core.dll</HintPath>
     </Reference>
     <Reference Include="SixpenceStudio.WeChat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.WeChat.1.1.15\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
+      <HintPath>packages\SixpenceStudio.WeChat.1.1.16\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
