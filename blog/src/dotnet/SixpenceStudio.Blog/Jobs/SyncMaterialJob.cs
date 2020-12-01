@@ -42,21 +42,25 @@ namespace SixpenceStudio.Blog.Jobs
                     logger.Debug($"发现共{images.item_count}张图片待同步");
                     images.item.ForEach(item =>
                     {
-                        var material = new wechat_material()
+                        var data = broker.Retrieve<wechat_material>(item.media_id);
+                        if (data == null)
                         {
-                            wechat_materialId = item.media_id,
-                            media_id = item.media_id,
-                            url = item.url,
-                            name = item.name,
-                            type = MaterialType.image.ToMaterialTypeString(),
-                            createdBy = user.Id,
-                            createdByName = user.name,
-                            modifiedBy = user.Id,
-                            modifiedByName = user.name,
-                            modifiedOn = DateTime.Now,
-                            createdOn = DateTime.Now
-                        };
-                        broker.Save(material);
+                            var material = new wechat_material()
+                            {
+                                wechat_materialId = item.media_id,
+                                media_id = item.media_id,
+                                url = item.url,
+                                name = item.name,
+                                type = MaterialType.image.ToMaterialTypeString(),
+                                createdBy = user.Id,
+                                createdByName = user.name,
+                                modifiedBy = user.Id,
+                                modifiedByName = user.name,
+                                modifiedOn = DateTime.Now,
+                                createdOn = DateTime.Now
+                            };
+                            broker.Create(material);
+                        }
                         logger.Debug($"同步图片{item.name}成功");
                     });
                     logger.Debug($"微信图片素材同步成功，共同步{images.item_count}个");
@@ -73,22 +77,26 @@ namespace SixpenceStudio.Blog.Jobs
                     logger.Debug($"发现共{images.item_count}个语音待同步");
                     voices.item.ForEach(item =>
                     {
-                        var material = new wechat_material()
+                        var data = broker.Retrieve<wechat_material>(item.media_id);
+                        if (data == null)
                         {
-                            wechat_materialId = item.media_id,
-                            media_id = item.media_id,
-                            url = item.url,
-                            sys_fileid = "",
-                            name = item.name,
-                            type = MaterialType.voice.ToMaterialTypeString(),
-                            createdBy = user.Id,
-                            createdByName = user.name,
-                            modifiedBy = user.Id,
-                            modifiedByName = user.name,
-                            modifiedOn = DateTime.Now,
-                            createdOn = DateTime.Now
-                        };
-                        broker.Save(material);
+                            var material = new wechat_material()
+                            {
+                                wechat_materialId = item.media_id,
+                                media_id = item.media_id,
+                                url = item.url,
+                                sys_fileid = "",
+                                name = item.name,
+                                type = MaterialType.voice.ToMaterialTypeString(),
+                                createdBy = user.Id,
+                                createdByName = user.name,
+                                modifiedBy = user.Id,
+                                modifiedByName = user.name,
+                                modifiedOn = DateTime.Now,
+                                createdOn = DateTime.Now
+                            };
+                            broker.Create(material);
+                        }
                         logger.Debug($"同步语音{item.name}成功");
                     });
                     logger.Debug($"微信语音素材同步成功，共同步{images.item_count}个");
@@ -105,23 +113,27 @@ namespace SixpenceStudio.Blog.Jobs
                     logger.Debug($"发现共{images.item_count}个视频待同步");
                     videos.item.ForEach(item =>
                     {
-                        var material = new wechat_material()
+                        var data = broker.Retrieve<wechat_material>(item.media_id);
+                        if (data == null)
                         {
-                            wechat_materialId = item.media_id,
-                            media_id = item.media_id,
-                            url = item.url,
-                            sys_fileid = "",
-                            name = item.name,
-                            type = MaterialType.video.ToMaterialTypeString(),
-                            createdBy = user.Id,
-                            createdByName = user.name,
-                            modifiedBy = user.Id,
-                            modifiedByName = user.name,
-                            modifiedOn = DateTime.Now,
-                            createdOn = DateTime.Now
-                        };
-                        logger.Debug($"同步视频{item.name}成功");
-                        broker.Save(material);
+                            var material = new wechat_material()
+                            {
+                                wechat_materialId = item.media_id,
+                                media_id = item.media_id,
+                                url = item.url,
+                                sys_fileid = "",
+                                name = item.name,
+                                type = MaterialType.video.ToMaterialTypeString(),
+                                createdBy = user.Id,
+                                createdByName = user.name,
+                                modifiedBy = user.Id,
+                                modifiedByName = user.name,
+                                modifiedOn = DateTime.Now,
+                                createdOn = DateTime.Now
+                            };
+                            broker.Create(material);
+                            logger.Debug($"同步视频{item.name}成功");
+                        }
                     });
                     logger.Debug($"微信视频素材同步成功，共同步{videos.item_count}个");
                 }
