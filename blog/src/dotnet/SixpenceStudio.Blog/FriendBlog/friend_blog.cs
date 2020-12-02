@@ -1,8 +1,6 @@
-
 using SixpenceStudio.Core.Entity;
 using System;
 using System.Runtime.Serialization;
-
 
 namespace SixpenceStudio.Blog.FriendBlog
 {
@@ -27,7 +25,7 @@ namespace SixpenceStudio.Blog.FriendBlog
             }
         }
 
-        
+
         /// <summary>
         /// 内容
         /// </summary>
@@ -67,7 +65,83 @@ namespace SixpenceStudio.Blog.FriendBlog
 
 
         /// <summary>
-        /// 创建时间
+        /// 作者
+        /// </summary>
+        private string _author;
+        [DataMember]
+        public string author
+        {
+            get
+            {
+                return this._author;
+            }
+            set
+            {
+                this._author = value;
+                SetAttributeValue("author", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        private string _description;
+        [DataMember]
+        public string description
+        {
+            get
+            {
+                return this._description;
+            }
+            set
+            {
+                this._description = value;
+                SetAttributeValue("description", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        private string _createdBy;
+        [DataMember]
+        public string createdBy
+        {
+            get
+            {
+                return this._createdBy;
+            }
+            set
+            {
+                this._createdBy = value;
+                SetAttributeValue("createdBy", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        private string _createdByName;
+        [DataMember]
+        public string createdByName
+        {
+            get
+            {
+                return this._createdByName;
+            }
+            set
+            {
+                this._createdByName = value;
+                SetAttributeValue("createdByName", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 创建日期
         /// </summary>
         private DateTime? _createdOn;
         [DataMember]
@@ -86,7 +160,45 @@ namespace SixpenceStudio.Blog.FriendBlog
 
 
         /// <summary>
-        /// 修改时间
+        /// 修改人
+        /// </summary>
+        private string _modifiedBy;
+        [DataMember]
+        public string modifiedBy
+        {
+            get
+            {
+                return this._modifiedBy;
+            }
+            set
+            {
+                this._modifiedBy = value;
+                SetAttributeValue("modifiedBy", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 修改人
+        /// </summary>
+        private string _modifiedByName;
+        [DataMember]
+        public string modifiedByName
+        {
+            get
+            {
+                return this._modifiedByName;
+            }
+            set
+            {
+                this._modifiedByName = value;
+                SetAttributeValue("modifiedByName", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 修改日期
         /// </summary>
         private DateTime? _modifiedOn;
         [DataMember]
@@ -103,41 +215,6 @@ namespace SixpenceStudio.Blog.FriendBlog
             }
         }
 
-        /// <summary>
-        /// 作者
-        /// </summary>
-        private string _author;
-        [DataMember]
-        public string author
-        {
-            get
-            {
-                return this._author;
-            }
-            set
-            {
-                this._author = value;
-                SetAttributeValue("author", value);
-            }
-        }
-
-        /// <summary>
-        /// 摘要
-        /// </summary>
-        private string _description;
-        [DataMember]
-        public string description
-        {
-            get
-            {
-                return _description;
-            }
-            set
-            {
-                _description = value;
-                SetAttributeValue("description", value);
-            }
-        }
 
     }
 }

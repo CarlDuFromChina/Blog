@@ -69,7 +69,12 @@
                 :remove="removeSurface"
                 list-type="picture"
               >
-                <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
+                <a-dropdown>
+                  <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="openCloudUpload"> <a-icon type="cloud-upload" />云上传 </a-menu-item>
+                  </a-menu>
+                  <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
+                </a-dropdown>
               </a-upload>
             </a-form-model-item>
           </a-col>
@@ -80,6 +85,7 @@
         <a-button type="primary" @click="save">确 定</a-button>
       </span>
     </a-modal>
+    <cloud-upload ref="cloudUpload"></cloud-upload>
   </div>
 </template>
 
@@ -88,10 +94,11 @@ import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 import { edit } from 'sixpence.platform.pc.vue';
 import draft from './draft';
+import cloudUpload from './cloudUploadDialog';
 
 export default {
   name: 'blogEdit',
-  components: { mavonEditor },
+  components: { mavonEditor, cloudUpload },
   mixins: [edit, draft],
   data() {
     return {
@@ -161,6 +168,9 @@ export default {
     }
   },
   methods: {
+    openCloudUpload() {
+      this.$refs.cloudUpload.visible = true;
+    },
     loadComplete() {
       if (!sp.isNullOrEmpty(this.data.imageId)) {
         this.fileList = [
