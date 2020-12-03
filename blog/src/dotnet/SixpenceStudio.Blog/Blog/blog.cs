@@ -26,44 +26,9 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
-        /// <summary>
-        /// 标题
-        /// </summary>
-        private string _title;
-        [DataMember]
-        public string title
-        {
-            get
-            {
-                return this._title;
-            }
-            set
-            {
-                this._title = value;
-                SetAttributeValue("title", value);
-            }
-        }
 
         /// <summary>
-        /// 分类
-        /// </summary>
-        private string _blog_type;
-        [DataMember]
-        public string blog_type
-        {
-            get
-            {
-                return this._blog_type;
-            }
-            set
-            {
-                this._blog_type = value;
-                SetAttributeValue("blog_type", value);
-            }
-        }
-
-        /// <summary>
-        /// 分类
+        /// 类型
         /// </summary>
         private string _blog_typeName;
         [DataMember]
@@ -79,6 +44,7 @@ namespace SixpenceStudio.Blog.Blog
                 SetAttributeValue("blog_typeName", value);
             }
         }
+
 
         /// <summary>
         /// 内容
@@ -98,113 +64,139 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+
         /// <summary>
-        /// 创建人
+        /// 标题
         /// </summary>
-        private string _createdby;
+        private string _title;
         [DataMember]
-        public string createdBy
+        public string title
         {
             get
             {
-                return this._createdby;
+                return this._title;
             }
             set
             {
-                this._createdby = value;
-                SetAttributeValue("createdBy", value);
+                this._title = value;
+                SetAttributeValue("title", value);
             }
         }
+
+
+        /// <summary>
+        /// 类型
+        /// </summary>
+        private string _blog_type;
+        [DataMember]
+        public string blog_type
+        {
+            get
+            {
+                return this._blog_type;
+            }
+            set
+            {
+                this._blog_type = value;
+                SetAttributeValue("blog_type", value);
+            }
+        }
+
 
         /// <summary>
         /// 创建人
         /// </summary>
-        private string _createdbyname;
+        private string _createdByName;
         [DataMember]
         public string createdByName
         {
             get
             {
-                return this._createdbyname;
+                return this._createdByName;
             }
             set
             {
-                this._createdbyname = value;
+                this._createdByName = value;
                 SetAttributeValue("createdByName", value);
             }
         }
 
+
         /// <summary>
         /// 创建日期
         /// </summary>
-        private DateTime? _createdon;
+        private DateTime? _createdOn;
         [DataMember]
         public DateTime? createdOn
         {
             get
             {
-                return this._createdon;
+                return this._createdOn;
             }
             set
             {
-                this._createdon = value;
+                this._createdOn = value;
                 SetAttributeValue("createdOn", value);
             }
         }
 
+
         /// <summary>
         /// 修改人
         /// </summary>
-        private string _modifiedby;
+        private string _modifiedBy;
         [DataMember]
         public string modifiedBy
         {
             get
             {
-                return this._modifiedby;
+                return this._modifiedBy;
             }
             set
             {
-                this._modifiedby = value;
+                this._modifiedBy = value;
                 SetAttributeValue("modifiedBy", value);
             }
         }
 
+
         /// <summary>
         /// 修改人
         /// </summary>
-        private string _modifiedbyname;
+        private string _modifiedByName;
         [DataMember]
         public string modifiedByName
         {
             get
             {
-                return this._modifiedbyname;
+                return this._modifiedByName;
             }
             set
             {
-                this._modifiedbyname = value;
+                this._modifiedByName = value;
                 SetAttributeValue("modifiedByName", value);
             }
         }
 
+
         /// <summary>
-        /// 创建日期
+        /// 修改日期
         /// </summary>
-        private DateTime? _modifiedon;
+        private DateTime? _modifiedOn;
         [DataMember]
         public DateTime? modifiedOn
         {
             get
             {
-                return this._modifiedon;
+                return this._modifiedOn;
             }
             set
             {
-                this._modifiedon = value;
+                this._modifiedOn = value;
                 SetAttributeValue("modifiedOn", value);
             }
         }
+
 
         /// <summary>
         /// 阅读次数
@@ -224,6 +216,7 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+
         /// <summary>
         /// 点赞次数
         /// </summary>
@@ -241,6 +234,7 @@ namespace SixpenceStudio.Blog.Blog
                 SetAttributeValue("upvote_times", value);
             }
         }
+
 
         /// <summary>
         /// 是否是系列
@@ -260,6 +254,7 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+
         /// <summary>
         /// 标签
         /// </summary>
@@ -278,6 +273,7 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+
         /// <summary>
         /// 禁止评论
         /// </summary>
@@ -295,5 +291,64 @@ namespace SixpenceStudio.Blog.Blog
                 SetAttributeValue("disable_comment", value);
             }
         }
+
+
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        private string _createdBy;
+        [DataMember]
+        public string createdBy
+        {
+            get
+            {
+                return this._createdBy;
+            }
+            set
+            {
+                this._createdBy = value;
+                SetAttributeValue("createdBy", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 封面
+        /// </summary>
+        private string _surfaceid;
+        [DataMember]
+        public string surfaceid
+        {
+            get
+            {
+                return this._surfaceid;
+            }
+            set
+            {
+                this._surfaceid = value;
+                SetAttributeValue("surfaceid", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 封面地址
+        /// </summary>
+        private string _surface_url;
+        [DataMember]
+        public string surface_url
+        {
+            get
+            {
+                return this._surface_url;
+            }
+            set
+            {
+                this._surface_url = value;
+                SetAttributeValue("surface_url", value);
+            }
+        }
+
     }
 }
+

@@ -4,7 +4,14 @@
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
     <div class="gallery">
-      <a-card hoverable v-for="item in dataList" class="item" :key="item.id" :class="{ active: selected.id == item.id }" @click="handleSelect(item)">
+      <a-card
+        hoverable
+        v-for="item in dataList"
+        class="item"
+        :key="item.id"
+        :class="{ active: (selected || {}).id == item.id }"
+        @click="handleSelect(item)"
+      >
         <img slot="cover" alt="example" :src="item.previewURL" />
       </a-card>
     </div>

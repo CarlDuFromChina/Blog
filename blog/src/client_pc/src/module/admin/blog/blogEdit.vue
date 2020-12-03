@@ -108,7 +108,7 @@ export default {
       controllerName: 'blog',
       blogType: [],
       fileList: [],
-      baseUrl: '',
+      baseUrl: sp.getBaseUrl(),
       token: '',
       tags: [],
       is_series: false,
@@ -138,7 +138,6 @@ export default {
       }
     });
     // 获取token和url
-    this.baseUrl = window.localStorage.getItem('baseUrl');
     this.token = window.localStorage.getItem('Token');
   },
   computed: {
@@ -170,13 +169,14 @@ export default {
   methods: {
     selected(item) {
       sp.post('api/Gallery/UploadImage', item).then(resp => {
-        this.data.imageId = resp.id;
+        this.data.surfaceid = resp.id;
+        this.data.surface_url = resp.downloadUrl;
         this.fileList = [
           {
             uid: '0',
             status: 'done',
             name: 'surface.png',
-            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.imageId}`
+            url: this.data.surface_url
           }
         ];
       });
@@ -185,13 +185,13 @@ export default {
       this.$refs.cloudUpload.visible = true;
     },
     loadComplete() {
-      if (!sp.isNullOrEmpty(this.data.imageId)) {
+      if (!sp.isNullOrEmpty(this.data.surfaceid)) {
         this.fileList = [
           {
             uid: '0',
             status: 'done',
             name: 'surface.png',
-            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.imageId}`
+            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.surfaceid}`
           }
         ];
       }
@@ -203,10 +203,13 @@ export default {
     },
     // 上传封页
     uploadSurface(param) {
-      const url = '/api/DataService/UploadImage?fileType=blog_surface';
+      const url = '/api/DataService/UploadImage?fileType=blog';
       const formData = new FormData();
       formData.append('file', param.file);
-      sp.post(url, formData, this.headers).then(resp => (this.data.imageId = resp.id));
+      sp.post(url, formData, this.headers).then(resp => {
+        this.data.surfaceid = resp.id;
+        this.data.surface_url = resp.downloadUrl;
+      });
     },
     beforeUpload(file, fileList) {
       if (fileList && fileList.length > 0) {
@@ -215,10 +218,10 @@ export default {
     },
     // 移除封页
     removeSurface() {
-      if (sp.isNullOrEmpty(this.data.imageId)) {
+      if (sp.isNullOrEmpty(this.data.surfaceid)) {
         return Promise.resolve(true);
       }
-      return sp.post('api/Blog/DeleteSurface', `=${this.data.imageId}`).then(() => {
+      return sp.post('api/Blog/DeleteSurface', `=${this.data.surfaceid}`).then(() => {
         this.$message.success('删除成功！');
       });
     },

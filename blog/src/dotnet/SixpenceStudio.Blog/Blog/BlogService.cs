@@ -46,10 +46,10 @@ SELECT
 	COALESCE(blog.reading_times, 0) reading_times,
 	COALESCE(blog.upvote_times, 0) upvote_times,
 	(SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid) message,
-	sys_file.sys_fileid AS imageId
+	blog.surfaceid,
+	blog.surfacec_url
 FROM
 	blog
-LEFT JOIN sys_file ON sys_file.objectid = blog.blogid AND sys_file.file_type = '{BLOG_SURFACE_NAME}'
 INNER JOIN classification ON classification.code = blog.blog_type AND classification.is_show = 1
 WHERE 1=1
 ";
@@ -75,14 +75,6 @@ WHERE 1=1
         }
 
         #region CRUD
-        public override void DeleteData(List<string> ids)
-        {
-            _cmd.Broker.ExecuteTransaction(() =>
-            {
-                ids.ForEach(item => DeleteBlogImages(item));
-                base.DeleteData(ids);
-            });
-        }
 
         /// <summary>
         /// 删除博客封面
@@ -90,36 +82,7 @@ WHERE 1=1
         /// <param name="id"></param>
         public void DeleteSurface(string id)
         {
-            new SysFileService().DeleteData(new List<string>() { id });
-        }
-
-        /// <summary>
-        /// 删除博客所有图片
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteBlogImages(string id)
-        {
-            var sql = @"
-DELETE from sys_file WHERE objectid = @id;
-";
-            _cmd.Broker.DbClient.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
-        }
-
-        /// <summary>
-        /// 获取博客
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public override blog GetData(string id)
-        {
-            var data = base.GetData(id);
-            var sql = $@"
-SELECT * FROM sys_file WHERE objectid = @id and file_type = '{BLOG_SURFACE_NAME}';
-";
-            // 获取博客封面
-            var image = _cmd.Broker.Retrieve<sys_file>(sql, new Dictionary<string, object>() { { "@id", id } });
-            data.imageId = image?.Id;
-            return data;
+            new SysFileService(Broker).DeleteData(new List<string>() { id });
         }
 
         /// <summary>
@@ -183,7 +146,7 @@ UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
             _cmd.Broker.ExecuteTransaction(() =>
             {
                 var data = GetData(id);
-                var media = new WeChatMaterialService(_cmd.Broker).CreateData(MaterialType.image, data.imageId);
+                var media = new WeChatMaterialService(_cmd.Broker).CreateData(MaterialType.image, data.surfaceid);
                 new WeChatNewsService(_cmd.Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
             });
         }
