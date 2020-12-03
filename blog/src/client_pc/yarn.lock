@@ -8019,6 +8019,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
+web-storage@^1.0.2:
+  version "1.0.2"
+  resolved "http://npm.karldu.cn/web-storage/-/web-storage-1.0.2.tgz#f1b0042a8b71a28ffbdaad35629adced6141a4af"
+  integrity sha512-dQLxSKXXlqCwRaQXNrvVzH0LWua9zKZ4xskhhcX8QdItcz53J3CF4E3ZX2malODrqti/sEGr+DkmSskHHaScPw==
+
 webpack-bundle-analyzer@^2.9.0:
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.13.1.tgz#07d2176c6e86c3cdce4c23e56fae2a7b6b4ad526"

@@ -7,6 +7,7 @@ import 'mavon-editor/dist/css/index.css';
 import './assets/icons';
 import './style/index.less';
 import './directives';
+import storage from 'web-storage';
 
 const Vue = require('vue');
 const VueRouter = require('vue-router');
@@ -29,6 +30,7 @@ Vue.use(Vuex);
 
 Vue.prototype.$bus = new Vue();
 Vue.prototype.$moment = moment;
+Vue.prototype.$indexDB = new storage.IndexedDB();
 Vue.use(moment);
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
 

@@ -35,12 +35,54 @@ export default {
     };
   },
   methods: {
+    openDB() {
+      return this.$indexDB.openDB({
+        databaseName: 'blog_indexDB',
+        tables: [
+          {
+            name: 'cloud_images',
+            keyPath: 'name'
+          }
+        ]
+      });
+    },
+    async getCache(value) {
+      await this.openDB();
+      const data = await this.$indexDB.getData('cloud_images', value);
+      await this.$indexDB.closeDB();
+      return data;
+    },
     handleSelect(item) {
       this.selected = item;
     },
-    loadData(value) {
+    async loadData(value) {
+      const data = await this.getCache(value);
+      if (data != null) {
+        this.dataList = data.value;
+        return;
+      }
       sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
         this.dataList = resp.hits;
+        this.$indexDB
+          .openDB({
+            databaseName: 'blog_indexDB',
+            tables: [
+              {
+                name: 'cloud_images',
+                keyPath: 'name'
+              }
+            ]
+          })
+          .then(() => {
+            this.$indexDB
+              .addData('cloud_images', {
+                name: value,
+                value: resp.hits
+              })
+              .then(() => {
+                this.$indexDB.closeDB();
+              });
+          });
       });
     },
     handleOk(e) {
