@@ -85,7 +85,7 @@
         <a-button type="primary" @click="save">确 定</a-button>
       </span>
     </a-modal>
-    <cloud-upload ref="cloudUpload"></cloud-upload>
+    <cloud-upload ref="cloudUpload" @selected="selected"></cloud-upload>
   </div>
 </template>
 
@@ -168,6 +168,19 @@ export default {
     }
   },
   methods: {
+    selected(item) {
+      sp.post('api/Gallery/UploadImage', item).then(resp => {
+        this.data.imageId = resp.id;
+        this.fileList = [
+          {
+            uid: '0',
+            status: 'done',
+            name: 'surface.png',
+            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.imageId}`
+          }
+        ];
+      });
+    },
     openCloudUpload() {
       this.$refs.cloudUpload.visible = true;
     },

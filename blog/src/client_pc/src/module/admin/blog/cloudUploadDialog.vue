@@ -4,7 +4,7 @@
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
     <div class="gallery">
-      <a-card hoverable v-for="item in dataList" class="item" :key="item.id">
+      <a-card hoverable v-for="item in dataList" class="item" :key="item.id" :class="{ active: selected.id == item.id }" @click="handleSelect(item)">
         <img slot="cover" alt="example" :src="item.previewURL" />
       </a-card>
     </div>
@@ -22,13 +22,17 @@ export default {
     return {
       visible: false,
       confirmLoading: false,
-      dataList: [1, 2, 3, 4, 5],
-      controllerName: 'Gallery'
+      dataList: [],
+      controllerName: 'Gallery',
+      selected: null
     };
   },
   methods: {
+    handleSelect(item) {
+      this.selected = item;
+    },
     loadData(value) {
-      sp.get(`api/${this.controllerName}/GetImages?searchValue=${value}`).then(resp => {
+      sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
         this.dataList = resp.hits;
       });
     },
@@ -37,6 +41,7 @@ export default {
       setTimeout(() => {
         this.visible = false;
         this.confirmLoading = false;
+        this.$emit('selected', this.selected);
       }, 2000);
     }
   }
@@ -51,6 +56,30 @@ export default {
   .item {
     width: 20%;
     margin: 10px;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .active {
+    position: relative;
+    border: 1px solid #99cc33;
+  }
+  .active::after {
+    display: inline-block;
+    content: '√';
+    color: #fff;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-left: 20px solid transparent;
+    border-right: 20px solid #99cc33;
+    border-bottom: 20px solid #99cc33;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 </style>
