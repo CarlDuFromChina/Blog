@@ -8,12 +8,8 @@ using System.Web.Http;
 
 namespace SixpenceStudio.Blog.Comments
 {
+    [AllowAnonymous]
     public class CommentsController : EntityBaseController<comments, CommentsService>
     {
-        [AllowAnonymous]
-        public override IList<comments> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
-        {
-            return base.GetDataList(searchList, orderBy, viewId, searchValue);
-        }
     }
 }
