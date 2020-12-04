@@ -47,7 +47,7 @@ SELECT
 	COALESCE(blog.upvote_times, 0) upvote_times,
 	(SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid) message,
 	blog.surfaceid,
-	blog.surfacec_url
+	blog.surface_url
 FROM
 	blog
 INNER JOIN classification ON classification.code = blog.blog_type AND classification.is_show = 1
@@ -75,15 +75,6 @@ WHERE 1=1
         }
 
         #region CRUD
-
-        /// <summary>
-        /// 删除博客封面
-        /// </summary>
-        /// <param name="id"></param>
-        public void DeleteSurface(string id)
-        {
-            new SysFileService(Broker).DeleteData(new List<string>() { id });
-        }
 
         /// <summary>
         /// 查询博客

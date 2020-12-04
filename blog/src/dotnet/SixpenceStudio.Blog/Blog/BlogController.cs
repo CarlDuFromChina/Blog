@@ -24,16 +24,6 @@ namespace SixpenceStudio.Blog.Blog
         }
 
         /// <summary>
-        /// 删除博客封面
-        /// </summary>
-        /// <param name="id"></param>
-        [HttpPost]
-        public void DeleteSurface([FromBody]string id)
-        {
-            new BlogService().DeleteSurface(id);
-        }
-
-        /// <summary>
         /// 获取所有博客
         /// </summary>
         /// <param name="searchList"></param>

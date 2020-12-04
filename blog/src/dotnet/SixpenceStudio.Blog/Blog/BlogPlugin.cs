@@ -28,9 +28,6 @@ UPDATE sys_file SET objectid = @objectid WHERE sys_fileid = @id
                     context.Broker.Execute(sql,  paramList);
                     new DraftService(context.Broker).DeleteDataByBlogId(id); // 删除草稿
                     break;
-                case EntityAction.PostDelete:
-                    new SysFileService(context.Broker).DeleteData(new List<string>() { entity.surfaceid });
-                    break;
                 default:
                     break;
             }

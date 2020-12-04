@@ -169,14 +169,14 @@ export default {
   methods: {
     selected(item) {
       sp.post('api/Gallery/UploadImage', item).then(resp => {
-        this.data.surfaceid = resp.id;
-        this.data.surface_url = resp.downloadUrl;
+        this.data.surfaceid = resp;
+        this.data.surface_url = `api/SysFile/Download?objectId=${resp}`;
         this.fileList = [
           {
             uid: '0',
             status: 'done',
             name: 'surface.png',
-            url: this.data.surface_url
+            url: `${this.baseUrl}${this.data.surface_url}`
           }
         ];
       });
@@ -191,7 +191,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'surface.png',
-            url: `${sp.getBaseUrl()}/api/SysFile/Download?objectId=${this.data.surfaceid}`
+            url: `${this.baseUrl}${this.data.surface_url}`
           }
         ];
       }
@@ -218,12 +218,9 @@ export default {
     },
     // 移除封页
     removeSurface() {
-      if (sp.isNullOrEmpty(this.data.surfaceid)) {
-        return Promise.resolve(true);
-      }
-      return sp.post('api/Blog/DeleteSurface', `=${this.data.surfaceid}`).then(() => {
-        this.$message.success('删除成功！');
-      });
+      this.data.surfaceid = '';
+      this.data.surface_url = '';
+      this.$message.success('删除成功！');
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
