@@ -172,12 +172,12 @@ export default {
         this.data.surfaceid = resp.Item1;
         this.data.surface_url = `api/SysFile/Download?objectId=${resp.Item1}`;
         this.data.big_surfaceid = resp.Item2;
-        this.data.big_surfaceurl = `api/SysFile/Download?objectId=${resp.Item2}`;
+        this.data.big_surface_url = `api/SysFile/Download?objectId=${resp.Item2}`;
         this.fileList = [
           {
             uid: '0',
             status: 'done',
-            name: 'surface.png',
+            name: 'surface',
             url: `${this.baseUrl}${this.data.surface_url}`
           }
         ];
@@ -192,7 +192,7 @@ export default {
           {
             uid: '0',
             status: 'done',
-            name: 'surface.png',
+            name: 'surface',
             url: `${this.baseUrl}${this.data.surface_url}`
           }
         ];
