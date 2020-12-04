@@ -349,6 +349,45 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+
+        /// <summary>
+        /// 大封面
+        /// </summary>
+        private string _big_surfaceid;
+        [DataMember]
+        public string big_surfaceid
+        {
+            get
+            {
+                return this._big_surfaceid;
+            }
+            set
+            {
+                this._big_surfaceid = value;
+                SetAttributeValue("big_surfaceid", value);
+            }
+        }
+
+
+        /// <summary>
+        /// 大封面地址
+        /// </summary>
+        private string _big_surface_url;
+        [DataMember]
+        public string big_surface_url
+        {
+            get
+            {
+                return this._big_surface_url;
+            }
+            set
+            {
+                this._big_surface_url = value;
+                SetAttributeValue("big_surface_url", value);
+            }
+        }
+
+
     }
 }
 

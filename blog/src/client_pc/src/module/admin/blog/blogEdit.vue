@@ -169,8 +169,10 @@ export default {
   methods: {
     selected(item) {
       sp.post('api/Gallery/UploadImage', item).then(resp => {
-        this.data.surfaceid = resp;
-        this.data.surface_url = `api/SysFile/Download?objectId=${resp}`;
+        this.data.surfaceid = resp[0];
+        this.data.surface_url = `api/SysFile/Download?objectId=${resp[0]}`;
+        this.data.big_surfaceid = resp[1];
+        this.data.big_surfaceurl = `api/SysFile/Download?objectId=${resp[1]}`;
         this.fileList = [
           {
             uid: '0',
@@ -209,6 +211,8 @@ export default {
       sp.post(url, formData, this.headers).then(resp => {
         this.data.surfaceid = resp.id;
         this.data.surface_url = resp.downloadUrl;
+        this.data.big_surfaceid = resp.id;
+        this.data.big_surface_url = resp.downloadUrl;
       });
     },
     beforeUpload(file, fileList) {
