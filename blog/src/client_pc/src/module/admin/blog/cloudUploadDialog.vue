@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="图库" :visible="visible" :confirm-loading="confirmLoading" width="60%">
+  <a-modal title="图库" v-model="visible" :confirm-loading="confirmLoading" width="60%">
     <a-form-model-item label="关键词">
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
@@ -14,6 +14,7 @@
       >
         <img slot="cover" alt="example" :src="item.previewURL" />
       </a-card>
+      <a-empty v-show="!dataList || dataList.length == 0" style="width: 100%"></a-empty>
     </div>
     <span slot="footer" class="dialog-footer">
       <a-button @click="visible = false">取 消</a-button>
@@ -35,54 +36,12 @@ export default {
     };
   },
   methods: {
-    openDB() {
-      return this.$indexDB.openDB({
-        databaseName: 'blog_indexDB',
-        tables: [
-          {
-            name: 'cloud_images',
-            keyPath: 'name'
-          }
-        ]
-      });
-    },
-    async getCache(value) {
-      await this.openDB();
-      const data = await this.$indexDB.getData('cloud_images', value);
-      await this.$indexDB.closeDB();
-      return data;
-    },
     handleSelect(item) {
       this.selected = item;
     },
     async loadData(value) {
-      const data = await this.getCache(value);
-      if (data != null) {
-        this.dataList = data.value;
-        return;
-      }
       sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
         this.dataList = resp.hits;
-        this.$indexDB
-          .openDB({
-            databaseName: 'blog_indexDB',
-            tables: [
-              {
-                name: 'cloud_images',
-                keyPath: 'name'
-              }
-            ]
-          })
-          .then(() => {
-            this.$indexDB
-              .addData('cloud_images', {
-                name: value,
-                value: resp.hits
-              })
-              .then(() => {
-                this.$indexDB.closeDB();
-              });
-          });
       });
     },
     handleOk(e) {

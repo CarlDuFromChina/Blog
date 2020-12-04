@@ -169,10 +169,10 @@ export default {
   methods: {
     selected(item) {
       sp.post('api/Gallery/UploadImage', item).then(resp => {
-        this.data.surfaceid = resp[0];
-        this.data.surface_url = `api/SysFile/Download?objectId=${resp[0]}`;
-        this.data.big_surfaceid = resp[1];
-        this.data.big_surfaceurl = `api/SysFile/Download?objectId=${resp[1]}`;
+        this.data.surfaceid = resp.Item1;
+        this.data.surface_url = `api/SysFile/Download?objectId=${resp.Item1}`;
+        this.data.big_surfaceid = resp.Item2;
+        this.data.big_surfaceurl = `api/SysFile/Download?objectId=${resp.Item2}`;
         this.fileList = [
           {
             uid: '0',
