@@ -7,6 +7,16 @@
           <a-layout-sider width="70%" theme="light">
             <a-card>
               <a-skeleton :loading="loading">
+                <div class="block">
+                  <div style="display:flex;">
+                    <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
+                    <div>
+                      <a>{{ user.name }}</a>
+                      <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+                    </div>
+                  </div>
+                </div>
+                <img :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
@@ -125,7 +135,8 @@ export default {
       imageUrl: '',
       formatterContent: '',
       user: {},
-      height: null
+      height: null,
+      baseUrl: sp.getBaseUrl()
     };
   },
   async created() {
