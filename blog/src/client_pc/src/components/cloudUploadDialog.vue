@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="图库" v-model="visible" :confirm-loading="confirmLoading" width="60%">
+  <a-modal title="图库" v-model="visible" width="60%">
     <a-form-model-item label="关键词">
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       visible: false,
-      confirmLoading: false,
       dataList: [],
       controllerName: 'Gallery',
       selected: null
@@ -45,12 +44,9 @@ export default {
       });
     },
     handleOk(e) {
-      this.confirmLoading = true;
-      setTimeout(() => {
-        this.visible = false;
-        this.confirmLoading = false;
-        this.$emit('selected', this.selected);
-      }, 2000);
+      this.visible = false;
+      this.confirmLoading = false;
+      this.$emit('selected', this.selected);
     }
   }
 };
