@@ -223,6 +223,8 @@ export default {
     removeSurface() {
       this.data.surfaceid = '';
       this.data.surface_url = '';
+      this.data.big_surfaceid = '';
+      this.data.big_surface_url = '';
       this.$message.success('删除成功！');
     },
     // 将图片上传到服务器，返回地址替换到md中
