@@ -94,11 +94,10 @@ import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 import { edit } from 'sixpence.platform.pc.vue';
 import draft from './draft';
-import cloudUpload from './cloudUploadDialog';
 
 export default {
   name: 'blogEdit',
-  components: { mavonEditor, cloudUpload },
+  components: { mavonEditor },
   mixins: [edit, draft],
   data() {
     return {
