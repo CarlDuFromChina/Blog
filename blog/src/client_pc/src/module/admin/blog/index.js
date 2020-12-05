@@ -7,6 +7,7 @@ export default [
   {
     path: '/admin/blogs',
     name: 'blogList',
-    component: () => import('./blogList')
+    component: () => import('./blogList'),
+    meta: { title: '文章管理' }
   }
 ];
