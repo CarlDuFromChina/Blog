@@ -60,29 +60,31 @@
         <a-row>
           <a-col>
             <a-form-model-item label="封面">
-              <a-upload
-                :action="baseUrl"
-                ref="files"
-                :customRequest="uploadSurface"
-                :default-file-list="fileList"
-                :beforeUpload="beforeUpload"
-                :remove="removeSurface"
-                list-type="picture"
-              >
-                <a-dropdown>
-                  <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="openCloudUpload"> <a-icon type="cloud-upload" />云上传 </a-menu-item>
-                  </a-menu>
-                  <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
-                </a-dropdown>
-              </a-upload>
+              <a-spin :spinning="loading">
+                <a-upload
+                  :action="baseUrl"
+                  ref="files"
+                  :customRequest="uploadSurface"
+                  :file-list="fileList"
+                  :beforeUpload="beforeUpload"
+                  :remove="removeSurface"
+                  list-type="picture"
+                >
+                  <a-dropdown>
+                    <a-menu slot="overlay">
+                      <a-menu-item key="1" @click="openCloudUpload"> <a-icon type="cloud-upload" />云上传 </a-menu-item>
+                    </a-menu>
+                    <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
+                  </a-dropdown>
+                </a-upload>
+              </a-spin>
             </a-form-model-item>
           </a-col>
         </a-row>
       </a-form-model>
       <span slot="footer" class="dialog-footer">
         <a-button @click="editVisible = false">取 消</a-button>
-        <a-button type="primary" @click="save">确 定</a-button>
+        <a-button type="primary" @click="save" :loading="loading">确 定</a-button>
       </span>
     </a-modal>
     <cloud-upload ref="cloudUpload" @selected="selected"></cloud-upload>
@@ -167,20 +169,25 @@ export default {
   },
   methods: {
     selected(item) {
-      sp.post('api/Gallery/UploadImage', item).then(resp => {
-        this.data.surfaceid = resp.Item1;
-        this.data.surface_url = `api/SysFile/Download?objectId=${resp.Item1}`;
-        this.data.big_surfaceid = resp.Item2;
-        this.data.big_surface_url = `api/SysFile/Download?objectId=${resp.Item2}`;
-        this.fileList = [
-          {
-            uid: '0',
-            status: 'done',
-            name: 'surface',
-            url: `${this.baseUrl}${this.data.surface_url}`
-          }
-        ];
-      });
+      this.loading = true;
+      sp.post('api/Gallery/UploadImage', item)
+        .then(resp => {
+          this.data.surfaceid = resp.Item1;
+          this.data.surface_url = `api/SysFile/Download?objectId=${resp.Item1}`;
+          this.data.big_surfaceid = resp.Item2;
+          this.data.big_surface_url = `api/SysFile/Download?objectId=${resp.Item2}`;
+          this.fileList = [
+            {
+              uid: '0',
+              status: 'done',
+              name: 'surface',
+              url: `${this.baseUrl}${this.data.surface_url}`
+            }
+          ];
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     openCloudUpload() {
       this.$refs.cloudUpload.visible = true;
@@ -225,6 +232,7 @@ export default {
       this.data.surface_url = '';
       this.data.big_surfaceid = '';
       this.data.big_surface_url = '';
+      this.fileList = [];
       this.$message.success('删除成功！');
     },
     // 将图片上传到服务器，返回地址替换到md中
