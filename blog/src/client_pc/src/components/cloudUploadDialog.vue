@@ -3,7 +3,7 @@
     <a-form-model-item label="关键词">
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
-    <div class="gallery">
+    <a-spin :spinning="loading" class="gallery">
       <a-card
         hoverable
         v-for="item in dataList"
@@ -15,10 +15,10 @@
         <img slot="cover" alt="example" :src="item.previewURL" />
       </a-card>
       <a-empty v-show="!dataList || dataList.length == 0" style="width: 100%"></a-empty>
-    </div>
+    </a-spin>
     <span slot="footer" class="dialog-footer">
       <a-button @click="visible = false">取 消</a-button>
-      <a-button type="primary" @click="handleOk">确 定</a-button>
+      <a-button type="primary" @click="handleOk" :loading="loading">确 定</a-button>
     </span>
   </a-modal>
 </template>
@@ -31,7 +31,8 @@ export default {
       visible: false,
       dataList: [],
       controllerName: 'Gallery',
-      selected: null
+      selected: null,
+      loading: false
     };
   },
   methods: {
@@ -39,11 +40,24 @@ export default {
       this.selected = item;
     },
     async loadData(value) {
-      sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
-        this.dataList = resp.hits;
-      });
+      this.loading = true;
+      sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`)
+        .then(resp => {
+          if (resp) {
+            this.dataList = resp.hits;
+          }
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 200);
+        });
     },
     handleOk(e) {
+      if (!this.selected) {
+        this.$message.error('请选择一个图片');
+        return;
+      }
       this.visible = false;
       this.confirmLoading = false;
       this.$emit('selected', this.selected);
@@ -54,9 +68,17 @@ export default {
 
 <style lang="less" scoped>
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  /deep/ .ant-spin-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  /deep/ .ant-card-cover {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+  }
   .item {
     width: 20%;
     margin: 10px;
