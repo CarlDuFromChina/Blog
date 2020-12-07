@@ -29,34 +29,14 @@ namespace SixpenceStudio.Blog.Comments
 
         public override string CreateData(comments t)
         {
-            // 匿名
-            if (string.IsNullOrEmpty(UserIdentityUtil.GetCurrentUser().Id))
-            {
-                var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
-                t.modifiedBy = anonymous.Id;
-                t.modifiedByName = anonymous.name;
-                t.createdBy = anonymous.Id;
-                t.createdByName = anonymous.name;
-                t.createdOn = DateTime.Now;
-                t.modifiedOn = DateTime.Now;
-                return _cmd.Broker.Create(t);
-            }
+            var user = UserIdentityUtil.GetAnonymous();
+            t.modifiedBy = user.Id;
+            t.modifiedByName = user.Name;
+            t.createdBy = user.Id;
+            t.createdByName = user.Name;
+            t.createdOn = DateTime.Now;
+            t.modifiedOn = DateTime.Now;
             return base.CreateData(t);
-        }
-
-        public override void UpdateData(comments t)
-        {
-            // 匿名
-            if (string.IsNullOrEmpty(UserIdentityUtil.GetCurrentUser().Id))
-            {
-                var anonymous = _cmd.Broker.Retrieve<user_info>("select * from user_info where code = 'Anonymous'", null);
-                t.createdBy = anonymous.Id;
-                t.createdByName = anonymous.name;
-                t.modifiedOn = DateTime.Now;
-                _cmd.Broker.Update(t);
-                return;
-            }
-            base.UpdateData(t);
         }
     }
 }
