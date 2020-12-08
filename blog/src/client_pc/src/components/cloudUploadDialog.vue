@@ -74,19 +74,21 @@ export default {
     flex-wrap: wrap;
   }
   /deep/ .ant-card-cover {
-    max-width: 100%;
-    max-height: 100%;
-    width: 100%;
-    height: 100%;
+    max-width: 200px;
+    min-width: 100%;
+    max-height: 150px;
+    width: 200px;
+    height: 150px;
   }
   .item {
     width: 20%;
     margin: 10px;
     img {
-      max-width: 100%;
-      max-height: 100%;
-      width: 100%;
-      height: 100%;
+      max-width: 200px;
+      min-width: 100%;
+      max-height: 150px;
+      width: 200px;
+      height: 150px;
     }
   }
   .active {
