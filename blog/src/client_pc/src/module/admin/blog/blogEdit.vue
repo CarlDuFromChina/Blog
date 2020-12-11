@@ -64,18 +64,13 @@
                 <a-upload
                   :action="baseUrl"
                   ref="files"
-                  :customRequest="uploadSurface"
                   :file-list="fileList"
                   :beforeUpload="beforeUpload"
                   :remove="removeSurface"
                   list-type="picture"
+                  :openFileDialogOnClick="false"
                 >
-                  <a-dropdown>
-                    <a-menu slot="overlay">
-                      <a-menu-item key="1" @click="openCloudUpload"> <a-icon type="cloud-upload" />云上传 </a-menu-item>
-                    </a-menu>
-                    <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
-                  </a-dropdown>
+                  <a-button type="primary" @click="openCloudUpload" icon="upload">上传</a-button>
                 </a-upload>
               </a-spin>
             </a-form-model-item>
@@ -169,25 +164,18 @@ export default {
   },
   methods: {
     selected(item) {
-      this.loading = true;
-      sp.post('api/Gallery/UploadImage', item)
-        .then(resp => {
-          this.data.surfaceid = resp.Item1;
-          this.data.surface_url = `api/SysFile/Download?objectId=${resp.Item1}`;
-          this.data.big_surfaceid = resp.Item2;
-          this.data.big_surface_url = `api/SysFile/Download?objectId=${resp.Item2}`;
-          this.fileList = [
-            {
-              uid: '0',
-              status: 'done',
-              name: 'surface',
-              url: `${this.baseUrl}${this.data.surface_url}`
-            }
-          ];
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.data.surfaceid = item.surfaceid;
+      this.data.surface_url = item.surface_url;
+      this.data.big_surfaceid = item.big_surfaceid;
+      this.data.big_surface_url = item.big_surface_url;
+      this.fileList = [
+        {
+          uid: '0',
+          status: 'done',
+          name: 'surface',
+          url: `${this.baseUrl}${this.data.surface_url}`
+        }
+      ];
     },
     openCloudUpload() {
       this.$refs.cloudUpload.visible = true;
@@ -209,22 +197,8 @@ export default {
       }
       this.openWatch();
     },
-    // 上传封页
-    uploadSurface(param) {
-      const url = '/api/DataService/UploadImage?fileType=blog';
-      const formData = new FormData();
-      formData.append('file', param.file);
-      sp.post(url, formData, this.headers).then(resp => {
-        this.data.surfaceid = resp.id;
-        this.data.surface_url = resp.downloadUrl;
-        this.data.big_surfaceid = resp.id;
-        this.data.big_surface_url = resp.downloadUrl;
-      });
-    },
     beforeUpload(file, fileList) {
-      if (fileList && fileList.length > 0) {
-        this.removeSurface();
-      }
+      return false;
     },
     // 移除封页
     removeSurface() {

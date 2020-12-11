@@ -1,6 +1,16 @@
 <template>
   <a-modal title="图库" v-model="visible" width="60%">
-    <a-form-model-item label="关键词">
+    <a-form-model-item label="数据源">
+      <a-radio-group v-model="source" @change="onChange">
+        <a-radio :value="1">
+          本地图库
+        </a-radio>
+        <a-radio :value="2">
+          云图库
+        </a-radio>
+      </a-radio-group>
+    </a-form-model-item>
+    <a-form-model-item label="关键词" v-show="source == 2">
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
     </a-form-model-item>
     <a-spin :spinning="loading" class="gallery">
@@ -32,35 +42,87 @@ export default {
       dataList: [],
       controllerName: 'Gallery',
       selected: null,
-      loading: false
+      loading: false,
+      baseUrl: sp.getBaseUrl(),
+      source: 1
     };
+  },
+  created() {
+    this.loadData();
   },
   methods: {
     handleSelect(item) {
       this.selected = item;
     },
+    onChange(value) {
+      if (this.source === 2) {
+        this.dataList = [];
+      } else {
+        this.loadData();
+      }
+    },
+    getLocalData(value) {
+      return sp.get(`api/${this.controllerName}/GetDataList?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE`).then(resp => {
+        this.dataList = resp.map(item => ({
+          id: item.Id,
+          previewURL: `${this.baseUrl}${item.preview_url}`,
+          preview_url: item.preview_url,
+          previewid: item.previewid,
+          image_url: item.image_url,
+          imageid: item.imageid
+        }));
+        this.localDataList = this.dataList;
+      });
+    },
+    getCloudData(value) {
+      return sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
+        if (resp) {
+          this.dataList = resp.hits;
+        }
+      });
+    },
     async loadData(value) {
       this.loading = true;
-      sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`)
-        .then(resp => {
-          if (resp) {
-            this.dataList = resp.hits;
-          }
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.loading = false;
-          }, 200);
-        });
+      try {
+        if (this.source === 1) {
+          await this.getLocalData(value);
+        } else {
+          await this.getCloudData(value);
+        }
+      } catch (error) {
+        this.$message.error('请求失败');
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 200);
+      }
     },
-    handleOk(e) {
+    uploadImages(item) {
+      return sp.post('api/Gallery/UploadImage', item).then(resp => {
+        this.$emit('selected', {
+          surfaceid: resp.Item1,
+          surface_url: `api/SysFile/Download?objectId=${resp.Item1}`,
+          big_surfaceid: resp.Item2,
+          big_surface_url: `api/SysFile/Download?objectId=${resp.Item2}`
+        });
+      });
+    },
+    async handleOk(e) {
       if (!this.selected) {
         this.$message.error('请选择一个图片');
         return;
       }
+      if (this.source === 1) {
+        this.$emit('selected', {
+          surfaceid: this.selected.previewid,
+          surface_url: this.selected.preview_url,
+          big_surfaceid: this.selected.imageid,
+          big_surface_url: this.selected.image_url
+        });
+      } else {
+        await this.uploadImages();
+      }
       this.visible = false;
-      this.confirmLoading = false;
-      this.$emit('selected', this.selected);
     }
   }
 };
