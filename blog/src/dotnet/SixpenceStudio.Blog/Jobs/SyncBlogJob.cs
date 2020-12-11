@@ -22,6 +22,7 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override void Execute(IPersistBroker broker)
         {
+            var count = 0;
             LogUtils.Debug("开始同步谢振国博客");
             try
             {
@@ -29,7 +30,7 @@ namespace SixpenceStudio.Blog.Jobs
                 var blogModel = JsonConvert.DeserializeObject<BlogModel>(result);
                 if (result != null && blogModel.statuscode == 200)
                 {
-                    LogUtils.Debug("博客请求成功");
+                    LogUtils.Debug($"共发现{blogModel.data.Count}篇博客待同步");
                     blogModel.data.ForEach(item =>
                     {
                         var blog = new friend_blog()
@@ -37,33 +38,26 @@ namespace SixpenceStudio.Blog.Jobs
                             name = item.title,
                             content = item.content,
                             description = item.description,
-                            createdOn = ConvertLongToDateTime(item.createTime),
-                            modifiedOn = ConvertLongToDateTime(item.updateTime),
+                            createdOn = item.createTime.ToDateTime(),
+                            modifiedOn = item.updateTime.ToDateTime(),
                             first_picture = item.firstPicture,
                             author = "谢振国",
                             Id = item.id.ToString()
                         };
                         broker.Save(blog);
+                        count++;
                     });
                 }
-                LogUtils.Debug("同步谢振国博客成功");
             }
             catch (Exception e)
             {
                 LogUtils.Error("同步博客出现异常", e);
             }
-        }
-
-        private DateTime? ConvertLongToDateTime(long tick)
-        {
-            if (tick == default(long))
+            finally
             {
-                return null;
+                LogUtils.Debug($"同步谢振国博客结束，共同步{count}篇博客");
             }
-            var timeZone = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            return timeZone.Add(new TimeSpan(long.Parse(tick + "0000")));
         }
-
     }
 
     public class BlogModel
