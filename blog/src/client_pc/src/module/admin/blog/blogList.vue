@@ -78,8 +78,11 @@ export default {
   },
   created() {
     // 获取博客类型选项集
-    sp.get('api/SysParamGroup/GetParams?code=blog_type').then(resp => {
-      this.blogType = resp;
+    sp.get('api/Classification/GetDataList').then(resp => {
+      this.blogType = resp.map(item => ({
+        Name: item.name,
+        Value: item.code
+      }));
     });
   },
   methods: {

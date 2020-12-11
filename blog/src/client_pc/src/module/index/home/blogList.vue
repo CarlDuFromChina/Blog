@@ -21,7 +21,7 @@
             <a @click="readBlog(item)">{{ item.title }}</a>
             <div>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
           </span>
-          <a-avatar slot="avatar" :src="avatar" />
+          <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width:150px;height:100px;" />
         </a-list-item-meta>
       </a-list-item>
     </a-list>
