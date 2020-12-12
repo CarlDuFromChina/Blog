@@ -387,7 +387,23 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
-
+        /// <summary>
+        /// 是否展示
+        /// </summary>
+        private int? _is_show;
+        [DataMember]
+        public int? is_show
+        {
+            get
+            {
+                return this._is_show;
+            }
+            set
+            {
+                this._is_show = value;
+                SetAttributeValue("is_show", value);
+            }
+        }
     }
 }
 

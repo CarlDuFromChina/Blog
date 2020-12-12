@@ -10,15 +10,6 @@ namespace SixpenceStudio.Blog.Classification
     public partial class classification
     {
         [DataMember]
-        public string is_showName
-        {
-            get
-            {
-                return this.is_show == 1 ? "是" : "否";
-            }
-        }
-
-        [DataMember]
         public string is_freeName
         {
             get

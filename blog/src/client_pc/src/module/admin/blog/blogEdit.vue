@@ -45,6 +45,13 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="是否前台显示">
+              <a-switch v-model="isShow"></a-switch>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
             <a-form-model-item label="允许评论">
               <a-switch v-model="enableComment"></a-switch>
             </a-form-model-item>
@@ -108,6 +115,7 @@ export default {
       token: '',
       tags: [],
       is_series: false,
+      is_show: 1,
       enable_comment: true
     };
   },
@@ -144,6 +152,14 @@ export default {
       set(val) {
         this.data.is_series = val ? 1 : 0;
         this.is_series = val;
+      }
+    },
+    isShow: {
+      get() {
+        return !!this.data.is_show;
+      },
+      set(val) {
+        this.data.is_show = val ? 1 : 0;
       }
     },
     enableComment: {

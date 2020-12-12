@@ -69,7 +69,9 @@ export default {
   methods: {
     fetchData() {
       try {
-        sp.get(`api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=`).then(resp => {
+        sp.get(
+          `api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
+        ).then(resp => {
           this.total = resp.RecordCount;
           this.listData = this.listData.concat(resp.DataList);
           this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;

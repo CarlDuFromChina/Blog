@@ -67,25 +67,6 @@ namespace SixpenceStudio.Blog.Classification
 
 
         /// <summary>
-        /// 是否前台显示
-        /// </summary>
-        private int _is_show;
-        [DataMember]
-        public int is_show
-        {
-            get
-            {
-                return this._is_show;
-            }
-            set
-            {
-                this._is_show = value;
-                SetAttributeValue("is_show", value);
-            }
-        }
-
-
-        /// <summary>
         /// 创建人
         /// </summary>
         private string _createdby;

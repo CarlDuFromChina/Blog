@@ -9,9 +9,6 @@
     <a-form-model-item label="是否付费">
       <a-switch v-model="isFree"></a-switch>
     </a-form-model-item>
-    <a-form-model-item label="是否前台显示">
-      <a-switch v-model="isShow"></a-switch>
-    </a-form-model-item>
   </a-form-model>
 </template>
 
@@ -25,8 +22,7 @@ export default {
     return {
       controllerName: 'Classification',
       data: {
-        is_free: 0,
-        is_show: 1
+        is_free: 0
       }
     };
   },
@@ -37,14 +33,6 @@ export default {
       },
       set(val) {
         this.data.is_free = val ? 1 : 0;
-      }
-    },
-    isShow: {
-      get() {
-        return !!this.data.is_show;
-      },
-      set(val) {
-        this.data.is_show = val ? 1 : 0;
       }
     }
   }
