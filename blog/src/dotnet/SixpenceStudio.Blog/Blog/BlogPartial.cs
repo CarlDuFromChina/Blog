@@ -19,6 +19,15 @@ namespace SixpenceStudio.Blog.Blog
         }
 
         [DataMember]
+        public string isShowName
+        {
+            get
+            {
+                return this.is_show == 0 ? "否" : "是";
+            }
+        }
+
+        [DataMember]
         public int message { get; set; }
     }
 }
