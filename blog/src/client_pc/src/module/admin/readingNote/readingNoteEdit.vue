@@ -46,7 +46,12 @@
       <a-row>
         <a-col>
           <a-form-model-item label="内容">
-            <sp-editor v-model="data.content" :uploadImgParams="uploadImgParams" :disabledMenu="['image', 'video']"></sp-editor>
+            <sp-editor
+              v-model="data.content"
+              :uploadImgParams="uploadImgParams"
+              :disabledMenu="['image', 'video']"
+              :preCreate="preCreate"
+            ></sp-editor>
           </a-form-model-item>
         </a-col>
       </a-row>
@@ -102,6 +107,9 @@ export default {
     }
   },
   methods: {
+    preCreate(editor) {
+      editor.config.zIndex = 2;
+    },
     loadComplete() {
       if (!sp.isNullOrEmpty(this.data.surfaceid)) {
         this.fileList = [
@@ -153,12 +161,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-/deep/ .w-e-toolbar {
-  z-index: 1 !important;
-}
-/deep/ .w-e-text-container {
-  z-index: 1 !important;
-}
-</style>
