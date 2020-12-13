@@ -223,6 +223,10 @@
     <Compile Include="idea\IdeaController.cs" />
     <Compile Include="idea\IdeaSerivice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadingNote\ReadingNoteController.cs" />
+    <Compile Include="ReadingNote\ReadingNotePartial.cs" />
+    <Compile Include="ReadingNote\ReadingNoteService.cs" />
+    <Compile Include="ReadingNote\reading_note.cs" />
     <Compile Include="RecommendInfo\RecommendInfoController.cs" />
     <Compile Include="RecommendInfo\RecommendInfoService.cs" />
     <Compile Include="RecommendInfo\recommend_info.cs" />

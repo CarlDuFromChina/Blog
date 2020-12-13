@@ -121,26 +121,10 @@ export default {
   },
   created() {
     // 编辑博客
-    if (this.$route.params.id) {
-      this.Id = this.$route.params.id;
-      this.loadData();
-    } else {
+    if (!this.$route.params.id) {
       this.data.is_series = 0;
       this.data.disable_comment = 0;
     }
-    // 获取博客类型选项集
-    sp.get('api/classification/GetDataList').then(resp => {
-      this.blogType = resp.map(item => {
-        return {
-          Name: item.name,
-          Value: item.code
-        };
-      });
-      if (this.$route.params.blogType) {
-        this.data.blog_type = this.$route.params.blogType;
-        this.handleTypeChange(this.data.blog_type);
-      }
-    });
     // 获取token和url
     this.token = window.localStorage.getItem('Token');
   },
@@ -197,6 +181,19 @@ export default {
       this.$refs.cloudUpload.visible = true;
     },
     loadComplete() {
+      // 获取博客类型选项集
+      sp.get('api/classification/GetDataList').then(resp => {
+        this.blogType = resp.map(item => {
+          return {
+            Name: item.name,
+            Value: item.code
+          };
+        });
+        if (this.$route.params.blogType) {
+          this.data.blog_type = this.$route.params.blogType;
+          this.handleTypeChange(this.data.blog_type);
+        }
+      });
       if (!sp.isNullOrEmpty(this.data.surfaceid)) {
         this.fileList = [
           {
