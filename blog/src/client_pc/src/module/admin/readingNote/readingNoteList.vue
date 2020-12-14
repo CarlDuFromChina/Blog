@@ -22,7 +22,8 @@ export default {
         { prop: 'book_title', label: '标题' },
         { prop: 'isShowName', label: '是否展示' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
+        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
+        { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }
       ]
     };
   },
@@ -31,6 +32,13 @@ export default {
       this.$router.push({
         path: `readingNote/edit/${(item || {}).Id || ''}`
       });
+    },
+    goReadonly(item) {
+      const { href } = this.$router.resolve({
+        name: 'readingNoteReadonly',
+        params: { id: item.Id }
+      });
+      window.open(href, '_blank');
     }
   }
 };
