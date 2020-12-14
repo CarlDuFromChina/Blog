@@ -80,6 +80,7 @@ export default {
         };
         sp.post('api/Comments/CreateData', comment).then(resp => {
           this.getDataList();
+          this.$message.success('留言成功');
         });
         this.value = '';
       }, 1000);

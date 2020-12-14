@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
+using SixpenceStudio.Core.Auth;
 using SixpenceStudio.Core.Entity;
 using SixpenceStudio.Core.WebApi;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SixpenceStudio.Blog.Comments
@@ -15,6 +12,7 @@ namespace SixpenceStudio.Blog.Comments
         [HttpPost, AllowAnonymous]
         public string CreateData(comments entity)
         {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetAnonymous());
             return new CommentsService().CreateData(entity);
         }
 
