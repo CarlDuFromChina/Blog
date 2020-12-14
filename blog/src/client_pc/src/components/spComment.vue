@@ -31,7 +31,13 @@ export default {
   props: {
     objectId: {
       type: String,
-      default: ''
+      default: '',
+      required: true
+    },
+    objectName: {
+      type: String,
+      default: '',
+      required: true
     },
     disabled: {
       type: Boolean,
@@ -68,9 +74,9 @@ export default {
         const comment = {
           Id: sp.newUUID(),
           name: '游客',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           comment: this.value,
-          objectid: this.objectId
+          objectid: this.objectId,
+          object_name: this.objectName
         };
         sp.post('api/Comments/CreateData', comment).then(resp => {
           this.getDataList();

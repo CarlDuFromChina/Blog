@@ -151,24 +151,6 @@ namespace SixpenceStudio.Blog.Comments
         }
 
         /// <summary>
-        /// 头像
-        /// </summary>
-        private string _avatar;
-        [DataMember]
-        public string avatar
-        {
-            get
-            {
-                return this._avatar;
-            }
-            set
-            {
-                this._avatar = value;
-                SetAttributeValue("avatar", value);
-            }
-        }
-
-        /// <summary>
         /// 实体Id
         /// </summary>
         private string _objectid;
@@ -183,6 +165,24 @@ namespace SixpenceStudio.Blog.Comments
             {
                 this._objectid = value;
                 SetAttributeValue("objectId", value);
+            }
+        }
+
+        /// <summary>
+        /// 类型名
+        /// </summary>
+        private string _object_name;
+        [DataMember]
+        public string object_name
+        {
+            get
+            {
+                return this._object_name;
+            }
+            set
+            {
+                this._object_name = value;
+                SetAttributeValue("object_name", value);
             }
         }
     }
