@@ -17,7 +17,7 @@ export default {
     return {
       controllerName: 'ReadingNote',
       editComponent: readingNoteEdit,
-      operations: ['new', 'delete'],
+      operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'book_title', label: '标题' },
         { prop: 'isShowName', label: '是否展示' },

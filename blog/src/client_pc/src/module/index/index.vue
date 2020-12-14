@@ -64,6 +64,12 @@ export default {
           }
         },
         {
+          name: '读书笔记',
+          click: () => {
+            this.$router.push({ name: 'readingNote' });
+          }
+        },
+        {
           name: '关于',
           click: () => {
             this.$router.push({ name: 'aboutme' });

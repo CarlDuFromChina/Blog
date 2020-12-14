@@ -4,11 +4,11 @@
       <a-col :span="24" v-for="item in data" :key="item.Id">
         <sp-card class="card-item">
           <div class="card-item-wrapper">
-            <img alt="example" :src="item.first_picture" />
+            <img alt="example" :src="imageName == 'surface_url' ? baseUrl + item[imageName] : item[imageName]" />
             <div class="content">
               <h2 class="title">{{ item.name }}</h2>
               <div>
-                <sp-icon name="sp-blog-author" :size="15"></sp-icon><span>{{ item.author }}</span>
+                <sp-icon name="sp-blog-author" :size="15"></sp-icon><span>{{ item[authorName] }}</span>
               </div>
               <div>
                 <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
@@ -40,13 +40,20 @@ export default {
       type: String,
       default: ''
     },
-    pageSize: {
-      type: Number,
-      default: 15
-    },
     newTag: {
       type: Boolean,
       default: false
+    },
+    imageName: {
+      type: String,
+      default: 'surface_url'
+    },
+    authorName: {
+      type: String,
+      default: 'author'
+    },
+    handleReadClick: {
+      type: Function
     }
   },
   data() {
@@ -54,6 +61,7 @@ export default {
       isFirstLoad: true,
       busy: false,
       editVisible: false,
+      baseUrl: sp.getBaseUrl(),
       data: [],
       loading: false
     };
@@ -106,6 +114,10 @@ export default {
         });
     },
     goReadonly(row) {
+      if (this.handleReadClick && typeof this.handleReadClick === 'function') {
+        this.handleReadClick(row);
+        return;
+      }
       this.editVisible = true;
       setTimeout(() => {
         const read = document.getElementById('blogRead');

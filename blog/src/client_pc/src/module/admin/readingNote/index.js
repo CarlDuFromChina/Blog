@@ -1,7 +1,7 @@
 export default [
   {
     path: '/admin/readingNote',
-    name: 'readingNote',
+    name: 'readingNoteList',
     component: () => import('./readingNoteList'),
     meta: { title: '阅读笔记' }
   },

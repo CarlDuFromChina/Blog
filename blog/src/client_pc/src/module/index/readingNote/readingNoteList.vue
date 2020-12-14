@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sp-blog-card ref="blog" :getDataApi="getDataApi" imageName="first_picture"></sp-blog-card>
+    <sp-blog-card ref="list" :getDataApi="getDataApi" authorName="createdByName" :handleReadClick="handleReadClick"></sp-blog-card>
     <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
       <span v-if="isLoadedAll">到底了....</span>
     </a-spin>
@@ -9,10 +9,10 @@
 
 <script>
 export default {
-  name: 'friends',
+  name: 'readingNoteList',
   data() {
     return {
-      controllerName: 'FriendBlog',
+      controllerName: 'ReadingNote',
       loading: false,
       isLoadedAll: false
     };
@@ -33,13 +33,23 @@ export default {
       }
       this.loading = true;
       setTimeout(() => {
-        this.$refs.blog.loadData();
+        this.$refs.list.loadData();
       }, 500);
     });
   },
   computed: {
     getDataApi() {
-      return `api/${this.controllerName}/GetDataList?orderBy=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC&&pageSize=$pageSize&pageIndex=$pageIndex&searchList=`;
+      return `api/${this.controllerName}/GetDataList?orderBy=&viewId=03860DF4-0E9E-4330-80BF-6A1E9AC797A6&pageSize=$pageSize&pageIndex=$pageIndex&searchList=`;
+    }
+  },
+  methods: {
+    handleReadClick(item) {
+      debugger;
+      const { href } = this.$router.resolve({
+        name: 'readingNoteReadonly',
+        params: { id: item.Id }
+      });
+      window.open(href, '_blank');
     }
   }
 };
