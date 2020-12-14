@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SixpenceStudio.Blog.Blog
 {
-    public class BlogPlugin : IEntityActionPlugin
+    public class BlogPlugin : IPersistBrokerPlugin
     {
         public void Execute(Context context)
         {

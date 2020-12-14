@@ -37,7 +37,7 @@ namespace SixpenceStudio.Blog.ReadingNote
                 new EntityView()
                 {
                     ViewId = "03860DF4-0E9E-4330-80BF-6A1E9AC797A6",
-                    Sql = @"
+                    Sql = @"    
 SELECT
 	name,
 	book_title,
