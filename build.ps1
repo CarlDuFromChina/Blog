@@ -22,7 +22,6 @@ If (! $?) { Throw $buildException }
 New-Item -ItemType directory "blog\build\bin"
 $release = "blog\src\dotnet\build\*"
 Copy-Item -Force -Recurse $release "blog\build\bin\"
-Remove-Item -Recurse -Force "blog\build\bin\*.pdb"
 Write-Success-Message "OK."
 '@ > DotNetBuild.ps1
 
