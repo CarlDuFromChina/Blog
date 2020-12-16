@@ -11,7 +11,7 @@
       </a-radio-group>
     </a-form-model-item>
     <a-form-model-item label="关键词" v-show="source == 2">
-      <a-input-search placeholder="请输入关键词" enter-button @search="loadData" />
+      <a-input-search placeholder="请输入关键词" enter-button @search="loadData" v-model="searchValue" />
     </a-form-model-item>
     <a-spin :spinning="loading" class="gallery">
       <a-card
@@ -26,6 +26,14 @@
       </a-card>
       <a-empty v-show="!dataList || dataList.length == 0" style="width: 100%"></a-empty>
     </a-spin>
+    <a-pagination
+      show-size-changer
+      :default-current="pageIndex"
+      :default-pageSize="pageSize"
+      :total="total"
+      @showSizeChange="sizeChange"
+      @change="currentPage"
+    />
     <span slot="footer" class="dialog-footer">
       <a-button @click="visible = false">取 消</a-button>
       <a-button type="primary" @click="handleOk" :loading="loading">确 定</a-button>
@@ -34,8 +42,11 @@
 </template>
 
 <script>
+import { pagination } from 'sixpence.platform.pc.vue';
+
 export default {
   name: 'cloudUpload',
+  mixins: [pagination],
   data() {
     return {
       visible: false,
@@ -44,7 +55,9 @@ export default {
       selected: null,
       loading: false,
       baseUrl: sp.getBaseUrl(),
-      source: 1
+      source: 1,
+      pageSize: 12,
+      searchValue: ''
     };
   },
   created() {
@@ -57,13 +70,20 @@ export default {
     onChange(value) {
       if (this.source === 2) {
         this.dataList = [];
+        this.total = 0;
       } else {
         this.loadData();
       }
     },
-    getLocalData(value) {
-      return sp.get(`api/${this.controllerName}/GetDataList?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE`).then(resp => {
-        this.dataList = resp.map(item => ({
+    currentPage(index) {
+      this.pageIndex = index;
+      this.loadData();
+    },
+    getLocalData() {
+      let url = `api/${this.controllerName}/GetDataList?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
+      url += `&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`;
+      return sp.get(url).then(resp => {
+        this.dataList = resp.DataList.map(item => ({
           id: item.Id,
           previewURL: `${this.baseUrl}${item.preview_url}`,
           preview_url: item.preview_url,
@@ -71,23 +91,30 @@ export default {
           image_url: item.image_url,
           imageid: item.imageid
         }));
-        this.localDataList = this.dataList;
+        this.total = resp.RecordCount;
       });
     },
-    getCloudData(value) {
-      return sp.get(`api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(value)}`).then(resp => {
-        if (resp) {
-          this.dataList = resp.hits;
-        }
-      });
+    getCloudData() {
+      return sp
+        .get(
+          `api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(this.searchValue)}&pageIndex=${this.pageIndex}&pageSize=${
+            this.pageSize
+          }`
+        )
+        .then(resp => {
+          if (resp) {
+            this.dataList = resp.hits;
+            this.total = resp.total;
+          }
+        });
     },
-    async loadData(value) {
+    async loadData() {
       this.loading = true;
       try {
         if (this.source === 1) {
-          await this.getLocalData(value);
+          await this.getLocalData();
         } else {
-          await this.getCloudData(value);
+          await this.getCloudData();
         }
       } catch (error) {
         this.$message.error('请求失败');
@@ -171,5 +198,9 @@ export default {
     bottom: 0;
     right: 0;
   }
+}
+
+/deep/ .ant-pagination {
+  text-align: center;
 }
 </style>
