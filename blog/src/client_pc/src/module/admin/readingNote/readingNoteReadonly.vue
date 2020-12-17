@@ -133,5 +133,6 @@ export default {
 
 #content {
   min-height: 600px;
+  padding-top: 50px;
 }
 </style>

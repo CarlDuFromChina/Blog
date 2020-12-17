@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     handleReadClick(item) {
-      debugger;
       const { href } = this.$router.resolve({
         name: 'readingNoteReadonly',
         params: { id: item.Id }

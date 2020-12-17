@@ -85,10 +85,10 @@ export default {
   computed: {
     isShow: {
       get() {
-        return !!this.data.is_show;
+        return !this.data.is_show;
       },
       set(val) {
-        this.data.is_show = val ? 1 : 0;
+        this.data.is_show = val ? 0 : 1;
       }
     },
     disableComment: {
