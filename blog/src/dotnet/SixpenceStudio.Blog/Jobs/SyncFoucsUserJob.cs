@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SixpenceStudio.Core.Utils;
 
 namespace SixpenceStudio.Blog.Jobs
 {
@@ -39,7 +40,6 @@ namespace SixpenceStudio.Blog.Jobs
                 var user_list = new List<OpenId>();
                 focusUserList.data.openid.ForEach(item => user_list.Add(new OpenId() { openid = item, lang = "zh_CN" }));
                 var focusUsers = focusUserService.GetFocusUsers(JsonConvert.SerializeObject(new { user_list }));
-                var start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 broker.ExecuteTransaction(() =>
                 {
                     focusUsers.user_list.ForEach(focusUser =>
@@ -56,7 +56,7 @@ namespace SixpenceStudio.Blog.Jobs
                             province = focusUser.province,
                             country = focusUser.country,
                             headimgurl = focusUser.headimgurl,
-                            subscribe_time = start.AddMilliseconds(focusUser.subscribe_time * 1000).ToLocalTime(),
+                            subscribe_time = focusUser.subscribe_time.ToDateTime(),
                             unionid = focusUser.unionid,
                             remark = focusUser.remark,
                             groupid = focusUser.groupid,

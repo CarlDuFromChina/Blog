@@ -32,7 +32,7 @@ namespace SixpenceStudio.Blog.Jobs
             var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
             try
             {
-                var images = new WeChatMaterialService().GetMaterial(MaterialType.image.ToMaterialTypeString(), 1, 5000);
+                var images = new WeChatMaterialService(broker).GetMaterial(MaterialType.image.ToMaterialTypeString(), 1, 5000);
                 if (images.item_count == 0)
                 {
                     logger.Debug($"未发现图片待同步");
@@ -67,7 +67,7 @@ namespace SixpenceStudio.Blog.Jobs
                 }
 
 
-                var voices = new WeChatMaterialService().GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
+                var voices = new WeChatMaterialService(broker).GetMaterial(MaterialType.voice.ToMaterialTypeString(), 1, 5000);
                 if (voices.item_count == 0)
                 {
                     logger.Debug($"未发现语音待同步");
@@ -103,7 +103,7 @@ namespace SixpenceStudio.Blog.Jobs
                 }
 
 
-                var videos = new WeChatMaterialService().GetMaterial(MaterialType.video.ToMaterialTypeString(), 1, 5000);
+                var videos = new WeChatMaterialService(broker).GetMaterial(MaterialType.video.ToMaterialTypeString(), 1, 5000);
                 if (voices.item_count == 0)
                 {
                     logger.Debug($"未发现视频待同步");
@@ -140,7 +140,8 @@ namespace SixpenceStudio.Blog.Jobs
             }
             catch (Exception ex)
             {
-                logger.Error($"微信素材同步失败：\r\n{ex.Message}\r\n{ex.StackTrace}");
+                logger.Debug($"微信素材同步失败");
+                logger.Error($"{ex.Message}\r\n{ex.StackTrace}");
             }
         }
     }

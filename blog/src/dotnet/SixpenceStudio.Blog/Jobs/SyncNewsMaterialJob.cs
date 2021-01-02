@@ -33,7 +33,7 @@ namespace SixpenceStudio.Blog.Jobs
             logger.Debug("开始同步微信公众号图文素材");
             try
             {
-                var result = new WeChatNewsService().GetDataList(1, 5000);
+                var result = new WeChatNewsService(broker).GetDataList(1, 5000);
                 var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
                 var dataList = from item in result.item
                                let news = item.content.news_item.FirstOrDefault()

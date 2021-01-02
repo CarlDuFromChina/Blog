@@ -58,23 +58,23 @@ namespace SixpenceStudio.Blog.Jobs
                 LogUtils.Debug($"同步谢振国博客结束，共同步{count}篇博客");
             }
         }
-    }
+        
+        class BlogModel
+        {
+            public int statuscode { get; set; }
+            public string message { get; set; }
+            public List<BlogDetail> data { get; set; }
+        }
 
-    public class BlogModel
-    {
-        public int statuscode { get; set; }
-        public string message { get; set; }
-        public List<BlogDetail> data { get; set; }
-    }
-
-    public class BlogDetail
-    {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public string firstPicture { get; set; }
-        public long createTime { get; set; }
-        public long updateTime { get; set; }
-        public string description { get; set; }
+        class BlogDetail
+        {
+            public int id { get; set; }
+            public string title { get; set; }
+            public string content { get; set; }
+            public string firstPicture { get; set; }
+            public long createTime { get; set; }
+            public long updateTime { get; set; }
+            public string description { get; set; }
+        }
     }
 }
