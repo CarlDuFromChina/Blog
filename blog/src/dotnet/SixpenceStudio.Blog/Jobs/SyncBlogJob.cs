@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Quartz;
 using SixpenceStudio.Blog.FriendBlog;
 using SixpenceStudio.Core.Data;
 using SixpenceStudio.Core.Job;
@@ -20,8 +21,9 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string CronExperssion => "0 0 4 * * ?";
 
-        public override void Execute(IPersistBroker broker)
+        public override void Executing(IJobExecutionContext context)
         {
+            var broker = PersistBrokerFactory.GetPersistBroker();
             var count = 0;
             LogUtils.Debug("开始同步谢振国博客");
             try
@@ -58,7 +60,7 @@ namespace SixpenceStudio.Blog.Jobs
                 LogUtils.Debug($"同步谢振国博客结束，共同步{count}篇博客");
             }
         }
-        
+
         class BlogModel
         {
             public int statuscode { get; set; }

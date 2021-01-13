@@ -14,6 +14,7 @@ using SixpenceStudio.Core.Logging;
 using SixpenceStudio.WeChat;
 using SixpenceStudio.WeChat.Material;
 using System;
+using Quartz;
 
 namespace SixpenceStudio.Blog.Jobs
 {
@@ -25,8 +26,9 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string CronExperssion => "0 0 4 * * ?";
 
-        public override void Execute(IPersistBroker broker)
+        public override void Executing(IJobExecutionContext context)
         {
+            var broker = PersistBrokerFactory.GetPersistBroker();
             var logger = LogFactory.GetLogger("wechat");
             logger.Debug("开始同步微信公众号素材");
             var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
