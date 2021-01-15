@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using SixpenceStudio.Core.UserInfo;
 using SixpenceStudio.Core.Data;
 using SixpenceStudio.Core.Job;
-using SixpenceStudio.Core.Logging;
 using SixpenceStudio.Core.Utils;
 using SixpenceStudio.WeChat.WeChatNews;
 using System;
@@ -26,13 +25,12 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string Description => "同步微信图文素材";
 
-        public override string CronExperssion => "0 0 4 * * ?";
+        public override IScheduleBuilder ScheduleBuilder => CronScheduleBuilder.CronSchedule("0 0 4 * * ? ");
 
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
-            var logger = LogFactory.GetLogger("wechat");
-            logger.Debug("开始同步微信公众号图文素材");
+            Logger.Debug("开始同步微信公众号图文素材");
             try
             {
                 var result = new WeChatNewsService(broker).GetDataList(1, 5000);
@@ -62,17 +60,17 @@ namespace SixpenceStudio.Blog.Jobs
                     return;
                 }
 
-                logger.Debug($"发现{result.item_count}篇文章需要同步");
+                Logger.Debug($"发现{result.item_count}篇文章需要同步");
                 dataList.Each(item =>
                 {
                     broker.Save(item);
-                    logger.Debug($"同步文章：{item.name}成功");
+                    Logger.Debug($"同步文章：{item.name}成功");
                 });
-                logger.Debug($"同步微信公众号图文素材成功，共同步：{dataList.Count()}篇文章");
+                Logger.Debug($"同步微信公众号图文素材成功，共同步：{dataList.Count()}篇文章");
             }
             catch (Exception e)
             {
-                logger.Error("同步微信公众号图文素材失败", e);
+                Logger.Error("同步微信公众号图文素材失败", e);
             }
         }
     }

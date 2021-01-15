@@ -28,8 +28,6 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string Description => "同步微信关注用户（手动）";
 
-        public override string CronExperssion => "";
-
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();

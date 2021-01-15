@@ -19,20 +19,20 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string Description => "同步谢振国的博客";
 
-        public override string CronExperssion => "0 0 4 * * ?";
+        public override IScheduleBuilder ScheduleBuilder => CronScheduleBuilder.CronSchedule("0 0 4 * * ? ");
 
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
             var count = 0;
-            LogUtils.Debug("开始同步谢振国博客");
+            Logger.Debug("开始同步谢振国博客");
             try
             {
                 var result = HttpUtil.Get("http://122.51.132.149:8081/index?index=0&offset=5000");
                 var blogModel = JsonConvert.DeserializeObject<BlogModel>(result);
                 if (result != null && blogModel.statuscode == 200)
                 {
-                    LogUtils.Debug($"共发现{blogModel.data.Count}篇博客待同步");
+                    Logger.Debug($"共发现{blogModel.data.Count}篇博客待同步");
                     blogModel.data.ForEach(item =>
                     {
                         var blog = new friend_blog()
@@ -53,11 +53,11 @@ namespace SixpenceStudio.Blog.Jobs
             }
             catch (Exception e)
             {
-                LogUtils.Error("同步博客出现异常", e);
+                Logger.Error("同步博客出现异常", e);
             }
             finally
             {
-                LogUtils.Debug($"同步谢振国博客结束，共同步{count}篇博客");
+                Logger.Debug($"同步谢振国博客结束，共同步{count}篇博客");
             }
         }
 
