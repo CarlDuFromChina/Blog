@@ -24,7 +24,7 @@ namespace SixpenceStudio.Blog.Jobs
 
         public override string Description => "同步微信素材";
 
-        public override IScheduleBuilder ScheduleBuilder => CronScheduleBuilder.CronSchedule("0 0 4 * * ? ");
+        public override IScheduleBuilder ScheduleBuilder => CronScheduleBuilder.CronSchedule("0 0 4 * * ?");
         
         public override void Executing(IJobExecutionContext context)
         {
