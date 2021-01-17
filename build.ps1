@@ -14,13 +14,13 @@ else
 @'
 . ".\help.ps1"
 Write-Section-Message "Build dotnet"
-nuget restore "blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"
+nuget restore "blog\src\server_dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"
 
 # Build Dotnet files
-$buildException = MSBuild.exe "blog\src\dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"  /t:rebuild  /p:Configuration=Release
+$buildException = MSBuild.exe "blog\src\server_dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"  /t:rebuild  /p:Configuration=Release
 If (! $?) { Throw $buildException }
 New-Item -ItemType directory "blog\build\bin"
-$release = "blog\src\dotnet\build\*"
+$release = "blog\src\server_dotnet\build\*"
 Copy-Item -Force -Recurse $release "blog\build\bin\"
 Write-Success-Message "OK."
 '@ > DotNetBuild.ps1
