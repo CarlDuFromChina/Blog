@@ -35,13 +35,29 @@ export default {
       total: 0
     };
   },
+  watch: {
+    searchValue(value) {
+      this.init();
+      this.$nextTick(() => {
+        this.loadMore();
+      });
+    }
+  },
   methods: {
+    init() {
+      this.loading = false;
+      this.list = [];
+      this.isLoadedAll = false;
+      this.pageIndex = 1;
+      this.pageSize = 10;
+      this.total = 0;
+    },
     getDownloadUrl(item) {
       return `${sp.getBaseUrl()}${item.surface_url}`;
     },
     loadMore() {
       sp.get(
-        `${sp.getBaseUrl()}api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+        `${sp.getBaseUrl()}api/blog/GetDataList?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
           this.pageIndex
         }&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
       ).then(resp => {
