@@ -7,8 +7,11 @@ import components from './components';
 import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import './style/index.less';
+import './assets/icons';
 import 'web-core';
+import moment from 'vue-moment';
 
+Vue.use(moment);
 Vue.use(MintUI);
 Vue.prototype.$message = MintUI.MessageBox;
 Vue.config.productionTip = false;

@@ -1114,7 +1114,7 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bluebird@^3.1.1, bluebird@^3.4.7, bluebird@^3.5.1:
+bluebird@^3.1.1, bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.7.2"
   resolved "http://npm.karldu.cn/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha1-nyKcFb4nJFT/qXOs4NvueaGww28=
@@ -1170,7 +1170,7 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
-braces@^2.3.1, braces@^2.3.2:
+braces@^2.2.2, braces@^2.3.1, braces@^2.3.2:
   version "2.3.2"
   resolved "http://npm.karldu.cn/braces/-/braces-2.3.2.tgz#5979fd3f14cd531565e5fa2df1abfff1dfaee729"
   integrity sha1-WXn9PxTNUxVl5fot8av/8d+u5yk=
@@ -2275,7 +2275,12 @@ deep-is@~0.1.3:
   resolved "http://npm.karldu.cn/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
   integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
 
-define-properties@^1.1.3:
+deepmerge@1.3.2:
+  version "1.3.2"
+  resolved "http://npm.karldu.cn/deepmerge/-/deepmerge-1.3.2.tgz#1663691629d4dbfe364fa12a2a4f0aa86aa3a050"
+  integrity sha1-FmNpFinU2/42T6EqKk8KqGqjoFA=
+
+define-properties@^1.1.2, define-properties@^1.1.3:
   version "1.1.3"
   resolved "http://npm.karldu.cn/define-properties/-/define-properties-1.1.3.tgz#cf88da6cbee26fe6db7094f61d870cbd84cee9f1"
   integrity sha1-z4jabL7ib+bbcJT2HYcMvYTO6fE=
@@ -2438,6 +2443,11 @@ domhandler@^2.3.0:
   integrity sha1-iAUJfpM9ZehVRvcm1g9euItE+AM=
   dependencies:
     domelementtype "1"
+
+domready@1.0.8:
+  version "1.0.8"
+  resolved "http://npm.karldu.cn/domready/-/domready-1.0.8.tgz#91f252e597b65af77e745ae24dd0185d5e26d58c"
+  integrity sha1-kfJS5Ze2Wvd+dFriTdAYXV4m1Yw=
 
 domutils@^1.5.1, domutils@^1.7.0:
   version "1.7.0"
@@ -2681,7 +2691,7 @@ escape-html@~1.0.3:
   resolved "http://npm.karldu.cn/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
+escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "http://npm.karldu.cn/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
@@ -3033,7 +3043,7 @@ external-editor@^2.0.4:
     iconv-lite "^0.4.17"
     tmp "^0.0.33"
 
-extglob@^2.0.4:
+extglob@^2.0.2, extglob@^2.0.4:
   version "2.0.4"
   resolved "http://npm.karldu.cn/extglob/-/extglob-2.0.4.tgz#ad00fe4dc612a9232e8718711dc5cb5ab0285543"
   integrity sha1-rQD+TcYSqSMuhxhxHcXLWrAoVUM=
@@ -3503,7 +3513,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-he@1.2.x, he@^1.1.0:
+he@1.2.x, he@^1.1.0, he@^1.1.1:
   version "1.2.0"
   resolved "http://npm.karldu.cn/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
@@ -3590,7 +3600,20 @@ html-webpack-plugin@^2.30.1:
     pretty-error "^2.0.2"
     toposort "^1.0.0"
 
-htmlparser2@^3.10.1:
+html-webpack-plugin@^3.2.0:
+  version "3.2.0"
+  resolved "http://npm.karldu.cn/html-webpack-plugin/-/html-webpack-plugin-3.2.0.tgz#b01abbd723acaaa7b37b6af4492ebda03d9dd37b"
+  integrity sha1-sBq71yOsqqeze2r0SS69oD2d03s=
+  dependencies:
+    html-minifier "^3.2.3"
+    loader-utils "^0.2.16"
+    lodash "^4.17.3"
+    pretty-error "^2.0.2"
+    tapable "^1.0.0"
+    toposort "^1.0.0"
+    util.promisify "1.0.0"
+
+htmlparser2@^3.10.1, htmlparser2@^3.8.3:
   version "3.10.1"
   resolved "http://npm.karldu.cn/htmlparser2/-/htmlparser2-3.10.1.tgz#bd679dc3f59897b6a34bb10749c855bb53a9392f"
   integrity sha1-vWedw/WYl7ajS7EHSchVu1OpOS8=
@@ -3702,7 +3725,7 @@ ignore@^3.3.3, ignore@^3.3.5, ignore@^3.3.6:
   resolved "http://npm.karldu.cn/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
   integrity sha1-Cpf7h2mG6AgcYxFg+PnziRV/AEM=
 
-image-size@~0.5.0:
+image-size@^0.5.1, image-size@~0.5.0:
   version "0.5.5"
   resolved "http://npm.karldu.cn/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
@@ -4041,7 +4064,7 @@ is-path-inside@^1.0.0:
   dependencies:
     path-is-inside "^1.0.1"
 
-is-plain-obj@^1.0.0:
+is-plain-obj@^1.0.0, is-plain-obj@^1.1:
   version "1.1.0"
   resolved "http://npm.karldu.cn/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
@@ -4126,7 +4149,7 @@ isexe@^2.0.0:
   resolved "http://npm.karldu.cn/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
-isobject@^2.0.0:
+isobject@^2.0.0, isobject@^2.1.0:
   version "2.1.0"
   resolved "http://npm.karldu.cn/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
   integrity sha1-8GVWEJaj8dou9GJy+BXIQNh+DIk=
@@ -4255,7 +4278,7 @@ kind-of@^4.0.0:
   dependencies:
     is-buffer "^1.1.5"
 
-kind-of@^5.0.0:
+kind-of@^5.0.0, kind-of@^5.0.2:
   version "5.1.0"
   resolved "http://npm.karldu.cn/kind-of/-/kind-of-5.1.0.tgz#729c91e2d857b7a419a1f9aa65685c4c33f5845d"
   integrity sha1-cpyR4thXt6QZofmqZWhcTDP1hF0=
@@ -4541,10 +4564,36 @@ merge-descriptors@1.0.1:
   resolved "http://npm.karldu.cn/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
+merge-options@1.0.1:
+  version "1.0.1"
+  resolved "http://npm.karldu.cn/merge-options/-/merge-options-1.0.1.tgz#2a64b24457becd4e4dc608283247e94ce589aa32"
+  integrity sha1-KmSyRFe+zU5NxggoMkfpTOWJqjI=
+  dependencies:
+    is-plain-obj "^1.1"
+
 methods@~1.1.2:
   version "1.1.2"
   resolved "http://npm.karldu.cn/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
+
+micromatch@3.1.0:
+  version "3.1.0"
+  resolved "http://npm.karldu.cn/micromatch/-/micromatch-3.1.0.tgz#5102d4eaf20b6997d6008e3acfe1c44a3fa815e2"
+  integrity sha1-UQLU6vILaZfWAI46z+HESj+oFeI=
+  dependencies:
+    arr-diff "^4.0.0"
+    array-unique "^0.3.2"
+    braces "^2.2.2"
+    define-property "^1.0.0"
+    extend-shallow "^2.0.1"
+    extglob "^2.0.2"
+    fragment-cache "^0.2.1"
+    kind-of "^5.0.2"
+    nanomatch "^1.2.1"
+    object.pick "^1.3.0"
+    regex-not "^1.0.0"
+    snapdragon "^0.8.1"
+    to-regex "^3.0.1"
 
 micromatch@^3.1.10, micromatch@^3.1.4:
   version "3.1.10"
@@ -4647,6 +4696,11 @@ mississippi@^2.0.0:
     stream-each "^1.1.0"
     through2 "^2.0.0"
 
+mitt@1.1.2:
+  version "1.1.2"
+  resolved "http://npm.karldu.cn/mitt/-/mitt-1.1.2.tgz#380e61480d6a615b660f07abb60d51e0a4e4bed6"
+  integrity sha1-OA5hSA1qYVtmDwertg1R4KTkvtY=
+
 mixin-deep@^1.2.0:
   version "1.3.2"
   resolved "http://npm.karldu.cn/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
@@ -4661,6 +4715,11 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.5, mkdirp@~0.5.0, mkdirp@~0.5.1:
   integrity sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8=
   dependencies:
     minimist "^1.2.5"
+
+moment@^2.19.2:
+  version "2.29.1"
+  resolved "http://npm.karldu.cn/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -4717,7 +4776,7 @@ nan@^2.12.1:
   resolved "http://npm.karldu.cn/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha1-9TdkAGlRaPTMaUrJOT0MlYXu6hk=
 
-nanomatch@^1.2.9:
+nanomatch@^1.2.1, nanomatch@^1.2.9:
   version "1.2.13"
   resolved "http://npm.karldu.cn/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
   integrity sha1-uHqKpPwN6P5r6IiVs4mD/yZb0Rk=
@@ -4936,7 +4995,7 @@ object.assign@^4.1.1:
     has-symbols "^1.0.1"
     object-keys "^1.1.1"
 
-object.getownpropertydescriptors@^2.1.0:
+object.getownpropertydescriptors@^2.0.3, object.getownpropertydescriptors@^2.1.0:
   version "2.1.1"
   resolved "http://npm.karldu.cn/object.getownpropertydescriptors/-/object.getownpropertydescriptors-2.1.1.tgz#0dfda8d108074d9c563e80490c883b6661091544"
   integrity sha1-Df2o0QgHTZxWPoBJDIg7ZmEJFUQ=
@@ -5761,6 +5820,13 @@ postcss-ordered-values@^4.1.2:
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
 
+postcss-prefix-selector@^1.6.0:
+  version "1.7.2"
+  resolved "http://npm.karldu.cn/postcss-prefix-selector/-/postcss-prefix-selector-1.7.2.tgz#3adeed903985734298f19d8f5e0b657f9d90d43c"
+  integrity sha1-Ot7tkDmFc0KY8Z2PXgtlf52Q1Dw=
+  dependencies:
+    postcss "^7.0.0"
+
 postcss-reduce-idents@^2.2.2:
   version "2.4.0"
   resolved "http://npm.karldu.cn/postcss-reduce-idents/-/postcss-reduce-idents-2.4.0.tgz#c2c6d20cc958284f6abfbe63f7609bf409059ad3"
@@ -5901,7 +5967,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.16:
+postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.16, postcss@^5.2.17:
   version "5.2.18"
   resolved "http://npm.karldu.cn/postcss/-/postcss-5.2.18.tgz#badfa1497d46244f6390f58b319830d9107853c5"
   integrity sha1-ut+hSX1GJE9jkPWLMZgw2RB4U8U=
@@ -5928,6 +5994,44 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.27:
     chalk "^2.4.2"
     source-map "^0.6.1"
     supports-color "^6.1.0"
+
+posthtml-parser@^0.2.0, posthtml-parser@^0.2.1:
+  version "0.2.1"
+  resolved "http://npm.karldu.cn/posthtml-parser/-/posthtml-parser-0.2.1.tgz#35d530de386740c2ba24ff2eb2faf39ccdf271dd"
+  integrity sha1-NdUw3jhnQMK6JP8usvrznM3ycd0=
+  dependencies:
+    htmlparser2 "^3.8.3"
+    isobject "^2.1.0"
+
+posthtml-rename-id@^1.0:
+  version "1.0.12"
+  resolved "http://npm.karldu.cn/posthtml-rename-id/-/posthtml-rename-id-1.0.12.tgz#cf7f6eb37146bf1afac31e68f18c6cc19ae61433"
+  integrity sha1-z39us3FGvxr6wx5o8YxswZrmFDM=
+  dependencies:
+    escape-string-regexp "1.0.5"
+
+posthtml-render@^1.0.5, posthtml-render@^1.0.6:
+  version "1.4.0"
+  resolved "http://npm.karldu.cn/posthtml-render/-/posthtml-render-1.4.0.tgz#40114070c45881cacb93347dae3eff53afbcff13"
+  integrity sha1-QBFAcMRYgcrLkzR9rj7/U6+8/xM=
+
+posthtml-svg-mode@^1.0.3:
+  version "1.0.3"
+  resolved "http://npm.karldu.cn/posthtml-svg-mode/-/posthtml-svg-mode-1.0.3.tgz#abd554face81223cab0cb367e18e4efd2a4e74b0"
+  integrity sha1-q9VU+s6BIjyrDLNn4Y5O/SpOdLA=
+  dependencies:
+    merge-options "1.0.1"
+    posthtml "^0.9.2"
+    posthtml-parser "^0.2.1"
+    posthtml-render "^1.0.6"
+
+posthtml@^0.9.2:
+  version "0.9.2"
+  resolved "http://npm.karldu.cn/posthtml/-/posthtml-0.9.2.tgz#f4c06db9f67b61fd17c4e256e7e3d9515bf726fd"
+  integrity sha1-9MBtufZ7Yf0XxOJW5+PZUVv3Jv0=
+  dependencies:
+    posthtml-parser "^0.2.0"
+    posthtml-render "^1.0.5"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -6049,7 +6153,7 @@ qs@6.7.0:
   resolved "http://npm.karldu.cn/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha1-QdwaAV49WB8WIXdr4xr7KHapsbw=
 
-query-string@^4.1.0:
+query-string@^4.1.0, query-string@^4.3.2:
   version "4.3.4"
   resolved "http://npm.karldu.cn/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
   integrity sha1-u7aTucqRXCMlFbIosaArYJBD2+s=
@@ -7004,6 +7108,49 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
+svg-baker-runtime@^1.4.7:
+  version "1.4.7"
+  resolved "http://npm.karldu.cn/svg-baker-runtime/-/svg-baker-runtime-1.4.7.tgz#f4720637f5b6202eef6378d81f1fead0815f8a4e"
+  integrity sha1-9HIGN/W2IC7vY3jYHx/q0IFfik4=
+  dependencies:
+    deepmerge "1.3.2"
+    mitt "1.1.2"
+    svg-baker "^1.7.0"
+
+svg-baker@^1.5.0, svg-baker@^1.7.0:
+  version "1.7.0"
+  resolved "http://npm.karldu.cn/svg-baker/-/svg-baker-1.7.0.tgz#8367f78d875550c52fe4756f7303d5c5d7c2e9a7"
+  integrity sha1-g2f3jYdVUMUv5HVvcwPVxdfC6ac=
+  dependencies:
+    bluebird "^3.5.0"
+    clone "^2.1.1"
+    he "^1.1.1"
+    image-size "^0.5.1"
+    loader-utils "^1.1.0"
+    merge-options "1.0.1"
+    micromatch "3.1.0"
+    postcss "^5.2.17"
+    postcss-prefix-selector "^1.6.0"
+    posthtml-rename-id "^1.0"
+    posthtml-svg-mode "^1.0.3"
+    query-string "^4.3.2"
+    traverse "^0.6.6"
+
+svg-sprite-loader@^4.1.3:
+  version "4.3.0"
+  resolved "http://npm.karldu.cn/svg-sprite-loader/-/svg-sprite-loader-4.3.0.tgz#a427f777fe15bba83a806e2fde01a736b19445c8"
+  integrity sha1-pCf3d/4Vu6g6gG4v3gGnNrGURcg=
+  dependencies:
+    bluebird "^3.5.0"
+    deepmerge "1.3.2"
+    domready "1.0.8"
+    escape-string-regexp "1.0.5"
+    html-webpack-plugin "^3.2.0"
+    loader-utils "^1.1.0"
+    svg-baker "^1.5.0"
+    svg-baker-runtime "^1.4.7"
+    url-slug "2.0.0"
+
 svgo@^0.7.0:
   version "0.7.2"
   resolved "http://npm.karldu.cn/svgo/-/svgo-0.7.2.tgz#9f5772413952135c6fefbf40afe6a4faa88b4bb5"
@@ -7052,6 +7199,11 @@ tapable@^0.2.7:
   version "0.2.9"
   resolved "http://npm.karldu.cn/tapable/-/tapable-0.2.9.tgz#af2d8bbc9b04f74ee17af2b4d9048f807acd18a8"
   integrity sha1-ry2LvJsE907hevK02QSPgHrNGKg=
+
+tapable@^1.0.0:
+  version "1.1.3"
+  resolved "http://npm.karldu.cn/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"
+  integrity sha1-ofzMBrWNth/XpF2i2kT186Pme6I=
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
@@ -7156,6 +7308,11 @@ toposort@^1.0.0:
   version "1.0.7"
   resolved "http://npm.karldu.cn/toposort/-/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
   integrity sha1-LmhELZ9k7HILjMieZEOsbKqVACk=
+
+traverse@^0.6.6:
+  version "0.6.6"
+  resolved "http://npm.karldu.cn/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trim-newlines@^1.0.0:
   version "1.0.0"
@@ -7276,6 +7433,11 @@ uglifyjs-webpack-plugin@^1.1.1:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
+unidecode@0.1.8:
+  version "0.1.8"
+  resolved "http://npm.karldu.cn/unidecode/-/unidecode-0.1.8.tgz#efbb301538bc45246a9ac8c559d72f015305053e"
+  integrity sha1-77swFTi8RSRqmsjFWdcvAVMFBT4=
+
 union-value@^1.0.0:
   version "1.0.1"
   resolved "http://npm.karldu.cn/union-value/-/union-value-1.0.1.tgz#0b6fe7b835aecda61c6ea4d4f02c14221e109847"
@@ -7366,6 +7528,13 @@ url-parse@^1.1.8, url-parse@^1.4.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
+url-slug@2.0.0:
+  version "2.0.0"
+  resolved "http://npm.karldu.cn/url-slug/-/url-slug-2.0.0.tgz#a789d5aed4995c0d95af33377ad1d5c68d4d7027"
+  integrity sha1-p4nVrtSZXA2VrzM3etHVxo1NcCc=
+  dependencies:
+    unidecode "0.1.8"
+
 url@^0.11.0:
   version "0.11.0"
   resolved "http://npm.karldu.cn/url/-/url-0.11.0.tgz#3838e97cfc60521eb73c525a8e55bfdd9e2e28f1"
@@ -7383,6 +7552,14 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "http://npm.karldu.cn/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+
+util.promisify@1.0.0:
+  version "1.0.0"
+  resolved "http://npm.karldu.cn/util.promisify/-/util.promisify-1.0.0.tgz#440f7165a459c9a16dc145eb8e72f35687097030"
+  integrity sha1-RA9xZaRZyaFtwUXrjnLzVocJcDA=
+  dependencies:
+    define-properties "^1.1.2"
+    object.getownpropertydescriptors "^2.0.3"
 
 util.promisify@~1.0.0:
   version "1.0.1"
@@ -7491,6 +7668,13 @@ vue-loader@^13.3.0:
     vue-hot-reload-api "^2.2.0"
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
+
+vue-moment@^4.1.0:
+  version "4.1.0"
+  resolved "http://npm.karldu.cn/vue-moment/-/vue-moment-4.1.0.tgz#092a8ff723a96c6f85a0a8e23ad30f0bf320f3b0"
+  integrity sha1-CSqP9yOpbG+FoKjiOtMPC/Mg87A=
+  dependencies:
+    moment "^2.19.2"
 
 vue-router@^3.0.1:
   version "3.4.9"
