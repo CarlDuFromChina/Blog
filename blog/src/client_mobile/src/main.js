@@ -7,6 +7,7 @@ import components from './components';
 import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import './style/index.less';
+import 'web-core';
 
 Vue.use(MintUI);
 Vue.prototype.$message = MintUI.MessageBox;
