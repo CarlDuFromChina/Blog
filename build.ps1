@@ -10,6 +10,8 @@ else
   New-Item -ItemType directory "blog\build\"
 }
 
+New-Item -ItemType directory "blog\build\debug\"
+
 # Restore Dotnet Packages
 @'
 . ".\help.ps1"
@@ -51,7 +53,7 @@ start powershell .\ClientPCBuild.ps1 -wait
 
 @'
 . ".\help.ps1"
-Write-Section-Message "Build pc.vue."
+Write-Section-Message "Build mobile.vue."
 Push-Location "blog\src\client_mobile"
 $npmInstallException = yarn.cmd install
 If (!$?) { Throw $npmInstallException }
@@ -60,8 +62,8 @@ If (!$?) { Throw $buildException }
 Pop-Location
 Write-Success-Message "OK."
 
-$release2 = "blog\src\client_mobile\dist\*"
-Copy-Item -Force -Recurse $release2 "blog\build\debug\"
+$release3 = "blog\src\client_mobile\dist\*"
+Copy-Item -Force -Recurse $release3 "blog\build\debug\"
 Remove-Item -Recurse -Force ".\ClientMobileBuild.ps1"
 '@ > ClientMobileBuild.ps1
 
