@@ -1,5 +1,3 @@
-export default [{
-  name: 'index',
-  path: '/index',
-  component: () => import('./index.vue')
-}]
+import blog from './blog';
+
+export default [].concat(blog);
