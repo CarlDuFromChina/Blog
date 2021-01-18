@@ -4,7 +4,7 @@
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入博客名快速搜索"></mt-search>
       <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
-        <div v-for="(row, index) in list" :key="index" class="card item">
+        <div v-for="(row, index) in list" :key="index" class="card item" @click="goReadonly(row.Id)">
           <div class="avatar">
             <img :src="getDownloadUrl(row)" alt="" />
           </div>
@@ -54,6 +54,9 @@ export default {
     },
     getDownloadUrl(item) {
       return `${sp.getBaseUrl()}${item.surface_url}`;
+    },
+    goReadonly(id) {
+      this.$router.push({ name: 'blog', params: { id: id } });
     },
     loadMore() {
       sp.get(
