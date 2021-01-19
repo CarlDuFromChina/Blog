@@ -1,7 +1,5 @@
 import blog from './blog';
-import idea from './idea';
-import reading from './reading';
-import friend from './friend';
+import error from './error';
 
 export default [{
   path: '/',
@@ -10,6 +8,6 @@ export default [{
   name: 'index',
   path: '/index',
   component: () => import('./index.vue'),
-  children: [].concat(blog, idea, reading, friend),
+  children: [].concat(blog),
   redirect: '/index/blogList'
-}];
+}].concat(error);
