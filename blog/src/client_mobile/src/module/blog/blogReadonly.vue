@@ -24,9 +24,16 @@ export default {
   },
   methods: {
     loadData() {
-      sp.get(`api/blog/GetData?id=${this.Id}`).then(resp => {
-        this.data = resp;
-      });
+      this.$indicator.open('加载中...');
+      sp.get(`api/blog/GetData?id=${this.Id}`)
+        .then(resp => {
+          this.data = resp;
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.$indicator.close();
+          }, 500);
+        });
     }
   }
 };

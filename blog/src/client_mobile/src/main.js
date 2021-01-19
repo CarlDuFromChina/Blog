@@ -14,7 +14,6 @@ import moment from 'vue-moment';
 
 Vue.use(moment);
 Vue.use(MintUI);
-Vue.prototype.$message = MintUI.MessageBox;
 Vue.config.productionTip = false;
 
 const install = _Vue => {

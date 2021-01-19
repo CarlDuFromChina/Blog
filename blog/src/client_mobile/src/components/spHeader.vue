@@ -1,6 +1,6 @@
 <template>
   <mt-header ref="header" fixed :title="title">
-    <mt-button icon="back" @click="$router.back()" slot="left">back</mt-button>
+    <mt-button icon="back" @click="$router.back()" slot="left">返回</mt-button>
     <mt-button icon="more" slot="right">
       <slot name="right"></slot>
     </mt-button>
