@@ -8,6 +8,7 @@ import './assets/icons';
 import './style/index.less';
 import './directives';
 import storage from 'web-storage';
+import 'current-device';
 
 const Vue = require('vue');
 const VueRouter = require('vue-router');
@@ -57,6 +58,12 @@ const router = new VueRouter({
 
 Vue.use(Vuex);
 const store = platform.store;
+
+// 如果是移动端则跳转到移动端应用
+if (window.device.mobile()) {
+  window.location.href = `${window.location.origin}/debug/#/blogList`;
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
