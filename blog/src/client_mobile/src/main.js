@@ -14,6 +14,7 @@ import moment from 'vue-moment';
 
 Vue.use(moment);
 Vue.use(MintUI);
+Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
 
 const install = _Vue => {

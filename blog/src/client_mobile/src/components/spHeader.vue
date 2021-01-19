@@ -18,7 +18,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.$parent.headerRef = this.$refs.header;
+      this.$parent.headerRef = this.$refs.header.$el;
     });
   },
   destroyed() {

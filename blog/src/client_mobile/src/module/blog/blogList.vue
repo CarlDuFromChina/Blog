@@ -1,6 +1,5 @@
 <template>
   <sp-view>
-    <sp-header title="首页"></sp-header>
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入博客名快速搜索"></mt-search>
       <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">

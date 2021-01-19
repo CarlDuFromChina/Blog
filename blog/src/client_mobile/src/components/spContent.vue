@@ -15,6 +15,9 @@ export default {
   watch: {
     '$parent.headerRef.clientHeight': function(newVal) {
       this.resizeStyle();
+    },
+    '$parent.footerRef.clientHeight': function(newVal) {
+      this.resizeStyle();
     }
   },
   mounted() {
@@ -23,9 +26,11 @@ export default {
   methods: {
     resizeStyle() {
       this.$nextTick(() => {
+        const footerHeight = this.$parent.footerRef ? this.$parent.footerRef.clientHeight : 0;
+        const headerHeight = this.$parent.headerRef ? this.$parent.headerRef.clientHeight : 0;
         this.contentStyle = {
-          height: `calc(100% - ${this.$parent.headerRef ? this.$parent.headerRef.$el.clientHeight : 0}px)`,
-          top: `${this.$parent.headerRef ? this.$parent.headerRef.$el.clientHeight : 0}px`
+          height: `calc(100% - ${headerHeight}px - ${footerHeight}px)`,
+          top: `${headerHeight}px`
         };
       });
     }

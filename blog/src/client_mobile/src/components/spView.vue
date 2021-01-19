@@ -9,7 +9,8 @@ export default {
   name: 'sp-view',
   data() {
     return {
-      headerRef: null
+      headerRef: null,
+      footerRef: null
     };
   }
 };
