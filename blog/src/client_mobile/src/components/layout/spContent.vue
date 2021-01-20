@@ -38,4 +38,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.sp-content {
+  position: absolute;
+  left: 0;
+  right: 0%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+}
+</style>
