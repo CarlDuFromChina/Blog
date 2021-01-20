@@ -1,5 +1,5 @@
 <template>
-  <div :title="'404'" class="div-404">
+  <div :title="title" class="error">
     <div class="img-box">
       <img src="../../assets/imgs/404.png" alt="" />
       <div class="font-box">
@@ -13,7 +13,11 @@
 
 <script>
 export default {
-  name: '404',
+  data() {
+    return {
+      title: '404'
+    };
+  },
   methods: {
     goBack() {
       this.$router.back();
@@ -23,7 +27,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.div-404 {
+.error {
   width: 100%;
   height: 100%;
   text-align: center;
