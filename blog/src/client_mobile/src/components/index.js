@@ -1,16 +1,7 @@
-import spHeader from './spHeader';
-import spView from './spView';
-import spContent from './spContent';
 import spIcon from './spIcon';
-import spFooter from './spFooter';
+import layout from './layout';
 
-const components = [
-  { name: spHeader.name, component: spHeader },
-  { name: spView.name, component: spView },
-  { name: spContent.name, component: spContent },
-  { name: spFooter.name, component: spFooter },
-  { name: spIcon.name, component: spIcon }
-];
+const components = [{ name: spIcon.name, component: spIcon }].concat(layout);
 
 const install = _Vue => {
   components.forEach(item => {
