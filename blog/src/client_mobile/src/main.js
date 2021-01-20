@@ -14,16 +14,9 @@ import moment from 'vue-moment';
 
 Vue.use(moment);
 Vue.use(MintUI);
+Vue.use(components);
 Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
-
-const install = _Vue => {
-  components.forEach(item => {
-    _Vue.component(item.name, item.component);
-  });
-};
-
-Vue.use(install);
 
 /* eslint-disable no-new */
 new Vue({
