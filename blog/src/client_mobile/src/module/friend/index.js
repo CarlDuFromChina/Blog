@@ -4,6 +4,6 @@ export default [{
   component: () => import('./friendList')
 }, {
   name: 'friend-readonly',
-  path: '/friend/:id',
+  path: '/index/friend/:id',
   component: () => import('./friendReadonly')
 }];

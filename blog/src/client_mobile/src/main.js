@@ -11,6 +11,7 @@ import './assets/icons';
 import 'web-core';
 import 'github-markdown-css/github-markdown.css';
 import moment from 'vue-moment';
+import './lib/extension';
 
 Vue.use(moment);
 Vue.use(MintUI);
