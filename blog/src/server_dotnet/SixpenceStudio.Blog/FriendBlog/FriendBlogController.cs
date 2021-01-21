@@ -25,5 +25,11 @@ namespace SixpenceStudio.Blog.FriendBlog
         {
             return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
         }
+
+        [HttpGet, AllowAnonymous]
+        public override friend_blog GetData(string id)
+        {
+            return base.GetData(id);
+        }
     }
 }

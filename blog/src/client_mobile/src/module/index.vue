@@ -1,6 +1,5 @@
 <template>
   <sp-view>
-    <sp-header title="首页" :back="false"></sp-header>
     <sp-content>
       <router-view />
     </sp-content>
