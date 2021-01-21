@@ -30,9 +30,11 @@
         <a-row>
           <a-col>
             <a-form-model-item label="分类">
-              <a-select v-model="data.blog_type" @change="handleTypeChange">
-                <a-select-option :value="item.Value" v-for="(item, index) in blogType" :key="index">{{ item.Name }}</a-select-option>
-              </a-select>
+              <sp-select
+                v-model="data.blog_type"
+                :options="selectDataList.classification"
+                @change="item => (data.blog_typeName = item.name)"
+              ></sp-select>
             </a-form-model-item>
           </a-col>
         </a-row>
@@ -96,20 +98,20 @@
 <script>
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import { edit } from 'sixpence.platform.pc.vue';
+import { edit, select } from 'sixpence.platform.pc.vue';
 import draft from './draft';
 
 export default {
   name: 'blogEdit',
   components: { mavonEditor },
-  mixins: [edit, draft],
+  mixins: [edit, draft, select],
   data() {
     return {
       html: '',
       configs: {},
       editVisible: false,
       controllerName: 'blog',
-      blogType: [],
+      selectEntityNameList: ['classification'],
       fileList: [],
       baseUrl: sp.getBaseUrl(),
       token: '',
@@ -140,10 +142,11 @@ export default {
     },
     isShow: {
       get() {
-        return !!this.data.is_show;
+        return this.is_show || !!this.data.is_show;
       },
       set(val) {
         this.data.is_show = val ? 1 : 0;
+        this.is_show = val;
       }
     },
     enableComment: {
@@ -181,19 +184,6 @@ export default {
       this.$refs.cloudUpload.visible = true;
     },
     loadComplete() {
-      // 获取博客类型选项集
-      sp.get('api/classification/GetDataList').then(resp => {
-        this.blogType = resp.map(item => {
-          return {
-            Name: item.name,
-            Value: item.code
-          };
-        });
-        if (this.$route.params.blogType) {
-          this.data.blog_type = this.$route.params.blogType;
-          this.handleTypeChange(this.data.blog_type);
-        }
-      });
       if (!sp.isNullOrEmpty(this.data.surfaceid)) {
         this.fileList = [
           {
@@ -241,12 +231,6 @@ export default {
     // 所有操作都会被解析重新渲染
     change(value, render) {
       this.html = render; // render 为 markdown 解析后的结果[html]
-    },
-    handleTypeChange(value) {
-      const item = this.blogType.find(item => item.Value === value);
-      if (item) {
-        this.data.blog_typeName = item.Name;
-      }
     },
     // 保存博客
     save() {
