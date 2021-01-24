@@ -1,11 +1,11 @@
-import spHeader from './spHeader';
-import spView from './spView';
-import spContent from './spContent';
-import spFooter from './spFooter';
+import header from './header';
+import view from './view';
+import content from './content';
+import footer from './footer';
 
 export default [
-  { name: spHeader.name, component: spHeader },
-  { name: spView.name, component: spView },
-  { name: spContent.name, component: spContent },
-  { name: spFooter.name, component: spFooter }
+  { name: 'header', component: header },
+  { name: 'view', component: view },
+  { name: 'content', component: content },
+  { name: 'footer', component: footer }
 ];

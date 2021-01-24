@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'spIcon',
+  name: 'icon',
   props: {
     name: {
       type: String

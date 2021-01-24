@@ -9,7 +9,6 @@
 
 <script>
 export default {
-  name: 'sp-header',
   props: {
     title: {
       type: String,

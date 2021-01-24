@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: 'sp-content',
   data() {
     return {
       contentStyle: {}

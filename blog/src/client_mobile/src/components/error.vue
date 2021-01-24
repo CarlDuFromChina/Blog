@@ -23,7 +23,7 @@ const types = [
 ];
 
 export default {
-  name: 'sp-error',
+  name: 'error',
   props: {
     type: {
       type: String,

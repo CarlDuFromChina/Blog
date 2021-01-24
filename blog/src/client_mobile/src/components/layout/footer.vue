@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: 'sp-footer',
   mounted() {
     this.$nextTick(() => {
       this.$parent.footerRef = this.$refs.footer;

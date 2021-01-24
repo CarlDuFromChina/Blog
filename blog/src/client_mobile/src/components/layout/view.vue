@@ -6,7 +6,6 @@
 
 <script>
 export default {
-  name: 'sp-view',
   data() {
     return {
       headerRef: null,
