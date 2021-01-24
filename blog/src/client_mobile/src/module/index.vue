@@ -35,6 +35,9 @@ export default {
       routeNameList: ['blog-list', 'friend-list', 'reading-list', 'idea-list']
     };
   },
+  created() {
+    this.selected = this.routeNameList.findIndex(item => item === this.$route.name).toString();
+  },
   watch: {
     selected() {
       this.$router.push({ name: this.routeNameList[this.selected] });
