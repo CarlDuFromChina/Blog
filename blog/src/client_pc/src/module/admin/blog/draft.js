@@ -14,6 +14,7 @@ export default {
       seconds: 60,
       configCode: 'enable_draft',
       saveStatusValue: '',
+      unwatch: null,
       statusList: [{
         value: 'wait',
         icon: 'redo',
@@ -32,25 +33,27 @@ export default {
       }]
     };
   },
-  async mounted() {
-    const enable = await sp.get(`/api/SysConfig/GetValue?code=${this.configCode}`);
-    if (enable !== 'true') {
-      return Promise.resolve(true);
-    }
-    if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
-      this.popDraft(this.$route.params.draftId); // 打开草稿
-    } else if (this.pageState === 'create') {
-      this.draft.blogId = sp.newUUID();
-      this.draft.draftId = sp.newUUID();
-      setTimeout(() => {
-        this.openWatch(); // 打开监听
-      }, 200);
-    } else {
-      this.getDraft(); // 获取草稿
-    }
+  created() {
+    this.$on('open-watch', () => this.openWatch());
   },
   beforeDestroy() {
+    this.closeWatch();
     window.clearInterval(this.secondId); // 销毁倒计时事件
+  },
+  async mounted() {
+    const enable = await sp.get(`/api/SysConfig/GetValue?code=${this.configCode}`);
+    if (enable === 'true') {
+      if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
+        await this.popDraft(this.$route.params.draftId); // 打开草稿
+        this.$emit('open-watch');
+      } else if (this.pageState === 'create') {
+        this.draft.blogId = sp.newUUID();
+        this.draft.draftId = sp.newUUID();
+        this.$emit('open-watch');
+      } else {
+        await this.getDraft(); // 获取草稿
+      }
+    }
   },
   computed: {
     showAutoSave() {
@@ -65,8 +68,8 @@ export default {
      * 打开草稿
      * @param {String} id - 博客id
      */
-    popDraft(id) {
-      sp.get(`api/Draft/GetDataByBlogId?id=${id}`).then(resp => {
+    async popDraft(id) {
+      return sp.get(`api/Draft/GetDataByBlogId?id=${id}`).then(resp => {
         this.draft = resp;
         const { blogId, content, title } = resp;
         this.data.blogId = blogId;
@@ -77,8 +80,8 @@ export default {
     /**
      * 获取草稿
      **/
-    getDraft() {
-      sp.get(`api/Draft/GetDataByBlogId?id=${this.Id}`).then(resp => {
+    async getDraft() {
+      return sp.get(`api/Draft/GetDataByBlogId?id=${this.Id}`).then(resp => {
         if (!sp.isNull(resp)) {
           this.draft = resp;
           this.$confirm({
@@ -92,6 +95,7 @@ export default {
               this.data.content = content;
               this.data.title = title;
               sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
+              this.$emit('open-watch');
             },
             onCancel: () => {
               sp.post('api/Draft/DeleteData', [this.draft.Id]).then(() => {
@@ -131,7 +135,7 @@ export default {
      * 监听页面是否修改
      */
     openWatch() {
-      this.$watch('data', () => {
+      this.unwatch = this.$watch('data', () => {
         // 倒计时保存草稿
         if (!this.isDirty) {
           this.isDirty = true;
@@ -148,6 +152,11 @@ export default {
       }, {
         deep: true
       });
+    },
+    closeWatch() {
+      if (this.unwatch && typeof this.unwatch === 'function') {
+        this.unwatch();
+      }
     },
     /**
      * 返回前检查
