@@ -1,7 +1,7 @@
 <template>
   <sp-view>
     <sp-content>
-      <mt-search v-model="searchValue" placeholder="输入博客名快速搜索"></mt-search>
+      <mt-search v-model="searchValue" placeholder="输入书名快速搜索"></mt-search>
       <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
         <div v-for="(row, index) in list" :key="index" class="card item" @click="goReadonly(row.Id)">
           <div class="avatar">
