@@ -21,6 +21,7 @@ export default {
   },
   created() {
     this.loadData();
+    this.recordReading();
   },
   methods: {
     loadData() {
@@ -34,6 +35,9 @@ export default {
             this.$indicator.close();
           }, 500);
         });
+    },
+    recordReading() {
+      sp.get(`api/blog/RecordReadingTimes?blogId=${this.Id}`);
     }
   }
 };
