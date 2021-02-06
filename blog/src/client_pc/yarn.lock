@@ -6977,10 +6977,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.149:
-  version "1.0.149"
-  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.149.tgz#2f147457a881b7f441c8398f5bd7e6a0e3dfd00a"
-  integrity sha512-VsqetpyQFbl8g2iVnHVPs4hqxKM7QohSNFgW3Y1nwl+Lec6Op/2FuBVCPgdlyWyjVESRChbaLdWNgkdNGFkPZQ==
+sixpence.platform.pc.vue@1.0.151:
+  version "1.0.151"
+  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.151.tgz#5c02552e8649893c4c39c9bb2143df4a8a2ed005"
+  integrity sha512-+jQ27EA9/Aq3zsJ9D5pdi2emPt05/I853ngjwpFLNDiRL7KQfijX0XYZAay77Ur4xFRGmdGCoWcAffyyBNPeZQ==
   dependencies:
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0-rc.1"
@@ -6990,7 +6990,7 @@ sixpence.platform.pc.vue@1.0.149:
     vue-infinite-scroll "^2.0.2"
     vue-waterfall-easy2 "^2.4.5"
     wangeditor "^4.1.0"
-    web-core "1.0.1"
+    web-core "1.0.4"
 
 slash@^1.0.0:
   version "1.0.0"
@@ -8051,10 +8051,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.1:
-  version "1.0.1"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.1.tgz#7f692598376407831ee9d76549289989f42188de"
-  integrity sha512-LELwlAqXSDhqmiLSAEbhrErNjUq1rw0W/wOy1mBUm9TIoDM/ZdvhtaoCqYQ4EoKTBFTqQMsLvoyELrAKaMrZeg==
+web-core@1.0.4:
+  version "1.0.4"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.4.tgz#5aca21d75ecc6fb71ccbea941023dc8a2c6a53be"
+  integrity sha512-h0Kro1Va01NIiXj3x+ePBKl236F2MiFZVbhOLQpPVkWJHTdRVgbjB1eQAVVaG7nRJN6SXgk+G7Zi9vtAvRaz5g==
   dependencies:
     axios "^0.19.0"
     current-device "^0.10.2"

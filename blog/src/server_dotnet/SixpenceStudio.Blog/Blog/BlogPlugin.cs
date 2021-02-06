@@ -9,7 +9,7 @@ namespace SixpenceStudio.Blog.Blog
 {
     public class BlogPlugin : IPersistBrokerPlugin
     {
-        public void Execute(Context context)
+        public void Execute(PluginContext context)
         {
             var entity = context.Entity as blog;
             switch (context.Action)
