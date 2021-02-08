@@ -124,8 +124,8 @@ export default {
         }, 200);
       }
     },
-    uploadImages(item) {
-      return sp.post('api/Gallery/UploadImage', item).then(resp => {
+    uploadImages() {
+      return sp.post('api/Gallery/UploadImage', this.selected).then(resp => {
         this.$emit('selected', {
           surfaceid: resp.Item1,
           surface_url: `api/SysFile/Download?objectId=${resp.Item1}`,
