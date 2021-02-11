@@ -10,7 +10,15 @@ else
   New-Item -ItemType directory "blog\build\"
 }
 
-New-Item -ItemType directory "blog\build\debug\"
+if (Test-Path blog\build\web) {
+  Remove-Item -Recurse -Force "blog\build\web\*"
+}
+else
+{
+  New-Item -ItemType directory "blog\build\web"
+}
+
+New-Item -ItemType directory "blog\build\web\debug\"
 
 # Restore Dotnet Packages
 Write-Section-Message "Build dotnet"
@@ -19,9 +27,9 @@ nuget restore "blog\src\server_dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sl
 # Build Dotnet files
 $buildException = MSBuild.exe "blog\src\server_dotnet\SixpenceStudio.Blog\SixpenceStudio.Blog.sln"  /t:rebuild  /p:Configuration=Release
 If (! $?) { Throw $buildException }
-New-Item -ItemType directory "blog\build\bin"
+New-Item -ItemType directory "blog\build\web\bin"
 $release = "blog\src\server_dotnet\build\*"
-Copy-Item -Force -Recurse $release "blog\build\bin\"
+Copy-Item -Force -Recurse $release "blog\build\web\bin\"
 Write-Success-Message "OK."
 
 # Build pc.vue
@@ -35,7 +43,7 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release2 = "blog\src\client_pc\dist\*"
-Copy-Item -Force -Recurse $release2 "blog\build\"
+Copy-Item -Force -Recurse $release2 "blog\build\web\"
 
 # Build mobile.vue
 
@@ -49,7 +57,11 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release3 = "blog\src\client_mobile\dist\*"
-Copy-Item -Force -Recurse $release3 "blog\build\debug\"
+Copy-Item -Force -Recurse $release3 "blog\build\web\debug\"
+
+## Compression
+Write-Section-Message "Compression..."
+Compress-Archive "blog\build\web\*" -DestinationPath "blog\build\web.zip" -Force
 
 # Done
 Write-Section-Message "Finished!"
