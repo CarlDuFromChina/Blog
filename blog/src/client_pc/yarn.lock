@@ -7723,17 +7723,17 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc@^0.0.5:
-  version "0.0.5"
-  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.5.tgz#292eab01b28c7dbb580fe984ecf0df7c23cebfd5"
-  integrity sha512-kyNJwPlMG/bMNLBmf+moHH4udiq/YaSo3/zq5+UOcHsDbTXBagqlGpM/EzUmwuwg4RKAqan8CuJlhyBgBmgDgg==
+vue-pc@^0.0.6:
+  version "0.0.6"
+  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.6.tgz#fe036f7a0d34078bfbe333028dc4e475d3c54881"
+  integrity sha512-2MJePI+jvTEj3nFGJ0haUkp2qcIeMIVuWVkN2sPKCnRH17UCmZTi3HbkuLLtHgtBPf474lZtJqjKLxAyhuJ/iA==
   dependencies:
     less "^3.10.3"
     less-loader "^5.0.0"
     vue-infinite-scroll "^2.0.2"
     vue-waterfall-easy2 "^2.4.5"
     wangeditor "^4.1.0"
-    web-core "1.0.5"
+    web-core "1.0.6"
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"
@@ -7794,10 +7794,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.5:
-  version "1.0.5"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.5.tgz#08b55f8237c1743cb3d7eca125fc152a04640587"
-  integrity sha512-IwB4ln7f/1lVT+tGhDM0ExPBUBzGQVfCyA8ucL7ela5/9292uSugpNGP5+GFUzcUgrVruLTgS+RcGyK1VoDdQQ==
+web-core@1.0.6:
+  version "1.0.6"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.6.tgz#23729529e05a4965774cf748c02f1c760c72bdd3"
+  integrity sha512-S00ZYR/O+nX4bN+Ui6I1/kh2eLNlUhCBZYdRyC9GmHf5tOmAPJPH6Xi/nwM847/zrDK+PY+PoT3+p/HKbsFbDg==
   dependencies:
     axios "^0.19.0"
     current-device "^0.10.2"
