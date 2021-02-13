@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { admin } from 'sixpence.platform.pc.vue';
+import { admin } from 'vue-pc';
 
 export default {
   name: 'myAdmin',

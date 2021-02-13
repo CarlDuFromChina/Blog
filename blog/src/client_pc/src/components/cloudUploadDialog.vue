@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { pagination } from 'sixpence.platform.pc.vue';
+import { pagination } from 'vue-pc';
 
 export default {
   name: 'cloudUpload',

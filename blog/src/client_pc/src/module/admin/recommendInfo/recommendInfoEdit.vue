@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { edit } from 'sixpence.platform.pc.vue';
+import { edit } from 'vue-pc';
 
 export default {
   name: 'recommendInfoEdit',

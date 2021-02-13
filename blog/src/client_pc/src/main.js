@@ -1,7 +1,7 @@
 import App from './App';
 import moduleRouter from './module';
 import { myAdmin, adminRouter } from './module/admin';
-import platform from 'sixpence.platform.pc.vue';
+import platform from 'vue-pc';
 import components from './components';
 import 'mavon-editor/dist/css/index.css';
 import './assets/icons';
