@@ -4256,10 +4256,10 @@ js-yaml@~3.7.0:
     argparse "^1.0.7"
     esprima "^2.6.0"
 
-jsencrypt@^3.0.0-rc.1:
-  version "3.0.0"
-  resolved "http://npm.karldu.cn/jsencrypt/-/jsencrypt-3.0.0.tgz#f6b191852b0bef31d5bac30ba121d58cbbb2a397"
-  integrity sha1-9rGRhSsL7zHVusMLoSHVjLuyo5c=
+jsencrypt@^3.0.0:
+  version "3.0.1"
+  resolved "http://npm.karldu.cn/jsencrypt/-/jsencrypt-3.0.1.tgz#e7f2525d79fb02eea8310c3838c9db164f1ef43f"
+  integrity sha1-5/JSXXn7Au6oMQw4OMnbFk8e9D8=
 
 jsesc@^1.3.0:
   version "1.3.0"
@@ -6795,21 +6795,6 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-sixpence.platform.pc.vue@1.0.151:
-  version "1.0.151"
-  resolved "http://npm.karldu.cn/sixpence.platform.pc.vue/-/sixpence.platform.pc.vue-1.0.151.tgz#5c02552e8649893c4c39c9bb2143df4a8a2ed005"
-  integrity sha512-+jQ27EA9/Aq3zsJ9D5pdi2emPt05/I853ngjwpFLNDiRL7KQfijX0XYZAay77Ur4xFRGmdGCoWcAffyyBNPeZQ==
-  dependencies:
-    js-md5 "^0.7.3"
-    jsencrypt "^3.0.0-rc.1"
-    less "^3.10.3"
-    less-loader "^5.0.0"
-    uuidjs "^4.2.5"
-    vue-infinite-scroll "^2.0.2"
-    vue-waterfall-easy2 "^2.4.5"
-    wangeditor "^4.1.0"
-    web-core "1.0.4"
-
 slash@^1.0.0:
   version "1.0.0"
   resolved "http://npm.karldu.cn/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -7669,7 +7654,7 @@ uuid@^3.0.1:
   resolved "http://npm.karldu.cn/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
 
-uuidjs@^4.2.4, uuidjs@^4.2.5:
+uuidjs@^4.2.4:
   version "4.2.7"
   resolved "http://npm.karldu.cn/uuidjs/-/uuidjs-4.2.7.tgz#ff444ba9947293b1e80988a67c52c42c5f11e985"
   integrity sha1-/0RLqZRyk7HoCYimfFLELF8R6YU=
@@ -7738,6 +7723,18 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-pc@^0.0.5:
+  version "0.0.5"
+  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.5.tgz#292eab01b28c7dbb580fe984ecf0df7c23cebfd5"
+  integrity sha512-kyNJwPlMG/bMNLBmf+moHH4udiq/YaSo3/zq5+UOcHsDbTXBagqlGpM/EzUmwuwg4RKAqan8CuJlhyBgBmgDgg==
+  dependencies:
+    less "^3.10.3"
+    less-loader "^5.0.0"
+    vue-infinite-scroll "^2.0.2"
+    vue-waterfall-easy2 "^2.4.5"
+    wangeditor "^4.1.0"
+    web-core "1.0.5"
+
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"
   resolved "http://npm.karldu.cn/vue-style-loader/-/vue-style-loader-3.1.2.tgz#6b66ad34998fc9520c2f1e4d5fa4091641c1597a"
@@ -7797,15 +7794,15 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.4:
-  version "1.0.4"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.4.tgz#5aca21d75ecc6fb71ccbea941023dc8a2c6a53be"
-  integrity sha512-h0Kro1Va01NIiXj3x+ePBKl236F2MiFZVbhOLQpPVkWJHTdRVgbjB1eQAVVaG7nRJN6SXgk+G7Zi9vtAvRaz5g==
+web-core@1.0.5:
+  version "1.0.5"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.5.tgz#08b55f8237c1743cb3d7eca125fc152a04640587"
+  integrity sha512-IwB4ln7f/1lVT+tGhDM0ExPBUBzGQVfCyA8ucL7ela5/9292uSugpNGP5+GFUzcUgrVruLTgS+RcGyK1VoDdQQ==
   dependencies:
     axios "^0.19.0"
     current-device "^0.10.2"
     js-md5 "^0.7.3"
-    jsencrypt "^3.0.0-rc.1"
+    jsencrypt "^3.0.0"
     uuidjs "^4.2.4"
 
 web-storage@^1.0.2:
