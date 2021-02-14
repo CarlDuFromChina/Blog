@@ -389,13 +389,6 @@ autoprefixer@^7.1.2:
     postcss "^6.0.17"
     postcss-value-parser "^3.2.3"
 
-axios@^0.19.0:
-  version "0.19.2"
-  resolved "http://npm.karldu.cn/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
-  integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
-  dependencies:
-    follow-redirects "1.5.10"
-
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "http://npm.karldu.cn/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -2268,13 +2261,6 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
-debug@=3.1.0:
-  version "3.1.0"
-  resolved "http://npm.karldu.cn/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
-  dependencies:
-    ms "2.0.0"
-
 debug@^3.1.0, debug@^3.1.1:
   version "3.2.7"
   resolved "http://npm.karldu.cn/debug/-/debug-3.2.7.tgz#72580b7e9145fb39b6676f9c5e5fb100b934179a"
@@ -2320,6 +2306,11 @@ deepmerge@1.3.2:
   version "1.3.2"
   resolved "http://npm.karldu.cn/deepmerge/-/deepmerge-1.3.2.tgz#1663691629d4dbfe364fa12a2a4f0aa86aa3a050"
   integrity sha1-FmNpFinU2/42T6EqKk8KqGqjoFA=
+
+deepmerge@^4.2.2:
+  version "4.2.2"
+  resolved "http://npm.karldu.cn/deepmerge/-/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
+  integrity sha1-RNLqNnm49NT/ujPwPYZfwee/SVU=
 
 define-properties@^1.1.2, define-properties@^1.1.3:
   version "1.1.3"
@@ -3267,13 +3258,6 @@ flush-write-stream@^1.0.0:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
-
-follow-redirects@1.5.10:
-  version "1.5.10"
-  resolved "http://npm.karldu.cn/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
-  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
-  dependencies:
-    debug "=3.1.0"
 
 follow-redirects@^1.0.0:
   version "1.13.2"
@@ -6783,6 +6767,11 @@ shellwords@^0.1.1:
   resolved "http://npm.karldu.cn/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha1-1rkYHBpI05cyTISHHvvPxz/AZUs=
 
+shvl@^2.0.0:
+  version "2.0.2"
+  resolved "http://npm.karldu.cn/shvl/-/shvl-2.0.2.tgz#eca7decb9bbd4e8dd93f06ea9ab94036319cd351"
+  integrity sha1-7Kfey5u9To3ZPwbqmrlANjGc01E=
+
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
   resolved "http://npm.karldu.cn/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
@@ -7723,17 +7712,18 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc@^0.0.6:
-  version "0.0.6"
-  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.6.tgz#fe036f7a0d34078bfbe333028dc4e475d3c54881"
-  integrity sha512-2MJePI+jvTEj3nFGJ0haUkp2qcIeMIVuWVkN2sPKCnRH17UCmZTi3HbkuLLtHgtBPf474lZtJqjKLxAyhuJ/iA==
+vue-pc@^0.0.7:
+  version "0.0.7"
+  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.7.tgz#f08032ac03738af26696a6bfb61c49bbb7a43992"
+  integrity sha512-45KPVB5j69h7+1HhfYKTQ/quFMePCaaDFd3hvxIbM9DKfnYuttj46/Nx/Xkkx/b5k9YWhbMtYHTbxseAGdw36w==
   dependencies:
     less "^3.10.3"
     less-loader "^5.0.0"
     vue-infinite-scroll "^2.0.2"
     vue-waterfall-easy2 "^2.4.5"
+    vuex-persistedstate "^2.5.4"
     wangeditor "^4.1.0"
-    web-core "1.0.6"
+    web-core "1.0.7"
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"
@@ -7760,6 +7750,14 @@ vue-waterfall-easy2@^2.4.5:
   version "2.4.5"
   resolved "http://npm.karldu.cn/vue-waterfall-easy2/-/vue-waterfall-easy2-2.4.5.tgz#a8979349fefda2c63a807755c463b9f44c1fdaf9"
   integrity sha512-tNj3d6zzIcYaj+wBQqm2/iN6RgOtBEvwtnwbL3R7zKRPhi04wnjI0mFEABlWCy2tQhCNtjsmEg39rgudnrDcaQ==
+
+vuex-persistedstate@^2.5.4:
+  version "2.7.1"
+  resolved "http://npm.karldu.cn/vuex-persistedstate/-/vuex-persistedstate-2.7.1.tgz#25ced829ea5789a2ed7d71a1ba057eb01a5235ad"
+  integrity sha1-Jc7YKepXiaLtfXGhugV+sBpSNa0=
+  dependencies:
+    deepmerge "^4.2.2"
+    shvl "^2.0.0"
 
 wangeditor@^4.1.0:
   version "4.6.6"
@@ -7794,12 +7792,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.6:
-  version "1.0.6"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.6.tgz#23729529e05a4965774cf748c02f1c760c72bdd3"
-  integrity sha512-S00ZYR/O+nX4bN+Ui6I1/kh2eLNlUhCBZYdRyC9GmHf5tOmAPJPH6Xi/nwM847/zrDK+PY+PoT3+p/HKbsFbDg==
+web-core@1.0.7:
+  version "1.0.7"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.7.tgz#e8558c1fcc457c97aa73e8b7512cee4dee3134ac"
+  integrity sha512-OI6Mj2KMiQ+mgxbd7QNM9CIk8cDStlT335BuXsb/4M95pHx0PYBKtufAfjMAYs2y0EC9wH5bZ3hKQ1yrEuHNbA==
   dependencies:
-    axios "^0.19.0"
     current-device "^0.10.2"
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0"
