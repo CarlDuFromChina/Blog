@@ -7712,10 +7712,10 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc@^0.0.7:
-  version "0.0.7"
-  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.7.tgz#f08032ac03738af26696a6bfb61c49bbb7a43992"
-  integrity sha512-45KPVB5j69h7+1HhfYKTQ/quFMePCaaDFd3hvxIbM9DKfnYuttj46/Nx/Xkkx/b5k9YWhbMtYHTbxseAGdw36w==
+vue-pc@^0.0.8:
+  version "0.0.8"
+  resolved "http://npm.karldu.cn/vue-pc/-/vue-pc-0.0.8.tgz#784403cc5e75be97d0497acb2343661d7973efbf"
+  integrity sha512-D+7+/htTfPqPKNBH+aAEC5mh/baQ0t8nsRNqpX/+yAqu6bCVEk12frOe3bRMyc6NInIxlMciJN0b7s7+FuDiOg==
   dependencies:
     less "^3.10.3"
     less-loader "^5.0.0"
