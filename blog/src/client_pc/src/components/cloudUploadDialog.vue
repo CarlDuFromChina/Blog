@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { pagination } from 'vue-pc';
+import { pagination } from 'vue-pc-admin';
 
 export default {
   name: 'cloudUpload',

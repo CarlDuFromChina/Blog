@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { edit } from 'vue-pc';
+import { edit } from 'vue-pc-admin';
 
 export default {
   name: 'ideaEdit',

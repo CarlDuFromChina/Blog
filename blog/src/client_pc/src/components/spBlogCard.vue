@@ -29,7 +29,7 @@
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
-import { pagination } from 'vue-pc';
+import { pagination } from 'vue-pc-admin';
 
 export default {
   name: 'spBlogCard',

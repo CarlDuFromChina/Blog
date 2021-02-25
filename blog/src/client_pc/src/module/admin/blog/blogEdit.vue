@@ -98,7 +98,7 @@
 <script>
 import { mavonEditor } from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import { edit, select } from 'vue-pc';
+import { edit, select } from 'vue-pc-admin';
 import draft from './draft';
 
 export default {
