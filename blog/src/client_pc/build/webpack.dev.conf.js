@@ -67,10 +67,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../node_modules/vue-pc-admin/Web.config'),
         to: '../dist/'
-      },
-      {
-        from: path.resolve(__dirname, '../node_modules/vue-pc-admin/log4net.config'),
-        to: '../dist/'
       }
     ])
   ]
