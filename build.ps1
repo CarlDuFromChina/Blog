@@ -37,7 +37,7 @@ Write-Section-Message "Build pc.vue."
 Push-Location "blog\src\client_pc"
 $npmInstallException = yarn.cmd install
 If (!$?) { Throw $npmInstallException }
-$buildException = yarn build
+$buildException = yarn build --release
 If (!$?) { Throw $buildException }
 Pop-Location
 Write-Success-Message "OK."
@@ -51,7 +51,7 @@ Write-Section-Message "Build mobile.vue."
 Push-Location "blog\src\client_mobile"
 $npmInstallException = yarn.cmd install
 If (!$?) { Throw $npmInstallException }
-$buildException = yarn build
+$buildException = yarn build --release
 If (!$?) { Throw $buildException }
 Pop-Location
 Write-Success-Message "OK."
