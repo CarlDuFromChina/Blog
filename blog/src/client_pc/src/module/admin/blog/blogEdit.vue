@@ -41,21 +41,21 @@
         <a-row>
           <a-col>
             <a-form-model-item label="系列">
-              <a-switch v-model="isSeries"></a-switch>
+              <a-switch v-model="data.is_series"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>
         <a-row>
           <a-col>
             <a-form-model-item label="是否前台显示">
-              <a-switch v-model="isShow"></a-switch>
+              <a-switch v-model="data.is_show"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>
         <a-row>
           <a-col>
-            <a-form-model-item label="允许评论">
-              <a-switch v-model="enableComment"></a-switch>
+            <a-form-model-item label="禁止评论">
+              <a-switch v-model="data.disable_comment"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>
@@ -115,49 +115,19 @@ export default {
       fileList: [],
       baseUrl: sp.getBaseUrl(),
       token: '',
-      tags: [],
-      is_series: false,
-      is_show: 1,
-      enable_comment: true
+      tags: []
     };
   },
   created() {
     // 编辑博客
     if (!this.$route.params.id) {
-      this.data.is_series = 0;
-      this.data.disable_comment = 0;
+      this.data.is_series = false;
+      this.data.disable_comment = false;
     }
     // 获取token和url
     this.token = window.localStorage.getItem('Token');
   },
   computed: {
-    isSeries: {
-      get() {
-        return this.is_series || !!this.data.is_series;
-      },
-      set(val) {
-        this.data.is_series = val ? 1 : 0;
-        this.is_series = val;
-      }
-    },
-    isShow: {
-      get() {
-        return this.is_show || !!this.data.is_show;
-      },
-      set(val) {
-        this.data.is_show = val ? 1 : 0;
-        this.is_show = val;
-      }
-    },
-    enableComment: {
-      get() {
-        return this.enable_comment || !this.data.disable_comment;
-      },
-      set(val) {
-        this.data.disable_comment = val ? 0 : 1;
-        this.enable_comment = val;
-      }
-    },
     // 请求头
     headers() {
       return {

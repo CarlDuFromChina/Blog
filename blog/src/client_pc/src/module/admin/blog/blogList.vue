@@ -46,8 +46,8 @@ export default {
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'tags', label: '标签', type: 'tag' },
-        { prop: 'isSeriesName', label: '是否系列' },
-        { prop: 'isShowName', label: '是否展示' },
+        { prop: 'is_seriesName', label: '是否系列' },
+        { prop: 'is_showName', label: '是否展示' },
         { prop: 'createdByName', label: '创建人' },
         { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' },
         { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }

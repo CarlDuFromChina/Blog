@@ -239,9 +239,9 @@ namespace SixpenceStudio.Blog.Blog
         /// <summary>
         /// 是否是系列
         /// </summary>
-        private int? _is_series;
+        private bool _is_series;
         [DataMember]
-        public int? is_series
+        public bool is_series
         {
             get
             {
@@ -254,6 +254,23 @@ namespace SixpenceStudio.Blog.Blog
             }
         }
 
+        /// <summary>
+        /// 是否是系列
+        /// </summary>
+        private string _is_seriesName;
+        [DataMember]
+        public string is_seriesName
+        {
+            get
+            {
+                return this._is_seriesName;
+            }
+            set
+            {
+                this._is_seriesName = value;
+                SetAttributeValue("is_seriesName", value);
+            }
+        }
 
         /// <summary>
         /// 标签
@@ -277,9 +294,9 @@ namespace SixpenceStudio.Blog.Blog
         /// <summary>
         /// 禁止评论
         /// </summary>
-        private int? _disable_comment;
+        private bool _disable_comment;
         [DataMember]
-        public int? disable_comment
+        public bool disable_comment
         {
             get
             {
@@ -390,9 +407,9 @@ namespace SixpenceStudio.Blog.Blog
         /// <summary>
         /// 是否展示
         /// </summary>
-        private int? _is_show;
+        private bool _is_show;
         [DataMember]
-        public int? is_show
+        public bool is_show
         {
             get
             {
@@ -402,6 +419,24 @@ namespace SixpenceStudio.Blog.Blog
             {
                 this._is_show = value;
                 SetAttributeValue("is_show", value);
+            }
+        }
+
+        /// <summary>
+        /// 是否展示
+        /// </summary>
+        private string _is_showName;
+        [DataMember]
+        public string is_showName
+        {
+            get
+            {
+                return this._is_showName;
+            }
+            set
+            {
+                this._is_showName = value;
+                SetAttributeValue("is_showName", value);
             }
         }
     }
