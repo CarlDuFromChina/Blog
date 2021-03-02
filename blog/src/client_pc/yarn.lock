@@ -3555,10 +3555,10 @@ highlight.js-async-webpack@^1.0.4:
   resolved "http://npm.karldu.cn/highlight.js-async-webpack/-/highlight.js-async-webpack-1.0.4.tgz#c06b67bf99f049045d62b756e5855b0912ec616c"
   integrity sha1-wGtnv5nwSQRdYrdW5YVbCRLsYWw=
 
-highlight.js@^10.1.1:
-  version "10.6.0"
-  resolved "http://npm.karldu.cn/highlight.js/-/highlight.js-10.6.0.tgz#0073aa71d566906965ba6e1b7be7b2682f5e18b6"
-  integrity sha1-AHOqcdVmkGllum4be+eyaC9eGLY=
+highlight.js@10.5.0:
+  version "10.5.0"
+  resolved "http://npm.karldu.cn/highlight.js/-/highlight.js-10.5.0.tgz#3f09fede6a865757378f2d9ebdcbc15ba268f98f"
+  integrity sha1-Pwn+3mqGV1c3jy2evcvBW6Jo+Y8=
 
 highlight.js@^9.11.0:
   version "9.18.5"

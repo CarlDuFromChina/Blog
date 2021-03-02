@@ -1,5 +1,4 @@
 import hljs from 'highlight.js';
-import 'highlight.js/styles/monokai-sublime.css';
 import javascript from 'highlight.js/lib/languages/javascript';
 import java from 'highlight.js/lib/languages/java';
 import css from 'highlight.js/lib/languages/css';
