@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import spBlogCard from './spBlogCard';
 import spComment from './spComment';
 import spCard from './spCard';
@@ -10,4 +11,10 @@ const components = [
   { name: cloudUpload.name, component: cloudUpload }
 ];
 
-export default components;
+const install = _Vue => {
+  components.forEach(item => {
+    _Vue.component(item.name, item.component);
+  });
+};
+
+Vue.use(install);

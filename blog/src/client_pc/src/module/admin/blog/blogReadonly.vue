@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import 'mavon-editor/src/lib/css/markdown.css';
 const marked = require('marked');
 
@@ -157,7 +158,6 @@ export default {
             sanitize: true
           });
           const content = document.querySelector('#content');
-          const Vue = require('vue');
           const MyComponent = Vue.extend({
             template: tocObj.toHTML(),
             data() {

@@ -1,10 +1,7 @@
 import heightLight from './highlight';
+import Vue from 'vue';
 
-const Vue = require('vue');
-
-const directives = [
-  heightLight
-];
+const directives = [heightLight];
 
 directives.forEach(e => {
   Vue.directive(e.name, e);
