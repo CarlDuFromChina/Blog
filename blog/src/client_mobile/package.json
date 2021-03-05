@@ -20,7 +20,7 @@
     "vue-markdown": "^2.2.4",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.0.1",
-    "web-core": "1.0.0"
+    "web-core": "1.0.10"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
