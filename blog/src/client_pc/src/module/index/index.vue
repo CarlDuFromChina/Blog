@@ -3,8 +3,8 @@
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
-        <li class="el-menu-item" style="float:right;" @click="login">登录</li>
-        <li class="el-menu-item" style="float:right;" @click="register">注册</li>
+        <sp-menu-item @click="login" style="float:right;">登录</sp-menu-item>
+        <sp-menu-item @click="register" style="float:right;">注册</sp-menu-item>
       </template>
       <div class="header-img">
         <div class="scene">
