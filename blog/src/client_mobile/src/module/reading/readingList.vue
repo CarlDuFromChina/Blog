@@ -2,7 +2,7 @@
   <sp-view>
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入书名快速搜索"></mt-search>
-      <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
+      <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
         <div v-for="(row, index) in list" :key="index" class="card item" @click="goReadonly(row.Id)">
           <div class="avatar">
             <img :src="(row.big_surfaceid || '').toDownloadUrl()" alt="" />
@@ -22,12 +22,14 @@
 </template>
 
 <script>
+import loading from '../loading';
+
 export default {
   name: 'reading-list',
+  mixins: [loading],
   data() {
     return {
       searchValue: '',
-      loading: false,
       list: [],
       isLoadedAll: false,
       pageIndex: 1,
@@ -36,16 +38,15 @@ export default {
     };
   },
   watch: {
-    searchValue(value) {
+    searchValue() {
       this.init();
       this.$nextTick(() => {
-        this.loadMore();
+        this.loadData();
       });
     }
   },
   methods: {
     init() {
-      this.loading = false;
       this.list = [];
       this.isLoadedAll = false;
       this.pageIndex = 1;
@@ -55,18 +56,19 @@ export default {
     goReadonly(id) {
       this.$router.push({ name: 'reading-readonly', params: { id: id } });
     },
-    loadMore() {
-      sp.get(
-        `${sp.getBaseUrl()}api/ReadingNote/GetDataList?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
-          this.pageIndex
-        }&searchList=&viewId=03860DF4-0E9E-4330-80BF-6A1E9AC797A6`
-      ).then(resp => {
-        this.total = resp.RecordCount;
-        this.list = this.list.concat(resp.DataList);
-        this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
-        this.pageIndex++;
-        this.loading = false;
-      });
+    fetch() {
+      return sp
+        .get(
+          `${sp.getBaseUrl()}api/ReadingNote/GetDataList?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+            this.pageIndex
+          }&searchList=&viewId=03860DF4-0E9E-4330-80BF-6A1E9AC797A6`
+        )
+        .then(resp => {
+          this.total = resp.RecordCount;
+          this.list = this.list.concat(resp.DataList);
+          this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
+          this.pageIndex++;
+        });
     }
   }
 };

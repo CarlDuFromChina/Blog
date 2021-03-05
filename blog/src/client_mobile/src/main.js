@@ -17,6 +17,7 @@ Vue.use(moment);
 Vue.use(MintUI);
 Vue.use(components);
 Vue.prototype.$bus = new Vue();
+Vue.prototype.$message = MintUI.MessageBox;
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

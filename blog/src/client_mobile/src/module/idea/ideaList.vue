@@ -1,7 +1,7 @@
 <template>
   <sp-view>
     <sp-content>
-      <div v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+      <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <div v-for="(item, index) in dataList" :key="index" class="list">
           <div class="list-item">
             <div style="color:#909399">{{ item.createdOn | moment('YYYY-MM-DD') }}</div>
@@ -14,11 +14,13 @@
 </template>
 
 <script>
+import loading from '../loading';
+
 export default {
   name: 'idea-list',
+  mixins: [loading],
   data() {
     return {
-      loading: false,
       dataList: [],
       pageIndex: 1,
       pageSize: 10,
@@ -26,23 +28,15 @@ export default {
     };
   },
   methods: {
-    loadMore() {
-      if (this.loading) {
-        return;
-      }
-      this.loading = true;
-      sp.get(`api/idea/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`)
-        .then(resp => {
-          if (resp && resp.DataList) {
-            this.dataList = resp.DataList;
-            this.total = resp.RecordCount;
-          } else {
-            this.dataList = resp;
-          }
-        })
-        .finally(() => {
-          this.loading = true;
-        });
+    fetch() {
+      return sp.get(`api/idea/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`).then(resp => {
+        if (resp && resp.DataList) {
+          this.dataList = resp.DataList;
+          this.total = resp.RecordCount;
+        } else {
+          this.dataList = resp;
+        }
+      });
     }
   }
 };

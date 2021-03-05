@@ -1,7 +1,9 @@
 <template>
   <sp-view>
     <sp-content>
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </sp-content>
     <sp-footer>
       <mt-tabbar v-model="selected">
