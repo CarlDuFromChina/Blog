@@ -470,12 +470,12 @@ autoprefixer@^7.1.2:
     postcss "^6.0.17"
     postcss-value-parser "^3.2.3"
 
-axios@0.19.2:
-  version "0.19.2"
-  resolved "http://npm.karldu.cn/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
-  integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "http://npm.karldu.cn/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha1-IlY0gZYvTWvemnbVFu8OXTwJsrg=
   dependencies:
-    follow-redirects "1.5.10"
+    follow-redirects "^1.10.0"
 
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
@@ -2121,6 +2121,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+crypto-js@^4.0.0:
+  version "4.0.0"
+  resolved "http://npm.karldu.cn/crypto-js/-/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha1-KQSrJnep0EKFai6i74DekuSjbcw=
+
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
   resolved "http://npm.karldu.cn/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -2368,13 +2373,6 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.
   version "2.6.9"
   resolved "http://npm.karldu.cn/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   integrity sha1-XRKFFd8TT/Mn6QpMk/Tgd6U2NB8=
-  dependencies:
-    ms "2.0.0"
-
-debug@=3.1.0:
-  version "3.1.0"
-  resolved "http://npm.karldu.cn/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
-  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
   dependencies:
     ms "2.0.0"
 
@@ -3403,17 +3401,15 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@1.5.10:
-  version "1.5.10"
-  resolved "http://npm.karldu.cn/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
-  integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
-  dependencies:
-    debug "=3.1.0"
-
 follow-redirects@^1.0.0:
   version "1.13.2"
   resolved "http://npm.karldu.cn/follow-redirects/-/follow-redirects-1.13.2.tgz#dd73c8effc12728ba5cf4259d760ea5fb83e3147"
   integrity sha1-3XPI7/wScoulz0JZ12DqX7g+MUc=
+
+follow-redirects@^1.10.0:
+  version "1.13.3"
+  resolved "http://npm.karldu.cn/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
+  integrity sha1-5VmK1QF0wbxOhyMB6CrCzZf5Amc=
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -4374,6 +4370,11 @@ js-base64@^2.1.9:
   version "2.6.4"
   resolved "http://npm.karldu.cn/js-base64/-/js-base64-2.6.4.tgz#f4e686c5de1ea1f867dbcad3d46d969428df98c4"
   integrity sha1-9OaGxd4eofhn28rT1G2WlCjfmMQ=
+
+js-base64@^3.6.0:
+  version "3.6.0"
+  resolved "http://npm.karldu.cn/js-base64/-/js-base64-3.6.0.tgz#773e1de628f4f298d65a7e9842c50244751f5756"
+  integrity sha1-dz4d5ij08pjWWn6YQsUCRHUfV1Y=
 
 js-md5@^0.7.3:
   version "0.7.3"
@@ -7961,13 +7962,12 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc-admin@0.0.8:
-  version "0.0.8"
-  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.8.tgz#f848c75f2c7dc157df6a2d92c84fc51813e4e1bf"
-  integrity sha512-gUKM6lXKETGI2IrF1wAF8qtsp8VX4KFUxN2hZZs5vZTBXh98e3boNFIP+9U/iwT7j2Pu15IbbAuK7++NLg4Q1w==
+vue-pc-admin@0.0.9:
+  version "0.0.9"
+  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.9.tgz#1b27b3b699018cd3422ef78fa7099ac9f32fc5dc"
+  integrity sha512-jfuaPShdFspLhvjsak2bhQyVZH2c4Lj6huDEKCM5vavTSjbtCnZwViX67EMz7EbFRdQcI/3xEL7iFrzAOylaog==
   dependencies:
     ant-design-vue "^1.7.4"
-    axios "0.19.2"
     less "^3.10.3"
     less-loader "^5.0.0"
     vue "2.6.12"
@@ -7977,7 +7977,7 @@ vue-pc-admin@0.0.8:
     vuex "^3.6.2"
     vuex-persistedstate "^2.5.4"
     wangeditor "^4.1.0"
-    web-core "1.0.7"
+    web-core "1.0.13"
 
 vue-ref@^2.0.0:
   version "2.0.0"
@@ -8073,12 +8073,15 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.7:
-  version "1.0.7"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.7.tgz#e8558c1fcc457c97aa73e8b7512cee4dee3134ac"
-  integrity sha512-OI6Mj2KMiQ+mgxbd7QNM9CIk8cDStlT335BuXsb/4M95pHx0PYBKtufAfjMAYs2y0EC9wH5bZ3hKQ1yrEuHNbA==
+web-core@1.0.13:
+  version "1.0.13"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.13.tgz#b433fafb06ee37c76a49b58a4c1d32fc48e4351e"
+  integrity sha512-z2s8lVGze14kA92keUEGOqI2UHU5JI57egp9P/vH+YazMu/z4VF892SvMhJRC/DFJmZnRmQ+QKjOj77BpnQPLw==
   dependencies:
+    axios "^0.21.1"
+    crypto-js "^4.0.0"
     current-device "^0.10.2"
+    js-base64 "^3.6.0"
     js-md5 "^0.7.3"
     jsencrypt "^3.0.0"
     uuidjs "^4.2.4"
