@@ -80,17 +80,24 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
             };
         }
 
-        #region CRUD
-
         /// <summary>
-        /// 查询博客
+        /// 根据id查询博客
         /// </summary>
-        /// <param name="searchList"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        #endregion
+        public override blog GetData(string id)
+        {
+            return Broker.ExecuteTransaction(() =>
+            {
+                var data = base.GetData(id);
+                if (data.reading_times == default)
+                {
+                    data.reading_times = 0;
+                }
+                data.reading_times += 1;
+                return data;
+            });
+        }
 
         /// <summary>
         /// 获取博客路由
@@ -107,18 +114,6 @@ WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
             return _cmd.Broker.DbClient.Query<string>(sql);
-        }
-
-        /// <summary>
-        /// 记录阅读次数
-        /// </summary>
-        /// <param name="blogId">博客 id</param>
-        public void RecordReadingTimes(string blogId)
-        {
-            var sql = @"
-UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
-";
-            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
         }
 
         /// <summary>

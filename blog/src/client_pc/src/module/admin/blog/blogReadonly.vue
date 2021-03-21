@@ -144,7 +144,6 @@ export default {
     await this.loadData();
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     this.imageUrl = `${sp.getBaseUrl()}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
-    this.recordReadingTimes();
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
@@ -221,9 +220,6 @@ export default {
           });
         }, 200);
       }
-    },
-    recordReadingTimes() {
-      sp.get(`/api/Blog/RecordReadingTimes?blogid=${this.Id}`);
     },
     upvote() {
       this.data.upvote_times = (this.data.upvote_times || 0) + 1;
