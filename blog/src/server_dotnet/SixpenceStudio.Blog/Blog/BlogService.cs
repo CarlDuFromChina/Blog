@@ -95,6 +95,7 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
                     data.reading_times = 0;
                 }
                 data.reading_times += 1;
+                Broker.Update(data);
                 return data;
             });
         }
