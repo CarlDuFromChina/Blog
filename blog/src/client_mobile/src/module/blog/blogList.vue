@@ -3,7 +3,7 @@
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入博客名快速搜索"></mt-search>
       <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
-        <div v-for="(row, index) in list" :key="index" class="card item" @click="goReadonly(row.Id)">
+        <div v-for="row in list" :key="row.Id" class="card item" @click="goReadonly(row.Id)">
           <div class="avatar">
             <img :src="getDownloadUrl(row)" alt="" />
           </div>
