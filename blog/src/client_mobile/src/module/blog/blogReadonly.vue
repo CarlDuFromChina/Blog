@@ -2,20 +2,20 @@
   <sp-view>
     <sp-header :title="data.title"></sp-header>
     <sp-content>
-      <vue-markdown :source="data.content" class="content markdown-body"></vue-markdown>
+      <div v-html="content" class="content markdown-body" v-highlight></div>
     </sp-content>
   </sp-view>
 </template>
 
 <script>
-import VueMarkdown from 'vue-markdown';
+import marked from 'marked';
 
 export default {
   name: 'blog',
-  components: { VueMarkdown },
   data() {
     return {
       data: {},
+      content: '',
       Id: this.$route.params.id || ''
     };
   },
@@ -28,6 +28,9 @@ export default {
       sp.get(`api/blog/GetData?id=${this.Id}`)
         .then(resp => {
           this.data = resp;
+          this.content = marked(resp.content, {
+            sanitize: true
+          });
         })
         .finally(() => {
           setTimeout(() => {

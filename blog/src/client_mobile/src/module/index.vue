@@ -2,7 +2,7 @@
   <sp-view>
     <sp-content>
       <keep-alive>
-        <router-view />
+        <router-view :key="$route.fullPath" />
       </keep-alive>
     </sp-content>
     <sp-footer>

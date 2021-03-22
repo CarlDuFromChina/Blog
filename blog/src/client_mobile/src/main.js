@@ -9,9 +9,9 @@ import 'mint-ui/lib/style.css';
 import './style/index.less';
 import './assets/icons';
 import 'web-core';
-import 'github-markdown-css/github-markdown.css';
 import moment from 'vue-moment';
 import './lib/extension';
+import './directives';
 
 Vue.use(moment);
 Vue.use(MintUI);

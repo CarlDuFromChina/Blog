@@ -57,6 +57,7 @@ export default {
       return `${sp.getBaseUrl()}${item.surface_url}`;
     },
     goReadonly(id) {
+      console.log(id);
       this.$router.push({ name: 'blog', params: { id: id } });
     },
     fetch() {
