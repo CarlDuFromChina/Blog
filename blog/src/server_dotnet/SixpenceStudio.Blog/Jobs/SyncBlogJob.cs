@@ -28,28 +28,33 @@ namespace SixpenceStudio.Blog.Jobs
             Logger.Debug("开始同步谢振国博客");
             try
             {
-                var result = HttpUtil.Get("http://122.51.132.149:8081/index?index=0&offset=5000");
-                var blogModel = JsonConvert.DeserializeObject<BlogModel>(result);
-                if (result != null && blogModel.statuscode == 200)
+                broker.ExecuteTransaction(() =>
                 {
-                    Logger.Debug($"共发现{blogModel.data.Count}篇博客待同步");
-                    blogModel.data.ForEach(item =>
+                    var result = HttpUtil.Get("http://122.51.132.149:8081/index?index=0&offset=5000");
+                    var blogModel = JsonConvert.DeserializeObject<BlogModel>(result);
+                    if (result != null && blogModel.statuscode == 200)
                     {
-                        var blog = new friend_blog()
-                        {
-                            name = item.title,
-                            content = item.content,
-                            description = item.description,
-                            createdOn = item.createTime.ToDateTime(),
-                            modifiedOn = item.updateTime.ToDateTime(),
-                            first_picture = item.firstPicture,
-                            author = "谢振国",
-                            Id = item.id.ToString()
-                        };
-                        broker.Save(blog);
-                        count++;
-                    });
-                }
+                        Logger.Debug($"共发现{blogModel.data.Count}篇博客待同步");
+                        var dataList = blogModel.data
+                            .Select(item =>
+                            {
+                                var blog = new friend_blog()
+                                {
+                                    name = item.title,
+                                    content = item.content,
+                                    description = item.description,
+                                    createdOn = item.createTime.ToDateTime(),
+                                    modifiedOn = item.updateTime.ToDateTime(),
+                                    first_picture = item.firstPicture,
+                                    author = "谢振国",
+                                    Id = item.id.ToString()
+                                };
+                            return blog;
+                        });
+                        count = dataList.Count();
+                        broker.BulkCreateOrUpdate(dataList);
+                    }
+                });
             }
             catch (Exception e)
             {

@@ -41,38 +41,39 @@ namespace SixpenceStudio.Blog.Jobs
                 focusUserList.data.openid.ForEach(item => user_list.Add(new OpenId() { openid = item, lang = "zh_CN" }));
                 var focusUsers = focusUserService.GetFocusUsers(JsonConvert.SerializeObject(new { user_list }));
                 broker.ExecuteTransaction(() =>
+                {
+                    var dataList = focusUsers.user_list.Select(focusUser =>
+                    {
+                        var wechat_user = new wechat_user()
                         {
-                            focusUsers.user_list.ForEach(focusUser =>
-                            {
-                                var wechat_user = new wechat_user()
-                                {
-                                    Id = focusUser.openid,
-                                    subscribe = Convert.ToInt32(focusUser.subscribe),
-                                    nickname = focusUser.nickname,
-                                    name = focusUser.nickname,
-                                    sex = focusUser.sex,
-                                    language = focusUser.language,
-                                    city = focusUser.city,
-                                    province = focusUser.province,
-                                    country = focusUser.country,
-                                    headimgurl = focusUser.headimgurl,
-                                    subscribe_time = focusUser.subscribe_time.ToDateTime(),
-                                    unionid = focusUser.unionid,
-                                    remark = focusUser.remark,
-                                    groupid = focusUser.groupid,
-                                    subscribe_scene = focusUser.subscribe_scene,
-                                    qr_scene = focusUser.qr_scene,
-                                    qr_scene_str = focusUser.qr_scene_str,
-                                    createdBy = user.user_infoId,
-                                    createdByName = user.name,
-                                    modifiedBy = user.user_infoId,
-                                    modifiedByName = user.name,
-                                    createdOn = DateTime.Now,
-                                    modifiedOn = DateTime.Now,
-                                };
-                                broker.Save(wechat_user);
-                            });
-                        });
+                            Id = focusUser.openid,
+                            subscribe = Convert.ToInt32(focusUser.subscribe),
+                            nickname = focusUser.nickname,
+                            name = focusUser.nickname,
+                            sex = focusUser.sex,
+                            language = focusUser.language,
+                            city = focusUser.city,
+                            province = focusUser.province,
+                            country = focusUser.country,
+                            headimgurl = focusUser.headimgurl,
+                            subscribe_time = focusUser.subscribe_time.ToDateTime(),
+                            unionid = focusUser.unionid,
+                            remark = focusUser.remark,
+                            groupid = focusUser.groupid,
+                            subscribe_scene = focusUser.subscribe_scene,
+                            qr_scene = focusUser.qr_scene,
+                            qr_scene_str = focusUser.qr_scene_str,
+                            createdBy = user.user_infoId,
+                            createdByName = user.name,
+                            modifiedBy = user.user_infoId,
+                            modifiedByName = user.name,
+                            createdOn = DateTime.Now,
+                            modifiedOn = DateTime.Now,
+                        };
+                        return wechat_user;
+                    });
+                    broker.BulkCreateOrUpdate(dataList);
+                });
             }
         }
     }
