@@ -7962,10 +7962,10 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc-admin@0.0.9:
-  version "0.0.9"
-  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.9.tgz#1b27b3b699018cd3422ef78fa7099ac9f32fc5dc"
-  integrity sha512-jfuaPShdFspLhvjsak2bhQyVZH2c4Lj6huDEKCM5vavTSjbtCnZwViX67EMz7EbFRdQcI/3xEL7iFrzAOylaog==
+vue-pc-admin@0.0.11:
+  version "0.0.11"
+  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.11.tgz#de0affd152791c765fbf82329c8de6706599f478"
+  integrity sha512-E9nan+PHzILJ1gEnEm3C8+HDDlegbKHHCrLons4ytDV9ZBWPH3P60u9dfG+jTHeVhE4t50wC6OwrTMGzwsnbng==
   dependencies:
     ant-design-vue "^1.7.4"
     less "^3.10.3"
@@ -7977,7 +7977,7 @@ vue-pc-admin@0.0.9:
     vuex "^3.6.2"
     vuex-persistedstate "^2.5.4"
     wangeditor "^4.1.0"
-    web-core "1.0.13"
+    web-core "1.0.16"
 
 vue-ref@^2.0.0:
   version "2.0.0"
@@ -8073,10 +8073,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.13:
-  version "1.0.13"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.13.tgz#b433fafb06ee37c76a49b58a4c1d32fc48e4351e"
-  integrity sha512-z2s8lVGze14kA92keUEGOqI2UHU5JI57egp9P/vH+YazMu/z4VF892SvMhJRC/DFJmZnRmQ+QKjOj77BpnQPLw==
+web-core@1.0.16:
+  version "1.0.16"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.16.tgz#d6c5be4060b18035b0b30b3ccbf04efa2f36221b"
+  integrity sha512-gKCJQ3X/NRkniBirFwObXSPqCXE7X88pu4z97Xhx6IEeixBHFuRWyHfDpI2K3j3tmudUEf7C+CyRYrV3eZArAA==
   dependencies:
     axios "^0.21.1"
     crypto-js "^4.0.0"
