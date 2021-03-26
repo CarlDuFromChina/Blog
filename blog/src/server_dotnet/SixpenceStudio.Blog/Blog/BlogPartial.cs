@@ -12,4 +12,10 @@ namespace SixpenceStudio.Blog.Blog
         [DataMember]
         public int message { get; set; }
     }
+
+    public class BlogActivityModel
+    {
+        public string created_date { get; set; }
+        public int? count { get; set; }
+    }
 }

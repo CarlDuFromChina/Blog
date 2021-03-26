@@ -12,9 +12,11 @@ import './directives';
 import storage from 'web-storage';
 import 'current-device';
 
+const echarts = require('echarts');
 Vue.config.productionTip = false;
 Vue.use(platform.install);
 Vue.prototype.$indexDB = new storage.IndexedDB();
+Vue.prototype.$echarts = echarts;
 
 // 合并平台路由
 let routes = platform.router.options.routes;

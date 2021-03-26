@@ -26,7 +26,8 @@ module.exports = {
   },
   externals: {
     moment: 'moment',
-    marked: 'marked'
+    marked: 'marked',
+    echarts: 'echarts'
   },
   output: {
     path: config.build.assetsRoot,

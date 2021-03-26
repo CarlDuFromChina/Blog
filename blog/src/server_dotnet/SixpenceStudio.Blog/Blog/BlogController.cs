@@ -78,5 +78,15 @@ namespace SixpenceStudio.Blog.Blog
             var content = HttpUtility.UrlDecode(htmlContent, Encoding.UTF8);
             new BlogService().SyncToWeChat(id, content);
         }
+
+        /// <summary>
+        /// 获取创作记录日历
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<BlogActivityModel> GetActivity()
+        {
+            return new BlogService().GetActivity();
+        }
     }
 }

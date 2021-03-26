@@ -143,5 +143,22 @@ UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
                 new WeChatNewsService(_cmd.Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
             });
         }
+
+        /// <summary>
+        /// 获取创作记录日历
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BlogActivityModel> GetActivity()
+        {
+            var sql = @"
+SELECT
+	to_char(createdon, 'YYYY-MM-DD') AS created_date,
+	count(1) AS count
+FROM blog
+WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND createdon < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
+GROUP BY to_char(createdon, 'YYYY-MM-DD')
+";
+            return Broker.Query<BlogActivityModel>(sql);
+        }
     }
 }

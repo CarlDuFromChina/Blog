@@ -7962,10 +7962,10 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-pc-admin@0.0.11:
-  version "0.0.11"
-  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.11.tgz#de0affd152791c765fbf82329c8de6706599f478"
-  integrity sha512-E9nan+PHzILJ1gEnEm3C8+HDDlegbKHHCrLons4ytDV9ZBWPH3P60u9dfG+jTHeVhE4t50wC6OwrTMGzwsnbng==
+vue-pc-admin@0.0.12:
+  version "0.0.12"
+  resolved "http://npm.karldu.cn/vue-pc-admin/-/vue-pc-admin-0.0.12.tgz#261219bade8a30212d945b0aab8310ab0d259166"
+  integrity sha512-NmPkay+lRljINieW0IcoBgm+9hhLVwOrxs7AinP6okOar1MlMAKJieCNsUvR51jJJvB7AzkJAuOE2FWW8InBug==
   dependencies:
     ant-design-vue "^1.7.4"
     less "^3.10.3"
