@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SixpenceStudio.Core.Utils;
 using Quartz;
+using SixpenceStudio.Core.Auth;
 
 namespace SixpenceStudio.Blog.Jobs
 {
@@ -32,9 +33,9 @@ namespace SixpenceStudio.Blog.Jobs
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
             var focusUserService = new FocusUserService();
+            var user = UserIdentityUtil.GetCurrentUser();
             var focusUserList = focusUserService.GetFocusUserList();
-
-            var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
+            Logger.Debug($"获取到{focusUserList.count}条微信公众号关注用户");
             if (focusUserList.count > 0)
             {
                 var user_list = new List<OpenId>();
@@ -42,37 +43,40 @@ namespace SixpenceStudio.Blog.Jobs
                 var focusUsers = focusUserService.GetFocusUsers(JsonConvert.SerializeObject(new { user_list }));
                 broker.ExecuteTransaction(() =>
                 {
-                    var dataList = focusUsers.user_list.Select(focusUser =>
-                    {
-                        var wechat_user = new wechat_user()
+                    var dataList = focusUsers.user_list
+                        .Select(focusUser =>
                         {
-                            Id = focusUser.openid,
-                            subscribe = Convert.ToInt32(focusUser.subscribe),
-                            nickname = focusUser.nickname,
-                            name = focusUser.nickname,
-                            sex = focusUser.sex,
-                            language = focusUser.language,
-                            city = focusUser.city,
-                            province = focusUser.province,
-                            country = focusUser.country,
-                            headimgurl = focusUser.headimgurl,
-                            subscribe_time = focusUser.subscribe_time.ToDateTime(),
-                            unionid = focusUser.unionid,
-                            remark = focusUser.remark,
-                            groupid = focusUser.groupid,
-                            subscribe_scene = focusUser.subscribe_scene,
-                            qr_scene = focusUser.qr_scene,
-                            qr_scene_str = focusUser.qr_scene_str,
-                            createdBy = user.user_infoId,
-                            createdByName = user.name,
-                            modifiedBy = user.user_infoId,
-                            modifiedByName = user.name,
-                            createdOn = DateTime.Now,
-                            modifiedOn = DateTime.Now,
-                        };
-                        return wechat_user;
-                    });
+                            var wechat_user = new wechat_user()
+                            {
+                                Id = focusUser.openid,
+                                subscribe = Convert.ToInt32(focusUser.subscribe),
+                                nickname = focusUser.nickname,
+                                name = focusUser.nickname,
+                                sex = focusUser.sex,
+                                language = focusUser.language,
+                                city = focusUser.city,
+                                province = focusUser.province,
+                                country = focusUser.country,
+                                headimgurl = focusUser.headimgurl,
+                                subscribe_time = focusUser.subscribe_time.ToDateTime(),
+                                unionid = focusUser.unionid,
+                                remark = focusUser.remark,
+                                groupid = focusUser.groupid,
+                                subscribe_scene = focusUser.subscribe_scene,
+                                qr_scene = focusUser.qr_scene,
+                                qr_scene_str = focusUser.qr_scene_str,
+                                createdBy = user.Id,
+                                createdByName = user.Name,
+                                modifiedBy = user.Id,
+                                modifiedByName = user.Name,
+                                createdOn = DateTime.Now,
+                                modifiedOn = DateTime.Now,
+                            };
+                            return wechat_user;
+                        })
+                        .ToList();
                     broker.BulkCreateOrUpdate(dataList);
+                    Logger.Debug($"创建或更新{dataList.Count}条关注用户信息");
                 });
             }
         }

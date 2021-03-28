@@ -49,9 +49,10 @@ namespace SixpenceStudio.Blog.Jobs
                                     author = "谢振国",
                                     Id = item.id.ToString()
                                 };
-                            return blog;
-                        });
-                        count = dataList.Count();
+                                return blog;
+                            })
+                            .ToList();
+                        count = dataList.Count;
                         broker.BulkCreateOrUpdate(dataList);
                     }
                 });

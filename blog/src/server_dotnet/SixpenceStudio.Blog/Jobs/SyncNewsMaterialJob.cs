@@ -37,25 +37,26 @@ namespace SixpenceStudio.Blog.Jobs
                 {
                     var result = new WeChatNewsService(broker).GetDataList(1, 5000);
                     var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
-                    var dataList = from item in result.item
-                                   let news = item.content.news_item.FirstOrDefault()
-                                   select new wechat_news()
-                                   {
-                                       wechat_newsId = item.media_id,
-                                       content = JsonConvert.SerializeObject(news?.content),
-                                       media_id = item.media_id,
-                                       update_time = item.update_time,
-                                       name = news?.title,
-                                       author = news?.author,
-                                       digest = news?.digest,
-                                       thumb_media_id = news?.thumb_media_id,
-                                       createdBy = user.user_infoId,
-                                       createdByName = user.name,
-                                       modifiedBy = user.user_infoId,
-                                       modifiedByName = user.name,
-                                       createdOn = DateTime.Now,
-                                       modifiedOn = DateTime.Now,
-                                   };
+                    var dataList = (from item in result.item
+                                    let news = item.content.news_item.FirstOrDefault()
+                                    select new wechat_news()
+                                    {
+                                        wechat_newsId = item.media_id,
+                                        content = JsonConvert.SerializeObject(news?.content),
+                                        media_id = item.media_id,
+                                        update_time = item.update_time,
+                                        name = news?.title,
+                                        author = news?.author,
+                                        digest = news?.digest,
+                                        thumb_media_id = news?.thumb_media_id,
+                                        createdBy = user.user_infoId,
+                                        createdByName = user.name,
+                                        modifiedBy = user.user_infoId,
+                                        modifiedByName = user.name,
+                                        createdOn = DateTime.Now,
+                                        modifiedOn = DateTime.Now,
+                                    })
+                                   .ToList();
                     broker.BulkCreateOrUpdate(dataList);
                     Logger.Debug($"发现{result.item_count}篇文章需要同步");
                     Logger.Debug($"同步微信公众号图文素材成功，共同步：{dataList.Count()}篇文章");
