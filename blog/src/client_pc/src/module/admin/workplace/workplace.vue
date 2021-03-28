@@ -72,7 +72,7 @@ export default {
         visualMap: {
           show: false,
           min: 0,
-          max: 20
+          max: 5
         },
         calendar: {
           range: this.$moment()
