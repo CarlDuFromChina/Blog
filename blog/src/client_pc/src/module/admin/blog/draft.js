@@ -47,8 +47,8 @@ export default {
         await this.popDraft(this.$route.params.draftId); // 打开草稿
         this.$emit('open-watch');
       } else if (this.pageState === 'create') {
-        this.draft.blogId = sp.newUUID();
-        this.draft.draftId = sp.newUUID();
+        this.draft.blogId = uuid.generate();
+        this.draft.draftId = uuid.generate();
         this.$emit('open-watch');
       } else {
         await this.getDraft(); // 获取草稿
@@ -107,7 +107,7 @@ export default {
             }
           });
         } else {
-          this.draft.draftId = sp.newUUID();
+          this.draft.draftId = uuid.generate();
           this.draft.blogId = this.Id;
         }
       });

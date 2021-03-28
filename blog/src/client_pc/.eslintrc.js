@@ -20,7 +20,8 @@ module.exports = {
     'vue'
   ],
   globals: {
-    "sp": true
+    "sp": true,
+    "uuid": true
   },
   // add your custom rules here
   rules: {

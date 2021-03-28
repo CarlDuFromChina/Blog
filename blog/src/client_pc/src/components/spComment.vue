@@ -72,7 +72,7 @@ export default {
       setTimeout(() => {
         this.submitting = false;
         const comment = {
-          Id: sp.newUUID(),
+          Id: uuid.generate(),
           name: '游客',
           comment: this.value,
           objectid: this.objectId,
