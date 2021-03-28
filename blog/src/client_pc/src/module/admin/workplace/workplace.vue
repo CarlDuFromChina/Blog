@@ -11,7 +11,18 @@
     </div>
     <div class="divide"></div>
     <div class="content">
-      <div id="calendar" style="width: 100%; height: 400px"></div>
+      <div class="section">
+        <p class="section-title">贡献</p>
+        <div id="calendar" style="width: 100%; height: 400px"></div>
+      </div>
+      <div class="section">
+        <p class="section-title">我的动态</p>
+        <a-timeline>
+          <a-timeline-item v-for="(item, index) in timeline" :key="index"
+            >{{ item.createdon | moment('YYYY-MM-DD') }}{{ ' 发表了：' + item.title }}</a-timeline-item
+          >
+        </a-timeline>
+      </div>
     </div>
   </div>
 </template>
@@ -21,11 +32,13 @@ export default {
   name: 'workplace',
   data() {
     return {
-      user_info: {}
+      user_info: {},
+      timeline: []
     };
   },
   created() {
     this.getUserInfo();
+    this.loadTimeline();
   },
   mounted() {
     this.loadCalendar();
@@ -86,6 +99,9 @@ export default {
         }
       };
       myChart.setOption(option);
+    },
+    async loadTimeline() {
+      this.timeline = await sp.get('api/Analysis/GetTimeline');
     }
   }
 };
@@ -120,5 +136,12 @@ export default {
 .divide {
   background: #f0f2f5;
   height: 25px;
+}
+
+.section {
+  padding: 24px;
+  &-title {
+    font-size: 24px;
+  }
 }
 </style>

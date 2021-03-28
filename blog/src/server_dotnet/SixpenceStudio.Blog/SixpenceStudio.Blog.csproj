@@ -205,6 +205,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\AnalysisController.cs" />
+    <Compile Include="Analysis\AnalysisService.cs" />
+    <Compile Include="Analysis\DataModel.cs" />
     <Compile Include="Comments\CommentsPlugin.cs" />
     <Compile Include="FriendBlog\FriendBlogController.cs" />
     <Compile Include="FriendBlog\FriendBlogService.cs" />
