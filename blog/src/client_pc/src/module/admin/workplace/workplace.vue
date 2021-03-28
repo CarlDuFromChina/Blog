@@ -66,13 +66,13 @@ export default {
     },
     async loadCalendar() {
       const el = document.getElementById('calendar');
-      const activityData = sp.get('api/Blog/GetActivity');
+      const activityData = await sp.get('api/Blog/GetActivity');
       const myChart = this.$echarts.init(el);
       var option = {
         visualMap: {
           show: false,
           min: 0,
-          max: 10000
+          max: 20
         },
         calendar: {
           range: this.$moment()
