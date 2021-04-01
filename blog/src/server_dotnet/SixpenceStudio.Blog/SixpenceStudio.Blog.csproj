@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -115,12 +115,6 @@
     <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SixpenceStudio.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.Core.1.1.63\lib\net461\SixpenceStudio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SixpenceStudio.WeChat, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\SixpenceStudio.WeChat.1.1.63\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -203,6 +197,12 @@
       <HintPath>packages\WebApiThrottle.1.5.4\lib\net45\WebApiThrottle.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="SixpenceStudio.WeChat">
+      <HintPath>packages\SixpenceStudio.WeChat.1.1.65\lib\net461\SixpenceStudio.WeChat.dll</HintPath>
+    </Reference>
+    <Reference Include="SixpenceStudio.Core">
+      <HintPath>packages\SixpenceStudio.Core.1.1.65\lib\net461\SixpenceStudio.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\AnalysisController.cs" />
@@ -246,9 +246,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Core.config" />
-    <None Include="log4net.config" />
     <None Include="packages.config" />
+    <None Include="log4net.config" />
+    <None Include="Core.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
