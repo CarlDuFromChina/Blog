@@ -13,7 +13,7 @@
     <div class="content">
       <div class="section">
         <p class="section-title">贡献</p>
-        <div id="calendar" style="width: 100%; height: 400px"></div>
+        <div id="calendar" style="width: 100%; height: 200px"></div>
       </div>
       <div class="section">
         <p class="section-title">我的动态</p>
