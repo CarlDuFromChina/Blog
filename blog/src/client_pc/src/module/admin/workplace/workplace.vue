@@ -61,7 +61,8 @@ export default {
   },
   methods: {
     getUserInfo() {
-      sp.get(`api/UserInfo/GetData?id=${sp.getUser()}`).then(resp => {
+      const userid = this.$store.getters.getUserId;
+      sp.get(`api/UserInfo/GetData?id=${userid}`).then(resp => {
         this.user_info = resp;
       });
     },
