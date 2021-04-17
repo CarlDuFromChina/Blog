@@ -1,4 +1,4 @@
-# SixpenceStudio-Blog
+# Blog
 
 基于`.Net Web Api`和`Vue`开发的博客系统，主要功能有：博客、想法、推荐信息、友人帐、归档等功能。
 
