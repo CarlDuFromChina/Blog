@@ -342,3 +342,5 @@ healthchecksdb
 .DS_Store
 
 release/
+build.ps1
+build/*
