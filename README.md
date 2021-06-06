@@ -6,33 +6,35 @@
 
 查看网站，请访问 🌍[此网站](http://www.karldu.cn/)获取最新信息。
 
-## 开发环境
+## 功能
 
-### 前端
++ 博客
++ 想法
++ 读书笔记
++ 推荐信息
++ 微信平台
++ 机器人
++ 文件管理
 
-前端基于 Vue.js，使用 ant design 组件库
+## 功能截图
 
-#### 开发工具
+登录
 
-Visual Studio Code
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_login.png)
 
-代码格式化插件：prettier  
-vue 开发插件：vetur  
-蚂蚁组件插件：ant-design-vue-helper  
-Git 插件：Git History、GitLens
+首页
 
-#### 开发环境
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_index.png)
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_index2.pgn.png)
 
-node：12.18.2
-yarn：1.15.2  
-npm：6.14.5
+编辑
 
-### 后端
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_edit.png)
 
-#### 开发工具
+博客
 
-Visual Studio 2019
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_read.png)
 
-### 数据库
+管理员
 
-PostgreSQL：10.8
+![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_admin.png)
