@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.RecommendInfo
 {
-    [EntityName("recommend_info")]
+    [Entity("recommend_info", "推荐信息", false)]
     public class recommend_info : BaseEntity
     {
         /// <summary>
@@ -16,6 +16,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// </summary>
         private string _recommend_infoid;
         [DataMember]
+        [Attr("recommend_infoid", "推荐信息id", AttrType.Varchar, 100)]
         public string recommend_infoId
         {
             get
@@ -34,6 +35,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// </summary>
         private string _url;
         [DataMember]
+        [Attr("url", "链接地址", AttrType.Varchar, 400)]
         public string url
         {
             get
@@ -51,7 +53,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// 推荐类型
         /// </summary>
         private string _recommend_type;
-        [DataMember]
+        [Attr("recommend_type", "推荐类型", AttrType.Varchar, 100)]
         public string recommend_type
         {
             get
@@ -70,6 +72,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// </summary>
         private string _recommend_typeName;
         [DataMember]
+        [Attr("recommend_typename", "推荐类型", AttrType.Varchar, 100)]
         public string recommend_typeName
         {
             get
@@ -88,6 +91,7 @@ namespace SixpenceStudio.Blog.RecommendInfo
         /// </summary>
         private int? _reading_times;
         [DataMember]
+        [Attr("reading_times", "阅读次数", AttrType.Int4)]
         public int? reading_times
         {
             get

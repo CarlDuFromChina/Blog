@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.Blog
 {
-    [EntityName("blog")]
+    [Entity("blog", "博客", false)]
     public partial class blog : BaseEntity
     {
         /// <summary>
@@ -13,6 +13,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _blogid;
         [DataMember]
+        [Attr("blogid", "博客id", AttrType.Varchar, 100)]
         public string blogId
         {
             get
@@ -32,6 +33,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _blog_typeName;
         [DataMember]
+        [Attr("blog_typename", "博客类型", AttrType.Varchar, 100)]
         public string blog_typeName
         {
             get
@@ -51,6 +53,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _content;
         [DataMember]
+        [Attr("content", "内容", AttrType.Text)]
         public string content
         {
             get
@@ -70,6 +73,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _title;
         [DataMember]
+        [Attr("title", "标题", AttrType.Varchar, 100)]
         public string title
         {
             get
@@ -89,6 +93,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _blog_type;
         [DataMember]
+        [Attr("blog_type", "类型", AttrType.Varchar, 100)]
         public string blog_type
         {
             get
@@ -107,6 +112,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private int? _reading_times;
         [DataMember]
+        [Attr("reading_times", "类型", AttrType.Int4)]
         public int? reading_times
         {
             get
@@ -126,6 +132,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private int? _upvote_times;
         [DataMember]
+        [Attr("upvote_times", "点赞次数", AttrType.Int4)]
         public int? upvote_times
         {
             get
@@ -145,6 +152,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private bool _is_series;
         [DataMember]
+        [Attr("is_series", "是否是系列", AttrType.Int4)]
         public bool is_series
         {
             get
@@ -163,6 +171,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _is_seriesName;
         [DataMember]
+        [Attr("is_seriesname", "是否是系列", AttrType.Varchar, 100)]
         public string is_seriesName
         {
             get
@@ -181,6 +190,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private JToken _tags;
         [DataMember]
+        [Attr("tags", "标签", AttrType.JToken)]
         public JToken tags
         {
             get
@@ -200,6 +210,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private bool _disable_comment;
         [DataMember]
+        [Attr("disable_comment", "禁止评论", AttrType.Int4)]
         public bool disable_comment
         {
             get
@@ -218,6 +229,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _surfaceid;
         [DataMember]
+        [Attr("surfaceid", "封面", AttrType.Varchar, 100)]
         public string surfaceid
         {
             get
@@ -237,6 +249,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _surface_url;
         [DataMember]
+        [Attr("surface_url", "封面地址", AttrType.Varchar, 200)]
         public string surface_url
         {
             get
@@ -256,6 +269,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _big_surfaceid;
         [DataMember]
+        [Attr("big_surfaceid", "大封面", AttrType.Varchar, 100)]
         public string big_surfaceid
         {
             get
@@ -275,6 +289,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _big_surface_url;
         [DataMember]
+        [Attr("big_surface_url", "大封面地址", AttrType.Varchar, 200)]
         public string big_surface_url
         {
             get
@@ -293,6 +308,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private bool _is_show;
         [DataMember]
+        [Attr("is_show", "是否展示", AttrType.Int4)]
         public bool is_show
         {
             get
@@ -311,6 +327,7 @@ namespace SixpenceStudio.Blog.Blog
         /// </summary>
         private string _is_showName;
         [DataMember]
+        [Attr("_is_showname", "是否展示", AttrType.Varchar, 100)]
         public string is_showName
         {
             get

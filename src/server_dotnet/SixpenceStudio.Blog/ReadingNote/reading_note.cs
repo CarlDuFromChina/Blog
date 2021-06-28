@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.ReadingNote
 {
-    [EntityName("reading_note")]
+    [Entity("reading_note", "读书笔记", false)]
     public partial class reading_note : BaseEntity
     {
         /// <summary>
@@ -12,6 +12,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _reading_noteid;
         [DataMember]
+        [Attr("reading_noteid", "读书笔记id", AttrType.Varchar, 100)]
         public string reading_noteId
         {
             get
@@ -31,6 +32,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _content;
         [DataMember]
+        [Attr("content", "内容", AttrType.Text)]
         public string content
         {
             get
@@ -50,6 +52,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private int? _is_show;
         [DataMember]
+        [Attr("is_show", "是否展示", AttrType.Int4)]
         public int? is_show
         {
             get
@@ -69,6 +72,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _book_title;
         [DataMember]
+        [Attr("book_title", "书名", AttrType.Varchar, 100)]
         public string book_title
         {
             get
@@ -88,6 +92,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _surfaceid;
         [DataMember]
+        [Attr("surfaceid", "封面", AttrType.Varchar, 100)]
         public string surfaceid
         {
             get
@@ -107,6 +112,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _surface_url;
         [DataMember]
+        [Attr("surface_url", "封面链接", AttrType.Varchar, 200)]
         public string surface_url
         {
             get
@@ -126,6 +132,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _big_surfaceid;
         [DataMember]
+        [Attr("big_surfaceid", "封面大图", AttrType.Varchar, 100)]
         public string big_surfaceid
         {
             get
@@ -145,6 +152,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private string _big_surface_url;
         [DataMember]
+        [Attr("big_surface_url", "封面大图链接", AttrType.Varchar, 200)]
         public string big_surface_url
         {
             get
@@ -164,6 +172,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private int? _disable_comment;
         [DataMember]
+        [Attr("disable_comment", "禁止评论", AttrType.Int4)]
         public int? disable_comment
         {
             get
@@ -182,6 +191,7 @@ namespace SixpenceStudio.Blog.ReadingNote
         /// </summary>
         private int? _brief;
         [DataMember]
+        [Attr("brief", "摘要", AttrType.Varchar, 100)]
         public int? brief
         {
             get

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.FriendBlog
 {
-    [EntityName("friend_blog")]
+    [Entity("friend_blog", "友人博客", false)]
     public partial class friend_blog : BaseEntity
     {
         /// <summary>
@@ -12,6 +12,7 @@ namespace SixpenceStudio.Blog.FriendBlog
         /// </summary>
         private string _friend_blogid;
         [DataMember]
+        [Attr("friend_blogid", "友人博客id", AttrType.Varchar, 100)]
         public string friend_blogId
         {
             get
@@ -31,6 +32,7 @@ namespace SixpenceStudio.Blog.FriendBlog
         /// </summary>
         private string _content;
         [DataMember]
+        [Attr("content", "内容", AttrType.Text)]
         public string content
         {
             get
@@ -50,6 +52,7 @@ namespace SixpenceStudio.Blog.FriendBlog
         /// </summary>
         private string _first_picture;
         [DataMember]
+        [Attr("first_picture", "图片地址", AttrType.Varchar, 500)]
         public string first_picture
         {
             get
@@ -69,6 +72,7 @@ namespace SixpenceStudio.Blog.FriendBlog
         /// </summary>
         private string _author;
         [DataMember]
+        [Attr("author", "作者", AttrType.Varchar, 100)]
         public string author
         {
             get
@@ -88,6 +92,7 @@ namespace SixpenceStudio.Blog.FriendBlog
         /// </summary>
         private string _description;
         [DataMember]
+        [Attr("description", "描述", AttrType.Varchar, 400)]
         public string description
         {
             get

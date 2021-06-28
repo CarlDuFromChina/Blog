@@ -6,11 +6,12 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.Comments
 {
-    [EntityName("comments")]
+    [Entity("comments", "评论", false)]
     public class comments : BaseEntity
     {
         private string _commentsid;
         [DataMember]
+        [Attr("commentsid", "评论id", AttrType.Varchar, 100)]
         public string commentsId
         {
             get
@@ -29,6 +30,7 @@ namespace SixpenceStudio.Blog.Comments
         /// </summary>
         private string _comment;
         [DataMember]
+        [Attr("comment", "评论", AttrType.Text)]
         public string comment
         {
             get
@@ -47,6 +49,7 @@ namespace SixpenceStudio.Blog.Comments
         /// </summary>
         private string _objectid;
         [DataMember]
+        [Attr("objectid", "实体Id", AttrType.Varchar, 100)]
         public string objectId
         {
             get
@@ -65,6 +68,7 @@ namespace SixpenceStudio.Blog.Comments
         /// </summary>
         private string _object_name;
         [DataMember]
+        [Attr("object_name", "类型名", AttrType.Varchar, 100)]
         public string object_name
         {
             get

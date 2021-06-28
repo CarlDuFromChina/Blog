@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.idea
 {
-    [EntityName("idea")]
+    [Entity("idea", "想法", false)]
     public partial class idea : BaseEntity
     {
         /// <summary>
@@ -16,6 +16,7 @@ namespace SixpenceStudio.Blog.idea
         /// </summary>
         private string _ideaid;
         [DataMember]
+        [Attr("ideaid", "想法id", AttrType.Varchar, 100)]
         public string ideaId
         {
             get
@@ -34,6 +35,7 @@ namespace SixpenceStudio.Blog.idea
         /// </summary>
         private string _content;
         [DataMember]
+        [Attr("content", "想法id", AttrType.Text)]
         public string content
         {
             get

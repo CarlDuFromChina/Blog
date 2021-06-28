@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SixpenceStudio.Blog.Draft
 {
-    [EntityName("draft")]
+    [Entity("draft", "草稿", false)]
     public partial class draft : BaseEntity
     {
         /// <summary>
@@ -16,6 +16,7 @@ namespace SixpenceStudio.Blog.Draft
         /// </summary>
         private string _draftid;
         [DataMember]
+        [Attr("draftid", "草稿id", AttrType.Varchar, 100)]
         public string draftId
         {
             get
@@ -34,6 +35,7 @@ namespace SixpenceStudio.Blog.Draft
         /// </summary>
         private string _blogid;
         [DataMember]
+        [Attr("blogid", "博客id", AttrType.Varchar, 100)]
         public string blogId
         {
             get
@@ -52,6 +54,7 @@ namespace SixpenceStudio.Blog.Draft
         /// </summary>
         private string _content;
         [DataMember]
+        [Attr("content", "内容", AttrType.Text)]
         public string content
         {
             get
@@ -70,6 +73,7 @@ namespace SixpenceStudio.Blog.Draft
         /// </summary>
         private string _title;
         [DataMember]
+        [Attr("title", "标题", AttrType.Varchar, 100)]
         public string title
         {
             get

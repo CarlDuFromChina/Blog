@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace SixpenceStudio.Blog.Classification
 {
-    [EntityName("classification")]
+    [Entity("classification", "博客分类", false)]
     public partial class classification : BaseEntity
     {
         /// <summary>
@@ -14,6 +14,7 @@ namespace SixpenceStudio.Blog.Classification
         /// </summary>
         private string _classificationid;
         [DataMember]
+        [Attr("classificationid", "博客分类id", AttrType.Varchar, 100)]
         public string classificationId
         {
             get
@@ -33,6 +34,7 @@ namespace SixpenceStudio.Blog.Classification
         /// </summary>
         private string _code;
         [DataMember]
+        [Attr("code", "编码", AttrType.Varchar, 100)]
         public string code
         {
             get
@@ -52,6 +54,7 @@ namespace SixpenceStudio.Blog.Classification
         /// </summary>
         private int _is_free;
         [DataMember]
+        [Attr("is_free", "是否付费阅读", AttrType.Int4)]
         public int is_free
         {
             get
