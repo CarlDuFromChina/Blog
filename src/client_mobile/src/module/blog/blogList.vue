@@ -54,7 +54,7 @@ export default {
       this.total = 0;
     },
     getDownloadUrl(item) {
-      return `${sp.getBaseUrl()}${item.surface_url}`;
+      return `${sp.getServerUrl()}${item.surface_url}`;
     },
     goReadonly(id) {
       console.log(id);
@@ -62,7 +62,7 @@ export default {
     },
     fetch() {
       sp.get(
-        `${sp.getBaseUrl()}api/blog/GetDataList?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+        `${sp.getServerUrl()}api/blog/GetViewData?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
           this.pageIndex
         }&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
       ).then(resp => {

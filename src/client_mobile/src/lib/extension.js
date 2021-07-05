@@ -8,7 +8,7 @@ Object.defineProperty(String.prototype, 'toDownloadUrl', {
     if (sp.isNullOrEmpty(this)) {
       return '';
     }
-    return `${sp.getBaseUrl()}api/SysFile/Download?objectId=${this}`;
+    return `${sp.getServerUrl()}api/SysFile/Download?objectId=${this}`;
   },
   writable: false
 });

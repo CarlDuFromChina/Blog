@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { pagination } from 'vue-pc-admin';
+import { pagination } from '@/mixins';
 
 export default {
   name: 'idea',
   mixins: [pagination],
   data() {
     return {
-      baseUrl: sp.getBaseUrl(),
+      baseUrl: sp.getServerUrl(),
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     avatar() {
-      return `${this.baseUrl}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+      return `${this.baseUrl}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
     }
   },
   methods: {
@@ -39,7 +39,7 @@ export default {
         return;
       }
       this.loading = true;
-      let url = `api/${this.controllerName}/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
+      let url = `api/${this.controllerName}/GetViewData?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       sp.get(url)
         .then(resp => {
           if (resp && resp.DataList) {

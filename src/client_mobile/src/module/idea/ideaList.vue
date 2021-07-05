@@ -4,7 +4,7 @@
       <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <div v-for="(item, index) in dataList" :key="index" class="list">
           <div class="list-item">
-            <div style="color:#909399">{{ item.createdOn | moment('YYYY-MM-DD') }}</div>
+            <div style="color: #909399">{{ item.createdOn | moment('YYYY-MM-DD') }}</div>
             <div v-html="item.content"></div>
           </div>
         </div>
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     fetch() {
-      return sp.get(`api/idea/GetDataList?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`).then(resp => {
+      return sp.get(`api/idea/GetViewData?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`).then(resp => {
         if (resp && resp.DataList) {
           this.dataList = resp.DataList;
           this.total = resp.RecordCount;

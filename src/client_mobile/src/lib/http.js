@@ -1,12 +1,18 @@
 import axios from 'axios';
+import { common, http, uuid } from 'web-core';
+import spExtension from './sp';
+
+window.sp = Object.assign({}, common, http, spExtension);
+window.uuid = Object.assign({}, uuid);
 
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = sp.getServerUrl();
 axios.interceptors.response.use(
   response => {
     // 处理excel文件
     if (response.headers && response.headers['content-type'] === 'application/octet-stream') {
-      downloadUrl(`${baseUrl}\\${response.config.url}`);
+      downloadUrl(`${sp.getServerUrl()}${response.config.url}`);
       return Promise.resolve(true);
     }
     return Promise.resolve(response);
@@ -25,13 +31,6 @@ axios.interceptors.response.use(
     return Promise.reject(new Error('服务器开小差了'));
   }
 );
-
-const baseUrl = localStorage.getItem('baseUrl');
-if (sp.isNullOrEmpty(baseUrl)) {
-  localStorage.setItem('baseUrl', window.location.origin);
-} else {
-  axios.defaults.baseURL = baseUrl;
-}
 
 // download url
 const downloadUrl = url => {

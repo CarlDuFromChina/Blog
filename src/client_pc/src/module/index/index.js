@@ -10,9 +10,5 @@ export default [
     component: () => import('./index.vue'),
     redirect: '/index/home',
     children: [].concat(home, aboutme, friends, readingNote)
-  },
-  {
-    path: '/',
-    redirect: 'index'
   }
 ];

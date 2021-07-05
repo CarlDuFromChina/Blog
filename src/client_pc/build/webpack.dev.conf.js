@@ -63,10 +63,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
-      },
-      {
-        from: path.resolve(__dirname, '../node_modules/vue-pc-admin/Web.config'),
-        to: '../dist/'
       }
     ])
   ]

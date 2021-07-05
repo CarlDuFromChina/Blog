@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>4aa1042d-eae1-4fa7-9ad7-9fcf049a88ae</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>../build/</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="version\2.0\2021070901-新增内容管理菜单.sql" />
+    <None Remove="version\2.0\2021070902-新增分析中心菜单.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="version\2.0\2021070901-新增内容管理菜单.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.0\2021070902-新增分析中心菜单.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Core\Blog.Core.csproj" />
+    <ProjectReference Include="..\Blog.WeChat\Blog.WeChat.csproj" />
+  </ItemGroup>
+
+
+</Project>

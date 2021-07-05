@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="version\2.0\2021070901-初始化微信菜单.sql" />
+    <None Remove="version\2.0\初始化微信菜单.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="version\2.0\2021070901-初始化微信菜单.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Core\Blog.Core.csproj" />
+  </ItemGroup>
+
+</Project>
