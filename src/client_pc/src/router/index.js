@@ -27,10 +27,12 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       next({ name: 'login' });
+      NProgress.done();
     }
   } else {
     if (to.name === 'login' && store.getters.isLoggedIn) {
       next({ name: 'admin' });
+      NProgress.done();
     } else {
       next();
     }
