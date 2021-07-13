@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Config;
+using Blog.Core.Data;
 using Blog.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,21 @@ WHERE user_infoid = @id;
             var user = UserIdentityUtil.GetCurrentUser();
             var paramList = new Dictionary<string, object>() { { "@id",  user.Id}, { "@password", password } };
             _cmd.Broker.Execute(sql, paramList);
+        }
+
+        /// <summary>
+        /// 充值密码
+        /// </summary>
+        /// <param name="id"></param>
+        public void ResetPassword(string id)
+        {
+            var sql = $@"
+UPDATE auth_user
+SET password = @password
+WHERE user_infoid = @id;
+";
+            var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
+            Broker.Execute(sql, paramList);
         }
 
         public auth_user GetDataByCode(string code)

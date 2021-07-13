@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class StoreConfig : BaseConfig<StoreConfig>
+    public class StoreConfig : ConfigBase<StoreConfig>
     {
         /// <summary>
         /// 存储方式（SystemStore、MinIOStore）

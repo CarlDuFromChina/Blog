@@ -125,7 +125,7 @@ export default {
       this.data.disable_comment = false;
     }
     // 获取token和url
-    this.token = window.localStorage.getItem('Token');
+    this.token = this.$store.getters.getToken;
   },
   computed: {
     // 请求头

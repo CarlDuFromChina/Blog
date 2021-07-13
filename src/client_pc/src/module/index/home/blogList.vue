@@ -46,7 +46,7 @@ export default {
       actions: [{ type: 'eye' }, { type: 'like-o' }, { type: 'message' }]
     };
   },
-  created() {
+  async created() {
     this.fetchData();
     this.$bus.$on('load-more', () => {
       if (this.isLoadedAll) {
@@ -60,11 +60,8 @@ export default {
         this.fetchData();
       }, 500);
     });
-  },
-  computed: {
-    avatar() {
-      return `${this.baseUrl}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
-    }
+    this.user = await sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`);
+    this.avatar = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
   },
   methods: {
     fetchData() {

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Blog.WeChat
 {
-    public class WeChatConfig : BaseConfig<WeChatConfig>
+    public class WeChatConfig : ConfigBase<WeChatConfig>
     {
         public string Token { get; set; }
 

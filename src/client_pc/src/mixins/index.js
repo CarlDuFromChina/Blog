@@ -1,4 +1,4 @@
-import { edit } from './edit';
+import edit from './edit';
 import select from './select';
 import pagination from './pagination';
 

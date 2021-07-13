@@ -19,7 +19,7 @@ namespace Blog.Core.Data
         public virtual IList<E> GetAllEntity()
         {
             var sql = $"SELECT *  FROM {new E().EntityName}";
-            var data = Broker.RetrieveMultiple<E>(sql);
+            var data = Broker.FilteredRetrieveMultiple<E>(sql);
             return data;
         }
 
@@ -44,7 +44,7 @@ namespace Blog.Core.Data
             var recordCountSql = $"SELECT COUNT(1) FROM ({sql}) AS table1";
             sql += $" LIMIT {pageSize} OFFSET {(pageIndex - 1) * pageSize}";
             recordCount = Convert.ToInt32(Broker.ExecuteScalar(recordCountSql, paramList));
-            var data = Broker.RetrieveMultiple<E>(sql, paramList);
+            var data = Broker.FilteredRetrieveMultiple<E>(sql, paramList);
             return data;
         }
 
@@ -62,7 +62,7 @@ namespace Blog.Core.Data
 
             GetSql(ref sql, searchList, ref paramList, orderBy, view, searchValue);
 
-            var data = Broker.RetrieveMultiple<E>(sql, paramList);
+            var data = Broker.FilteredRetrieveMultiple<E>(sql, paramList);
             return data;
         }
 

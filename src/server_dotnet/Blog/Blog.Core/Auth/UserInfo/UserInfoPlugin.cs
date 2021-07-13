@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Config;
+using Blog.Core.Data;
 using Blog.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,15 @@ namespace Blog.Core.Auth.UserInfo
         {
             var authInfo = new auth_user()
             {
-                auth_userId = entity["user_infoId"]?.ToString(),
-                name = entity["name"]?.ToString(),
-                code = entity["code"]?.ToString(),
-                password = "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", // TODO 取配置文件参数
-                user_infoid = entity["user_infoId"]?.ToString()
+                auth_userId = entity.GetAttributeValue<string>("user_infoId"),
+                name = entity.GetAttributeValue<string>("name"),
+                code = entity.GetAttributeValue<string>("code"),
+                password = SystemConfig.Config.DefaultPassword,
+                user_infoid = entity.GetAttributeValue<string>("user_infoId"),
+                roleid = entity.GetAttributeValue<string>("roleid"),
+                roleidName = entity.GetAttributeValue<string>("roleidName"),
+                is_lock = false,
+                is_lockName = "否"
             };
             new AuthUserService(broker).CreateData(authInfo);
         }

@@ -33,7 +33,7 @@ namespace Blog.Core.Data
             {
                 return "";
             }
-            var id = Broker.Create(entity);
+            var id = Broker.FilteredCreate(entity);
             return id;
         }
 
@@ -70,7 +70,7 @@ namespace Blog.Core.Data
                 ids.Each(id =>
                 {
                     var data = Broker.Retrieve<E>(id);
-                    Broker.Delete(new E().EntityName, id);
+                    Broker.FilteredDelete(new E().EntityName, id);
                 });
             });
         }
@@ -84,7 +84,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public E GetEntity(string id)
         {
-            return Broker.Retrieve<E>(id);
+            return Broker.FilteredRetrieve<E>(id);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Blog.Core.Data
                 return;
             }
 
-            Broker.Update(entity);
+            Broker.FiltededUpdate(entity);
         }
     }
 }

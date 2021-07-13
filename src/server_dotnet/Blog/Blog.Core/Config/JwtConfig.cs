@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class JwtConfig : BaseConfig<JwtConfig>
+    public class JwtConfig : ConfigBase<JwtConfig>
     {
         /// <summary>
         /// 颁发者

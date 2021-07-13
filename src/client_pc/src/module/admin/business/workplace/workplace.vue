@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="header-avatar">
-        <a-avatar :size="64" src="http://karldu.cn//api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10" />
+        <a-avatar :size="64" :src="avatarUrl" />
       </div>
       <div class="header-content">
         <div class="header-content-title">{{ welcome }}，{{ user_info.name }}</div>
@@ -33,7 +33,8 @@ export default {
   data() {
     return {
       user_info: {},
-      timeline: []
+      timeline: [],
+      avatarUrl: ''
     };
   },
   created() {
@@ -64,6 +65,7 @@ export default {
       const userid = this.$store.getters.getUserId;
       sp.get(`api/UserInfo/GetData?id=${userid}`).then(resp => {
         this.user_info = resp;
+        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar}`;
       });
     },
     getVirtulData(year, activityData) {
