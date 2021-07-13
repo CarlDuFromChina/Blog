@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { pagination } from 'vue-pc-admin';
+import { pagination } from '@/mixins';
 
 export default {
   name: 'cloudUpload',
@@ -54,7 +54,7 @@ export default {
       controllerName: 'Gallery',
       selected: null,
       loading: false,
-      baseUrl: sp.getBaseUrl(),
+      baseUrl: sp.getServerUrl(),
       source: 1,
       pageSize: 12,
       searchValue: ''
@@ -80,7 +80,7 @@ export default {
       this.loadData();
     },
     getLocalData() {
-      let url = `api/${this.controllerName}/GetDataList?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
+      let url = `api/${this.controllerName}/GetViewData?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
       url += `&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`;
       return sp.get(url).then(resp => {
         this.dataList = resp.DataList.map(item => ({

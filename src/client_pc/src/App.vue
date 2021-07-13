@@ -18,4 +18,9 @@ html {
   margin: 0px;
   overflow: hidden;
 }
+
+#nprogress .bar {
+  background: #1890ff !important;
+  height: 3px !important;
+}
 </style>

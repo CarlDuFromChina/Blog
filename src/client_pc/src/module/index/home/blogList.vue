@@ -32,14 +32,14 @@
 </template>
 
 <script>
-import { pagination } from 'vue-pc-admin';
+import { pagination } from '@/mixins';
 
 export default {
   name: 'blog-list',
   mixins: [pagination],
   data() {
     return {
-      baseUrl: sp.getBaseUrl(),
+      baseUrl: sp.getServerUrl(),
       listData: [],
       loading: false,
       isLoadedAll: false,
@@ -63,14 +63,14 @@ export default {
   },
   computed: {
     avatar() {
-      return `${this.baseUrl}/api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+      return `${this.baseUrl}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
     }
   },
   methods: {
     fetchData() {
       try {
         sp.get(
-          `api/blog/GetDataList?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
+          `api/blog/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
         ).then(resp => {
           this.total = resp.RecordCount;
           this.listData = this.listData.concat(resp.DataList);

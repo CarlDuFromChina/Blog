@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { admin } from 'vue-pc-admin';
+import { admin } from './core';
 
 export default {
   name: 'myAdmin',

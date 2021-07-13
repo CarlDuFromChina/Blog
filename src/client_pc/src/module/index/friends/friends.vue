@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     getDataApi() {
-      return `api/${this.controllerName}/GetDataList?orderBy=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC&&pageSize=$pageSize&pageIndex=$pageIndex&searchList=`;
+      return `api/${this.controllerName}/GetViewData?orderBy=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC&&pageSize=$pageSize&pageIndex=$pageIndex&searchList=`;
     }
   }
 };

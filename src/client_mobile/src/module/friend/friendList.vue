@@ -58,7 +58,7 @@ export default {
     },
     fetch() {
       sp.get(
-        `${sp.getBaseUrl()}api/FriendBlog/GetDataList?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+        `${sp.getServerUrl()}api/FriendBlog/GetViewData?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
           this.pageIndex
         }&searchList=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC`
       ).then(resp => {

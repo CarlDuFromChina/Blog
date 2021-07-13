@@ -29,7 +29,7 @@
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
-import { pagination } from 'vue-pc-admin';
+import { pagination } from '@/mixins';
 
 export default {
   name: 'spBlogCard',
@@ -61,7 +61,7 @@ export default {
       isFirstLoad: true,
       busy: false,
       editVisible: false,
-      baseUrl: sp.getBaseUrl(),
+      baseUrl: sp.getServerUrl(),
       data: [],
       loading: false
     };
