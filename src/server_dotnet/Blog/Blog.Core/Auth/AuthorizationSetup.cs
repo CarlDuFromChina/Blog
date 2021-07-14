@@ -2,8 +2,10 @@
 using Blog.Core.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +62,10 @@ namespace Blog.Core.Auth
                          // 如果过期，则把<是否过期>添加到，返回头信息中
                          if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                          {
-                             context.Response.Headers.Add("Token-Expired", "true");
+                             context.Response.StatusCode = 403;
+                             context.Response.ContentType = "application/json";
+                             var error = "Token过期";
+                             return context.Response.WriteAsync(JsonConvert.SerializeObject(error));
                          }
                          return Task.CompletedTask;
                      }

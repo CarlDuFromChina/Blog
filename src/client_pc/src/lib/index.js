@@ -10,7 +10,8 @@ window.uuid = Object.assign({}, uuid);
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = sp.getServerUrl();
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use(async config => {
+  await checkToken();
   config.headers.Authorization = `Bearer ${store.getters.getToken}`;
   return config;
 });
@@ -23,17 +24,7 @@ axios.interceptors.response.use(
     }
     return Promise.resolve(response);
   },
-  error => {
-    if (error && error.response && error.response.status) {
-      switch (error.response.status) {
-        case 403:
-          location.href = '/#/login';
-          break;
-        default:
-          break;
-      }
-      return Promise.reject(error);
-    }
+  () => {
     return Promise.reject(new Error('服务器开小差了'));
   }
 );
@@ -48,3 +39,46 @@ const downloadUrl = url => {
   };
   document.body.appendChild(iframe);
 };
+
+/**
+ * 检查token是否有效
+ */
+async function checkToken() {
+  // 匿名用户访问无需检查token
+  if (store.getters.isLoggedIn) {
+    // 已登录但是token为空重新登录
+    if (store.getters.isEmptyToken()) {
+      reLogin();
+    }
+
+    // 刷新token过期重新登录
+    if (store.getters.isRefreshTokenExpired()) {
+      reLogin();
+    }
+
+    // 授权token过期重新获取
+    if (store.getters.isAccessTokenExpired()) {
+      await refreshToken();
+    }
+  }
+}
+
+/**
+ * 刷新token
+ */
+async function refreshToken() {
+  store.commit('changeTokenWithRefreshToken'); // 更换成RefreshToken
+  const resp = await sp.get('api/AuthUser/RefreshAccessToken');
+  if (resp) {
+    store.commit('updateAccessToken', resp);
+  }
+}
+
+/**
+ * 重新登录
+ */
+function reLogin() {
+  store.commit('clearAuth');
+  store.commit('changeLogin', false); // 修改登录状态
+  location.href = '/#/login';
+}

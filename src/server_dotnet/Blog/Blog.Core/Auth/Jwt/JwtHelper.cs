@@ -60,7 +60,7 @@ namespace Blog.Core.Auth
         private static Token CreateToken(List<Claim> claims, TokenType tokenType = TokenType.AccessToken)
         {
             var now = DateTime.Now;
-            var expires = tokenType == TokenType.AccessToken ? now.AddSeconds(1000) : now.AddHours(10);
+            var expires = tokenType == TokenType.AccessToken ? now.AddSeconds(JwtConfig.Config.ExpireSeconds) : now.AddHours(JwtConfig.Config.RefreshExpireHours);
             claims.Add(new Claim("type", tokenType.ToString()));
 
             string iss = JwtConfig.Config.Issuer;
