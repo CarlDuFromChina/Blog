@@ -12,11 +12,11 @@ namespace Blog.Core.Module.SysParamGroup
         #region 构造函数
         public SysParamGroupService()
         {
-            this._cmd = new EntityCommand<sys_paramgroup>();
+            this._context = new EntityContext<sys_paramgroup>();
         }
         public SysParamGroupService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<sys_paramgroup>(broker);
+            this._context = new EntityContext<sys_paramgroup>(broker);
         }
         #endregion
 
@@ -52,7 +52,7 @@ FROM sys_param
 INNER JOIN sys_paramgroup ON sys_param.sys_paramgroupid = sys_paramgroup.sys_paramgroupid
 WHERE sys_paramgroup.code = @code
 ";
-            return _cmd.Broker.Query<SelectOption>(sql, new Dictionary<string, object>() { { "@code", code } }).ToList();
+            return Broker.Query<SelectOption>(sql, new Dictionary<string, object>() { { "@code", code } }).ToList();
         }
 
         public IEnumerable<IEnumerable<SelectOption>> GetParamsList(string[] paramsList)
@@ -79,12 +79,12 @@ WHERE sys_paramgroup.code = @code
 
         public override void DeleteData(List<string> ids)
         {
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
                 var sql = @"
 DELETE FROM sys_param WHERE sys_paramgroupid IN (in@ids)
 ";
-                _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", ids } });
+                Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", ids } });
                 base.DeleteData(ids);
             });
         }

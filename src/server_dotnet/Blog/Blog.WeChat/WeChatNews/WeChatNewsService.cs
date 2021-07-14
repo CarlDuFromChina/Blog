@@ -14,12 +14,12 @@ namespace Blog.WeChat.WeChatNews
         #region 构造函数
         public WeChatNewsService()
         {
-            this._cmd = new EntityCommand<wechat_news>();
+            this._context = new EntityContext<wechat_news>();
         }
 
         public WeChatNewsService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<wechat_news>(broker);
+            this._context = new EntityContext<wechat_news>(broker);
         }
         #endregion
 
@@ -31,7 +31,7 @@ namespace Blog.WeChat.WeChatNews
         {
             foreach (var item in ids)
             {
-                var data = _cmd.Broker.Retrieve<wechat_news>(item);
+                var data = Broker.Retrieve<wechat_news>(item);
                 WeChatApi.DeleteMaterial(data.media_id);
             }
             base.DeleteData(ids);

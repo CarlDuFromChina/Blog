@@ -12,12 +12,12 @@ namespace Blog.idea
         #region 构造函数
         public IdeaSerivice()
         {
-            _cmd = new EntityCommand<idea>();
+            _context = new EntityContext<idea>();
         }
 
         public IdeaSerivice(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<idea>(broker);
+            _context = new EntityContext<idea>(broker);
         }
         #endregion
 

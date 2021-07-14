@@ -14,12 +14,12 @@ namespace Blog.Core.Auth.Privilege
         #region 构造函数
         public SysRolePrivilegeService()
         {
-            _cmd = new EntityCommand<sys_role_privilege>();
+            _context = new EntityContext<sys_role_privilege>();
         }
 
         public SysRolePrivilegeService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<sys_role_privilege>(broker);
+            _context = new EntityContext<sys_role_privilege>(broker);
         }
         #endregion
 

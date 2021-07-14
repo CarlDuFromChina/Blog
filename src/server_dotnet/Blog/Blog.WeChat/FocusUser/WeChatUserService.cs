@@ -13,12 +13,12 @@ namespace Blog.WeChat.FocusUser
         #region 构造函数
         public WeChatUserService()
         {
-            _cmd = new EntityCommand<wechat_user>();
+            _context = new EntityContext<wechat_user>();
         }
        
         public WeChatUserService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<wechat_user>(broker);
+            _context = new EntityContext<wechat_user>(broker);
         }
         #endregion
     }

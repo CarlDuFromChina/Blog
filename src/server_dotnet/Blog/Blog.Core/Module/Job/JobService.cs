@@ -11,12 +11,12 @@ namespace Blog.Core.Module.Job
         #region 构造函数
         public JobService()
         {
-            _cmd = new EntityCommand<job>();
+            _context = new EntityContext<job>();
         }
 
         public JobService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<job>(broker);
+            _context = new EntityContext<job>(broker);
         }
         #endregion
 
@@ -41,7 +41,7 @@ namespace Blog.Core.Module.Job
 SELECT * FROM job
 ORDER BY name
 ";
-            var dataList = _cmd.Broker.RetrieveMultiple<job>(sql);
+            var dataList = Broker.RetrieveMultiple<job>(sql);
             return dataList;
         }
 

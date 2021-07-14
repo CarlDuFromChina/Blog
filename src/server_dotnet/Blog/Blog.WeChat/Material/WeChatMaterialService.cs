@@ -17,12 +17,12 @@ namespace Blog.WeChat.Material
         #region 构造函数
         public WeChatMaterialService()
         {
-            _cmd = new EntityCommand<wechat_material>();
+            _context = new EntityContext<wechat_material>();
         }
 
         public WeChatMaterialService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<wechat_material>(broker);
+            _context = new EntityContext<wechat_material>(broker);
         }
         #endregion
 
@@ -76,7 +76,7 @@ namespace Blog.WeChat.Material
             AssertUtil.CheckBoolean<SpException>(file == null, $"根据fileid：{fileId}未找到记录", "36B5F5C9-ED65-4CAC-BE60-712278056EA9");
 
             // 检查素材库是否已经上传
-            var data = _cmd.Broker.Retrieve<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.sys_fileId } });
+            var data = Broker.Retrieve<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.sys_fileId } });
             if (data != null)
             {
                 return data.media_id;

@@ -11,12 +11,12 @@ namespace Blog.Core.Module.SysConfig
         #region 构造函数
         public SysConfigService()
         {
-            _cmd = new EntityCommand<sys_config>();
+            _context = new EntityContext<sys_config>();
         }
 
         public SysConfigService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<sys_config>(broker);
+            _context = new EntityContext<sys_config>(broker);
         }
         #endregion
 
@@ -27,7 +27,7 @@ namespace Blog.Core.Module.SysConfig
                 var sql = @"
 select * from sys_config where code = @code;
 ";
-                var data = _cmd.Broker.Retrieve<sys_config>(sql, new Dictionary<string, object>() { { "@code", code } });
+                var data = Broker.Retrieve<sys_config>(sql, new Dictionary<string, object>() { { "@code", code } });
                 return data?.value;
             }
             return "";

@@ -12,12 +12,12 @@ namespace Blog.ReadingNote
         #region 构造函数
         public ReadingNoteService()
         {
-            this._cmd = new EntityCommand<reading_note>();
+            this._context = new EntityContext<reading_note>();
         }
 
         public ReadingNoteService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<reading_note>(broker);
+            this._context = new EntityContext<reading_note>(broker);
         }
         #endregion
 

@@ -12,12 +12,12 @@ namespace Blog.WeChat.Robot
         #region 构造函数
         public RobotService()
         {
-            _cmd = new EntityCommand<robot>();
+            _context = new EntityContext<robot>();
         }
 
         public RobotService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<robot>(Broker);
+            _context = new EntityContext<robot>(Broker);
         }
         #endregion
     }

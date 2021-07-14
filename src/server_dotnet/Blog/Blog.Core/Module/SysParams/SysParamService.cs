@@ -11,12 +11,12 @@ namespace Blog.Core.Module.SysParams
         #region 构造函数
         public SysParamService()
         {
-            this._cmd = new EntityCommand<sys_param>();
+            this._context = new EntityContext<sys_param>();
         }
 
         public SysParamService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<sys_param>(broker);
+            this._context = new EntityContext<sys_param>(broker);
         }
         #endregion
     }

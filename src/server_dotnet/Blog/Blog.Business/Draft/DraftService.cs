@@ -13,12 +13,12 @@ namespace Blog.Draft
         #region 构造函数
         public DraftService()
         {
-            this._cmd = new EntityCommand<draft>();
+            this._context = new EntityContext<draft>();
         }
 
         public DraftService(IPersistBroker Broker)
         {
-            this._cmd = new EntityCommand<draft>(Broker);
+            this._context = new EntityContext<draft>(Broker);
         }
         #endregion
 
@@ -30,7 +30,7 @@ WHERE blogid NOT IN (
 	SELECT blogid FROM blog
 )
 ";
-            return _cmd.Broker.RetrieveMultiple<draft>(sql);
+            return Broker.RetrieveMultiple<draft>(sql);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ WHERE blogid NOT IN (
 SELECT * FROM draft
 WHERE blogid = @blogid
 ";
-            return _cmd.Broker.Retrieve<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            return Broker.Retrieve<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ WHERE blogid = @blogid
 DELETE FROM draft
 WHERE blogid = @blogid
 ";
-            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            Broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
     }
 }

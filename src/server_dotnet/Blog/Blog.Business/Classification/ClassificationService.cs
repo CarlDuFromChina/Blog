@@ -12,12 +12,12 @@ namespace Blog.Classification
         #region 构造函数
         public ClassificationService()
         {
-            this._cmd = new EntityCommand<classification>();
+            this._context = new EntityContext<classification>();
         }
 
         public ClassificationService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<classification>(broker);
+            this._context = new EntityContext<classification>(broker);
         }
         #endregion
     }

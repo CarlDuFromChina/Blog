@@ -12,12 +12,12 @@ namespace Blog.RecommendInfo
         #region 构造函数
         public RecommendInfoService()
         {
-            _cmd = new EntityCommand<recommend_info>();
+            _context = new EntityContext<recommend_info>();
         }
 
         public RecommendInfoService(IPersistBroker Broker)
         {
-            _cmd = new EntityCommand<recommend_info>(Broker);
+            _context = new EntityContext<recommend_info>(Broker);
         }
         #endregion
 
@@ -39,7 +39,7 @@ ORDER BY
 	LIMIT 5
 ";
             var paramList = new Dictionary<string, object>() { { "@type", type } };
-            var data = _cmd.Broker.RetrieveMultiple<recommend_info>(sql, paramList);
+            var data = Broker.RetrieveMultiple<recommend_info>(sql, paramList);
             return data;
         }
 
@@ -52,7 +52,7 @@ ORDER BY
             var sql = @"
 UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE recommend_infoid = @id
 ";
-            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
+            Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }
     }
 }

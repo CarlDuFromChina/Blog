@@ -12,12 +12,12 @@ namespace Blog.FriendBlog
         #region 构造函数
         public FriendBlogService()
         {
-            this._cmd = new EntityCommand<friend_blog>();
+            this._context = new EntityContext<friend_blog>();
         }
 
         public FriendBlogService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<friend_blog>(broker);
+            this._context = new EntityContext<friend_blog>(broker);
         }
         #endregion
 

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
-    public class EntityCommand<E> : BaseEntityCommand<E>
+    public class EntityContext<E> : EntityContextBase<E>
         where E : BaseEntity, new()
     {
-        public EntityCommand() { }
-        public EntityCommand(IPersistBroker broker) : base(broker) { }
+        public EntityContext() { }
+        public EntityContext(IPersistBroker broker) : base(broker) { }
 
         /// <summary>
         ///  获取所有实体记录
