@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Blog.Core.Job;
 using Blog.Core.Data;
 using Blog.Core.Utils;
+using AutoMapper;
+using Blog.Core;
+using Blog.Core.Profiles;
 
 namespace Blog.Jobs
 {
@@ -35,22 +38,9 @@ namespace Blog.Jobs
                     {
                         Logger.Debug($"共发现{blogModel.data.Count}篇博客待同步");
                         var dataList = blogModel.data
-                            .Select(item =>
-                            {
-                                var blog = new friend_blog()
-                                {
-                                    name = item.title,
-                                    content = item.content,
-                                    description = item.description,
-                                    createdOn = item.createTime.ToDateTime(),
-                                    modifiedOn = item.updateTime.ToDateTime(),
-                                    first_picture = item.firstPicture,
-                                    author = "谢振国",
-                                    Id = item.id.ToString()
-                                };
-                                return blog;
-                            })
+                            .Select(item => MapperHelper.Map<friend_blog>(item))
                             .ToList();
+                        dataList.Each(item => item.author = "谢振国");
                         count = dataList.Count;
                         broker.BulkCreateOrUpdate(dataList);
                     }
@@ -66,14 +56,14 @@ namespace Blog.Jobs
             }
         }
 
-        class BlogModel
+        public class BlogModel
         {
             public int statuscode { get; set; }
             public string message { get; set; }
             public List<BlogDetail> data { get; set; }
         }
 
-        class BlogDetail
+        public class BlogDetail
         {
             public int id { get; set; }
             public string title { get; set; }
