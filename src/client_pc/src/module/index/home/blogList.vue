@@ -1,34 +1,37 @@
 <template>
-  <sp-card class="blog-list">
-    <a-list item-layout="vertical" size="large" :data-source="listData">
-      <a-list-item slot="renderItem" key="item.title" slot-scope="item">
-        <template slot="actions">
-          <span :key="'eye'">
-            <a-icon type="eye" style="margin-right: 8px" />
-            {{ item.reading_times }}
-          </span>
-          <span :key="'like-o'">
-            <a-icon type="like-o" style="margin-right: 8px" />
-            {{ item.upvote_times }}
-          </span>
-          <span :key="'message'">
-            <a-icon type="message" style="margin-right: 8px" />
-            {{ item.message || 0 }}
-          </span>
-        </template>
-        <a-list-item-meta :description="item.description">
-          <span slot="title" style="font-size:14px;">
-            <a @click="readBlog(item)">{{ item.title }}</a>
-            <div>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
-          </span>
-          <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width:150px;height:100px;" />
-        </a-list-item-meta>
-      </a-list-item>
-    </a-list>
-    <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
-      <span v-if="isLoadedAll">到底了....</span>
-    </a-spin>
-  </sp-card>
+  <div>
+    <a-input-search placeholder="输入博客名快速搜索" class="search" size="large" enter-button @search="onSearch" />
+    <sp-card class="blog-list">
+      <a-list item-layout="vertical" size="large" :data-source="listData">
+        <a-list-item slot="renderItem" key="item.title" slot-scope="item">
+          <template slot="actions">
+            <span :key="'eye'">
+              <a-icon type="eye" style="margin-right: 8px" />
+              {{ item.reading_times }}
+            </span>
+            <span :key="'like-o'">
+              <a-icon type="like-o" style="margin-right: 8px" />
+              {{ item.upvote_times }}
+            </span>
+            <span :key="'message'">
+              <a-icon type="message" style="margin-right: 8px" />
+              {{ item.message || 0 }}
+            </span>
+          </template>
+          <a-list-item-meta :description="item.description">
+            <span slot="title" style="font-size: 14px">
+              <a @click="readBlog(item)">{{ item.title }}</a>
+              <div>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+            </span>
+            <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width: 150px; height: 100px" />
+          </a-list-item-meta>
+        </a-list-item>
+      </a-list>
+      <a-spin :spinning="loading" :delay="100" style="width: 100%; padding: 10px 0; text-align: center">
+        <span v-if="isLoadedAll">到底了....</span>
+      </a-spin>
+    </sp-card>
+  </div>
 </template>
 
 <script>
@@ -43,6 +46,8 @@ export default {
       listData: [],
       loading: false,
       isLoadedAll: false,
+      searchValue: '',
+      viewId: '463BE7FE-5435-4841-A365-C9C946C0D655',
       actions: [{ type: 'eye' }, { type: 'like-o' }, { type: 'message' }]
     };
   },
@@ -64,10 +69,16 @@ export default {
     this.avatar = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
   },
   methods: {
+    onSearch(value) {
+      this.searchValue = value;
+      this.listData = [];
+      this.goFirst();
+      this.fetchData();
+    },
     fetchData() {
       try {
         sp.get(
-          `api/blog/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
+          `api/blog/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
         ).then(resp => {
           this.total = resp.RecordCount;
           this.listData = this.listData.concat(resp.DataList);
@@ -90,6 +101,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.search {
+  padding: 0 50px 24px 0;
+}
+
 .blog-list {
   padding: 10px 20px 24px 20px;
   margin-right: 50px;

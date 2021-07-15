@@ -8,6 +8,10 @@ export default {
     };
   },
   methods: {
+    goFirst() {
+      this.pageIndex = 1;
+      this.total = 0;
+    },
     sizeChange(count) {
       this.pageSize = count;
     },
