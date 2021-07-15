@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,11 @@ namespace Blog.Core.Data.Driver
 {
     public class MySqlDriver : IDbDriver
     {
+        public void BulkCopy(IDbConnection conn, DataTable dataTable, string tableName)
+        {
+            throw new NotImplementedException();
+        }
+
         public string CreateRole(string name)
         {
             throw new NotImplementedException();
@@ -18,7 +25,7 @@ namespace Blog.Core.Data.Driver
             throw new NotImplementedException();
         }
 
-        public string CreateTemporaryTable(string tableName, out string newTableName)
+        public string CreateTemporaryTable(IDbConnection conn, string tableName)
         {
             throw new NotImplementedException();
         }
@@ -44,6 +51,11 @@ namespace Blog.Core.Data.Driver
         }
 
         public string GetDataBase(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DbConnection GetDbConnection(string connectionString)
         {
             throw new NotImplementedException();
         }
