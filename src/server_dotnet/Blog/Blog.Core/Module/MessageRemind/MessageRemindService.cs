@@ -12,12 +12,12 @@ namespace Blog.Core.Module.MessageRemind
         #region 构造函数
         public MessageRemindService()
         {
-            _cmd = new EntityCommand<message_remind>();
+            _context = new EntityContext<message_remind>();
         }
 
         public MessageRemindService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<message_remind>(broker);
+            _context = new EntityContext<message_remind>(broker);
         }
         #endregion
     }

@@ -9,12 +9,12 @@ namespace Blog.Core.Store.SysFile
         #region 构造函数
         public SysFileService()
         {
-            this._cmd = new EntityCommand<sys_file>();
+            this._context = new EntityContext<sys_file>();
         }
 
         public SysFileService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<sys_file>(broker);
+            this._context = new EntityContext<sys_file>(broker);
         }
         #endregion
 
@@ -65,7 +65,7 @@ FROM
 SELECT * FROM sys_file
 WHERE hash_code = @code
 ";
-            return _cmd.Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
         }
     }
 }

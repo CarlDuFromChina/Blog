@@ -14,12 +14,12 @@ namespace Blog.Blog
         #region 构造函数
         public BlogService()
         {
-            _cmd = new EntityCommand<blog>();
+            _context = new EntityContext<blog>();
         }
 
         public BlogService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<blog>(broker);
+            _context = new EntityContext<blog>(broker);
         }
         #endregion
 
@@ -85,13 +85,11 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
         {
             return Broker.ExecuteTransaction(() =>
             {
+                var sql = @"
+UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
+";
                 var data = base.GetData(id);
-                if (data.reading_times == default)
-                {
-                    data.reading_times = 0;
-                }
-                data.reading_times += 1;
-                Broker.Update(data);
+                Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
                 return data;
             });
         }
@@ -110,7 +108,7 @@ FROM
 WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
-            return _cmd.Broker.DbClient.Query<string>(sql);
+            return Broker.DbClient.Query<string>(sql);
         }
 
         /// <summary>
@@ -122,7 +120,7 @@ WHERE
             var sql = @"
 UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
 ";
-            _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+            Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
         }
 
         /// <summary>
@@ -132,11 +130,11 @@ UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
         /// <param name="htmlContent"></param>
         public void SyncToWeChat(string id, string htmlContent)
         {
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
                 var data = GetData(id);
-                var media = new WeChatMaterialService(_cmd.Broker).CreateData(MaterialType.image, data.surfaceid);
-                new WeChatNewsService(_cmd.Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+                var media = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.surfaceid);
+                new WeChatNewsService(Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
             });
         }
 

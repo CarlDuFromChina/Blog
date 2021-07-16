@@ -13,12 +13,12 @@ namespace Blog.WeChat.WeChatReply.Focus
         #region 构造函数
         public WeChatFocusReplyService()
         {
-            this._cmd = new EntityCommand<wechat_focus_reply>();
+            this._context = new EntityContext<wechat_focus_reply>();
         }
 
         public WeChatFocusReplyService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<wechat_focus_reply>(broker);
+            this._context = new EntityContext<wechat_focus_reply>(broker);
         }
         #endregion
 
@@ -44,7 +44,7 @@ namespace Blog.WeChat.WeChatReply.Focus
             var sql = @"
 select * from wechat_focus_reply where wechat = @wechat
 ";
-            var data = _cmd.Broker.Retrieve<wechat_focus_reply>(sql, new Dictionary<string, object>() { { "@wechat", config.Appid } });
+            var data = Broker.Retrieve<wechat_focus_reply>(sql, new Dictionary<string, object>() { { "@wechat", config.Appid } });
             return data;
         }
 

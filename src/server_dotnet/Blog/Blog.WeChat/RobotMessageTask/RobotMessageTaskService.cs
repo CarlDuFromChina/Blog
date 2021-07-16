@@ -14,18 +14,18 @@ namespace Blog.WeChat.RobotMessageTask
         #region 构造函数
         public RobotMessageTaskService()
         {
-            _cmd = new EntityCommand<robot_message_task>();
+            _context = new EntityContext<robot_message_task>();
         }
 
         public RobotMessageTaskService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<robot_message_task>(broker);
+            _context = new EntityContext<robot_message_task>(broker);
         }
         #endregion
 
         public new IEnumerable<robot_message_task> GetAllData()
         {
-            return _cmd.GetAllEntity();
+            return _context.GetAllEntity();
         }
 
         public void RunOnce(string id)

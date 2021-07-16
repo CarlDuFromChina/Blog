@@ -19,8 +19,7 @@ namespace Blog.Core.Data.DbClient
         /// <summary>
         /// 数据库连接实例
         /// </summary>
-        private DbConnection _conn;
-        public IDbConnection DbConnection => _conn;
+        public IDbConnection DbConnection { get; private set; }
 
         private IDbDriver driver;
         public IDbDriver Driver => driver;
@@ -32,14 +31,14 @@ namespace Blog.Core.Data.DbClient
         public void Initialize(string connectionString, DriverType driverType)
         {
             driver = ServiceContainer.Resolve<IDbDriver>($"{driverType}Driver");
-            _conn = DbConnectionFactory.GetDbConnection(driverType, connectionString);
+            DbConnection = driver.GetDbConnection(connectionString);
         }
 
         /// <summary>
         ///获取数据库连接状态 
         /// </summary>
         /// <returns></returns>
-        public ConnectionState ConnectionState => _conn.State;
+        public ConnectionState ConnectionState => DbConnection.State;
 
         #region 开启数据库连接
         //数据库打开、关闭的计数器
@@ -53,8 +52,8 @@ namespace Blog.Core.Data.DbClient
             //counter = 0代表没有打开过，否则说明已经打开过了，不需要再打开
             if (_dbOpenCounter++ == 0)
             {
-                if (_conn.State != ConnectionState.Open)
-                    _conn.Open();
+                if (DbConnection.State != ConnectionState.Open)
+                    DbConnection.Open();
             }
 
         }
@@ -67,9 +66,9 @@ namespace Blog.Core.Data.DbClient
             //counter先自减1，然后判断是否=0，是的话代表是最后一次关闭
             if (--_dbOpenCounter == 0)
             {
-                if (_conn.State != ConnectionState.Closed)
+                if (DbConnection.State != ConnectionState.Closed)
                 {
-                    _conn?.Close();
+                    DbConnection?.Close();
                 }
             }
         }
@@ -77,7 +76,7 @@ namespace Blog.Core.Data.DbClient
 
         #region 事务
 
-        private DbTransaction _trans;
+        private IDbTransaction _trans;
         private int _transCounter;
 
         /// <summary>
@@ -88,7 +87,7 @@ namespace Blog.Core.Data.DbClient
         {
             if (_transCounter++ == 0)
             {
-                _trans = _conn.BeginTransaction();
+                _trans = DbConnection.BeginTransaction();
             }
             return _trans;
         }
@@ -136,9 +135,7 @@ namespace Blog.Core.Data.DbClient
         /// <param name="paramList"></param>
         /// <returns></returns>
         public int Execute(string sql, IDictionary<string, object> paramList = null)
-        {
-            return _conn.Execute(sql, paramList);
-        }
+            => DbConnection.Execute(sql, paramList);
 
         /// <summary>
         /// 执行SQL语句，并返回第一行第一列
@@ -147,9 +144,7 @@ namespace Blog.Core.Data.DbClient
         /// <param name="paramList"></param>
         /// <returns></returns>
         public object ExecuteScalar(string sql, IDictionary<string, object> paramList = null)
-        {
-            return _conn.ExecuteScalar(sql, paramList);
-        }
+            => DbConnection.ExecuteScalar(sql, paramList);
         #endregion
 
         #region Query
@@ -161,9 +156,7 @@ namespace Blog.Core.Data.DbClient
         /// <param name="paramList"></param>
         /// <returns></returns>
         public IEnumerable<T> Query<T>(string sql, IDictionary<string, object> paramList = null)
-        {
-            return _conn.Query<T>(sql, paramList);
-        }
+            => DbConnection.Query<T>(sql, paramList);
         #endregion
 
         #region DataTable
@@ -176,12 +169,11 @@ namespace Blog.Core.Data.DbClient
         public DataTable Query(string sql, IDictionary<string, object> paramList = null)
         {
             DataTable dt = new DataTable();
-            var reader = _conn.ExecuteReader(sql, paramList);
+            var reader = DbConnection.ExecuteReader(sql, paramList);
             dt.Load(reader);
             return dt;
         }
         #endregion
-
 
         /// <summary>
         /// 创建临时表
@@ -189,10 +181,7 @@ namespace Blog.Core.Data.DbClient
         /// <param name="tableName"></param>
         /// <returns></returns>
         public string CreateTemporaryTable(string tableName)
-        {
-            _conn.Execute(driver.CreateTemporaryTable(tableName, out var newTableName));
-            return newTableName;
-        }
+            => driver.CreateTemporaryTable(DbConnection, tableName);
 
         /// <summary>
         /// 删除表
@@ -201,16 +190,14 @@ namespace Blog.Core.Data.DbClient
         public void DropTable(string tableName)
         {
             var sql = $"DROP TABLE IF EXISTS {tableName}";
-            _conn.Execute(sql);
+            DbConnection.Execute(sql);
         }
 
         /// <summary>
         /// 释放连接
         /// </summary>
         public void Dispose()
-        {
-            _conn.Dispose();
-        }
+            => DbConnection.Dispose();
 
         /// <summary>
         /// 拷贝数据
@@ -218,15 +205,6 @@ namespace Blog.Core.Data.DbClient
         /// <param name="dataTable"></param>
         /// <param name="tableName"></param>
         public void BulkCopy(DataTable dataTable, string tableName)
-        {
-            var commandFormat = string.Format(System.Globalization.CultureInfo.InvariantCulture, "COPY {0} FROM STDIN BINARY", tableName);
-            using (var writer = (_conn as NpgsqlConnection).BeginBinaryImport(commandFormat))
-            {
-                foreach (DataRow item in dataTable.Rows)
-                    writer.WriteRow(item.ItemArray);
-
-                writer.Complete();
-            }
-        }
+            => driver.BulkCopy(DbConnection, dataTable, tableName);
     }
 }

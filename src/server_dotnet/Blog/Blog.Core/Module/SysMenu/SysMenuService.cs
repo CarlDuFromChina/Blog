@@ -11,12 +11,12 @@ namespace Blog.Core.Module.SysMenu
         #region 构造函数
         public SysMenuService()
         {
-            this._cmd = new EntityCommand<sys_menu>();
+            this._context = new EntityContext<sys_menu>();
         }
 
         public SysMenuService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<sys_menu>(broker);
+            this._context = new EntityContext<sys_menu>(broker);
         }
         #endregion
 
@@ -71,7 +71,7 @@ SELECT * FROM sys_menu
 WHERE parentid IS NULL
 ORDER BY menu_index
 ";
-            var data = _cmd.Broker.RetrieveMultiple<sys_menu>(sql);
+            var data = Broker.RetrieveMultiple<sys_menu>(sql);
             return data;
         }
     }

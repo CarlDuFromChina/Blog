@@ -2,6 +2,7 @@
 using Blog.Core.Logging;
 using Blog.Core.Module.SysAttrs;
 using Blog.Core.Module.SysEntity;
+using Blog.Core.Module.VersionScriptExecutionLog;
 using Blog.Core.Utils;
 using Microsoft.AspNetCore.Builder;
 using System;
@@ -59,8 +60,11 @@ CREATE TABLE public.{item.GetEntityName()} (
                         {
                             try
                             {
-                                broker.ExecuteSqlScript(sqlFile);
-                                vLogger.Info($"脚本：{Path.GetFileName(sqlFile)}执行成功");
+                                var count = new VersionScriptExecutionLogService(broker).ExecuteScript(sqlFile);
+                                if (count == 1)
+                                {
+                                    vLogger.Info($"脚本：{Path.GetFileName(sqlFile)}执行成功");
+                                }
                             }
                             catch (Exception ex)
                             {

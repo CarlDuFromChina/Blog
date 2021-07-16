@@ -7,11 +7,11 @@ namespace Blog.Comments
         #region 构造函数
         public CommentsService()
         {
-            this._cmd = new EntityCommand<comments>();
+            this._context = new EntityContext<comments>();
         }
         public CommentsService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<comments>(broker);
+            this._context = new EntityContext<comments>(broker);
         }
         #endregion
     }

@@ -16,12 +16,12 @@ namespace Blog.Core.Module.Gallery
         #region 构造函数
         public GalleryService()
         {
-            _cmd = new EntityCommand<gallery>();
+            _context = new EntityContext<gallery>();
         }
 
         public GalleryService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<gallery>(Broker);
+            _context = new EntityContext<gallery>(Broker);
         }
         #endregion
 

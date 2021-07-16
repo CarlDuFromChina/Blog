@@ -24,12 +24,12 @@ namespace Blog.WeChat.WeChatReply.Keywords
         #region 构造函数
         public WeChatKeywordsService()
         {
-            this._cmd = new EntityCommand<wechat_keywords>();
+            this._context = new EntityContext<wechat_keywords>();
         }
 
         public WeChatKeywordsService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<wechat_keywords>(broker);
+            this._context = new EntityContext<wechat_keywords>(broker);
         }
         #endregion
 
@@ -44,7 +44,7 @@ namespace Blog.WeChat.WeChatReply.Keywords
 SELECT * FROM wechat_keywords
 WHERE name LIKE CONCAT('%', @name, '%')
 ";
-            return _cmd.Broker.RetrieveMultiple<wechat_keywords>(sql, new Dictionary<string, object>() { { "@name", requestMesage } });
+            return Broker.RetrieveMultiple<wechat_keywords>(sql, new Dictionary<string, object>() { { "@name", requestMesage } });
         }
 
         /// <summary>

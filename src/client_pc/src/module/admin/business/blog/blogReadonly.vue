@@ -143,7 +143,7 @@ export default {
   async created() {
     await this.loadData();
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
-    this.imageUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+    this.imageUrl = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);

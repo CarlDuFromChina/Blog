@@ -106,15 +106,14 @@ export default {
     return {
       controllerName: 'UserInfo',
       avatarChange: false,
-      baseUrl: '',
+      baseUrl: sp.getServerUrl(),
       token: '',
       fileList: [],
       roles: []
     };
   },
-  created() {
-    this.baseUrl = window.localStorage.getItem('baseUrl');
-    this.token = window.localStorage.getItem('Token');
+  async created() {
+    this.token = this.$store.getters.getToken;
     sp.get('api/SysRole/GetBasicRole').then(resp => {
       this.roles = resp;
     });
@@ -140,7 +139,7 @@ export default {
     },
     async loadComplete() {
       if (!sp.isNullOrEmpty(this.data.avatar)) {
-        const image = await sp.get(`api/SysFile/data?id=${this.data.avatar}`);
+        const image = await sp.get(`api/SysFile/GetData?id=${this.data.avatar}`);
         this.fileList = [
           {
             uid: '-1',

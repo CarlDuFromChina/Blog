@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class DBSourceConfig : BaseConfig<DBSourceConfig>
+    public class DBSourceConfig : ConfigBase<DBSourceConfig>
     {
         public DBNode Main { get; set; }
         public DBNode StandBy { get; set; }

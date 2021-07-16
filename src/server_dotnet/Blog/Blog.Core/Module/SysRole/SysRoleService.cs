@@ -12,12 +12,12 @@ namespace Blog.Core.Module.Role
         #region 构造函数
         public SysRoleService()
         {
-            _cmd = new EntityCommand<sys_role>();
+            _context = new EntityContext<sys_role>();
         }
 
         public SysRoleService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<sys_role>(broker);
+            _context = new EntityContext<sys_role>(broker);
         }
         #endregion
 

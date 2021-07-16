@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Config;
+using Blog.Core.Data;
 using Blog.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace Blog.Core.Auth
         #region 构造函数
         public AuthUserService()
         {
-            _cmd = new EntityCommand<auth_user>();
+            _context = new EntityContext<auth_user>();
         }
 
         public AuthUserService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<auth_user>(broker);
+            _context = new EntityContext<auth_user>(broker);
         }
         #endregion
 
@@ -32,7 +33,7 @@ namespace Blog.Core.Auth
 SELECT * FROM auth_user WHERE code = @code AND password = @password;
 ";
             var paramList = new Dictionary<string, object>() { { "@code", code }, { "@password", pwd } };
-            var authUser = _cmd.Broker.Retrieve<auth_user>(sql, paramList);
+            var authUser = Broker.Retrieve<auth_user>(sql, paramList);
             return authUser;
         }
 
@@ -44,7 +45,7 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         /// <returns></returns>
         public LoginResponse Login(string code, string pwd, string publicKey)
         {
-            var authUser = _cmd.Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
+            var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
 
             if (authUser == null ||
                 string.IsNullOrEmpty(pwd) ||
@@ -85,12 +86,27 @@ WHERE user_infoid = @id;
 ";
             var user = UserIdentityUtil.GetCurrentUser();
             var paramList = new Dictionary<string, object>() { { "@id",  user.Id}, { "@password", password } };
-            _cmd.Broker.Execute(sql, paramList);
+            Broker.Execute(sql, paramList);
+        }
+
+        /// <summary>
+        /// 充值密码
+        /// </summary>
+        /// <param name="id"></param>
+        public void ResetPassword(string id)
+        {
+            var sql = $@"
+UPDATE auth_user
+SET password = @password
+WHERE user_infoid = @id;
+";
+            var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
+            Broker.Execute(sql, paramList);
         }
 
         public auth_user GetDataByCode(string code)
         {
-            var data = _cmd.Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>(){ { "@code", code } });
+            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>(){ { "@code", code } });
             return data;
         }
 

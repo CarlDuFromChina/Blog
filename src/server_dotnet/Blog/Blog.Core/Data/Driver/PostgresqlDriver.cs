@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Blog.Core.Data.DbClient;
+using Dapper;
+using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +13,11 @@ namespace Blog.Core.Data.Driver
 {
     public class PostgresqlDriver : IDbDriver
     {
+        public DbConnection GetDbConnection(string connectionString)
+        {
+            return DbConnectionFactory.GetDbConnection(DriverType.Postgresql, connectionString);
+        }
+
         public string CreateRole(string name)
         {
             return $"CREATE ROLE {name}";
@@ -24,10 +34,11 @@ CREATE TABLE {name}
             return sql;
         }
 
-        public string CreateTemporaryTable(string tableName, out string newTableName)
+        public string CreateTemporaryTable(IDbConnection conn, string tableName)
         {
-            newTableName = tableName + Guid.NewGuid().ToString().Replace("-", "");
-            return $@"CREATE TEMP TABLE {newTableName} ON COMMIT DROP AS SELECT * FROM {tableName} WHERE 1!=1;";
+            var newTableName = tableName + Guid.NewGuid().ToString().Replace("-", "");
+            conn.Execute($@"CREATE TEMP TABLE {newTableName} ON COMMIT DROP AS SELECT * FROM {tableName} WHERE 1!=1;");
+            return newTableName;
         }
 
         public string CreateUser(string name)
@@ -93,5 +104,16 @@ SELECT * FROM pg_roles
 WHERE rolname = '{name}'";
         }
 
+        public void BulkCopy(IDbConnection conn, DataTable dataTable, string tableName)
+        {
+            var commandFormat = string.Format(System.Globalization.CultureInfo.InvariantCulture, "COPY {0} FROM STDIN BINARY", tableName);
+            using (var writer = (conn as NpgsqlConnection).BeginBinaryImport(commandFormat))
+            {
+                foreach (DataRow item in dataTable.Rows)
+                    writer.WriteRow(item.ItemArray);
+
+                writer.Complete();
+            }
+        }
     }
 }

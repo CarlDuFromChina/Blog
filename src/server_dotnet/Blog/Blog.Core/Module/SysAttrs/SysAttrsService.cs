@@ -13,12 +13,12 @@ namespace Blog.Core.Module.SysAttrs
         #region 构造函数
         public SysAttrsService()
         {
-            _cmd = new EntityCommand<sys_attrs>();
+            _context = new EntityContext<sys_attrs>();
         }
 
         public SysAttrsService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<sys_attrs>(broker);
+            _context = new EntityContext<sys_attrs>(broker);
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace Blog.Core.Module.SysAttrs
                 { new Column() { Name = "modifiedByName", LogicalName = "修改人", Type = AttrType.Varchar, Length = 100, IsRequire = true } },
                 { new Column() { Name = "modifiedOn", LogicalName = "修改日期", Type = AttrType.Timestamp, IsRequire = true } }
             };
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
                 var entity = Broker.Retrieve<sys_entity>(id);
                 columns.ForEach(item =>
@@ -47,7 +47,7 @@ namespace Blog.Core.Module.SysAttrs
 SELECT * FROM sys_attrs
 WHERE entityid = @id AND code = @code;
 ";
-                    var count = _cmd.Broker.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.Id }, { "@code", item.Name } }).Count();
+                    var count = Broker.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.Id }, { "@code", item.Name } }).Count();
                     AssertUtil.CheckBoolean<SpException>(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加", "E86150F7-52CC-4FB7-A6C4-B743BF382E92");
                     var attrModel = new sys_attrs()
                     {
@@ -60,7 +60,7 @@ WHERE entityid = @id AND code = @code;
                         attr_length = item.Length,
                         isrequire = item.IsRequire == true
                     };
-                    _cmd.Create(attrModel);
+                    _context.Create(attrModel);
                 });
                 Broker.Execute(Broker.DbClient.Driver.GetAddColumnSql(entity.code, columns));
             });
@@ -77,10 +77,10 @@ WHERE entityid = @id AND code = @code;
             var columns = new List<Column>() { { new Column() {  Name = t?.code, LogicalName = t?.name, Type = t.attr_type.GetEnum<AttrType>(), Length = t.attr_length.Value, IsRequire = t.isrequire } } };
             var sql = Broker.DbClient.Driver.GetAddColumnSql(t.entityCode, columns);
 
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
                 id = base.CreateData(t);
-                _cmd.Broker.Execute(sql);
+                Broker.Execute(sql);
             });
 
             return id;
@@ -92,9 +92,9 @@ WHERE entityid = @id AND code = @code;
         /// <param name="ids"></param>
         public override void DeleteData(List<string> ids)
         {
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
-                var dataList = _cmd.Broker.RetrieveMultiple<sys_attrs>(ids).ToList();
+                var dataList = Broker.RetrieveMultiple<sys_attrs>(ids).ToList();
                 var columns = new List<Column>();
                 dataList.ForEach(item =>
                 {
@@ -105,9 +105,9 @@ WHERE entityid = @id AND code = @code;
 
                 if (dataList.Count > 0)
                 {
-                    var tableName = new SysEntityService(_cmd.Broker).GetData(dataList[0].entityid)?.code;
+                    var tableName = new SysEntityService(Broker).GetData(dataList[0].entityid)?.code;
                     var sql = Broker.DbClient.Driver.GetDropColumnSql(tableName, columns);
-                    _cmd.Broker.Execute(sql);
+                    Broker.Execute(sql);
                 }
             });
         }

@@ -2,16 +2,14 @@ using Blog.Core.Auth;
 using Blog.Core.Data.Entity;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
+using Blog.Core.Profiles;
 using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -63,6 +61,8 @@ namespace Blog.Core
             ServiceContainer.AddServices(services);
 
             AuthorizationSetup.AddAuthorizationSetup(services);
+
+            services.AddAutoMapper(MapperHelper.MapType());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

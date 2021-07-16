@@ -8,12 +8,12 @@ namespace Blog.Core.Auth.UserInfo
         #region 构造函数
         public UserInfoService()
         {
-            this._cmd = new EntityCommand<user_info>();
+            this._context = new EntityContext<user_info>();
         }
 
         public UserInfoService(IPersistBroker broker)
         {
-            this._cmd = new EntityCommand<user_info>(broker);
+            this._context = new EntityContext<user_info>(broker);
         }
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Auth.Role;
 using Blog.Core.Data;
+using Blog.Core.Logging;
 using Blog.Core.Store.SysFile;
 using Blog.Core.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace Blog.Core.Store
                 HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileInfo.Name);
                 return new FileStreamResult(stream, "application/octet-stream");
             }
+            LogUtils.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");
             throw new FileNotFoundException();
         }
 

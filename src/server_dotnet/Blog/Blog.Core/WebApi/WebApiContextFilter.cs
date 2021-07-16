@@ -1,5 +1,7 @@
-﻿using Blog.Core.Auth;
+﻿using AutoMapper;
+using Blog.Core.Auth;
 using Blog.Core.Logging;
+using Blog.Core.Profiles;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,7 @@ namespace Blog.Core.WebApi
             var user = JwtHelper.SerializeJwt(tokenHeader);
             if (user != null)
             {
-                UserIdentityUtil.SetCurrentUser(new CurrentUserModel() { Code = user.Code, Name = user.Name, Id = user.Uid });
+                UserIdentityUtil.SetCurrentUser(MapperHelper.Map<CurrentUserModel>(user));
             }
             else
             {

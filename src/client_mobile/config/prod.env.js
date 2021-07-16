@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BASE_URL: '"http://karldu.cn:5000/"'
+  BASE_URL: '"http://karldu.cn/"'
 }

@@ -324,7 +324,7 @@ namespace Blog.Blog
         /// </summary>
         private string _is_showName;
         [DataMember]
-        [Attr("_is_showname", "是否展示", AttrType.Varchar, 100)]
+        [Attr("is_showname", "是否展示", AttrType.Varchar, 100)]
         public string is_showName
         {
             get

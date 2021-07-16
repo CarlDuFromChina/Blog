@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class BaseConfig<T> where T : class
+    public class ConfigBase<T> where T : class
     {
         public static T Config { get; private set; }
-        static BaseConfig()
+        static ConfigBase()
         {
             Config = AppConfig.GetConfig<T>(typeof(T).Name.Replace("Config", ""));
         }

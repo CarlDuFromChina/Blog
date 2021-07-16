@@ -17,12 +17,12 @@ namespace Blog.Core.Module.SysEntity
         #region 构造函数
         public SysEntityService()
         {
-            _cmd = new EntityCommand<sys_entity>();
+            _context = new EntityContext<sys_entity>();
         }
 
         public SysEntityService(IPersistBroker broker)
         {
-            _cmd = new EntityCommand<sys_entity>(broker);
+            _context = new EntityContext<sys_entity>(broker);
         }
         #endregion
 
@@ -63,7 +63,7 @@ FROM
 WHERE
 	entityid = @id
 ";
-            return _cmd.Broker.RetrieveMultiple<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", id } });
+            return Broker.RetrieveMultiple<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", id } });
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ WHERE
         public override string CreateData(sys_entity t)
         {
             var id = "";
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
                 id = base.CreateData(t);
                 var sql = Broker.DbClient.Driver.CreateTable(t.code);
@@ -90,17 +90,17 @@ WHERE
         /// <param name="ids"></param>
         public override void DeleteData(List<string> ids)
         {
-            _cmd.Broker.ExecuteTransaction(() =>
+            Broker.ExecuteTransaction(() =>
             {
-                var dataList = _cmd.Broker.RetrieveMultiple<sys_entity>(ids).ToList();
+                var dataList = Broker.RetrieveMultiple<sys_entity>(ids).ToList();
                 base.DeleteData(ids); // 删除实体
                 var sql = @"
 DELETE FROM sys_attrs WHERE entityid IN (in@ids);
 ";
-                _cmd.Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } }); // 删除级联字段
+                Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } }); // 删除级联字段
                 dataList.ForEach(data =>
                 {
-                    _cmd.Broker.Execute($"DROP TABLE {data.code}");
+                    Broker.Execute($"DROP TABLE {data.code}");
                 });
             });
         }

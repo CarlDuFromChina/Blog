@@ -32,6 +32,12 @@ namespace Blog.Core
             Services.AddTransient(typeFrom, typeTo);
         }
 
+        public static T Resolve<T>()
+        {
+            var provider = Services.BuildServiceProvider();
+            return provider.GetServices<T>().FirstOrDefault();
+        }
+
         public static T Resolve<T>(string name)
         {
             var provider = Services.BuildServiceProvider();
@@ -42,6 +48,12 @@ namespace Blog.Core
         {
             var provider = Services.BuildServiceProvider();
             return provider.GetServices<T>();
+        }
+
+        public static IEnumerable<object> ResolveAll(Type type)
+        {
+            var provider = Services.BuildServiceProvider();
+            return provider.GetServices(type);
         }
 
         public static T Resolve<T>(Func<string, bool> action)

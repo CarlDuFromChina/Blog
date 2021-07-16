@@ -14,9 +14,9 @@
           </a-input>
         </a-form-model-item>
         <a-form-model-item prop="password">
-          <a-input type="password" v-model="data.password" placeholder="密码" @keyup.enter.native="validate">
+          <a-input-password v-model="data.password" placeholder="密码" @keyup.enter.native="validate">
             <a-icon slot="prefix" type="lock" style="color: rgba(0, 0, 0, 0.25)" />
-          </a-input>
+          </a-input-password>
         </a-form-model-item>
         <a-form-model-item>
           <a-checkbox v-model="rememberMe" style="float: left">记住我</a-checkbox>
@@ -71,7 +71,7 @@ export default {
         el: document.getElementById('mask'),
         width: 310, // 可选, 默认310
         height: 155, // 可选, 默认155
-        onSuccess: function() {
+        onSuccess: function () {
           that.visible = false;
           this.reset();
           that.signIn();

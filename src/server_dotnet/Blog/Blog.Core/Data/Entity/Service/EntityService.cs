@@ -15,7 +15,7 @@ namespace Blog.Core.Data
         /// <summary>
         /// 实体操作
         /// </summary>
-        protected EntityCommand<T> _cmd;
+        protected EntityContext<T> _context;
 
         /// <summary>
         /// 数据库持久化
@@ -24,7 +24,7 @@ namespace Blog.Core.Data
         {
             get
             {
-                return _cmd.Broker;
+                return _context.Broker;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public IEnumerable<T> GetAllData()
         {
-            return _cmd.GetAllEntity();
+            return _context.GetAllEntity();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Blog.Core.Data
         public virtual IList<T> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
             var view = string.IsNullOrEmpty(viewId) ? GetViewList().ToList().FirstOrDefault() : GetViewList().ToList().Find(item => item.ViewId == viewId);
-            return _cmd.GetDataList(view, searchList, orderBy);
+            return _context.GetDataList(view, searchList, orderBy);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Blog.Core.Data
         public virtual DataModel<T> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
             var view = string.IsNullOrEmpty(viewId) ? GetViewList().ToList().FirstOrDefault() : GetViewList().ToList().Find(item => item.ViewId == viewId);
-            var data = _cmd.GetDataList(view, searchList, orderBy, pageSize, pageIndex, out var recordCount, searchValue);
+            var data = _context.GetDataList(view, searchList, orderBy, pageSize, pageIndex, out var recordCount, searchValue);
             return new DataModel<T>()
             {
                 DataList = data,
@@ -90,7 +90,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public virtual T GetData(string id)
         {
-            var obj = _cmd.GetEntity(id);
+            var obj = _context.GetEntity(id);
             return obj;
         }
 
@@ -101,7 +101,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public virtual string CreateData(T t)
         {
-            return _cmd.Create(t);
+            return _context.Create(t);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Blog.Core.Data
         /// <param name="t"></param>
         public virtual void UpdateData(T t)
         {
-            _cmd.Update(t);
+            _context.Update(t);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public virtual string CreateOrUpdateData(T t)
         {
-            return _cmd.CreateOrUpdateData(t);
+            return _context.CreateOrUpdateData(t);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Blog.Core.Data
         /// <param name="ids"></param>
         public virtual void DeleteData(List<string> ids)
         {
-            _cmd.Delete(ids);
+            _context.Delete(ids);
         }
         #endregion
     }
