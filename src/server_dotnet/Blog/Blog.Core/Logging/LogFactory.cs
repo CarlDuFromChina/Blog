@@ -9,6 +9,7 @@ using log4net.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -84,7 +85,7 @@ namespace Blog.Core.Logging
             // File Appender
             RollingFileAppender appender = new RollingFileAppender();
             // 目录
-            appender.File = $"log\\{name}.log";
+            appender.File = $"log{Path.AltDirectorySeparatorChar}{name}.log";
             // 立即写入磁盘
             appender.ImmediateFlush = true;
             // true：追加到文件；false：覆盖文件

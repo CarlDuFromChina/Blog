@@ -65,7 +65,7 @@ namespace Blog.Core.Store
         /// <param name="fileName"></param>
         public void Upload(Stream stream, string fileName, out string filePath)
         {
-            filePath = $"\\storage\\{fileName}"; // 相对路径
+            filePath = $"{Path.AltDirectorySeparatorChar}storage{Path.AltDirectorySeparatorChar}{fileName}"; // 相对路径
             var path = Path.Combine(FolderType.Storage.GetPath(), fileName); // 绝对路径
             FileUtil.SaveFile(stream, path);
         }

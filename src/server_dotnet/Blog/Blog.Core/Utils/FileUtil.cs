@@ -183,7 +183,7 @@ namespace Blog.Core.Utils
         /// <returns></returns>
         public static bool PackageFolder(string folderName, string compressedFileName, bool overrideExisting)
         {
-            if (folderName.EndsWith(@"\"))
+            if (folderName.EndsWith(Path.AltDirectorySeparatorChar))
                 folderName = folderName.Remove(folderName.Length - 1);
             bool result = false;
             if (!Directory.Exists(folderName))
@@ -205,7 +205,7 @@ namespace Blog.Core.Utils
 
                         //The path in the package is all of the subfolders after folderName
                         string pathInPackage;
-                        pathInPackage = Path.GetDirectoryName(fileName).Replace(folderName, string.Empty) + "/" + Path.GetFileName(fileName);
+                        pathInPackage = Path.GetDirectoryName(fileName).Replace(folderName, string.Empty) + Path.AltDirectorySeparatorChar + Path.GetFileName(fileName);
 
                         Uri partUriDocument = PackUriHelper.CreatePartUri(new Uri(pathInPackage, UriKind.Relative));
                         PackagePart packagePartDocument = package.CreatePart(partUriDocument, "", CompressionOption.Maximum);
@@ -314,7 +314,7 @@ namespace Blog.Core.Utils
 
         static void ExtractPart(PackagePart packagePart, string targetDirectory, bool overrideExisting)
         {
-            string stringPart = targetDirectory + HttpUtility.UrlDecode(packagePart.Uri.ToString()).Replace('\\', '/');
+            string stringPart = targetDirectory + HttpUtility.UrlDecode(packagePart.Uri.ToString()).Replace('\\', Path.AltDirectorySeparatorChar);
 
             if (!Directory.Exists(Path.GetDirectoryName(stringPart)))
                 Directory.CreateDirectory(Path.GetDirectoryName(stringPart));
