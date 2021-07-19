@@ -16,10 +16,10 @@ namespace Blog.Core.Data
         ///  获取所有实体记录
         /// </summary>
         /// <returns></returns>
-        public virtual IList<E> GetAllEntity()
+        public virtual IList<E> GetAllEntity(bool isFilter = true)
         {
             var sql = $"SELECT *  FROM {new E().EntityName}";
-            var data = Broker.FilteredRetrieveMultiple<E>(sql);
+            var data = isFilter ? Broker.FilteredRetrieveMultiple<E>(sql) : Broker.RetrieveMultiple<E>(sql);
             return data;
         }
 

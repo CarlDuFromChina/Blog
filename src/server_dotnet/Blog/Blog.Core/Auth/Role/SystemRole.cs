@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Blog.Core.Auth.Role
     /// <summary>
     /// 基础系统角色
     /// </summary>
-    public enum SystemRole
+    public enum Role
     {
         /// <summary>
         /// 拥有系统所有权限

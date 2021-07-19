@@ -20,6 +20,7 @@
     <None Remove="version\2.0\2021070706-选项（sys_param）初始化.sql" />
     <None Remove="version\2.0\2021070901-新增日志保留天数配置.sql" />
     <None Remove="version\2.0\2021070902-新增启用草稿系统参数.sql" />
+    <None Remove="version\2.1\2021071901-权限表修改字段objectid.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +49,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070902-新增启用草稿系统参数.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.1\2021071901-权限表修改字段objectid.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

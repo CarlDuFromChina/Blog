@@ -22,5 +22,7 @@ namespace Blog.Core.Module.SysEntity
                 return data;
             });
         }
+
+        public static IEnumerable<sys_entity> GetEntityList() => Entities.Values;
     }
 }

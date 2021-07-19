@@ -1,4 +1,5 @@
-﻿using Blog.Core.WebApi;
+﻿using Blog.Core.Auth.Role.BasicRole;
+using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -12,9 +13,9 @@ namespace Blog.Core.Auth.Privilege
     public class SysRolePrivilegeController : EntityBaseController<sys_role_privilege, SysRolePrivilegeService>
     {
         [HttpGet]
-        public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid)
+        public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
-            return new SysRolePrivilegeService().GetUserPrivileges(roleid);
+            return new SysRolePrivilegeService().GetUserPrivileges(roleid, roleType);
         }
 
         [HttpPost]

@@ -8,19 +8,7 @@
               {{ item.objectidName }}
             </a-col>
             <a-col :span="6">
-              <a-checkbox :value="1">
-                读
-              </a-checkbox>
-            </a-col>
-            <a-col :span="6">
-              <a-checkbox :value="2">
-                写
-              </a-checkbox>
-            </a-col>
-            <a-col :span="6">
-              <a-checkbox :value="4">
-                删
-              </a-checkbox>
+              <a-checkbox :value="1"> </a-checkbox>
             </a-col>
           </a-row>
         </a-checkbox-group>
@@ -31,7 +19,7 @@
 
 <script>
 export default {
-  name: 'entity-privilege',
+  name: 'menu-privilege',
   props: {
     privileges: {
       type: Array,
@@ -40,7 +28,7 @@ export default {
   },
   data() {
     return {
-      operationTypes: [1, 2, 4]
+      operationTypes: [1]
     };
   },
   computed: {

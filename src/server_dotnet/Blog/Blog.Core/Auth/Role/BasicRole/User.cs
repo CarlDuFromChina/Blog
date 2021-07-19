@@ -1,4 +1,7 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Auth.Privilege;
+using Blog.Core.Data;
+using Blog.Core.Module.SysEntity;
+using Blog.Core.Module.SysMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +13,20 @@ namespace Blog.Core.Auth.Role.BasicRole
     /// <summary>
     /// 普通用户
     /// </summary>
-    public class User : BasicRole, IBasicRole
+    public class User : BasicRole
     {
-        public override SystemRole GetSystemRole() => SystemRole.User;
-        protected override void CreateRolePrivilege()
+        public override Role Role => Role.User;
+
+        public override IDictionary<string, IEnumerable<sys_role_privilege>> GetDefaultPrivilege()
         {
-            Broker.ExecuteTransaction(() =>
-            {
-                var entityList = GetNoPrivilegeEntityList();
-                var dataList = entityList.Select(entity =>
-                {
-                    int privilege = (int)OperationType.Read + (int)OperationType.Write + (int)OperationType.Delete;
-                    return GenerateRolePrivilege(entity, GetRole(), privilege);
-                }).ToList();
-                Broker.BulkCreate(dataList);
-            });
+            var dic = new Dictionary<string, IEnumerable<sys_role_privilege>>();
+            var entityContext = new EntityContext<sys_entity>(Broker);
+            var menuContext = new EntityContext<sys_menu>(Broker);
+
+            dic.Add(RoleType.Entity.ToString(), entityContext.GetAllEntity(false).Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read + (int)OperationType.Write + (int)OperationType.Delete)));
+            dic.Add(RoleType.Menu.ToString(), menuContext.GetAllEntity(false).Select(item => GenerateRolePrivilege(item, this.GetSysRole(), 0)));
+
+            return dic;
         }
     }
 }

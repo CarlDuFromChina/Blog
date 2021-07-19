@@ -1,4 +1,6 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Auth;
+using Blog.Core.Auth.Privilege;
+using Blog.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,7 @@ namespace Blog.Core.Module.SysMenu
 
         public override IList<sys_menu> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
-            var data = base.GetDataList(searchList, orderBy, viewId).ToList();
+            var data = base.GetDataList(searchList, orderBy, viewId).Filter().ToList();
             var firstMenu = data.Where(e => string.IsNullOrEmpty(e.parentid)).ToList();
             firstMenu.ForEach(item =>
             {
@@ -43,7 +45,7 @@ namespace Blog.Core.Module.SysMenu
         public override DataModel<sys_menu> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
             var model = base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId);
-            var data = model.DataList.ToList();
+            var data = model.DataList.Filter().ToList();
             var firstMenu = data.Where(e => string.IsNullOrEmpty(e.parentid)).ToList();
             firstMenu.ForEach(item =>
             {
@@ -60,7 +62,7 @@ namespace Blog.Core.Module.SysMenu
             firstMenu = firstMenu.OrderBy(e => e.menu_Index).ToList();
             return new DataModel<sys_menu>() { 
                 DataList = firstMenu,
-                RecordCount = model.RecordCount
+                RecordCount = data.Count()
             };
         }
 
