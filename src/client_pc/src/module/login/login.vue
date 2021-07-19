@@ -14,7 +14,7 @@
           </a-input>
         </a-form-model-item>
         <a-form-model-item prop="password">
-          <a-input-password v-model="data.password" placeholder="密码" @keyup.enter.native="validate">
+          <a-input-password v-model="data.password" placeholder="密码" @keyup.enter.native="signIn">
             <a-icon slot="prefix" type="lock" style="color: rgba(0, 0, 0, 0.25)" />
           </a-input-password>
         </a-form-model-item>
@@ -23,11 +23,11 @@
           <a href="#/login/forget" class="forget-pwd">忘记密码</a>
         </a-form-model-item>
         <a-form-model-item>
-          <a-button style="width: 100%" type="primary" @click="validate" :loading="loading">登录</a-button>
+          <a-button style="width: 100%" type="primary" @click="signIn" :loading="loading">登录</a-button>
         </a-form-model-item>
       </a-form-model>
     </div>
-    <a-modal v-model="visible" title="验证" :footer="false">
+    <a-modal v-model="visible" :destroyOnClose="true" title="验证" :footer="false">
       <div ref="mask" id="mask"></div>
     </a-modal>
   </div>
@@ -53,7 +53,8 @@ export default {
       },
       rememberMe: false,
       visible: false,
-      isGenerated: false
+      isLoginFailed: false,
+      isPassCheck: false
     };
   },
   created() {
@@ -61,23 +62,19 @@ export default {
   },
   methods: {
     generateCode() {
-      // 是否生成过
-      if (this.isGenerated) {
-        return false;
-      }
-      this.isGenerated = true;
       const that = this;
       window.jigsaw.init({
         el: document.getElementById('mask'),
         width: 310, // 可选, 默认310
         height: 155, // 可选, 默认155
-        onSuccess: function () {
+        onSuccess: () => {
           that.visible = false;
-          this.reset();
+          that.isPassCheck = true;
           that.signIn();
         },
         onFail: () => {
           this.$message.warn('再试一次');
+          this.isPassCheck = false;
         }
       });
     },
@@ -91,23 +88,35 @@ export default {
       });
     },
     async validate() {
-      const valid = await this.$refs.form.validate();
-      if (valid) {
-        this.visible = true;
-        await this.$nextTick();
-        this.generateCode();
-        return true;
-      }
-      this.$message.error('请检查账号密码是否输入');
-      return false;
+      return this.$refs.form
+        .validate()
+        .then(async valid => {
+          if (valid) {
+            return Promise.resolve(true);
+          }
+          return Promise.resolve(false);
+        })
+        .catch(() => {
+          return Promise.resolve(false);
+        });
     },
     async signIn() {
       if (this.loading) {
         return;
       }
       this.loading = true;
+
+      // 上次登录失败且未通过人机检查
+      if (this.isLoginFailed && !this.isPassCheck) {
+        this.visible = true;
+        await this.$nextTick();
+        this.generateCode();
+        this.loading = false;
+        return;
+      }
+
       try {
-        const valid = await this.$refs.form.validate();
+        const valid = await this.validate();
         if (valid) {
           const key = await sp.get('api/DataService/GetPublicKey');
           const url = 'api/AuthUser/login';
@@ -125,6 +134,8 @@ export default {
                 that.$router.push({ name: 'workplace' });
                 that.$message.success(resp.message);
               } else {
+                this.isLoginFailed = true;
+                this.isPassCheck = false;
                 that.$message.error(resp.message);
               }
             })
@@ -132,6 +143,7 @@ export default {
               this.$message.error(error);
             });
         } else {
+          this.$message.error('请检查账号密码是否输入');
         }
       } catch (error) {
         this.$message.error(error);
