@@ -20,7 +20,7 @@
             <a-menu-item key="1" @click="editPassword">修改密码</a-menu-item>
             <a-menu-item key="2" @click="logout">退出</a-menu-item>
           </a-menu>
-          <a-button icon="user" shape="circle"></a-button>
+          <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
         </a-dropdown>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
@@ -50,11 +50,15 @@ export default {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
       },
-      imageUrl: 'http://karldu.cn//api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10' // 头像
+      imageUrl: ''
     };
   },
   created() {
     this.getMenu();
+    sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
+      this.$store.commit('updateUser', resp);
+      this.imageUrl = this.$store.getters.getAvatar;
+    });
   },
   methods: {
     goHome() {
