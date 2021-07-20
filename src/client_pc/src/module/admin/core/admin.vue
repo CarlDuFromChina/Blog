@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout-home">
     <a-layout-sider breakpoint="lg" collapsed-width="0">
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+      <a-menu theme="dark" mode="inline" :open-keys="openKeys" @openChange="onOpenChange">
         <a-sub-menu v-for="(item, index) in menus" :key="index">
           <span slot="title">
             <a-icon :type="item.icon" /><span>{{ item.title }}</span>
@@ -44,6 +44,7 @@ export default {
     return {
       menus: [],
       defaultOpenedsArray: [],
+      openKeys: [],
       data: {},
       rules: {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
@@ -96,7 +97,9 @@ export default {
         this.$message.error('发生错误，请检查菜单地址是否正确！');
         return;
       }
-      this.$router.push({ path: keyPath[0] });
+      if (keyPath[0] !== this.$route.path) {
+        this.$router.push({ path: keyPath[0] });
+      }
     },
     editPassword() {
       this.$refs.pwd.editVisible = true;
@@ -105,6 +108,15 @@ export default {
       this.$message.success('退出成功');
       clearAuth(this.$store);
       this.$router.replace('/login');
+    },
+    onOpenChange(openKeys) {
+      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+      const rootSubmenuKeys = this.menus.map((item, index) => index);
+      if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys;
+      } else {
+        this.openKeys = latestOpenKey ? [latestOpenKey] : [];
+      }
     }
   }
 };
