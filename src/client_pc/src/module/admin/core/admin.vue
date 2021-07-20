@@ -119,7 +119,7 @@ export default {
       if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
         this.openKeys = openKeys;
       } else {
-        this.openKeys = latestOpenKey ? [latestOpenKey] : [];
+        this.openKeys = !sp.isNil(latestOpenKey) ? [latestOpenKey] : [];
       }
     }
   }
