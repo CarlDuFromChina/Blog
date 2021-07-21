@@ -84,10 +84,50 @@ WHERE sys_roleidName = @name
         }
 
         /// <summary>
-        /// 获取初始化权限
+        /// 获取缺失权限
         /// </summary>
         /// <returns></returns>
-        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetDefaultPrivilege();
+        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege();
+
+        /// <summary>
+        /// 获取缺失实体权限
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerable<sys_entity> GetMissingEntityPrivileges()
+        {
+            var role = GetSysRole();
+            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var dataList = new List<sys_role_privilege>();
+
+            var sql = @"
+SELECT * FROM sys_entity
+WHERE sys_entityid NOT IN (
+	SELECT objectid FROM sys_role_privilege
+	WHERE object_type = 'sys_entity' AND sys_roleid = @id
+)
+";
+            return Broker.RetrieveMultiple<sys_entity>(sql, paramList);
+        }
+
+        /// <summary>
+        /// 获取缺失菜单权限
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerable<sys_menu> GetMissingMenuPrivileges()
+        {
+            var role = GetSysRole();
+            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var dataList = new List<sys_role_privilege>();
+
+            var sql = @"
+SELECT * FROM sys_menu
+WHERE sys_menuid NOT IN (
+	SELECT objectid FROM sys_role_privilege
+	WHERE object_type = 'sys_menu' AND sys_roleid = @id
+)
+";
+            return Broker.RetrieveMultiple<sys_menu>(sql, paramList);
+        }
 
         /// <summary>
         /// 生成权限

@@ -1,9 +1,14 @@
 <template>
   <sp-card title="链接">
-    <a class="item" v-for="(item, index) in items" :key="index" @click="openLink(item.link)">
-      <div class="item-start"><sp-icon :name="item.icon" :size="15" style="padding-right:10px"></sp-icon>{{ item.name }}</div>
-      <div class="item-end tag">
-        <span>{{ item.linkName }}</span>
+    <a class="item" v-for="(item, index) in items" :key="index" @click="openLink(item.link_url)">
+      <div class="item-start"><sp-icon :name="getIcon(item.link_type)" :size="15" style="padding-right:10px"></sp-icon>{{ item.name }}</div>
+      <div class="item-end tag" v-if="item.brief">
+        <a-tooltip>
+          <template slot="title">
+            {{ item.brief }}
+          </template>
+          <span class="item-brief">{{ item.brief }}</span>
+        </a-tooltip>
       </div>
     </a>
   </sp-card>
@@ -14,13 +19,17 @@ export default {
   name: 'links',
   data() {
     return {
-      items: [
-        { name: 'GitHub', link: 'https://github.com/CarlDuFromChina', linkName: 'github.com', icon: 'sp-blog-github' },
-        { name: 'CSDN', link: 'https://blog.csdn.net/dumiaoxin?spm=1000.2115.3001.5113', linkName: 'csdn.com', icon: 'sp-blog-csdn' }
-      ]
+      items: []
     };
   },
+  created() {
+    sp.get('api/Link/GetDataList').then(resp => (this.items = resp));
+  },
   methods: {
+    getIcon(type) {
+      const mapper = { github: 'sp-blog-github' };
+      return mapper[type];
+    },
     openLink(link) {
       window.open(link, '_blank');
     }
@@ -53,6 +62,12 @@ export default {
     line-height: 1.5;
     padding-left: 0.75em;
     padding-right: 0.75em;
+    white-space: nowrap;
+  }
+  &-brief {
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 }

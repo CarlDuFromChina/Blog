@@ -15,7 +15,7 @@
       <!-- 推荐博客 -->
 
       <!-- 想法 -->
-      <idea :pageSize="5"></idea>
+      <idea :pageSize="5" style="margin-bottom:20px;"></idea>
       <!-- 想法 -->
     </a-layout-sider>
   </a-layout>

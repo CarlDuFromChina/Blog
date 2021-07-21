@@ -17,23 +17,18 @@ namespace Blog.Core.Module.SysRole
         {
             var roles = ServiceContainer.ResolveAll<IRole>();
             var broker = PersistBrokerFactory.GetPersistBroker();
-
             var privileges = new List<sys_role_privilege>();
-            var isEntityEmpty = RoleType.Entity.IsEmpty();
-            var isMenuEmpty = RoleType.Menu.IsEmpty();
+
             roles.Each(item =>
             {
-                var defaultValue = item.GetDefaultPrivilege();
-
-                if (isEntityEmpty)
-                {
-                    privileges.AddRange(defaultValue[RoleType.Entity.ToString()]);
-                }
-
-                if (isMenuEmpty)
-                {
-                    privileges.AddRange(defaultValue[RoleType.Menu.ToString()]);
-                }
+                item.GetMissingPrivilege()
+                    .Each(item =>
+                    {
+                        if (!item.Value.IsEmpty())
+                        {
+                            privileges.AddRange(item.Value);
+                        }
+                    });
             });
 
             broker.ExecuteTransaction(() => broker.BulkCreate(privileges));

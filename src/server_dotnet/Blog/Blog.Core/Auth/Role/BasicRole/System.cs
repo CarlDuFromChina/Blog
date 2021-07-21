@@ -16,14 +16,12 @@ namespace Blog.Core.Auth.Role.BasicRole
     public class System : BasicRole
     {
         public override Role Role => Role.System;
-        public override IDictionary<string, IEnumerable<sys_role_privilege>> GetDefaultPrivilege()
+        public override IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege()
         {
             var dic = new Dictionary<string, IEnumerable<sys_role_privilege>>();
-            var entityContext = new EntityContext<sys_entity>(Broker);
-            var menuContext = new EntityContext<sys_menu>(Broker);
 
-            dic.Add(RoleType.Entity.ToString(), entityContext.GetAllEntity(false).Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read + (int)OperationType.Write + (int)OperationType.Delete)));
-            dic.Add(RoleType.Menu.ToString(), menuContext.GetAllEntity(false).Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read)));
+            dic.Add(RoleType.Entity.ToString(), GetMissingEntityPrivileges().Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read + (int)OperationType.Write + (int)OperationType.Delete)));
+            dic.Add(RoleType.Menu.ToString(), GetMissingMenuPrivileges().Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read)));
 
             return dic;
         }
