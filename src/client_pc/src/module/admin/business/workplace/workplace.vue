@@ -62,8 +62,10 @@ export default {
   },
   methods: {
     getUserInfo() {
-      this.user_info = this.$store.getters.getUser;
-      this.avatarUrl = this.$store.getters.getAvatar;
+      sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
+        this.user_info = resp;
+        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar || ''}`;
+      });
     },
     getVirtulData(year, activityData) {
       year = year || '2017';

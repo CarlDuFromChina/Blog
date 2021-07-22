@@ -89,6 +89,17 @@ namespace Blog.Core.WebApi
         }
 
         /// <summary>
+        /// 创建或更新
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public string CreateOrUpdateData(E entity)
+        {
+            return new S().CreateOrUpdateData(entity);
+        }
+
+        /// <summary>
         /// 删除数据
         /// </summary>
         /// <param name="ids"></param>

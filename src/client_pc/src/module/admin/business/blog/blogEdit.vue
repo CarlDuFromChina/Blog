@@ -168,7 +168,6 @@ export default {
         this.data.tags = JSON.parse(this.data.tags);
         this.tags = this.data.tags;
       }
-      this.$emit('open-watch');
     },
     beforeUpload(file, fileList) {
       return false;
