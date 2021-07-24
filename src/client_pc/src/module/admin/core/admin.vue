@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout-home">
     <a-layout-sider breakpoint="lg" collapsed-width="0">
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+      <a-menu theme="dark" mode="inline" :open-keys="openKeys" @openChange="onOpenChange">
         <a-sub-menu v-for="(item, index) in menus" :key="index">
           <span slot="title">
             <a-icon :type="item.icon" /><span>{{ item.title }}</span>
@@ -20,7 +20,7 @@
             <a-menu-item key="1" @click="editPassword">修改密码</a-menu-item>
             <a-menu-item key="2" @click="logout">退出</a-menu-item>
           </a-menu>
-          <a-button icon="user" shape="circle"></a-button>
+          <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
         </a-dropdown>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
@@ -44,16 +44,21 @@ export default {
     return {
       menus: [],
       defaultOpenedsArray: [],
+      openKeys: [],
       data: {},
       rules: {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
       },
-      imageUrl: 'http://karldu.cn//api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10' // 头像
+      imageUrl: ''
     };
   },
   created() {
     this.getMenu();
+    sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
+      this.$store.commit('updateUser', resp);
+      this.imageUrl = this.$store.getters.getAvatar;
+    });
   },
   methods: {
     goHome() {
@@ -96,7 +101,9 @@ export default {
         this.$message.error('发生错误，请检查菜单地址是否正确！');
         return;
       }
-      this.$router.push({ path: keyPath[0] });
+      if (keyPath[0] !== this.$route.path) {
+        this.$router.push({ path: keyPath[0] });
+      }
     },
     editPassword() {
       this.$refs.pwd.editVisible = true;
@@ -105,6 +112,15 @@ export default {
       this.$message.success('退出成功');
       clearAuth(this.$store);
       this.$router.replace('/login');
+    },
+    onOpenChange(openKeys) {
+      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+      const rootSubmenuKeys = this.menus.map((item, index) => index);
+      if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys;
+      } else {
+        this.openKeys = !sp.isNil(latestOpenKey) ? [latestOpenKey] : [];
+      }
     }
   }
 };

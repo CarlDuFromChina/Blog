@@ -45,13 +45,11 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         /// <returns></returns>
         public LoginResponse Login(string code, string pwd, string publicKey)
         {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+
             var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
 
-            if (authUser == null ||
-                string.IsNullOrEmpty(pwd) ||
-                string.IsNullOrEmpty(publicKey) ||
-                !string.Equals(authUser.password, RSAUtil.Decrypt(pwd, publicKey))
-                )
+            if (authUser == null)
             {
                 return new LoginResponse() { result = false, message = "用户名或密码错误" };
             }
@@ -60,6 +58,42 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
             {
                 return new LoginResponse() { result = false, message = "用户已被锁定，请联系管理员" };
             }
+
+            if (string.IsNullOrEmpty(pwd) ||
+                string.IsNullOrEmpty(publicKey) ||
+                !string.Equals(authUser.password, RSAUtil.Decrypt(pwd, publicKey))
+                )
+            {
+                var message = "用户名或密码错误";
+                if (!authUser.try_times.HasValue)
+                {
+                    authUser.try_times = 1;
+                }
+                else
+                {
+                    authUser.try_times += 1;
+                    if (authUser.try_times > 1)
+                    {
+                        message = $"用户名或密码已连续错误{authUser.try_times}次，超过五次账号锁定";
+                    }
+                }
+
+                if (authUser.try_times >= 5)
+                {
+                    authUser.is_lock = true;
+                    message = $"用户已被锁定，请联系管理员";
+                }
+
+                Broker.Update(authUser);
+                return new LoginResponse() { result = false, message = message };
+            }
+
+            if (authUser.try_times > 0)
+            {
+                authUser.try_times = 0;
+            }
+            authUser.last_login_time = DateTime.Now;
+            Broker.Update(authUser);
 
             // 返回登录结果、用户信息、用户验证票据信息
             var oUser = new LoginResponse

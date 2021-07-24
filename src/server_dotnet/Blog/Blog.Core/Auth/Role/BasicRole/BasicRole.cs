@@ -2,6 +2,7 @@
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
+using Blog.Core.Module.SysMenu;
 using Blog.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,28 +12,30 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Auth.Role.BasicRole
 {
-    public abstract class BasicRole
+    public abstract class BasicRole : IRole
     {
-        public IPersistBroker Broker;
+        public IPersistBroker Broker = PersistBrokerFactory.GetPersistBroker();
         protected const string ROLE_PREFIX = "BasicRole";
         protected const string PRIVILEGE_PREFIX = "RolePrivilege";
+
         public string GetRoleKey => this.GetType().Name;
 
-        public abstract SystemRole GetSystemRole();
-        public SystemRole Role => GetSystemRole();
-        public string RoleName => GetSystemRole().ToString();
+        /// <summary>
+        /// 系统角色
+        /// </summary>
+        public abstract Role Role { get; }
 
-        public BasicRole()
-        {
-            Broker = PersistBrokerFactory.GetPersistBroker();
-        }
+        /// <summary>
+        /// 系统角色名
+        /// </summary>
+        public string RoleName => Role.ToString();
 
         /// <summary>
         /// 获取角色
         /// </summary>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public sys_role GetRole()
+        public sys_role GetSysRole()
         {
             var key = $"{ROLE_PREFIX}_{RoleName}";
             return MemoryCacheUtil.GetOrAddCacheItem(key, () =>
@@ -62,12 +65,11 @@ namespace Blog.Core.Auth.Role.BasicRole
             var key = $"{PRIVILEGE_PREFIX}_{RoleName}";
             return MemoryCacheUtil.GetOrAddCacheItem(key, () =>
             {
-                var entityList = GetNoPrivilegeEntityList();
-                if (!entityList.IsEmpty())
-                {
-                    CreateRolePrivilege();
-                }
-                var dataList = Broker.RetrieveMultiple<sys_role_privilege>("select * from sys_role_privilege where sys_roleidName = @name", new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
+                var sql = @"
+SELECT * FROM sys_role_privilege
+WHERE sys_roleidName = @name
+";
+                var dataList = Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
                 return dataList;
             }, DateTime.Now.AddHours(12));
         }
@@ -82,10 +84,50 @@ namespace Blog.Core.Auth.Role.BasicRole
         }
 
         /// <summary>
-        /// 创建角色权限
+        /// 获取缺失权限
         /// </summary>
         /// <returns></returns>
-        protected abstract void CreateRolePrivilege();
+        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege();
+
+        /// <summary>
+        /// 获取缺失实体权限
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerable<sys_entity> GetMissingEntityPrivileges()
+        {
+            var role = GetSysRole();
+            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var dataList = new List<sys_role_privilege>();
+
+            var sql = @"
+SELECT * FROM sys_entity
+WHERE sys_entityid NOT IN (
+	SELECT objectid FROM sys_role_privilege
+	WHERE object_type = 'sys_entity' AND sys_roleid = @id
+)
+";
+            return Broker.RetrieveMultiple<sys_entity>(sql, paramList);
+        }
+
+        /// <summary>
+        /// 获取缺失菜单权限
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerable<sys_menu> GetMissingMenuPrivileges()
+        {
+            var role = GetSysRole();
+            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var dataList = new List<sys_role_privilege>();
+
+            var sql = @"
+SELECT * FROM sys_menu
+WHERE sys_menuid NOT IN (
+	SELECT objectid FROM sys_role_privilege
+	WHERE object_type = 'sys_menu' AND sys_roleid = @id
+)
+";
+            return Broker.RetrieveMultiple<sys_menu>(sql, paramList);
+        }
 
         /// <summary>
         /// 生成权限
@@ -94,14 +136,15 @@ namespace Blog.Core.Auth.Role.BasicRole
         /// <param name="role"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected sys_role_privilege GenerateRolePrivilege(sys_entity entity, sys_role role, int value)
+        public static sys_role_privilege GenerateRolePrivilege(BaseEntity entity, sys_role role, int value)
         {
-            var user = UserIdentityUtil.GetAdmin();
+            var user = UserIdentityUtil.GetSystem();
             var privilege = new sys_role_privilege()
             {
                 Id = Guid.NewGuid().ToString(),
-                sys_entityid = entity.Id,
-                sys_entityidName = entity.name,
+                objectid = entity.Id,
+                objectidName = entity.name,
+                object_type = entity.EntityName,
                 sys_roleid = role.Id,
                 sys_roleidName = role.name,
                 createdBy = user.Id,
@@ -113,25 +156,6 @@ namespace Blog.Core.Auth.Role.BasicRole
                 privilege = value
             };
             return privilege;
-        }
-
-        /// <summary>
-        /// 获取角色未生成实体权限的实体
-        /// </summary>
-        /// <param name="systemRole"></param>
-        /// <returns></returns>
-        protected IEnumerable<sys_entity> GetNoPrivilegeEntityList()
-        {
-            var sql = @"
-select *
-from sys_entity se 
-where sys_entityid not in (
-	select sys_entityid 
-	from sys_role_privilege srp 
-	where sys_roleid  = @roleid
-)
-";
-            return Broker.RetrieveMultiple<sys_entity>(sql, new Dictionary<string, object>() { { "@roleid", GetRole()?.Id } });
         }
     }
 }

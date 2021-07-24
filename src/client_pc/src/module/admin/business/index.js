@@ -6,5 +6,6 @@ import classification from './classification';
 import series from './series';
 import readingNote from './readingNote';
 import workplace from './workplace';
+import link from './link';
 
-export default [].concat(recommendInfo, idea, blog, draft, classification, series, readingNote, workplace);
+export default [].concat(recommendInfo, idea, blog, draft, classification, series, readingNote, workplace, link);

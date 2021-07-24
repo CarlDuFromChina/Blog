@@ -12,7 +12,7 @@ export default {
       controllerName: 'SysRolePrivilege',
       operations: ['new', 'delete', 'search'],
       columns: [
-        { prop: 'sys_entityidName', label: '实体名' },
+        { prop: 'objectidName', label: '实体名' },
         { prop: 'description', label: '描述' },
         { prop: 'createdByName', label: '创建人' },
         { prop: 'createdOn', label: '创建日期', type: 'datetime' }

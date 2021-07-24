@@ -152,5 +152,45 @@ namespace Blog.Core.Auth
                 SetAttributeValue("is_lockName", value);
             }
         }
+
+        private DateTime? _last_login_time;
+
+        /// <summary>
+        /// 上次登录时间
+        /// </summary>
+        [DataMember]
+        [Attr("last_login_time", "上次登录时间", AttrType.Timestamp)]
+        public DateTime? last_login_time
+        {
+            get
+            {
+                return _last_login_time;
+            }
+            set
+            {
+                _last_login_time = value;
+                SetAttributeValue("last_login_time", value);
+            }
+        }
+
+        private int? _try_times;
+
+        /// <summary>
+        /// 尝试登录次数
+        /// </summary>
+        [DataMember]
+        [Attr("try_times", "尝试登录次数", AttrType.Int4)]
+        public int? try_times
+        {
+            get
+            {
+                return _try_times;
+            }
+            set
+            {
+                _try_times = value;
+                SetAttributeValue("try_times", value);
+            }
+        }
     }
 }

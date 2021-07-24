@@ -1,5 +1,8 @@
 ﻿using Blog.Core.Auth.Privilege;
+using Blog.Core.Data;
 using Blog.Core.Module.Role;
+using Blog.Core.Module.SysEntity;
+using Blog.Core.Module.SysMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 namespace Blog.Core.Auth.Role.BasicRole
 {
     [ServiceRegister]
-    public interface IBasicRole
+    public interface IRole
     {
         /// <summary>
         /// 获取唯一键
@@ -19,14 +22,14 @@ namespace Blog.Core.Auth.Role.BasicRole
         /// <summary>
         /// 角色名
         /// </summary>
-        SystemRole Role { get; }
+        Role Role { get; }
 
         /// <summary>
         /// 获取角色
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        sys_role GetRole();
+        sys_role GetSysRole();
 
         /// <summary>
         /// 获取角色权限
@@ -39,5 +42,17 @@ namespace Blog.Core.Auth.Role.BasicRole
         /// 清除缓存
         /// </summary>
         void ClearCache();
+
+        /// <summary>
+        /// 获取初始化权限
+        /// </summary>
+        /// <returns></returns>
+        IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege();
+    }
+
+    public enum RoleType
+    {
+        Entity,
+        Menu
     }
 }

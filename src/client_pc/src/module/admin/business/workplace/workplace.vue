@@ -62,10 +62,9 @@ export default {
   },
   methods: {
     getUserInfo() {
-      const userid = this.$store.getters.getUserId;
-      sp.get(`api/UserInfo/GetData?id=${userid}`).then(resp => {
+      sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
         this.user_info = resp;
-        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar}`;
+        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar || ''}`;
       });
     },
     getVirtulData(year, activityData) {

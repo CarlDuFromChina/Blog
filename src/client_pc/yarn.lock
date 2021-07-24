@@ -260,7 +260,7 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.7.4:
+ant-design-vue@^1.7.6:
   version "1.7.6"
   resolved "http://npm.karldu.cn/ant-design-vue/-/ant-design-vue-1.7.6.tgz#976a84ff037c2e5f0586dcd697eafb8cf7983b1e"
   integrity sha1-l2qE/wN8Ll8FhtzWl+r7jPeYOx4=
@@ -3702,10 +3702,10 @@ highlight.js-async-webpack@^1.0.4:
   resolved "http://npm.karldu.cn/highlight.js-async-webpack/-/highlight.js-async-webpack-1.0.4.tgz#c06b67bf99f049045d62b756e5855b0912ec616c"
   integrity sha1-wGtnv5nwSQRdYrdW5YVbCRLsYWw=
 
-highlight.js@10.5.0:
-  version "10.5.0"
-  resolved "http://npm.karldu.cn/highlight.js/-/highlight.js-10.5.0.tgz#3f09fede6a865757378f2d9ebdcbc15ba268f98f"
-  integrity sha1-Pwn+3mqGV1c3jy2evcvBW6Jo+Y8=
+highlight.js@11.1.0:
+  version "11.1.0"
+  resolved "http://npm.karldu.cn/highlight.js/-/highlight.js-11.1.0.tgz#0198f7326e64ddfbea5f76b00e84ab542cf24ae8"
+  integrity sha1-AZj3Mm5k3fvqX3awDoSrVCzySug=
 
 highlight.js@^9.11.0:
   version "9.18.5"
@@ -4731,7 +4731,7 @@ math-expression-evaluator@^1.2.14:
   resolved "http://npm.karldu.cn/math-expression-evaluator/-/math-expression-evaluator-1.3.7.tgz#1b62225db86af06f7ea1fd9576a34af605a5b253"
   integrity sha1-G2IiXbhq8G9+of2VdqNK9gWlslM=
 
-mavon-editor@^2.9.0:
+mavon-editor@^2.9.1:
   version "2.9.1"
   resolved "http://npm.karldu.cn/mavon-editor/-/mavon-editor-2.9.1.tgz#59adc7cbd1a1a71f691cf5b2a27e60ec3e6997cc"
   integrity sha1-Wa3Hy9Ghpx9pHPWyon5g7D5pl8w=
@@ -8026,7 +8026,7 @@ vuex@^3.6.2:
   resolved "http://npm.karldu.cn/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
   integrity sha1-I2vAhqhww655lG8QfxbeWdWJXnE=
 
-wangeditor@^4.1.0:
+wangeditor@^4.7.5:
   version "4.7.5"
   resolved "http://npm.karldu.cn/wangeditor/-/wangeditor-4.7.5.tgz#51de4d32a837f5b500c1bca7a317fd2600a39062"
   integrity sha1-Ud5NMqg39bUAwbynoxf9JgCjkGI=

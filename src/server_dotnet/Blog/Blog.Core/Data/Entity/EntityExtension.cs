@@ -1,4 +1,5 @@
-﻿using Blog.Core.Auth;
+﻿using AutoMapper;
+using Blog.Core.Auth;
 using Blog.Core.Logging;
 using Blog.Core.Module.SysAttrs;
 using Blog.Core.Module.SysEntity;
@@ -111,7 +112,7 @@ CREATE TABLE public.{item.GetEntityName()} (
                                 attr_length = attr.Length,
                                 isrequire = attr.IsRequire.HasValue && attr.IsRequire.Value
                             };
-                            var columns = new List<Column>() { { new Column() { Name = _attr.code, LogicalName = _attr?.name, Type = _attr.attr_type.GetEnum<AttrType>(), Length = _attr?.attr_length, IsRequire = _attr?.isrequire } } };
+                            var columns = new List<Column>() { ServiceContainer.Resolve<IMapper>().Map<Column>(_attr) };
                             var sql = broker.DbClient.Driver.GetAddColumnSql(_attr.entityCode, columns);
                             broker.Create(_attr);
                             broker.Execute(sql);

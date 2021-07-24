@@ -28,11 +28,19 @@ namespace Blog.Core.Auth.Privilege
         /// </summary>
         /// <param name="roleid"></param>
         /// <returns></returns>
-        public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid)
+        public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
             var role = Broker.Retrieve<sys_role>(roleid);
-            return ServiceContainer.ResolveAll<IBasicRole>().FirstOrDefault(item => item.Role.GetDescription() == role.name).GetRolePrivilege();
-
+            var privileges = ServiceContainer.ResolveAll<IRole>().FirstOrDefault(item => item.Role.GetDescription() == role.name).GetRolePrivilege();
+            switch (roleType)
+            {
+                case RoleType.Entity:
+                    return privileges.Where(item => item.object_type == nameof(Module.SysEntity.sys_entity));
+                case RoleType.Menu:
+                    return privileges.Where(item => item.object_type == nameof(Module.SysMenu.sys_menu));
+                default:
+                    return new List<sys_role_privilege>();
+            }
         }
 
         /// <summary>

@@ -85,45 +85,65 @@ namespace Blog.Core.Auth.Privilege
             }
         }
 
+        private string _objectid;
+
         /// <summary>
-        /// 实体id
+        /// 对象id
         /// </summary>
-        private string _sys_entityid;
         [DataMember]
-        [Attr("sys_entityid", "实体id", AttrType.Varchar, 100)]
-        public string sys_entityid
+        [Attr("objectid", "实体id", AttrType.Varchar, 100)]
+        public string objectid
         {
             get
             {
-                return this._sys_entityid;
+                return this._objectid;
             }
             set
             {
-                this._sys_entityid = value;
-                SetAttributeValue("sys_entityid", value);
+                this._objectid = value;
+                SetAttributeValue("objectid", value);
             }
         }
 
+        private string _objectidName;
 
         /// <summary>
-        /// 实体名
+        /// 对象名
         /// </summary>
-        private string _sys_entityidName;
         [DataMember]
-        [Attr("sys_entityidname", "实体名", AttrType.Varchar, 100)]
-        public string sys_entityidName
+        [Attr("objectidname", "实体名", AttrType.Varchar, 100)]
+        public string objectidName
         {
             get
             {
-                return this._sys_entityidName;
+                return this._objectidName;
             }
             set
             {
-                this._sys_entityidName = value;
-                SetAttributeValue("sys_entityidName", value);
+                this._objectidName = value;
+                SetAttributeValue("objectidName", value);
             }
         }
 
+        private string _object_type;
+        
+        /// <summary>
+        /// 对象类型
+        /// </summary>
+        [DataMember]
+        [Attr("object_type", "对象类型", AttrType.Varchar, 100)]
+        public string object_type
+        {
+            get
+            {
+                return _object_type;
+            }
+            set
+            {
+                _object_type = value;
+                SetAttributeValue("object_type", value);
+            }
+        }
     }
 }
 

@@ -1,18 +1,30 @@
 <template>
   <div id="blog" class="blog blog__readonly">
-    <div class="blog-header"></div>
-    <div class="blog-body" style="background-color:#e9ecef">
+    <div class="blog-header">
+      <sp-icon
+        name="sp-blog-logo"
+        @click="() => this.$router.push({ name: 'home' })"
+        size="32"
+        style="display: inline-flex; border-radius: 6px; cursor: pointer"
+      ></sp-icon>
+      <a-menu mode="horizontal">
+        <a-menu-item key="index" @click="() => this.$router.push({ name: 'home' })"> 首页 </a-menu-item>
+        <a-menu-item key="friend" @click="() => this.$router.push({ name: 'friends' })"> 友人帐 </a-menu-item>
+        <a-menu-item key="note" @click="() => this.$router.push({ name: 'readingNote' })"> 读书笔记 </a-menu-item>
+      </a-menu>
+    </div>
+    <div class="blog-body" style="background-color: #e9ecef">
       <div class="bodyWrapper">
         <a-layout>
           <a-layout-sider width="70%" theme="light">
             <a-card>
               <a-skeleton :loading="loading">
                 <div class="block">
-                  <div style="display:flex;">
-                    <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
+                  <div style="display: flex">
+                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
-                      <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
@@ -25,34 +37,44 @@
             </a-card>
             <sp-comment :object-id="Id" :disabled="!!data.disable_comment" objectName="blog"></sp-comment>
           </a-layout-sider>
-          <a-layout-sider width="30%" style="margin-left:20px" theme="light">
+          <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
               <div class="block-title">
-                关于作者
+                <span>关于作者</span>
               </div>
               <div class="block-body">
                 <a-skeleton :loading="loading">
-                  <a style="display:flex;">
-                    <a-avatar :src="imageUrl" style="margin-right:10px;"></a-avatar>
+                  <a style="display: flex">
+                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
-                      <div style="color:#72777b;font-size:12px;padding-top: 5px;">{{ user.introduction }}</div>
+                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
                     </div>
                   </a>
-                  <div id="block-content" style="padding-top:20px">
-                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right:10px"></sp-icon>
+                  <div id="block-content" style="padding-top: 20px">
+                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right: 10px"></sp-icon>
                     <span>获得点赞</span>
                     <span>{{ data.upvote_times || 0 }}</span>
                   </div>
                   <div class="block-content">
-                    <sp-icon name="sp-blog-view" :size="30" style="padding-right:10px"></sp-icon>
+                    <sp-icon name="sp-blog-view" :size="30" style="padding-right: 10px"></sp-icon>
                     <span>文章被阅读</span>
                     <span>{{ data.reading_times || 0 }}</span>
                   </div>
                 </a-skeleton>
               </div>
             </a-card>
-            <div id="content" class="block"></div>
+            <a-card class="block recommand">
+              <div class="block-title">
+                <span>好文推荐</span>
+              </div>
+              <a class="item" v-for="(item, index) in recommandList" :key="index" @click="read(item)">
+                <div class="item-start">{{ item.name }}</div>
+              </a>
+            </a-card>
+            <div id="content" class="block catalog">
+              <div style="font-size: 16px">目录</div>
+            </div>
           </a-layout-sider>
         </a-layout>
       </div>
@@ -66,7 +88,7 @@ import 'mavon-editor/src/lib/css/markdown.css';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
-renderer.heading = function(text, level, raw) {
+renderer.heading = function (text, level, raw) {
   const anchor = tocObj.add(text, level);
   return `<a id=${anchor} class="anchor-fix"></a><h${level}>${text}</h${level}>\n`;
 };
@@ -75,12 +97,12 @@ marked.setOptions({
   renderer: renderer
 });
 const tocObj = {
-  add: function(text, level) {
+  add: function (text, level) {
     var anchor = `toc${level}${++this.index}`;
     this.toc.push({ anchor: anchor, level: level, text: text });
     return anchor;
   },
-  toHTML: function() {
+  toHTML: function () {
     let levelStack = [];
     let result = '';
     const addStartUL = () => {
@@ -92,7 +114,7 @@ const tocObj = {
     const addLI = (anchor, text) => {
       result += '<li class="content-item" @click="goAnchor(\'' + anchor + '\')"><a href="javascript:void(0)">' + text + '</a></li>\n';
     };
-    this.toc.forEach(function(item) {
+    this.toc.forEach(function (item) {
       let levelIndex = levelStack.indexOf(item.level);
       // 没有找到相应level的ul标签，则将li放入新增的ul中
       if (levelIndex === -1) {
@@ -132,6 +154,7 @@ export default {
       Id: this.$route.params.id,
       controllerName: 'blog',
       data: {},
+      recommandList: [],
       loading: false,
       imageUrl: '',
       formatterContent: '',
@@ -144,6 +167,7 @@ export default {
     await this.loadData();
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     this.imageUrl = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
+    this.loadRecommand();
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
@@ -189,6 +213,16 @@ export default {
     }
   },
   methods: {
+    loadRecommand() {
+      sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
+        this.recommandList = resp;
+      });
+    },
+    read(item) {
+      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.Id}`);
+      item.reading_times = (item.reading_times || 0) + 1;
+      window.open(item.url);
+    },
     handleScroll() {
       const content = document.getElementById('content');
       const blog = document.getElementById('blog');
@@ -196,7 +230,7 @@ export default {
         content.style.position = 'relative';
         content.style.marginTop = 20;
       } else {
-        content.style.position = 'fixed';
+        content.style.position = 'sticky';
         content.style.top = '0';
         content.style.marginTop = 0;
       }
@@ -233,13 +267,21 @@ export default {
 .block {
   width: 300px;
   margin-bottom: 20px;
+  border-radius: 6px;
+
+  .catalog {
+    position: sticky;
+  }
+
   /deep/ .ant-card-body {
     padding: 0px;
   }
   .block-title {
-    padding: 10px 20px;
-    line-height: 1.6;
-    border-bottom: 1px solid hsla(0, 0%, 58.8%, 0.1);
+    font-size: 14px;
+    padding: 10px 12px;
+    border-bottom: 2px solid hsla(0, 0%, 58.8%, 0.1);
+    display: flex;
+    align-items: center;
   }
   .block-body {
     padding: 10px 20px;
@@ -280,5 +322,38 @@ export default {
 
 /deep/ .ant-layout-sider-light {
   background: #e9ecef;
+}
+
+/deep/ .blog-header {
+  display: flex !important;
+  align-items: center;
+}
+
+/deep/ .ant-menu {
+  font-size: 16px;
+  border-bottom: none !important;
+}
+
+.recommand {
+  /deep/ .ant-card-body {
+    padding: 0px;
+  }
+  .item {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    &-start {
+      color: #000000;
+    }
+    &-end {
+      color: #4a4a4a;
+    }
+  }
+  .item:hover {
+    background: hsla(0, 0%, 85.1%, 0.1);
+  }
 }
 </style>

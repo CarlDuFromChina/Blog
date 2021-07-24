@@ -15,22 +15,26 @@ export default {
       configCode: 'enable_draft',
       saveStatusValue: '',
       unwatch: null,
-      statusList: [{
-        value: 'wait',
-        icon: 'redo',
-        text: '60秒后备份',
-        color: '#000000a6'
-      }, {
-        value: 'success',
-        icon: 'check-circle',
-        text: '草稿保存成功',
-        color: '#52c41a'
-      }, {
-        value: 'fail',
-        icon: 'close-circle',
-        text: '草稿保存失败',
-        color: '#ff4d4f'
-      }]
+      statusList: [
+        {
+          value: 'wait',
+          icon: 'redo',
+          text: '60秒后备份',
+          color: '#000000a6'
+        },
+        {
+          value: 'success',
+          icon: 'check-circle',
+          text: '草稿保存成功',
+          color: '#52c41a'
+        },
+        {
+          value: 'fail',
+          icon: 'close-circle',
+          text: '草稿保存失败',
+          color: '#ff4d4f'
+        }
+      ]
     };
   },
   created() {
@@ -95,7 +99,6 @@ export default {
               this.data.content = content;
               this.data.title = title;
               sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
-              this.$emit('open-watch');
             },
             onCancel: () => {
               sp.post('api/Draft/DeleteData', [this.draft.Id]).then(() => {
@@ -107,6 +110,7 @@ export default {
           this.draft.draftId = uuid.generate();
           this.draft.blogId = this.Id;
         }
+        this.$emit('open-watch');
       });
     },
     /**
@@ -116,10 +120,11 @@ export default {
       this.draft.title = this.data.title || '草稿';
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
-      sp.post('api/Draft/CreateOrUpdateData', this.draft).then(() => {
-        this.saveStatusValue = 'success';
-        this.isDirty = false;
-      })
+      sp.post('api/Draft/CreateOrUpdateData', this.draft)
+        .then(() => {
+          this.saveStatusValue = 'success';
+          this.isDirty = false;
+        })
         .catch(() => {
           this.saveStatusValue = 'fail';
         })
@@ -132,23 +137,27 @@ export default {
      * 监听页面是否修改
      */
     openWatch() {
-      this.unwatch = this.$watch('data', () => {
-        // 倒计时保存草稿
-        if (!this.isDirty) {
-          this.isDirty = true;
-          this.saveStatusValue = 'wait';
-          this.secondId = setInterval(() => {
-            if (this.seconds === 0) {
-              this.saveDraft();
-            } else {
-              this.seconds -= 1;
-              this.statusList[0].text = `${this.seconds}秒后备份`;
-            }
-          }, 1000);
+      this.unwatch = this.$watch(
+        'data',
+        () => {
+          // 倒计时保存草稿
+          if (!this.isDirty) {
+            this.isDirty = true;
+            this.saveStatusValue = 'wait';
+            this.secondId = setInterval(() => {
+              if (this.seconds === 0) {
+                this.saveDraft();
+              } else {
+                this.seconds -= 1;
+                this.statusList[0].text = `${this.seconds}秒后备份`;
+              }
+            }, 1000);
+          }
+        },
+        {
+          deep: true
         }
-      }, {
-        deep: true
-      });
+      );
     },
     closeWatch() {
       if (this.unwatch && typeof this.unwatch === 'function') {

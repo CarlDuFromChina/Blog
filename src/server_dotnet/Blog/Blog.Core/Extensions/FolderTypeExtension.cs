@@ -46,10 +46,10 @@ namespace Blog.Core
                 case FolderType.Bin:
                     break;
                 case FolderType.Log:
-                    folderPath += "\\log";
+                    folderPath += $"{Path.AltDirectorySeparatorChar}log";
                     break;
                 case FolderType.LogArchive:
-                    folderPath += "\\log\\Archive";
+                    folderPath += $"{Path.AltDirectorySeparatorChar}log{Path.AltDirectorySeparatorChar}Archive";
                     break;
                 case FolderType.Temp:
                     folderPath = temp;
@@ -58,7 +58,7 @@ namespace Blog.Core
                     folderPath = storage;
                     break;
                 case FolderType.Version:
-                    folderPath += "\\version";
+                    folderPath += $"{Path.AltDirectorySeparatorChar}version";
                     break;
                 default:
                     break;

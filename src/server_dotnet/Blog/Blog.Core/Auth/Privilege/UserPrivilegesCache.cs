@@ -37,12 +37,12 @@ namespace Blog.Core.Auth.Privilege
         public static void Clear(IPersistBroker broker)
         {
             UserPrivliege.Clear();
-            ServiceContainer.ResolveAll<IBasicRole>().Each(item =>
+            ServiceContainer.ResolveAll<IRole>().Each(item =>
             {
                 (item as BasicRole).Broker = broker;
                 item.ClearCache();
                 MemoryCacheUtil.RemoveCacheItem(item.GetRoleKey);
-                MemoryCacheUtil.Set(item.GetRoleKey, new RolePrivilegeModel() { Role = item.GetRole(), Privileges = item.GetRolePrivilege() }, 3600 * 12);
+                MemoryCacheUtil.Set(item.GetRoleKey, new RolePrivilegeModel() { Role = item.GetSysRole(), Privileges = item.GetRolePrivilege() }, 3600 * 12);
             });
         }
     }

@@ -26,7 +26,7 @@
     </a-row>
     <a-tabs default-active-key="1">
       <a-tab-pane key="1" tab="菜单权限">
-        敬请期待
+        <menu-privilege :privileges="menuList"></menu-privilege>
       </a-tab-pane>
       <a-tab-pane key="2" tab="实体权限">
         <entity-privilege :privileges="entityList"></entity-privilege>
@@ -41,11 +41,12 @@
 <script>
 import { edit } from '@/mixins';
 import entityPrivilege from './components/entityPrivilege';
+import menuPrivilege from './components/menuPrivilege';
 
 export default {
   name: 'sysRoleEdit',
   mixins: [edit],
-  components: { entityPrivilege },
+  components: { entityPrivilege, menuPrivilege },
   data() {
     return {
       controllerName: 'SysRole',
@@ -56,7 +57,8 @@ export default {
       data: {
         is_basic: false
       },
-      entityList: []
+      entityList: [],
+      menuList: []
     };
   },
   created() {
@@ -68,10 +70,9 @@ export default {
     loadComplete() {
       this.getEntities();
     },
-    getEntities() {
-      sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.Id}`).then(resp => {
-        this.entityList = resp;
-      });
+    async getEntities() {
+      this.entityList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.Id}&roleType=0`);
+      this.menuList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.Id}&roleType=1`);
     }
   }
 };

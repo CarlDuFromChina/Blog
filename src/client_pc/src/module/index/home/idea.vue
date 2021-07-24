@@ -1,5 +1,5 @@
 <template>
-  <sp-card title="想法" :loading="loading">
+  <sp-card title="想法" :loading="loading" :empty="!dataList || dataList.length == 0">
     <a-timeline>
       <a-timeline-item v-for="(item, index) in dataList" :key="index">
         <span>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
