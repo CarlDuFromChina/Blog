@@ -19,7 +19,6 @@
           </a-input-password>
         </a-form-model-item>
         <a-form-model-item>
-          <a-checkbox v-model="rememberMe" style="float: left">记住我</a-checkbox>
           <a href="#/login/forget" class="forget-pwd">忘记密码</a>
         </a-form-model-item>
         <a-form-model-item>
@@ -51,7 +50,6 @@ export default {
         code: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
-      rememberMe: false,
       visible: false,
       isLoginFailed: false,
       isPassCheck: false
