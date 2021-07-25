@@ -19,17 +19,17 @@
       </div>
     </div>
     <a-modal title="发布文章" v-model="editVisible" @ok="editVisible = false">
-      <a-form-model ref="form" :model="data">
+      <a-form-model ref="form" :model="data" :rules="rules">
         <a-row>
           <a-col>
-            <a-form-model-item label="标题">
+            <a-form-model-item label="标题" prop="title">
               <a-input v-model="data.title"></a-input>
             </a-form-model-item>
           </a-col>
         </a-row>
         <a-row>
           <a-col>
-            <a-form-model-item label="分类">
+            <a-form-model-item label="分类" prop="blog_type">
               <sp-select
                 v-model="data.blog_type"
                 :options="selectDataList.classification"
@@ -119,7 +119,11 @@ export default {
         is_series: false,
         disable_comment: false
       },
-      token: this.$store.getters.getToken
+      token: this.$store.getters.getToken,
+      rules: {
+        title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }]
+      }
     };
   },
   computed: {
@@ -198,17 +202,21 @@ export default {
     },
     // 保存博客
     save() {
-      this.editVisible = false;
-      this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
-      if (this.tags) {
-        this.data.tags = this.tags;
-      }
-      sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
-        .then(() => {
-          this.$message.success('发布成功！');
-          this.$router.back();
-        })
-        .catch(error => this.$message.error(error));
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.editVisible = false;
+          this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+          if (this.tags) {
+            this.data.tags = this.tags;
+          }
+          sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
+            .then(() => {
+              this.$message.success('发布成功！');
+              this.$router.back();
+            })
+            .catch(error => this.$message.error(error));
+        }
+      });
     },
     // 返回上页
     goBack() {
