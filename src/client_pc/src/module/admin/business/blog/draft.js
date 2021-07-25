@@ -185,7 +185,8 @@ export default {
         okText: '保存',
         cancelText: '取消',
         onOk: () => {
-          save();
+          this.editVisible = true;
+          this.$nextTick(() => this.save());
         },
         onCancel: () => {
           this.$router.back();

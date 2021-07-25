@@ -3,26 +3,6 @@
     <a-form-model ref="form" :model="data">
       <a-row>
         <a-col>
-          <a-form-model-item label="小图">
-            <a-spin :spinning="loading">
-              <a-upload
-                :action="baseUrl"
-                ref="files"
-                :customRequest="uploadSmallImg"
-                :file-list="smallImage"
-                :beforeUpload="beforeUpload"
-                :remove="removeSmallImg"
-                list-type="picture"
-                key="small-image-upload"
-              >
-                <a-button type="primary"> <a-icon type="upload" /> 上传小图</a-button>
-              </a-upload>
-            </a-spin>
-          </a-form-model-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col>
           <a-form-model-item label="大图">
             <a-spin :spinning="loading">
               <a-upload
@@ -35,7 +15,7 @@
                 list-type="picture"
                 key="big-image-upload"
               >
-                <a-button type="primary"> <a-icon type="upload" /> 上传大图</a-button>
+                <a-button type="primary"> <a-icon type="upload" /> 上传</a-button>
               </a-upload>
             </a-spin>
           </a-form-model-item>
@@ -112,39 +92,39 @@ export default {
       this.tags = val;
     },
     upload(param) {
-      const url = '/api/DataService/UploadImage?fileType=gallery';
+      const url = '/api/SysFile/UploadImage?fileType=gallery';
       const formData = new FormData();
       formData.append('file', param.file);
       return sp.post(url, formData, this.headers).then(resp => resp);
     },
-    // 上传小图
-    uploadSmallImg(param) {
-      this.upload(param).then(resp => {
-        this.data.previewid = resp.id;
-        this.data.preview_url = resp.downloadUrl;
-        this.smallImage = [
-          {
-            uid: '0',
-            status: 'done',
-            name: 'small_image',
-            url: `${this.baseUrl}${this.data.preview_url}`
-          }
-        ];
-      });
-    },
     // 上传大图
     uploadBigImg(param) {
       this.upload(param).then(resp => {
-        this.data.imageid = resp.id;
-        this.data.image_url = resp.downloadUrl;
+        const image = resp[0];
+        const thumbnail = resp[1];
+
+        this.data.imageid = image.id;
+        this.data.image_url = image.downloadUrl;
         this.bigImage = [
           {
             uid: '0',
             status: 'done',
             name: 'big_image',
-            url: `${this.baseUrl}${this.data.image_url}`
+            url: `${this.baseUrl}${image.downloadUrl}`
           }
         ];
+
+        this.data.previewid = thumbnail.id;
+        this.data.preview_url = thumbnail.downloadUrl;
+        this.smallImage = [
+          {
+            uid: '0',
+            status: 'done',
+            name: 'small_image',
+            url: `${this.baseUrl}${thumbnail.downloadUrl}`
+          }
+        ];
+        console.log(this.data);
       });
     },
     beforeUpload(file, fileList) {

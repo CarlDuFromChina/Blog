@@ -1,6 +1,9 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Data;
+using Blog.Core.Utils;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Blog.Core.Store.SysFile
 {
@@ -66,6 +69,37 @@ SELECT * FROM sys_file
 WHERE hash_code = @code
 ";
             return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
+        }
+
+        public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId)
+        {
+            // 获取文件哈希码，将哈希码作为文件名
+            var hash_code = SHAUtil.GetFileSHA1(stream);
+            var newFileName = $"{hash_code}.{fileSuffix}";
+
+            // 保存图片到本地
+            // TODO：执行失败回滚操作
+            var config = StoreConfig.Config;
+            ServiceContainer.Resolve<IStoreStrategy>(config.Type).Upload(stream, newFileName, out var filePath);
+            var sysImage = new sys_file()
+            {
+                sys_fileId = Guid.NewGuid().ToString(),
+                name = newFileName,
+                hash_code = hash_code,
+                file_path = filePath,
+                file_type = fileType,
+                content_type = contentType,  
+            };
+            sysImage.DownloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}";
+
+            if (!string.IsNullOrEmpty(objectId))
+            {
+                sysImage.objectId = objectId;
+            }
+
+            CreateData(sysImage);
+
+            return sysImage;
         }
     }
 }
