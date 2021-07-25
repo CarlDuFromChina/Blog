@@ -114,18 +114,13 @@ export default {
       selectEntityNameList: ['classification'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
-      token: '',
-      tags: []
+      tags: [],
+      data: {
+        is_series: false,
+        disable_comment: false
+      },
+      token: this.$store.getters.getToken
     };
-  },
-  created() {
-    // 编辑博客
-    if (!this.$route.params.id) {
-      this.data.is_series = false;
-      this.data.disable_comment = false;
-    }
-    // 获取token和url
-    this.token = this.$store.getters.getToken;
   },
   computed: {
     // 请求头
