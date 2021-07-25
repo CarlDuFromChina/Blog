@@ -72,13 +72,13 @@ New-Item -ItemType directory ".\release\web\debug\"
 
 # Restore Dotnet Packages
 Write-Section-Message "Build dotnet"
-Remove-Item -Recurse -Force ".\src\server_dotnet\Blog\release\netcoreapp3.1\*"
+Remove-Item -Recurse -Force ".\src\server_dotnet\Blog\build\netcoreapp3.1\*"
 
 # Build Dotnet files
 $buildException = dotnet build ".\src\server_dotnet\Blog\Blog.sln" -f netcoreapp3.1 -r win-x64 -c Release --no-incremental
 If (! $?) { Throw $buildException }
 New-Item -ItemType directory ".\release\server"
-$release = ".\src\server_dotnet\Blog\release\netcoreapp3.1\win-x64\*"
+$release = ".\src\server_dotnet\Blog\build\netcoreapp3.1\win-x64\*"
 Copy-Item -Force -Recurse $release ".\release\server\"
 Write-Success-Message "OK."
 
