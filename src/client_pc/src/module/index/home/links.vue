@@ -1,5 +1,5 @@
 <template>
-  <sp-card title="链接">
+  <sp-card title="链接" :empty="!items || items.length == 0">
     <a class="item" v-for="(item, index) in items" :key="index" @click="openLink(item.link_url)">
       <div class="item-start"><sp-icon :name="getIcon(item.link_type)" :size="15" style="padding-right:10px"></sp-icon>{{ item.name }}</div>
       <div class="item-end tag" v-if="item.brief">
