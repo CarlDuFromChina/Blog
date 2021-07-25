@@ -252,6 +252,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import 'blog.less';
 /deep/ .v-note-wrapper {
   z-index: 100;
 }
