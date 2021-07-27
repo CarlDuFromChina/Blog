@@ -23,7 +23,7 @@
           <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
         </a-dropdown>
       </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px' }">
+      <a-layout-content :style="{ margin: '24px 16px', overflow: 'hidden' }">
         <div :style="{ background: '#fff', height: '100%' }">
           <router-view :key="$route.path"></router-view>
         </div>

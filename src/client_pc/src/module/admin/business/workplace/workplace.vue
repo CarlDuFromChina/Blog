@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ height: '100%', overflowY: 'auto' }">
     <div class="header">
       <div class="header-avatar">
         <a-avatar :size="64" :src="avatarUrl" />
