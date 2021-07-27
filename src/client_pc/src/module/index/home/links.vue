@@ -43,9 +43,11 @@ export default {
   padding: 10px;
   cursor: pointer;
   align-items: center;
+  white-space: nowrap;
   justify-content: space-between;
   &-start {
     color: #000000;
+    width: 200px;
   }
   &-end {
     color: #4a4a4a;
@@ -65,7 +67,7 @@ export default {
     white-space: nowrap;
   }
   &-brief {
-    width: 180px;
+    width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
