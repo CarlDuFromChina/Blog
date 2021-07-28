@@ -177,9 +177,7 @@ export default {
       immediate: true,
       handler(newVal) {
         if (!sp.isNullOrEmpty(newVal)) {
-          this.formatterContent = marked(newVal, {
-            sanitize: true
-          });
+          this.formatterContent = marked(newVal);
           const content = document.querySelector('#content');
           const MyComponent = Vue.extend({
             template: tocObj.toHTML(),
