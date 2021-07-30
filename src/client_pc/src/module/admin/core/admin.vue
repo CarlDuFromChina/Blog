@@ -17,8 +17,8 @@
         <slot></slot>
         <a-dropdown>
           <a-menu slot="overlay">
-            <a-menu-item key="1" @click="editPassword">修改密码</a-menu-item>
-            <a-menu-item key="2" @click="logout">退出</a-menu-item>
+            <a-menu-item key="1" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
+            <a-menu-item key="2" @click="logout"><a-icon type="logout" />退出</a-menu-item>
           </a-menu>
           <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
         </a-dropdown>
@@ -29,17 +29,19 @@
         </div>
       </a-layout-content>
     </a-layout>
-    <edit-password ref="pwd"></edit-password>
+    <a-modal v-model="userInfoEditVisible" title="编辑" @ok="saveUserInfo" width="60%" okText="确认" cancelText="取消">
+      <user-info-edit ref="userInfoEdit" :related-attr="userParam" @close="userInfoEditVisible = false"></user-info-edit>
+    </a-modal>
   </a-layout>
 </template>
 
 <script>
-import editPassword from './editPasssword/editPassword';
 import { clearAuth } from '@/lib/login';
+import userInfoEdit from './userInfo/userInfoEdit.vue';
 
 export default {
   name: 'admin',
-  components: { editPassword },
+  components: { userInfoEdit },
   data() {
     return {
       menus: [],
@@ -50,7 +52,11 @@ export default {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
       },
-      imageUrl: ''
+      imageUrl: '',
+      userParam: {
+        id: sp.getUserId()
+      },
+      userInfoEditVisible: false
     };
   },
   created() {
@@ -105,9 +111,6 @@ export default {
         this.$router.push({ path: keyPath[0] });
       }
     },
-    editPassword() {
-      this.$refs.pwd.editVisible = true;
-    },
     logout() {
       this.$message.success('退出成功');
       clearAuth(this.$store);
@@ -121,6 +124,9 @@ export default {
       } else {
         this.openKeys = !sp.isNil(latestOpenKey) ? [latestOpenKey] : [];
       }
+    },
+    saveUserInfo() {
+      this.$refs.userInfoEdit.saveData();
     }
   }
 };
