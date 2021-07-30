@@ -1,5 +1,5 @@
 <template>
-  <a-spin :spinning="loading">
+  <a-spin :spinning="loading" style="height: 100%;overflow-y: auto">
     <sp-header>
       <div style="display: inline-block;padding-right:10px;">
         <a-button icon="check" type="primary" @click="saveData" :loading="loading">提交</a-button>
@@ -7,14 +7,12 @@
       </div>
     </sp-header>
     <a-form-model ref="form" :model="data" style="padding:0 20px;">
-      <a-row>
+      <a-row type="flex" justify="space-between">
         <a-col :span="4">
           <a-form-model-item label="书名">
             <a-input v-model="data.book_title"></a-input>
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row>
         <a-col :span="4">
           <a-form-model-item label="是否前台显示">
             <a-switch v-model="isShow"></a-switch>
@@ -25,9 +23,7 @@
             <a-switch v-model="disableComment"></a-switch>
           </a-form-model-item>
         </a-col>
-      </a-row>
-      <a-row>
-        <a-col>
+        <a-col :span="4">
           <a-form-model-item label="封面">
             <a-upload
               :action="baseUrl"
