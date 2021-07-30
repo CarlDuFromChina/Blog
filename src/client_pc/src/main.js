@@ -32,12 +32,6 @@ if (window.device.mobile()) {
   window.location.href = `${window.location.origin}/debug/#/`;
 }
 
-const serverUrl = localStorage.getItem('server_url');
-if (process.env.NODE_ENV === 'development' && !sp.isNullOrEmpty(serverUrl)) {
-  store.commit('updateServerUrl', serverUrl);
-  console.info('服务器地址修改为：' + serverUrl);
-}
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
