@@ -87,12 +87,23 @@ export default {
         visualMap: {
           show: false,
           min: 0,
-          max: 5
+          max: 5,
+          inRange: {
+            color: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196027']
+          }
         },
+        backgroundColor: '#fff',
         calendar: {
-          range: this.$moment()
-            .year()
-            .toString()
+          cellSize: [14, 14],
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 4
+          },
+          splitLine: {
+            show: false
+          },
+          yearLabel: { show: false },
+          range: this.$moment().year().toString()
         },
         series: {
           type: 'heatmap',
