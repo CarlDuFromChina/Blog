@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
+    /// <summary>
+    /// 持久化存储
+    /// </summary>
     internal class PersistBroker : IPersistBroker, IDisposable
     {
         /// <summary>

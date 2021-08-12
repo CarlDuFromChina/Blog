@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
+    /// <summary>
+    /// 选项集
+    /// </summary>
     public class SelectOption
     {
         public SelectOption() { }
@@ -20,6 +23,9 @@ namespace Blog.Core.Data
         public string Value { get; set; }
     }
 
+    /// <summary>
+    /// 选项集扩展
+    /// </summary>
     public static class SelectOptionExtension
     {
         /// <summary>

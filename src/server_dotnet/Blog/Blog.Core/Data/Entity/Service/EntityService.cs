@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
@@ -9,7 +8,7 @@ namespace Blog.Core.Data
     /// 实体服务类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EntityService<T>
+    public abstract class EntityService<T>
         where T : BaseEntity, new()
     {
         /// <summary>
@@ -20,13 +19,7 @@ namespace Blog.Core.Data
         /// <summary>
         /// 数据库持久化
         /// </summary>
-        protected IPersistBroker Broker
-        {
-            get
-            {
-                return _context.Broker;
-            }
-        }
+        protected IPersistBroker Broker => _context.Broker;
 
         #region 实体表单
 

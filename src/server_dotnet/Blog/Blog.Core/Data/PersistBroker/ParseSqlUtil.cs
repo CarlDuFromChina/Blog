@@ -8,8 +8,19 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
+    /// <summary>
+    /// SQL 语句格式化
+    /// </summary>
     public class ParseSqlUtil
     {
+        /// <summary>
+        /// 获取筛选SQL
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="paramName"></param>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public static (string sql, Dictionary<string, object> paramsList) GetSearchCondition(SearchType type, string paramName, object value, ref int count)
         {
             switch (type)

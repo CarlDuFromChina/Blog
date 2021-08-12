@@ -14,6 +14,7 @@ namespace Blog.Core.Data
         {
             Broker = PersistBrokerFactory.GetPersistBroker();
         }
+
         public EntityContextBase(IPersistBroker broker)
         {
             Broker = broker;

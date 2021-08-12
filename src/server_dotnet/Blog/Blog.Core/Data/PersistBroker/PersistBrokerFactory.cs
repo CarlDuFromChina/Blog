@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
+    /// <summary>
+    /// 持久化存储工厂类
+    /// </summary>
     public class PersistBrokerFactory
     {
         /// <summary>
