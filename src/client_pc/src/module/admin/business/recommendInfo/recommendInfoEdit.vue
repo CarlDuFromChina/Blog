@@ -16,14 +16,6 @@
         <a-button size="small" type="primary"> <a-icon type="upload" /> 上传</a-button>
       </a-upload>
     </a-form-model-item>
-    <a-form-model-item :wrapper-col="{ span: 4, offset: 20 }">
-      <a-button type="primary" @click="saveData">
-        确 定
-      </a-button>
-      <a-button style="margin-left: 10px;" @click="$emit('close')">
-        取 消
-      </a-button>
-    </a-form-model-item>
   </a-form-model>
 </template>
 
