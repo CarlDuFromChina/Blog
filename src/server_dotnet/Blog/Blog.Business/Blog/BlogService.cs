@@ -33,7 +33,7 @@ namespace Blog.Blog
                     ViewId = "C94EDAAE-0C59-41E6-A373-D4816C2FD882",
                     CustomFilter = new List<string>(){ "title" },
                     Name = "全部博客",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
                 },
                 new EntityView()
                 {
@@ -71,7 +71,7 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
                     ViewId = "ACCE50D6-81A5-4240-BD82-126A50764FAB",
                     CustomFilter = new List<string>() { "title" },
                     Name = "全部系列",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
                 }
             };
         }
