@@ -29,7 +29,7 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public virtual IList<EntityView> GetViewList()
         {
-            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1";
+            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1 ORDER BY createdon DESC";
             return new List<EntityView>()
             {
                 new EntityView()

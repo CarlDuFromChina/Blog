@@ -38,7 +38,7 @@ INSERT INTO sys_param (
 )
 SELECT
     '15F05AAF-7C47-4376-B8DF-C59FB58D7FFB',
-    '连接',
+    '链接',
     'url',
     '1062CA39-9CEF-4AA4-919C-F5BD5752BC9E',
     '推荐类型',
