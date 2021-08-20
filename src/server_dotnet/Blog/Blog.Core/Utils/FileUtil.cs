@@ -17,24 +17,26 @@ namespace Blog.Core.Utils
     {
         #region CRUD
         /// <summary>
-        /// 获取文件列表路径
+        /// 获取文件夹下文件
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="directory">目录</param>
+        /// <param name="folderType">文件类型</param>
+        /// <param name="searchOption">搜索参数</param>
         /// <returns></returns>
-        public static IList<string> GetFileList(string name, FolderType type = FolderType.Bin, SearchOption searchOption = SearchOption.AllDirectories)
+        public static IList<string> GetFileList(string directory, FolderType folderType = FolderType.Bin, SearchOption searchOption = SearchOption.AllDirectories)
         {
-            var path = type.GetPath();
+            var path = folderType.GetPath();
             if (!Directory.Exists(path))
             {
                 return new List<string>();
             }
-            return Directory.GetFiles(path, name, searchOption);
+            return Directory.GetFiles(path, directory, searchOption);
         }
 
         /// <summary>
         /// 保存文件
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="stream"></param>
         /// <param name="filePath"></param>
         public static void SaveFile(Stream stream, string filePath)
         {
@@ -44,18 +46,19 @@ namespace Blog.Core.Utils
                 return;
             }
 
-            var fs = new FileStream(filePath, FileMode.Create);
-            try
+            using (var fs = new FileStream(filePath, FileMode.Create))
             {
-                var bytes = stream.ToByteArray();
-                fs.Write(bytes, 0, bytes.Length);
-                fs.Flush();
+                try
+                {
+                    var bytes = stream.ToByteArray();
+                    fs.Write(bytes, 0, bytes.Length);
+                    fs.Flush();
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
             }
-            finally
-            {
-                fs.Close();
-            }
-
         }
 
         /// <summary>
@@ -65,9 +68,7 @@ namespace Blog.Core.Utils
         public static void DeleteFile(string filePath)
         {
             if (File.Exists(filePath))
-            {
                 File.Delete(filePath);
-            }
         }
 
         /// <summary>
@@ -105,6 +106,10 @@ namespace Blog.Core.Utils
             }
         }
 
+        /// <summary>
+        /// 删除文件夹
+        /// </summary>
+        /// <param name="filePath"></param>
         public static void DeleteFolder(string filePath)
         {
             DeleteFolder(filePath, new List<string>());
