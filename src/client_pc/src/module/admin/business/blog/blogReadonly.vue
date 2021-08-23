@@ -165,6 +165,9 @@ export default {
   },
   async created() {
     await this.loadData();
+    if (this.data.title) {
+      document.title = this.data.title;
+    }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     this.imageUrl = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
     this.loadRecommand();
