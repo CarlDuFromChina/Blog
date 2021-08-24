@@ -23,6 +23,7 @@ Vue.use(Vuex);
 
 Vue.prototype.$bus = new Vue();
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
+moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
 Vue.prototype.$indexDB = new storage.IndexedDB();
 Vue.prototype.$echarts = echarts;

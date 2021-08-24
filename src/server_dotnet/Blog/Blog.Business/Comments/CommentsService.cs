@@ -1,4 +1,7 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core;
+using Blog.Core.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Blog.Comments
 {
@@ -14,5 +17,13 @@ namespace Blog.Comments
             this._context = new EntityContext<comments>(broker);
         }
         #endregion
+
+        public override IList<comments> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
+        {
+            var comments = base.GetDataList(searchList, orderBy, viewId, searchValue).ToList();
+            var dataList = comments.Where(item => string.IsNullOrEmpty(item.parentid));
+            dataList.Each(item => item.Comments = comments.Where(e => e.parentid == item.Id));
+            return dataList.ToList();
+        }
     }
 }

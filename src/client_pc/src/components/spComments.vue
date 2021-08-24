@@ -1,0 +1,115 @@
+<template>
+  <div>
+    <a-comment v-if="!disabled">
+      <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
+      <div slot="content">
+        <a-form-item>
+          <a-textarea :rows="4" :value="value" @change="handleChange" />
+        </a-form-item>
+        <a-form-item>
+          <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
+            发表评论
+          </a-button>
+        </a-form-item>
+      </div>
+    </a-comment>
+    <a-list
+      v-if="comments.length"
+      :data-source="comments"
+      :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
+      item-layout="horizontal"
+    >
+      <a-list-item slot="renderItem" slot-scope="item">
+        <sp-comment :data="item" @replied="getDataList">
+          <sp-comment v-for="item2 in item.Comments" :key="item2.Id" :data="item2" @replied="getDataList"></sp-comment>
+        </sp-comment>
+      </a-list-item>
+    </a-list>
+  </div>
+</template>
+<script>
+import spComment from './spComment.vue';
+
+export default {
+  name: 'sp-comments',
+  components: { spComment },
+  props: {
+    objectId: {
+      type: String,
+      default: '',
+      required: true
+    },
+    objectName: {
+      type: String,
+      default: '',
+      required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      controllerName: 'Comments',
+      comments: [],
+      submitting: false,
+      value: ''
+    };
+  },
+  created() {
+    this.getDataList();
+  },
+  methods: {
+    getDataList() {
+      const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
+      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {
+        this.comments = resp;
+      });
+    },
+    handleSubmit() {
+      if (!this.value) {
+        this.$message.warning('请填写评论');
+        return;
+      }
+
+      this.submitting = true;
+
+      setTimeout(() => {
+        this.submitting = false;
+        const comment = {
+          Id: uuid.generate(),
+          name: '评论',
+          comment: this.value,
+          objectid: this.objectId,
+          object_name: this.objectName
+        };
+        sp.post('api/Comments/CreateData', comment).then(resp => {
+          this.getDataList();
+          this.$message.success('留言成功');
+        });
+        this.value = '';
+      }, 1000);
+    },
+    handleChange(e) {
+      this.value = e.target.value;
+    },
+    formtDate(val) {
+      return this.$moment(val).fromNow();
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.ant-list {
+  /deep/ .ant-comment {
+    width: 100%;
+    background: #fff;
+  }
+}
+
+/deep/ .ant-list-item {
+  padding: 0;
+}
+</style>

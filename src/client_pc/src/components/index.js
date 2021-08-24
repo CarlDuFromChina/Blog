@@ -13,7 +13,7 @@ import spEditor from './spEditor';
 import spSelect from './spSelect';
 import spSwitch from './spSwitch';
 import spBlogCard from './spBlogCard';
-import spComment from './spComment';
+import spComments from './spComments';
 import spCard from './spCard';
 import cloudUpload from './cloudUploadDialog';
 
@@ -32,7 +32,7 @@ const components = [
   { name: spSelect.name, component: spSelect },
   { name: spSwitch.name, component: spSwitch },
   { name: spBlogCard.name, component: spBlogCard },
-  { name: spComment.name, component: spComment },
+  { name: spComments.name, component: spComments },
   { name: spCard.name, component: spCard },
   { name: cloudUpload.name, component: cloudUpload }
 ];
