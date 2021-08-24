@@ -114,7 +114,7 @@ namespace Blog.Core.Data
             }
             else
             {
-                orderBy.Replace("ORDER BY", "");
+                orderBy.Replace("ORDER BY", "", StringComparison.OrdinalIgnoreCase);
                 orderBy = $" ORDER BY {orderBy},{new E().EntityName}id";
             }
 

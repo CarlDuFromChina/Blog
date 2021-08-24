@@ -29,14 +29,14 @@ namespace Blog.Core.Data
         /// <returns></returns>
         public virtual IList<EntityView> GetViewList()
         {
-            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1 ORDER BY createdon DESC";
+            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1";
             return new List<EntityView>()
             {
                 new EntityView()
                 {
                     Sql = sql,
                     CustomFilter = new List<string>() { "name" }, // name 是每个实体必须要添加字段
-                    OrderBy = "",
+                    OrderBy = "createdon DESC",
                     ViewId = ""
                 }
             };
