@@ -29,5 +29,7 @@ where is_basic = 1
 ";
             return Broker.Query<SelectOption>(sql);
         }
+
+        public sys_role GetGuest() => Broker.Retrieve<sys_role>("222222222-22222-2222-2222-222222222222");
     }
 }

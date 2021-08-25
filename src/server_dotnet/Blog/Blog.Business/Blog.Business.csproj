@@ -17,8 +17,9 @@
   <ItemGroup>
     <None Remove="version\2.0\2021070901-新增内容管理菜单.sql" />
     <None Remove="version\2.0\2021070902-新增分析中心菜单.sql" />
-    <None Remove="version\2.1\2021072101-新增链接菜单.sql" />
+    <None Remove="version\2.2\2021072101-新增链接菜单.sql" />
     <None Remove="version\2.0\2021070903-初始化推荐信息类型选项集.sql" />
+    <None Remove="version\2.2\2021082401-更新评论名称.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070902-新增分析中心菜单.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.2\2021082401-更新评论名称.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.1\2021072101-新增链接菜单.sql">

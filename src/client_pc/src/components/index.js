@@ -15,6 +15,7 @@ import spSwitch from './spSwitch';
 import spBlogCard from './spBlogCard';
 import spComments from './spComments';
 import spCard from './spCard';
+import spLogin from './spLogin';
 import cloudUpload from './cloudUploadDialog';
 
 const components = [
@@ -34,6 +35,7 @@ const components = [
   { name: spBlogCard.name, component: spBlogCard },
   { name: spComments.name, component: spComments },
   { name: spCard.name, component: spCard },
+  { name: spLogin.name, component: spLogin },
   { name: cloudUpload.name, component: cloudUpload }
 ];
 

@@ -22,10 +22,10 @@
     </a-tooltip>
     <template slot="actions">
       <!-- <span key="comment-basic-like" @click="like">
-        <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" />
-        <span style="padding-left: '8px';cursor: 'auto'">点赞</span>
-      </span> -->
-      <span key="comment-basic-reply-to" @click="showReply = !showReply">
+          <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" />
+          <span style="padding-left: '8px';cursor: 'auto'">点赞</span>
+        </span> -->
+      <span key="comment-basic-reply-to" @click="clickReply">
         <a-icon type="form" :theme="showReply ? 'filled' : 'outlined'" />
         <span style="padding-left: '8px';cursor: 'auto'">{{ showReply ? '取消回复' : '回复' }}</span>
       </span>
@@ -51,12 +51,24 @@ export default {
       value: ''
     };
   },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   methods: {
     formtDate(val) {
       return this.$moment(val).fromNow();
     },
     handleChange(e) {
       this.value = e.target.value;
+    },
+    clickReply() {
+      if (!this.isLoggedIn) {
+        this.$emit('login');
+        return;
+      }
+      this.showReply = !this.showReply;
     },
     reply() {
       if (sp.isNullOrEmpty(this.value)) {

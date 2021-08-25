@@ -4,10 +4,10 @@
       <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
       <div slot="content">
         <a-form-item>
-          <a-textarea :rows="4" :value="value" @change="handleChange" />
+          <a-textarea ref="commentInput" placeholder="请输入评论" :rows="4" :value="value" @change="handleChange" @click="showLogin" />
         </a-form-item>
         <a-form-item>
-          <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
+          <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit" :disabled="!isLoggedIn">
             发表评论
           </a-button>
         </a-form-item>
@@ -20,11 +20,12 @@
       item-layout="horizontal"
     >
       <a-list-item slot="renderItem" slot-scope="item">
-        <sp-comment :data="item" @replied="getDataList">
-          <sp-comment v-for="item2 in item.Comments" :key="item2.Id" :data="item2" @replied="getDataList"></sp-comment>
+        <sp-comment :data="item" @replied="getDataList" @login="showLogin">
+          <sp-comment v-for="item2 in item.Comments" :key="item2.Id" :data="item2" @replied="getDataList" @login="showLogin"></sp-comment>
         </sp-comment>
       </a-list-item>
     </a-list>
+    <sp-login ref="login" @closed="closed"></sp-login>
   </div>
 </template>
 <script>
@@ -60,7 +61,24 @@ export default {
   created() {
     this.getDataList();
   },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  },
   methods: {
+    showLogin() {
+      if (!this.isLoggedIn) {
+        this.$refs.login.editVisible = true;
+      }
+    },
+    closed() {
+      if (!this.isLoggedIn) {
+        setTimeout(() => {
+          this.$refs.commentInput.blur();
+        }, 0);
+      }
+    },
     getDataList() {
       const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
       sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {

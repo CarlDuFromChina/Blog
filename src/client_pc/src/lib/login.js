@@ -10,10 +10,11 @@ export function clearAuth(store) {
  * 保存用户登录信息
  */
 export function saveAuth(store, data) {
-  const { token, userId } = data;
+  const { token, userId, userName } = data;
   store.commit('updateAuth', {
     token: token,
-    userId: userId
+    userId: userId,
+    userName: userName
   });
   store.commit('changeLogin', true);
 }

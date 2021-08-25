@@ -3,8 +3,8 @@
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
-        <sp-menu-item @click="login" style="float:right;">登录</sp-menu-item>
-        <sp-menu-item @click="register" style="float:right;">注册</sp-menu-item>
+        <sp-menu-item @click="login" style="float:right;" v-show="!isLoggedIn">登录</sp-menu-item>
+        <sp-menu-item @click="logout" style="float:right;" v-show="isLoggedIn">注销</sp-menu-item>
       </template>
       <div class="header-img">
         <div class="scene">
@@ -35,12 +35,13 @@
         </div>
       </div>
     </transition>
+    <sp-login ref="login"></sp-login>
   </div>
 </template>
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
-
+import { clearAuth } from '../../lib/login';
 export default {
   name: 'index',
   directives: { infiniteScroll },
@@ -84,6 +85,14 @@ export default {
   destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
   },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    userName() {
+      return this.$store.getters.userName;
+    }
+  },
   methods: {
     // 点击图片回到顶部方法，加计时器是为了过渡顺滑
     backTop() {
@@ -108,12 +117,13 @@ export default {
     },
     // 跳转登录页
     login() {
-      this.$router.push({
-        name: 'login'
-      });
+      if (!this.isLoggedIn) {
+        this.$refs.login.editVisible = true;
+      }
     },
-    register() {
-      this.$message.error('暂未开放注册');
+    logout() {
+      clearAuth(this.$store);
+      this.$message.success('注销成功');
     },
     // 菜单切换
     menuChange() {

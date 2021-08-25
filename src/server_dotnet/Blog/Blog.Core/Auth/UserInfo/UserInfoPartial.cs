@@ -11,5 +11,8 @@ namespace Blog.Core.Auth.UserInfo
     {
         [DataMember]
         public  string is_lockName { get; set; }
+
+        [DataMember]
+        public string password { get; set; }
     }
 }

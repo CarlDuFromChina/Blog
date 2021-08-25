@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 namespace Blog.Core.Auth.UserInfo
 {
     [Entity("user_info", "用户", true)]
+    [KeyAttributes("请勿重复创建用户", "code")]
     public partial class user_info : BaseEntity
     {
         /// <summary>

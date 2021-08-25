@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Auth;
+using Blog.Core.Data;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +88,18 @@ namespace Blog.Blog
         public IEnumerable<BlogActivityModel> GetActivity()
         {
             return new BlogService().GetActivity();
+        }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, AllowAnonymous]
+        public LoginResponse SignUp(LoginRequest model)
+        {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+            return new BlogService().SignUp(model);
         }
     }
 }
