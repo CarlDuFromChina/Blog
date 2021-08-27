@@ -10,10 +10,9 @@ namespace Blog.Comments
 {
     public class CommentsController : BaseApiController
     {
-        [HttpPost, AllowAnonymous]
+        [HttpPost]
         public string CreateData(comments entity)
         {
-            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetAnonymous());
             return new CommentsService().CreateData(entity);
         }
 

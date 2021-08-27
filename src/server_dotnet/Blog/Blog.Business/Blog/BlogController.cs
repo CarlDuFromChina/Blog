@@ -90,16 +90,5 @@ namespace Blog.Blog
             return new BlogService().GetActivity();
         }
 
-        /// <summary>
-        /// 注册
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost, AllowAnonymous]
-        public LoginResponse SignUp(LoginRequest model)
-        {
-            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
-            return new BlogService().SignUp(model);
-        }
     }
 }

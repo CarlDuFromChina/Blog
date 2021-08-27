@@ -20,8 +20,8 @@
             <a-menu-item key="1" @click="() => this.$router.push({ name: 'notification' })"
               ><a-badge :dot="messageCount > 0"><a-icon type="notification" />消息</a-badge></a-menu-item
             >
-            <a-menu-item key="1" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
-            <a-menu-item key="2" @click="logout"><a-icon type="logout" />退出</a-menu-item>
+            <a-menu-item key="2" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
+            <a-menu-item key="3" @click="logout"><a-icon type="logout" />退出</a-menu-item>
           </a-menu>
           <a-badge :count="messageCount">
             <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
@@ -67,9 +67,9 @@ export default {
   },
   created() {
     this.getMenu();
+    this.imageUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
     sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
       this.$store.commit('updateUser', resp);
-      this.imageUrl = this.$store.getters.getAvatar;
     });
   },
   methods: {

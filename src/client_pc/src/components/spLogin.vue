@@ -38,7 +38,7 @@ export default {
   methods: {
     save() {
       this.$refs.form.validate().then(async () => {
-        const key = await sp.get('api/DataService/GetPublicKey');
+        const key = await sp.get('api/System/GetPublicKey');
         const { rsa, md5 } = encrypt;
         this.data.publicKey = key;
         this.data.password = rsa.encrypt(md5.encrypt(this.data.password), key);

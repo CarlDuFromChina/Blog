@@ -21,14 +21,14 @@
               <a-skeleton :loading="loading">
                 <div class="block">
                   <div style="display: flex">
-                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
-                <img :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+                <img v-if="data.big_surface_url" :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
@@ -45,7 +45,7 @@
               <div class="block-body">
                 <a-skeleton :loading="loading">
                   <a style="display: flex">
-                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
@@ -156,7 +156,6 @@ export default {
       data: {},
       recommandList: [],
       loading: false,
-      imageUrl: '',
       formatterContent: '',
       user: {},
       height: null,
@@ -169,7 +168,6 @@ export default {
       document.title = this.data.title;
     }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
-    this.imageUrl = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
     this.loadRecommand();
   },
   mounted() {

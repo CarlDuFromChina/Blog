@@ -33,13 +33,13 @@ export default {
   data() {
     return {
       user_info: {},
-      timeline: [],
-      avatarUrl: ''
+      timeline: []
     };
   },
   created() {
     this.getUserInfo();
     this.loadTimeline();
+    this.avatarUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
   },
   mounted() {
     this.loadCalendar();
@@ -64,7 +64,6 @@ export default {
     getUserInfo() {
       sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
         this.user_info = resp;
-        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar || ''}`;
       });
     },
     getVirtulData(year, activityData) {
@@ -103,7 +102,9 @@ export default {
             show: false
           },
           yearLabel: { show: false },
-          range: this.$moment().year().toString()
+          range: this.$moment()
+            .year()
+            .toString()
         },
         series: {
           type: 'heatmap',

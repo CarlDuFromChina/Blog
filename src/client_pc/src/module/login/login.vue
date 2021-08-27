@@ -77,7 +77,7 @@ export default {
       });
     },
     test() {
-      sp.get('api/DataService/test').then(resp => {
+      sp.get('api/System/test').then(resp => {
         if (resp) {
           this.$router.push({ name: 'workplace' });
         } else {
@@ -116,7 +116,7 @@ export default {
       try {
         const valid = await this.validate();
         if (valid) {
-          const key = await sp.get('api/DataService/GetPublicKey');
+          const key = await sp.get('api/System/GetPublicKey');
           const url = 'api/AuthUser/login';
           const { rsa, md5 } = encrypt;
           const data = {

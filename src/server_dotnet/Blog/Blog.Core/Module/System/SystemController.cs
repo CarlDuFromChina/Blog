@@ -4,6 +4,7 @@ using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
 using Blog.Core.Utils;
 using Blog.Core.WebApi;
+using Jdenticon.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ using System.Web;
 
 namespace Blog.Core.Module.DataService
 {
-    public class DataServiceController : BaseApiController
+    public class SystemController : BaseApiController
     {
         /// <summary>
         /// 获取公钥
@@ -23,7 +24,7 @@ namespace Blog.Core.Module.DataService
         [HttpGet, AllowAnonymous]
         public string GetPublicKey()
         {
-            return new DataService().GetPublicKey();
+            return new SystemService().GetPublicKey();
         }
 
         /// <summary>
@@ -33,7 +34,18 @@ namespace Blog.Core.Module.DataService
         [HttpGet, AllowAnonymous]
         public string GetRandomImage()
         {
-            return new DataService().GetRandomImage();
+            return new SystemService().GetRandomImage();
+        }
+
+        /// <summary>
+        /// 获取头像
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public object GetAvatar(string id)
+        {
+            return new SystemService().GetAvatar(id);
         }
 
         /// <summary>
@@ -52,6 +64,18 @@ namespace Blog.Core.Module.DataService
             {
                 return JwtHelper.SerializeJwt(token) != null;
             }
+        }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, AllowAnonymous]
+        public LoginResponse Login(LoginRequest model)
+        {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+            return new SystemService().Login(model);
         }
     }
 }

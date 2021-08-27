@@ -97,7 +97,7 @@ export default {
       sp.get(`api/idea/GetViewData?orderBy=createdOn desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
         resp => {
           const dataList = resp.DataList.map(item => {
-            item.avatar = this.$store.getters.getAvatar;
+            item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.createdBy}`;
             return item;
           });
           this.total = resp.RecordCount;

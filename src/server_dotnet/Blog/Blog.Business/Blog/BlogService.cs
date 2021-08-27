@@ -1,6 +1,4 @@
 ﻿using Blog.Core;
-using Blog.Core.Auth;
-using Blog.Core.Auth.UserInfo;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
@@ -160,71 +158,6 @@ WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND create
 GROUP BY to_char(createdon, 'YYYY-MM-DD')
 ";
             return Broker.Query<BlogActivityModel>(sql);
-        }
-
-        /// <summary>
-        /// 注册
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public LoginResponse SignUp(LoginRequest model)
-        {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
-            AssertUtil.CheckBoolean<SpException>(!model.code.Contains("@"), "账号格式错误", "");
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
-
-            return Broker.ExecuteTransaction(() =>
-            {
-                var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", model.code } });
-                if (authUser != null)
-                {
-                    return new AuthUserService(Broker).Login(model.code, model.password, model.publicKey);
-                }
-
-                var role = new SysRoleService().GetGuest();
-                var user = new user_info() { code = model.code, password = model.password };
-                var system = UserIdentityUtil.GetSystem();
-                user.Id = Guid.NewGuid().ToString();
-                user.name = model.code.Split("@")[0];
-                user.avatar = "";
-                user.mailbox = model.code;
-                user.code = model.code;
-                user.roleid = role.Id;
-                user.roleidName = role.name;
-                user.createdBy = system.Id;
-                user.createdByName = system.Name;
-                user.createdOn = DateTime.Now;
-                user.modifiedBy = system.Id;
-                user.modifiedByName = system.Name;
-                user.modifiedOn = DateTime.Now;
-                user.stateCode = 1;
-                user.stateCodeName = "启用";
-                Broker.Create(user, false);
-                var _authUser = new auth_user()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    name = user.name,
-                    code = user.code,
-                    roleid = user.roleid,
-                    roleidName = user.roleidName,
-                    user_infoid = user.user_infoId,
-                    is_lock = false,
-                    is_lockName = "否",
-                    last_login_time = DateTime.Now,
-                    password = RSAUtil.Decrypt(model.password, model.publicKey)
-                };
-                Broker.Create(_authUser);
-
-                // 返回登录结果、用户信息、用户验证票据信息
-                return new LoginResponse
-                {
-                    result = true,
-                    userName = user.code,
-                    token = JwtHelper.CreateToken(new JwtTokenModel() { Code = user.code, Name = user.name, Role = user.code, Uid = user.Id }),
-                    userId = user.Id,
-                    message = "登录成功"
-                };
-            });
         }
     }
 }

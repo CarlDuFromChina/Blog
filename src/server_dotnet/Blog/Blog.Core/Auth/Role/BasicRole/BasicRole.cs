@@ -97,8 +97,6 @@ WHERE sys_roleidName = @name
         {
             var role = GetSysRole();
             var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
-            var dataList = new List<sys_role_privilege>();
-
             var sql = @"
 SELECT * FROM sys_entity
 WHERE sys_entityid NOT IN (
@@ -117,8 +115,6 @@ WHERE sys_entityid NOT IN (
         {
             var role = GetSysRole();
             var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
-            var dataList = new List<sys_role_privilege>();
-
             var sql = @"
 SELECT * FROM sys_menu
 WHERE sys_menuid NOT IN (

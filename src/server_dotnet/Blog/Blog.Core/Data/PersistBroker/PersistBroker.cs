@@ -40,10 +40,10 @@ namespace Blog.Core.Data
             {
                 #region 创建前 Plugin
                 var context = new PersistBrokerPluginContext() { Entity = entity, Broker = this, Action = EntityAction.PreCreate, EntityName = entity.EntityName };
+                ServiceContainer.ResolveAll<IPersistBrokerBeforeCreateOrUpdate>()?
+                    .Each(item => item.Execute(context));
                 if (usePlugin)
                 {
-                    ServiceContainer.ResolveAll<IPersistBrokerBeforeCreateOrUpdate>()?
-                        .Each(item => item.Execute(context));
                     ServiceContainer.ResolveAll<IPersistBrokerPlugin>(item => item.StartsWith(entity.EntityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
                         .Each(item => item.Execute(context));
                 }

@@ -1,5 +1,5 @@
 <template>
-  <a-comment :avatar="'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'" style="padding: 10px">
+  <a-comment :avatar="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="padding: 10px">
     <a slot="author">
       <template v-if="data.name === '名称'">
         {{ data.createdByName }}
@@ -48,7 +48,8 @@ export default {
     return {
       controllerName: 'Comments',
       showReply: false,
-      value: ''
+      value: '',
+      baseUrl: sp.getServerUrl()
     };
   },
   computed: {
