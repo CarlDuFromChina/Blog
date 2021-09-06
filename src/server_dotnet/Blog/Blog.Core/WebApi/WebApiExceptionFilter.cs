@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Authentication;
 using System.Text;
 
 namespace Blog.Core.WebApi
@@ -42,7 +43,31 @@ namespace Blog.Core.WebApi
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
-            else if (context.Exception as SpException == null)
+            else if (context.Exception is InvalidCredentialException)
+            {
+                ContentResult result = new ContentResult
+                {
+                    StatusCode = 403,
+                    ContentType = "application/json; charset=utf-8",
+                    Content = context.Exception.Message
+                };
+                context.Result = result;
+                context.ExceptionHandled = true;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            }
+            else if (context.Exception is SpException)
+            {
+                ContentResult result = new ContentResult
+                {
+                    StatusCode = 500,
+                    ContentType = "application/json; charset=utf-8",
+                    Content = context.Exception.Message
+                };
+                context.Result = result;
+                context.ExceptionHandled = true;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+            else
             {
                 ContentResult result = new ContentResult
                 {

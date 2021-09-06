@@ -4,12 +4,14 @@ using Blog.Core.Auth.UserInfo;
 using Blog.Core.Config;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
+using Blog.Core.Module.Vertification.Mail;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
 using Blog.Core.Utils;
 using Jdenticon.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,53 +72,45 @@ namespace Blog.Core.Module.DataService
         public LoginResponse Login(LoginRequest model)
         {
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
-            AssertUtil.CheckBoolean<SpException>(!model.code.Contains("@"), "账号格式错误", "");
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
 
             return Broker.ExecuteTransaction(() =>
             {
-                var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", model.code } });
-                if (authUser != null)
+                var loginResponse = new AuthUserService(Broker).Login(model.code, model.password, model.publicKey);
+                if (loginResponse.result)
                 {
-                    return new AuthUserService(Broker).Login(model.code, model.password, model.publicKey);
+                    return loginResponse;
                 }
 
-                var role = new SysRoleService().GetGuest();
-                var user = new user_info()
+                if (!model.code.Contains("@"))
+                    return new LoginResponse(false, "注册失败，请使用邮箱作为账号");
+
+                var vertification = new MailVertificationService(Broker).GetDataByMailAdress(model.code);
+                if (vertification != null)
+                    return new LoginResponse(false, "激活邮件已发送，请前往邮件激活账号，请勿重复注册", LoginMesageLevel.Warning);
+
+                var id = Guid.NewGuid().ToString();
+                model.password = RSAUtil.Decrypt(model.password, model.publicKey);
+                var data = new mail_vertification()
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    code = model.code,
-                    password = model.password,
-                    name = model.code.Split("@")[0],
-                    roleid = role.Id,
-                    roleidName = role.name,
-                    stateCode = 1,
-                    stateCodeName = "启用"
+                    Id = id,
+                    name = "账号激活邮件",
+                    content = $@"你好,<br/><br/>
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
+",
+                    expire_time = DateTime.Now.AddHours(2),
+                    is_active = false,
+                    login_request = JsonConvert.SerializeObject(model),
+                    mail_address = model.code
                 };
-                Broker.Create(user, false);
-                var _authUser = new auth_user()
-                {
-                    Id = user.user_infoId,
-                    name = user.name,
-                    code = user.code,
-                    roleid = user.roleid,
-                    roleidName = user.roleidName,
-                    user_infoid = user.user_infoId,
-                    is_lock = false,
-                    is_lockName = "否",
-                    last_login_time = DateTime.Now,
-                    password = RSAUtil.Decrypt(model.password, model.publicKey)
-                };
-                Broker.Create(_authUser);
+                Broker.Create(data);
 
                 // 返回登录结果、用户信息、用户验证票据信息
-                return new LoginResponse
+                return new LoginResponse()
                 {
-                    result = true,
-                    userName = user.code,
-                    token = JwtHelper.CreateToken(new JwtTokenModel() { Code = user.code, Name = user.name, Role = user.code, Uid = user.Id }),
-                    userId = user.Id,
-                    message = "登录成功"
+                    result = false,
+                    message = $"已向{data.mail_address}发送激活邮件，请在两个小时内激活",
+                    level = LoginMesageLevel.Warning.ToString()
                 };
             });
         }

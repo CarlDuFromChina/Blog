@@ -13,5 +13,15 @@ namespace Blog.Core.Config
         /// 默认密码
         /// </summary>
         public string DefaultPassword { get; set; }
+
+        /// <summary>
+        /// 域名
+        /// </summary>
+        public string Domain { get; set; }
+
+        /// <summary>
+        /// 协议
+        /// </summary>
+        public string Protocol { get; set; }
     }
 }

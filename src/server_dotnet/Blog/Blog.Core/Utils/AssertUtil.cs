@@ -65,5 +65,15 @@ namespace Blog.Core.Utils
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// 是否为空
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static bool CheckEmpty(params string[] args)
+        {
+            return args.Any(item => string.IsNullOrEmpty(item));
+        }
     }
 }

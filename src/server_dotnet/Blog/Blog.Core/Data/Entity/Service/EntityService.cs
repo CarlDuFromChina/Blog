@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Blog.Core.Auth;
+using Blog.Core.Auth.Privilege;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Module.SysEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -125,5 +129,28 @@ namespace Blog.Core.Data
             _context.Delete(ids);
         }
         #endregion
+
+        /// <summary>
+        /// 获取用户对实体的权限
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public EntityPrivilegeResponse GetPrivilege()
+        {
+            var sql = @"
+SELECT * FROM sys_role_privilege
+WHERE sys_roleid = @id and object_type = 'sys_entity'
+and objectid = @entityid";
+            var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().EntityName)?.Id } };
+            var data = Broker.Retrieve<sys_role_privilege>(sql, paramList);
+
+            return new EntityPrivilegeResponse()
+            {
+                read = data.privilege >= 1,
+                create = data.privilege >= 3,
+                delete = data.privilege >= 7
+            };
+        }
     }
 }

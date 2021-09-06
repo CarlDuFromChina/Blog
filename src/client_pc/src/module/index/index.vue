@@ -4,6 +4,7 @@
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
         <sp-menu-item @click="login" style="float:right;" v-show="!isLoggedIn">登录</sp-menu-item>
+        <sp-menu-item @click="goBg" style="float:right;" v-show="isLoggedIn">后台</sp-menu-item>
         <sp-menu-item @click="logout" style="float:right;" v-show="isLoggedIn">注销</sp-menu-item>
       </template>
       <div class="header-img">
@@ -124,6 +125,9 @@ export default {
     logout() {
       clearAuth(this.$store);
       this.$message.success('注销成功');
+    },
+    goBg() {
+      this.$router.push({ name: 'workplace' });
     },
     // 菜单切换
     menuChange() {

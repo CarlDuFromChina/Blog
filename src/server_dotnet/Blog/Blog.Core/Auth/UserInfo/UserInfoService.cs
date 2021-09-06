@@ -1,4 +1,5 @@
 ﻿using Blog.Core.Data;
+using Blog.Core.Utils;
 using System.Collections.Generic;
 
 namespace Blog.Core.Auth.UserInfo
@@ -44,6 +45,35 @@ LEFT JOIN (
                     Name = "所有的用户信息"
                 }
             };
+        }
+
+        public user_info GetData()
+        {
+            return Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+        }
+
+        /// <summary>
+        /// 通过Code查询用户信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public user_info GetDataByCode(string code)
+        {
+            var sql = @"
+SELECT * FROM user_info
+WHERE code = @code";
+            return Broker.Retrieve<user_info>(sql, new Dictionary<string, object>() { { "@code", code } });
+        }
+
+        /// <summary>
+        /// 是否需要填充信息
+        /// </summary>
+        /// <returns></returns>
+        public bool InfoFilled()
+        {
+            var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
+            return !user.gender.HasValue || AssertUtil.CheckEmpty(user.mailbox, user.cellphone, user.realname);
         }
     }
 }

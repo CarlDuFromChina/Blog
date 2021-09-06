@@ -1,15 +1,15 @@
 <template>
-  <a-form-model ref="form" :model="data">
+  <a-form-model ref="form" :model="data" :rules="rules">
     <a-tabs default-active-key="1" :animated="false">
       <a-tab-pane key="1" tab="个人资料">
         <a-row :gutter="24">
           <a-col :span="12">
-            <a-form-model-item label="昵称">
+            <a-form-model-item label="昵称" prop="name">
               <a-input v-model="data.name"></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="12">
-            <a-form-model-item label="编码">
+            <a-form-model-item label="编码" prop="code">
               <a-input v-model="data.code" :disabled="pageState == 'edit'"></a-input>
             </a-form-model-item>
           </a-col>
@@ -39,7 +39,7 @@
         <a-row :gutter="24">
           <a-col>
             <a-form-model-item label="自我介绍">
-              <a-input v-model="data.introduction" type="textarea"></a-input>
+              <a-input v-model="data.introduction" type="textarea" placeholder="请介绍一下你自己...."></a-input>
             </a-form-model-item>
           </a-col>
         </a-row>
@@ -65,19 +65,19 @@
       <a-tab-pane key="2" tab="账号设置">
         <a-row :gutter="24">
           <a-col :span="12">
-            <a-form-model-item label="邮箱">
+            <a-form-model-item label="邮箱" prop="mailbox">
               <a-input v-model="data.mailbox"></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="12">
-            <a-form-model-item label="手机号码">
+            <a-form-model-item label="手机号码" prop="cellphone">
               <a-input v-model="data.cellphone"></a-input>
             </a-form-model-item>
           </a-col>
         </a-row>
         <a-row :gutter="24">
           <a-col :span="12">
-            <a-form-model-item label="角色">
+            <a-form-model-item label="角色" prop="roleid">
               <sp-select v-model="data.roleid" :options="roles" @change="item => (data.roleidName = item.name)"></sp-select>
             </a-form-model-item>
           </a-col>
@@ -125,7 +125,15 @@ export default {
       baseUrl: sp.getServerUrl(),
       token: '',
       fileList: [],
-      roles: []
+      roles: [],
+      rules: {
+        name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入编码', trigger: 'blur' }],
+        gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+        mailbox: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+        cellphone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
+        roleid: [{ required: true, message: '请选择角色', trigger: 'blur' }]
+      }
     };
   },
   async created() {

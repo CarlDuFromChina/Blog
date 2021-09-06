@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Auth.Privilege;
+using Blog.Core.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -107,6 +108,12 @@ namespace Blog.Core.WebApi
         public void DeleteData([FromBody]List<string> ids)
         {
             new S().DeleteData(ids);
+        }
+
+        [HttpGet]
+        public EntityPrivilegeResponse GetPrivilege()
+        {
+            return new S().GetPrivilege();
         }
     }
 }

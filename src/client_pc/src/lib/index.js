@@ -32,9 +32,6 @@ axios.interceptors.response.use(
       return Promise.resolve(true);
     }
     return Promise.resolve(response);
-  },
-  () => {
-    return Promise.reject(new Error('服务器开小差了'));
   }
 );
 
@@ -43,7 +40,7 @@ const downloadUrl = url => {
   let iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   iframe.src = url;
-  iframe.onload = function() {
+  iframe.onload = function () {
     document.body.removeChild(iframe);
   };
   document.body.appendChild(iframe);

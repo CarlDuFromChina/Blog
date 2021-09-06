@@ -14,6 +14,7 @@
     <None Remove="appsettings.json" />
     <None Remove="log4net.config" />
     <None Remove="version\2.0\2021070702-角色（sys_role）初始化数据.sql" />
+    <None Remove="version\2.0\2021070703-用户信息（user_info）初始化.sql" />
     <None Remove="version\2.0\2021070703-用户角色（auth_user）初始化.sql" />
     <None Remove="version\2.0\2021070704-菜单（sys_menu）初始化.sql" />
     <None Remove="version\2.0\2021070705-选项集（sys_paramgroup）初始化.sql" />
@@ -30,6 +31,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070702-角色（sys_role）初始化数据.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.0\2021070703-用户信息（user_info）初始化.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070703-用户角色（auth_user）初始化.sql">
