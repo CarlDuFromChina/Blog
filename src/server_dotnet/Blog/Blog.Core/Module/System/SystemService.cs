@@ -47,7 +47,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public object GetAvatar(string id)
+        public IActionResult GetAvatar(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -58,7 +58,7 @@ namespace Blog.Core.Module.DataService
             if (!string.IsNullOrEmpty(user?.avatar))
             {
                 var config = StoreConfig.Config;
-                return ServiceContainer.Resolve<IStoreStrategy>(config?.Type).DownLoad(user.avatar);
+                return ServiceContainer.Resolve<IStoreStrategy>(config?.Type).DownLoad(user.avatar)?.Result;
             }
             return IdenticonResult.FromValue(id, 64);
         }
