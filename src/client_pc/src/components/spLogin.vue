@@ -5,10 +5,10 @@
         <a-input v-model="data.code" placeholder="邮箱"></a-input>
       </a-form-model-item>
       <a-form-model-item prop="password">
-        <a-input v-model="data.password" placeholder="密码" type="password"></a-input>
+        <a-input v-model="data.password" placeholder="密码" type="password" @keyup.enter.native="login"></a-input>
       </a-form-model-item>
     </a-form-model>
-    <a-button type="primary" block @click="save">
+    <a-button type="primary" block @click="login">
       登录
     </a-button>
     <a-alert style="margin-top: 8px" message="如果邮箱不存在即注册" type="info" banner closable />
@@ -36,7 +36,7 @@ export default {
     };
   },
   methods: {
-    save() {
+    login() {
       this.$refs.form.validate().then(async () => {
         try {
           const key = await sp.get('api/System/GetPublicKey');

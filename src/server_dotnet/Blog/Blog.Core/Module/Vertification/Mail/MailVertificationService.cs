@@ -63,6 +63,7 @@ AND expire_time > CURRENT_TIMESTAMP";
                     code = model.code,
                     password = model.password,
                     name = model.code.Split("@")[0],
+                    mailbox = model.code,
                     roleid = role.Id,
                     roleidName = role.name,
                     stateCode = 1,
