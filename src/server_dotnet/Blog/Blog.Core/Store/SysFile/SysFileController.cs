@@ -73,6 +73,7 @@ namespace Blog.Core.Store.SysFile
         /// 上传图片，自动生成预览图片
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
         public IEnumerable<ImageInfo> UploadImage([FromForm]IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId)
         {
             var stream = file.OpenReadStream();

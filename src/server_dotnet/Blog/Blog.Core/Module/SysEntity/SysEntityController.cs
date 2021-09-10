@@ -17,6 +17,7 @@ namespace Blog.Core.Module.SysEntity
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public IList<sys_attrs> GetEntityAttrs(string id)
         {
             return new SysEntityService().GetEntityAttrs(id);
