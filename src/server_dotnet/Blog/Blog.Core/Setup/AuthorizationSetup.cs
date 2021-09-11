@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Core.Auth
+namespace Blog.Core
 {
     public static class AuthorizationSetup
     {

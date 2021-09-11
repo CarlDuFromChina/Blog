@@ -9,7 +9,7 @@ namespace Blog.Core.Setup
 {
     public static class SwaggerSetup
     {
-        public static void AddSwaggerSetup(this IServiceCollection services)
+        public static void AddSwagger(this IServiceCollection services)
         {
             var config = SwaggerConfig.Config;
             services.AddSwaggerGen(c =>

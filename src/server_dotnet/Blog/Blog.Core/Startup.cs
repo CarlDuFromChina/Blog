@@ -62,13 +62,17 @@ namespace Blog.Core
 
             services.AddHttpContextAccessor();
 
-            ServiceContainer.AddServices(services);
+            // 添加依赖注入服务
+            services.AddServices();
 
-            AuthorizationSetup.AddAuthorizationSetup(services);
+            // 添加Jwt认证服务
+            services.AddAuthorizationSetup();
 
+            // 添加Swagger
             if (SwaggerConfig.Enable)
-                services.AddSwaggerSetup();
+                services.AddSwagger();
 
+            // 添加AutoMapper
             services.AddAutoMapper(MapperHelper.MapType());
         }
 

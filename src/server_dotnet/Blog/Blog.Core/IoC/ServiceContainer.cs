@@ -12,20 +12,7 @@ namespace Blog.Core
 {
     public static class ServiceContainer
     {
-        private static IServiceCollection Services;
-
-        public static void AddServices(IServiceCollection services)
-        {
-            Services = services;
-
-            var types = AssemblyUtil.GetAssemblies().GetTypes();
-            var interfaces = types.Where(item => item.IsInterface && item.IsDefined(typeof(ServiceRegisterAttribute), false)).ToList();
-            interfaces.ForEach(item =>
-            {
-                var _types = types.Where(type => !type.IsInterface && !type.IsAbstract && type.GetInterfaces().Contains(item) && !type.IsDefined(typeof(IgnoreServiceRegisterAttribute), false)).ToList();
-                _types.ForEach(type => Register(item, type));
-            });
-        }
+        public static IServiceCollection Services;
 
         public static void Register(Type typeFrom, Type typeTo)
         {
