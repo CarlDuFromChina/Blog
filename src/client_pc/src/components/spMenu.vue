@@ -42,7 +42,7 @@ export default {
     });
   },
   destroyed() {
-    this.$bus.$destroyed('scroll');
+    this.$bus.$off('scroll');
   },
   methods: {
     menuChange(item) {

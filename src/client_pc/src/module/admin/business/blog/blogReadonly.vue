@@ -274,6 +274,7 @@ export default {
       display: inline-block;
       line-height: 60px;
       padding-left: 20px;
+      background: #fff;
     }
     .blog-body {
       background-color: #e9ecef;

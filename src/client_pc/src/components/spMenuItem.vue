@@ -1,5 +1,5 @@
 <template>
-  <li class="menu-item" @click="handleClick">
+  <li ref="menuItem" class="menu-item" @click="handleClick">
     <slot></slot>
   </li>
 </template>
@@ -7,6 +7,18 @@
 <script>
 export default {
   name: 'sp-menu-item',
+  props: {
+    disableHover: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted() {
+    if (!this.disableHover) {
+      const ref = this.$refs.menuItem;
+      ref.classList.add('hover');
+    }
+  },
   methods: {
     handleClick() {
       this.$emit('click');
@@ -34,7 +46,9 @@ li {
   color: #222226;
 }
 
-li:hover {
-  background: #f0f0f5;
+.hover {
+  &:hover {
+    background: #f0f0f5;
+  }
 }
 </style>

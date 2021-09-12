@@ -77,5 +77,11 @@ namespace Blog.Core.Module.DataService
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             return new SystemService().Login(model);
         }
+
+        [HttpGet]
+        public bool GetShowAdmin()
+        {
+            return new SystemService().GetShowAdmin();
+        }
     }
 }

@@ -3,9 +3,19 @@
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
-        <sp-menu-item @click="login" style="float:right;" v-show="!isLoggedIn">登录</sp-menu-item>
-        <sp-menu-item @click="goBg" style="float:right;" v-show="isLoggedIn">后台</sp-menu-item>
-        <sp-menu-item @click="logout" style="float:right;" v-show="isLoggedIn">注销</sp-menu-item>
+        <sp-menu-item style="float:right;" v-show="!isLoggedIn" disableHover>
+          <a-button icon="login" type="primary" @click="login">登录</a-button>
+        </sp-menu-item>
+        <sp-menu-item style="float:right;" v-show="isLoggedIn" disableHover>
+          <a-dropdown>
+            <a-menu slot="overlay">
+              <a-menu-item key="2" @click="goBg" v-show="showAdmin"><a-icon type="appstore" />后台</a-menu-item>
+              <a-menu-item key="3" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
+              <a-menu-item key="4" @click="logout"><a-icon type="logout" />注销</a-menu-item>
+            </a-menu>
+            <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />
+          </a-dropdown>
+        </sp-menu-item>
       </template>
     </sp-menu>
     <!-- 菜单 -->
@@ -23,21 +33,30 @@
         </div>
       </div>
     </transition>
+    <a-modal v-model="userInfoEditVisible" title="编辑" @ok="saveUserInfo" width="60%" okText="确认" cancelText="取消">
+      <user-info-edit ref="userInfoEdit" :related-attr="getUserParam()" @close="userInfoEditVisible = false"></user-info-edit>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
 import { clearAuth } from '../../lib/login';
+import userInfoEdit from '../admin/core/userInfo/userInfoEdit.vue';
+
 export default {
   name: 'index',
   directives: { infiniteScroll },
+  components: { userInfoEdit },
   data() {
     return {
       bottom: 100,
       scrollTop: 0,
       btnFlag: false,
       activeIndex: '1',
+      userInfoEditVisible: false,
+      messageCount: 0,
+      showAdmin: false,
       menus: [
         {
           name: '首页',
@@ -63,6 +82,13 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
   },
+  created() {
+    if (this.isLoggedIn) {
+      sp.get('api/System/GetShowAdmin').then(resp => {
+        this.showAdmin = resp;
+      });
+    }
+  },
   destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
   },
@@ -75,6 +101,9 @@ export default {
     }
   },
   methods: {
+    getAvatar() {
+      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
+    },
     // 点击图片回到顶部方法，加计时器是为了过渡顺滑
     backTop() {
       let timer = setInterval(() => {
@@ -116,6 +145,14 @@ export default {
     },
     loadMore() {
       this.$bus.$emit('load-more');
+    },
+    saveUserInfo() {
+      this.$refs.userInfoEdit.saveData();
+    },
+    getUserParam() {
+      return {
+        id: sp.getUserId()
+      };
     }
   }
 };

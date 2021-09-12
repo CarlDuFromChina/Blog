@@ -114,5 +114,25 @@ namespace Blog.Core.Module.DataService
                 };
             });
         }
+
+        /// <summary>
+        /// 是否有进入后台权限
+        /// </summary>
+        /// <returns></returns>
+        public bool GetShowAdmin()
+        {
+            var userId = UserIdentityUtil.GetCurrentUserId();
+            if (string.IsNullOrEmpty(userId))
+                return false;
+
+            var user = Broker.Retrieve<user_info>(userId);
+            if (user == null)
+                return false;
+
+            if (user.roleid == UserIdentityUtil.ANONYMOUS_ID)
+                return true;
+
+            return false;
+        }
     }
 }

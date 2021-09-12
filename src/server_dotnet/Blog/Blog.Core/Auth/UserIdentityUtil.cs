@@ -8,8 +8,28 @@ namespace Blog.Core.Auth
     /// <summary>
     /// 用户身份认证帮助类
     /// </summary>
-    public class UserIdentityUtil
+    public static class UserIdentityUtil
     {
+        /// <summary>
+        /// 匿名id
+        /// </summary>
+        public const string ANONYMOUS_ID = "222222222-22222-2222-2222-222222222222";
+
+        /// <summary>
+        /// 管理员id
+        /// </summary>
+        public const string ADMIN_ID = "00000000-0000-0000-0000-000000000000";
+
+        /// <summary>
+        /// 系统用户id
+        /// </summary>
+        public const string SYSTEM_ID = "111111111-11111-1111-1111-111111111111";
+
+        /// <summary>
+        /// 用户id
+        /// </summary>
+        public const string USER_ID = "333333333-33333-3333-3333-333333333333";
+
         /// <summary>
         /// 用户Id
         /// </summary>
@@ -60,7 +80,7 @@ namespace Blog.Core.Auth
             return new CurrentUserModel()
             {
                 Code = "admin",
-                Id = "00000000-0000-0000-0000-000000000000",
+                Id = ADMIN_ID,
                 Name = "系统管理员"
             };
         }
@@ -74,7 +94,7 @@ namespace Blog.Core.Auth
             return new CurrentUserModel()
             {
                 Code = "anonymous",
-                Id = "222222222-22222-2222-2222-222222222222",
+                Id = ANONYMOUS_ID,
                 Name = "访客"
             };
         }
@@ -88,7 +108,7 @@ namespace Blog.Core.Auth
             return new CurrentUserModel()
             {
                 Code = "system",
-                Id = "111111111-11111-1111-1111-111111111111",
+                Id = SYSTEM_ID,
                 Name = "系统"
             };
         }
