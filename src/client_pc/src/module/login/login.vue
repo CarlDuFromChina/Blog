@@ -129,7 +129,7 @@ export default {
             .then(resp => {
               if (resp.result) {
                 saveAuth(this.$store, resp);
-                that.$router.push({ name: 'workplace' });
+                that.$router.push({ name: 'index' });
                 that.$message.success(resp.message);
               } else {
                 this.isLoginFailed = true;

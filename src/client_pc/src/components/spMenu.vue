@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-menu-header">
+  <div ref="header" class="sp-menu-header">
     <div class="sp-menu-header-wrapper">
       <a-row>
         <a-col>
@@ -28,6 +28,22 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.$bus.$on('scroll', val => {
+      const ref = this.$refs.header;
+      if (val !== 0) {
+        ref.style.position = 'fixed';
+        ref.style.width = '100%';
+        ref.style.zIndex = 99;
+        ref.style.top = 0;
+      } else {
+        ref.style.position = 'relative';
+      }
+    });
+  },
+  destroyed() {
+    this.$bus.$destroyed('scroll');
+  },
   methods: {
     menuChange(item) {
       this.$emit('menu-change');
@@ -39,16 +55,15 @@ export default {
 
 <style lang="less" scoped>
 .sp-menu-header {
+  // transition: all 0.2s;
+  // transform: translate3d(0, -100%, 0);
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+  color: #222226;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 400;
   .sp-menu-header-wrapper {
     width: 100%;
-    background: rgba(40, 42, 44, 0.6);
-    /*margin-bottom:30px;*/
-    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
     z-index: 100;
     .sp-menu-list {
       background: transparent;

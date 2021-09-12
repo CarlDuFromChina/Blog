@@ -18,10 +18,8 @@ export default {
 <style lang="less" scoped>
 .menu-item {
   float: left;
-  height: 60px;
-  line-height: 60px;
+  line-height: 48px;
   padding: 0 20px;
-  margin: 0;
   border-bottom: 2px solid transparent;
   transition: border-color 0.3s, background-color 0.3s, color 0.3s;
   box-sizing: border-box;
@@ -32,11 +30,11 @@ export default {
 }
 
 li {
-  font-size: 16px;
-  color: #fff;
+  font-size: 14px;
+  color: #222226;
 }
 
 li:hover {
-  background: #48456c;
+  background: #f0f0f5;
 }
 </style>

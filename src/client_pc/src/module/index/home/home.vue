@@ -17,6 +17,14 @@
       <!-- 想法 -->
       <idea :pageSize="5" style="margin-bottom:20px;"></idea>
       <!-- 想法 -->
+
+      <div class="more">
+        <p>作者：Karl Du</p>
+        <p>博客仓库地址：<a href="https://github.com/CarlDuFromChina/blog">blog</a></p>
+        <p>我的邮箱：<a href="mailto:18556906294@163.com">18556906294@163.com</a></p>
+        <p>版本号：2.2</p>
+        <p><a href="http://www.miitbeian.gov.cn">苏ICP备2020054977号</a></p>
+      </div>
     </a-layout-sider>
   </a-layout>
 </template>
@@ -57,5 +65,13 @@ export default {
 <style lang="less" scoped>
 /deep/ .ant-layout-sider-light {
   background: #edeef2;
+}
+
+.more {
+  border-radius: 2px;
+  margin-bottom: 1.3rem;
+  line-height: 1;
+  font-size: 14px;
+  color: #9aa3ab;
 }
 </style>
