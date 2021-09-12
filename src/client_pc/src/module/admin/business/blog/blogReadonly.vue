@@ -79,6 +79,7 @@
         </a-layout>
       </div>
     </div>
+    <a-back-top :target="getBlogEl" :visibilityHeight="100" />
   </div>
 </template>
 
@@ -212,6 +213,9 @@ export default {
     }
   },
   methods: {
+    getBlogEl() {
+      return document.getElementById('blog');
+    },
     loadRecommand() {
       sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
         this.recommandList = resp;

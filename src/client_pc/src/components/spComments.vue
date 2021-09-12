@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-comment v-if="!disabled">
-      <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
+      <a-avatar slot="avatar" :src="getAvatar()" alt="Han Solo" />
       <div slot="content">
         <a-form-item>
           <a-textarea ref="commentInput" placeholder="请输入评论" :rows="4" :value="value" @change="handleChange" @click="showLogin" />
@@ -114,6 +114,13 @@ export default {
     },
     formtDate(val) {
       return this.$moment(val).fromNow();
+    },
+    getAvatar() {
+      const userId = sp.getUserId();
+      if (sp.isNullOrEmpty(userId)) {
+        return 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+      }
+      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
     }
   }
 };
