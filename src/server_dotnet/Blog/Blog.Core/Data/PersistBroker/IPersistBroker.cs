@@ -24,8 +24,9 @@ namespace Blog.Core.Data
         /// 创建实体记录
         /// </summary>
         /// <param name="entity">实体对象实例</param>
+        /// <param name="usePlugin">是否使用Plugin</param>
         /// <returns></returns>
-        string Create(BaseEntity entity);
+        string Create(BaseEntity entity, bool usePlugin = true);
 
         /// <summary>
         /// 更新实体记录

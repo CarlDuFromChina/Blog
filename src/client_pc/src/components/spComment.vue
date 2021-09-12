@@ -1,93 +1,108 @@
 <template>
-  <div>
-    <a-list
-      v-if="comments.length"
-      :data-source="comments"
-      :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
-      item-layout="horizontal"
-    >
-      <a-list-item slot="renderItem" slot-scope="item">
-        <a-comment :author="item.name" :avatar="item.avatar" :content="item.comment" :datetime="item.createdOn | moment('YYYY-MM-DD HH:mm')" />
-      </a-list-item>
-    </a-list>
-    <a-comment v-if="!disabled">
-      <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
-      <div slot="content">
-        <a-form-item>
-          <a-textarea :rows="4" :value="value" @change="handleChange" />
-        </a-form-item>
-        <a-form-item>
-          <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
-            提交留言
-          </a-button>
-        </a-form-item>
-      </div>
-    </a-comment>
-  </div>
+  <a-comment :avatar="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="padding: 10px">
+    <a slot="author">
+      <template v-if="data.name === '名称'">
+        {{ data.createdByName }}
+        <span>{{ data.name }}</span>
+      </template>
+      <template v-else-if="data.name === '回复'">
+        {{ data.createdByName }}
+        <span>{{ data.name }}</span>
+        {{ data.replyidName }}
+      </template>
+      <template v-else>
+        {{ data.createdByName }}
+      </template>
+    </a>
+    <p slot="content" style="background: #f7f8fa">
+      {{ data.comment }}
+    </p>
+    <a-tooltip slot="datetime" :title="data.createdOn | moment('YYYY-MM-DD HH:mm:ss')">
+      <span>{{ formtDate(data.createdOn) }}</span>
+    </a-tooltip>
+    <template slot="actions">
+      <!-- <span key="comment-basic-like" @click="like">
+          <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" />
+          <span style="padding-left: '8px';cursor: 'auto'">点赞</span>
+        </span> -->
+      <span key="comment-basic-reply-to" @click="clickReply">
+        <a-icon type="form" :theme="showReply ? 'filled' : 'outlined'" />
+        <span style="padding-left: '8px';cursor: 'auto'">{{ showReply ? '取消回复' : '回复' }}</span>
+      </span>
+    </template>
+    <div v-show="showReply" class="reply">
+      <a-textarea :value="value" @change="handleChange"></a-textarea>
+      <a-button type="primary" style="margin-top: 8px" size="small" @click="reply">回复</a-button>
+    </div>
+    <slot />
+  </a-comment>
 </template>
+
 <script>
 export default {
   name: 'sp-comment',
   props: {
-    objectId: {
-      type: String,
-      default: '',
-      required: true
-    },
-    objectName: {
-      type: String,
-      default: '',
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
+    data: {}
   },
   data() {
     return {
       controllerName: 'Comments',
-      comments: [],
-      submitting: false,
-      value: ''
+      showReply: false,
+      value: '',
+      baseUrl: sp.getServerUrl()
     };
   },
-  created() {
-    this.getDataList();
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
   },
   methods: {
-    getDataList() {
-      const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
-      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {
-        this.comments = resp;
-      });
-    },
-    handleSubmit() {
-      if (!this.value) {
-        return;
-      }
-
-      this.submitting = true;
-
-      setTimeout(() => {
-        this.submitting = false;
-        const comment = {
-          Id: uuid.generate(),
-          name: '游客',
-          comment: this.value,
-          objectid: this.objectId,
-          object_name: this.objectName
-        };
-        sp.post('api/Comments/CreateData', comment).then(resp => {
-          this.getDataList();
-          this.$message.success('留言成功');
-        });
-        this.value = '';
-      }, 1000);
+    formtDate(val) {
+      return this.$moment(val).fromNow();
     },
     handleChange(e) {
       this.value = e.target.value;
+    },
+    clickReply() {
+      if (!this.isLoggedIn) {
+        this.$emit('login');
+        return;
+      }
+      this.showReply = !this.showReply;
+    },
+    reply() {
+      if (sp.isNullOrEmpty(this.value)) {
+        this.$message.warning('请填写回复');
+        return;
+      }
+      const comment = {
+        Id: uuid.generate(),
+        name: '回复',
+        comment: this.value,
+        objectid: this.data.objectId,
+        object_name: this.data.object_name,
+        replyid: this.data.createdBy,
+        replyidName: this.data.createdByName,
+        parentid: this.data.parentid || this.data.Id
+      };
+      sp.post('api/Comments/CreateData', comment).then(() => {
+        this.$message.success('留言成功');
+        this.showReply = false;
+        this.value = '';
+        this.$emit('replied');
+      });
     }
   }
 };
 </script>
+
+<style lang="less" scoped>
+.reply {
+  background: #f7f8fa;
+  padding: 12px;
+  display: inline-block;
+  text-align: right;
+  width: 100%;
+}
+</style>

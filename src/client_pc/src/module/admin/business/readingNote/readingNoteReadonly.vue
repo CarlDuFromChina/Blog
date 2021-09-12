@@ -131,6 +131,55 @@ export default {
   background: #e9ecef;
 }
 
+.blog {
+  height: 100%;
+  &.blog__readonly {
+    overflow-y: auto;
+    overflow-x: hidden;
+    .blog-header {
+      width: 100%;
+      height: 60px;
+      display: inline-block;
+      line-height: 60px;
+      padding-left: 20px;
+    }
+    .blog-body {
+      background-color: #e9ecef;
+      color: #212529;
+      padding-top: 24px;
+      padding-bottom: 40px;
+      .bodyWrapper {
+        width: 80%;
+        min-height: 800px;
+        margin: 0 auto;
+        .ant-layout {
+          background: transparent;
+        }
+        .bodyWrapper-title {
+          font-size: 2.5rem;
+          text-align: left;
+          font-weight: 600;
+          color: #000000d9;
+        }
+        &-background {
+          max-width: 100%;
+          max-width: 100%;
+          width: 100%;
+          height: 100%;
+          margin-bottom: 20px;
+        }
+        .bodyWrapper-content {
+          height: 100%;
+          min-height: 1000px;
+          img {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
 #content {
   min-height: 600px;
   padding-top: 50px;

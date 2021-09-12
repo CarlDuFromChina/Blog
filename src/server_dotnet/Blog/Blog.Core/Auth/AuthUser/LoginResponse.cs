@@ -10,6 +10,34 @@ namespace Blog.Core.Auth
     /// </summary>
     public class LoginResponse
     {
+        public LoginResponse() { }
+
+        public LoginResponse(bool result, string message)
+        {
+            this.result = result;
+            this.message = message;
+            if (this.result)
+            {
+                this.level = LoginMesageLevel.Success.ToString();
+            }
+            else
+            {
+                this.level = LoginMesageLevel.Fail.ToString();
+            }
+        }
+
+        public LoginResponse(bool result, string message, LoginMesageLevel level)
+        {
+            this.result = result;
+            this.message = message;
+            this.level = level.ToString();
+        }
+
+        /// <summary>
+        /// 消息级别
+        /// </summary>
+        public string level { get; set; }
+
         /// <summary>
         /// 结果
         /// </summary>
@@ -34,5 +62,15 @@ namespace Blog.Core.Auth
         /// 信息
         /// </summary>
         public string message { get; set; }
+    }
+
+    /// <summary>
+    /// 登录消息级别
+    /// </summary>
+    public enum LoginMesageLevel
+    {
+        Success,
+        Warning,
+        Fail
     }
 }

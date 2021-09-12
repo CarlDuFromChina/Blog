@@ -21,21 +21,21 @@
               <a-skeleton :loading="loading">
                 <div class="block">
                   <div style="display: flex">
-                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
-                <img :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+                <img v-if="data.big_surface_url" :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comment :object-id="Id" :disabled="!!data.disable_comment" objectName="blog"></sp-comment>
+            <sp-comments :object-id="Id" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
@@ -45,7 +45,7 @@
               <div class="block-body">
                 <a-skeleton :loading="loading">
                   <a style="display: flex">
-                    <a-avatar :src="imageUrl" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
@@ -79,6 +79,7 @@
         </a-layout>
       </div>
     </div>
+    <a-back-top :target="getBlogEl" :visibilityHeight="100" />
   </div>
 </template>
 
@@ -88,7 +89,7 @@ import 'mavon-editor/src/lib/css/markdown.css';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
-renderer.heading = function (text, level, raw) {
+renderer.heading = function(text, level, raw) {
   const anchor = tocObj.add(text, level);
   return `<a id=${anchor} class="anchor-fix"></a><h${level}>${text}</h${level}>\n`;
 };
@@ -97,12 +98,12 @@ marked.setOptions({
   renderer: renderer
 });
 const tocObj = {
-  add: function (text, level) {
+  add: function(text, level) {
     var anchor = `toc${level}${++this.index}`;
     this.toc.push({ anchor: anchor, level: level, text: text });
     return anchor;
   },
-  toHTML: function () {
+  toHTML: function() {
     let levelStack = [];
     let result = '';
     const addStartUL = () => {
@@ -114,7 +115,7 @@ const tocObj = {
     const addLI = (anchor, text) => {
       result += '<li class="content-item" @click="goAnchor(\'' + anchor + '\')"><a href="javascript:void(0)">' + text + '</a></li>\n';
     };
-    this.toc.forEach(function (item) {
+    this.toc.forEach(function(item) {
       let levelIndex = levelStack.indexOf(item.level);
       // 没有找到相应level的ul标签，则将li放入新增的ul中
       if (levelIndex === -1) {
@@ -156,7 +157,6 @@ export default {
       data: {},
       recommandList: [],
       loading: false,
-      imageUrl: '',
       formatterContent: '',
       user: {},
       height: null,
@@ -165,8 +165,10 @@ export default {
   },
   async created() {
     await this.loadData();
+    if (this.data.title) {
+      document.title = this.data.title;
+    }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
-    this.imageUrl = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
     this.loadRecommand();
   },
   mounted() {
@@ -177,9 +179,7 @@ export default {
       immediate: true,
       handler(newVal) {
         if (!sp.isNullOrEmpty(newVal)) {
-          this.formatterContent = marked(newVal, {
-            sanitize: true
-          });
+          this.formatterContent = marked(newVal);
           const content = document.querySelector('#content');
           const MyComponent = Vue.extend({
             template: tocObj.toHTML(),
@@ -213,6 +213,9 @@ export default {
     }
   },
   methods: {
+    getBlogEl() {
+      return document.getElementById('blog');
+    },
     loadRecommand() {
       sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
         this.recommandList = resp;
@@ -264,6 +267,56 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.blog {
+  height: 100%;
+  &.blog__readonly {
+    overflow-y: auto;
+    overflow-x: hidden;
+    .blog-header {
+      width: 100%;
+      height: 60px;
+      display: inline-block;
+      line-height: 60px;
+      padding-left: 20px;
+      background: #fff;
+    }
+    .blog-body {
+      background-color: #e9ecef;
+      color: #212529;
+      padding-top: 24px;
+      padding-bottom: 40px;
+      .bodyWrapper {
+        width: 80%;
+        min-height: 800px;
+        margin: 0 auto;
+        .ant-layout {
+          background: transparent;
+        }
+        .bodyWrapper-title {
+          font-size: 2.5rem;
+          text-align: left;
+          font-weight: 600;
+          color: #000000d9;
+        }
+        &-background {
+          max-width: 100%;
+          max-width: 100%;
+          width: 100%;
+          height: 100%;
+          margin-bottom: 20px;
+        }
+        .bodyWrapper-content {
+          height: 100%;
+          min-height: 1000px;
+          img {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
 .block {
   width: 300px;
   margin-bottom: 20px;

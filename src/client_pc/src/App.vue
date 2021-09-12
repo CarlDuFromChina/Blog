@@ -14,9 +14,8 @@ export default {
 body,
 html {
   width: 100%;
-  height: 100%;
   margin: 0px;
-  overflow: hidden;
+  background-color: #edeef2;
 }
 
 #nprogress .bar {

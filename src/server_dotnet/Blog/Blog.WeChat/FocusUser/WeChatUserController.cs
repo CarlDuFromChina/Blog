@@ -1,4 +1,5 @@
 ﻿using Blog.Core.WebApi;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Blog.WeChat.FocusUser
 {
     public class WeChatUserController : EntityBaseController<wechat_user, WeChatUserService>
     {
+        [HttpGet]
         public FocusUserListModel GetFocusUserList()
         {
             return new FocusUserService().GetFocusUserList();

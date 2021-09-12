@@ -1,4 +1,5 @@
 ﻿using Blog.Core.WebApi;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 激活
         /// </summary>
         /// <param name="id"></param>
+        [HttpGet]
         public void Activate(string id)
         {
             new WeChatFocusReplyService().Activate(id);
@@ -22,14 +24,10 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 停用
         /// </summary>
         /// <param name="id"></param>
+        [HttpGet]
         public void Deactivate(string id)
         {
             new WeChatFocusReplyService().Deactivate(id);
-        }
-
-        public wechat_focus_reply GetData()
-        {
-            return new WeChatFocusReplyService().GetData();
         }
     }
 }

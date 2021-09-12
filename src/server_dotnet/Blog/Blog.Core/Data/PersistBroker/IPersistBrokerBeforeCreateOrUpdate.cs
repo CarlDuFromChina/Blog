@@ -13,6 +13,9 @@ namespace Blog.Core.Data
         void Execute(PersistBrokerPluginContext context);
     }
 
+    /// <summary>
+    /// Broker 创建数据钩子
+    /// </summary>
     public class PersistBrokerBeforeCreateOrUpdate : IPersistBrokerBeforeCreateOrUpdate
     {
         public void Execute(PersistBrokerPluginContext context)

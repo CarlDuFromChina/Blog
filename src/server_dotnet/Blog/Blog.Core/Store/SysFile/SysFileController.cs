@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Module.DataService;
+using Blog.Core.Profiles;
 using Blog.Core.Utils;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
@@ -26,12 +27,12 @@ namespace Blog.Core.Store.SysFile
 
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        public List<ImageInfo> Upload([FromForm]List<IFormFile> files, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        public List<FileInfoModel> Upload([FromForm]List<IFormFile> files, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             if (files == null || !files.Any())
                 throw new SpException("上传文件不能为空", "");
 
-            var imgList = new List<ImageInfo>();
+            var fileList = new List<FileInfoModel>();
 
             foreach (var file in files)
             {
@@ -56,16 +57,39 @@ namespace Blog.Core.Store.SysFile
                     sysImage.objectId = objectId;
                 }
                 new SysFileService().CreateData(sysImage);
-                var imgInfo = new ImageInfo()
+                var fileModel = new FileInfoModel
                 {
                     id = sysImage.Id,
                     name = sysImage.name,
                     downloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}"
                 };
-                imgList.Add(imgInfo);
+                fileList.Add(fileModel);
             }
 
-            return imgList;
+            return fileList;
+        }
+
+        /// <summary>
+        /// 上传图片，自动生成预览图片
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IEnumerable<ImageInfo> UploadImage([FromForm]IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId)
+        {
+            var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
+            
+            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
+
+            var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
+            var image2 = new SysFileService().UploadFile(thumbStream, suffix, fileType, contentType, objectId);
+
+            return new List<ImageInfo>()
+            {
+                MapperHelper.Map<ImageInfo>(image),
+                MapperHelper.Map<ImageInfo>(image2)
+            };
         }
     }
 }

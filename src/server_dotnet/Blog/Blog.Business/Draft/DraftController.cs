@@ -1,4 +1,5 @@
 ﻿using Blog.Core.WebApi;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Blog.Draft
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public draft GetDataByBlogId(string id)
         {
             return new DraftService().GetDataByBlogId(id);
@@ -23,6 +25,7 @@ namespace Blog.Draft
         /// 获取博客草稿（新建）
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public IList<draft> GetDrafts()
         {
             return new DraftService().GetDrafts();

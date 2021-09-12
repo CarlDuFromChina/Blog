@@ -20,7 +20,7 @@ namespace Blog.Core.Pixabay
     {
         public PixabayService()
         {
-            logger = LogFactory.GetLogger("Pixabay");
+            logger = LogFactory.GetLogger("pixabay");
         }
 
         private static readonly string key = "19356383-2f75a9b525aa933f63ab20ab5";

@@ -21,7 +21,7 @@ namespace Blog.Core.Auth.Role.BasicRole
         {
             var dic = new Dictionary<string, IEnumerable<sys_role_privilege>>();
 
-            dic.Add(RoleType.Entity.ToString(), GetMissingEntityPrivileges().Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read + (int)OperationType.Write + (int)OperationType.Delete)));
+            dic.Add(RoleType.Entity.ToString(), GetMissingEntityPrivileges().Select(item => GenerateRolePrivilege(item, this.GetSysRole(), (int)OperationType.Read)));
             dic.Add(RoleType.Menu.ToString(), GetMissingMenuPrivileges().Select(item => GenerateRolePrivilege(item, this.GetSysRole(), 0)));
 
             return dic;

@@ -2,6 +2,7 @@ export default {
   state: {
     isLogin: false,
     userId: '',
+    userName: '',
     token: {} // { RefreshToken, AccessToken }
   },
   getters: {
@@ -13,6 +14,9 @@ export default {
     },
     getUserId(state) {
       return state.userId;
+    },
+    getUserName(state) {
+      return state.userName;
     },
     isAccessTokenExpired: (state) => () => {
       const { AccessToken } = state.token;
@@ -35,6 +39,7 @@ export default {
     updateAuth(state, data) {
       state.token = data.token;
       state.userId = data.userId;
+      state.userName = data.userName;
     },
     changeTokenWithRefreshToken(state) {
       state.token.AccessToken = state.token.RefreshToken;

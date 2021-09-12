@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ height: '100%', overflowY: 'auto' }">
     <div class="header">
       <div class="header-avatar">
         <a-avatar :size="64" :src="avatarUrl" />
@@ -33,13 +33,13 @@ export default {
   data() {
     return {
       user_info: {},
-      timeline: [],
-      avatarUrl: ''
+      timeline: []
     };
   },
   created() {
     this.getUserInfo();
     this.loadTimeline();
+    this.avatarUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
   },
   mounted() {
     this.loadCalendar();
@@ -64,7 +64,6 @@ export default {
     getUserInfo() {
       sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
         this.user_info = resp;
-        this.avatarUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=${resp.avatar || ''}`;
       });
     },
     getVirtulData(year, activityData) {
@@ -87,9 +86,22 @@ export default {
         visualMap: {
           show: false,
           min: 0,
-          max: 5
+          max: 5,
+          inRange: {
+            color: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196027']
+          }
         },
+        backgroundColor: '#fff',
         calendar: {
+          cellSize: [14, 14],
+          itemStyle: {
+            borderColor: '#fff',
+            borderWidth: 4
+          },
+          splitLine: {
+            show: false
+          },
+          yearLabel: { show: false },
           range: this.$moment()
             .year()
             .toString()

@@ -1,107 +1,123 @@
 <template>
-  <a-form-model ref="form" :model="data">
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="昵称">
-          <a-input v-model="data.name"></a-input>
-        </a-form-model-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-model-item label="编码">
-          <a-input v-model="data.code" :disabled="pageState == 'edit'"></a-input>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="真实姓名">
-          <a-input v-model="data.realname"></a-input>
-        </a-form-model-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-model-item label="性别">
-          <a-radio-group v-model="data.gender" @change="handleChangeGender">
-            <a-radio
-              v-for="(item, index) in [
-                { name: '男', value: 0 },
-                { name: '女', value: 1 }
-              ]"
-              :key="index"
-              :value="item.value"
-              >{{ item.name }}</a-radio
-            >
-          </a-radio-group>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="邮箱">
-          <a-input v-model="data.mailbox"></a-input>
-        </a-form-model-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-model-item label="手机号码">
-          <a-input v-model="data.cellphone"></a-input>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24">
-      <a-col>
-        <a-form-model-item label="自我介绍">
-          <a-input v-model="data.introduction" type="textarea"></a-input>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="角色">
-          <sp-select v-model="data.roleid" :options="roles" @change="item => (data.roleidName = item.name)"></sp-select>
-        </a-form-model-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-model-item label="状态">
-          <a-radio-group v-model="data.stateCode" @change="handleStateCodeChange">
-            <a-radio
-              v-for="(item, index) in [
-                { name: '启用', value: 1 },
-                { name: '禁用', value: 0 }
-              ]"
-              :key="index"
-              :value="item.value"
-              >{{ item.name }}</a-radio
-            >
-          </a-radio-group>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="头像">
-          <a-upload
-            ref="file"
-            list-type="picture-card"
-            :file-list="fileList"
-            @change="handleAvatarChange"
-            :remove="remove"
-            :before-upload="beforeUpload"
-          >
-            <div v-if="fileList && fileList.length === 0">
-              <a-icon type="plus" />
-            </div>
-          </a-upload>
-        </a-form-model-item>
-      </a-col>
-    </a-row>
+  <a-form-model ref="form" :model="data" :rules="rules">
+    <a-tabs default-active-key="1" :animated="false">
+      <a-tab-pane key="1" tab="个人资料">
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="昵称" prop="name">
+              <a-input v-model="data.name"></a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="编码" prop="code">
+              <a-input v-model="data.code" :disabled="pageState == 'edit'"></a-input>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="真实姓名">
+              <a-input v-model="data.realname"></a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="性别">
+              <a-radio-group v-model="data.gender" @change="handleChangeGender">
+                <a-radio
+                  v-for="(item, index) in [
+                    { name: '男', value: 0 },
+                    { name: '女', value: 1 }
+                  ]"
+                  :key="index"
+                  :value="item.value"
+                  >{{ item.name }}</a-radio
+                >
+              </a-radio-group>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col>
+            <a-form-model-item label="自我介绍">
+              <a-input v-model="data.introduction" type="textarea" placeholder="请介绍一下你自己...."></a-input>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="头像">
+              <a-upload
+                ref="file"
+                list-type="picture-card"
+                :file-list="fileList"
+                @change="handleAvatarChange"
+                :remove="remove"
+                :before-upload="beforeUpload"
+              >
+                <div v-if="fileList && fileList.length === 0">
+                  <a-icon type="plus" />
+                </div>
+              </a-upload>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </a-tab-pane>
+      <a-tab-pane key="2" tab="账号设置">
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="邮箱" prop="mailbox">
+              <a-input v-model="data.mailbox"></a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="手机号码" prop="cellphone">
+              <a-input v-model="data.cellphone"></a-input>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="角色" prop="roleid">
+              <sp-select v-model="data.roleid" :options="roles" @change="item => (data.roleidName = item.name)"></sp-select>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="12">
+            <a-form-model-item label="状态">
+              <a-radio-group v-model="data.stateCode" @change="handleStateCodeChange">
+                <a-radio
+                  v-for="(item, index) in [
+                    { name: '启用', value: 1 },
+                    { name: '禁用', value: 0 }
+                  ]"
+                  :key="index"
+                  :value="item.value"
+                  >{{ item.name }}</a-radio
+                >
+              </a-radio-group>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="12">
+            <a-form-model-item label="密码">
+              <a-button @click="editPassword">重置</a-button>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+      </a-tab-pane>
+    </a-tabs>
+    <edit-password ref="pwd"></edit-password>
   </a-form-model>
 </template>
 
 <script>
 import { edit } from '@/mixins';
+import editPassword from '../editPasssword/editPassword.vue';
 
 export default {
   name: 'userInfo-edit',
   mixins: [edit],
+  components: { editPassword },
   data() {
     return {
       controllerName: 'UserInfo',
@@ -109,7 +125,15 @@ export default {
       baseUrl: sp.getServerUrl(),
       token: '',
       fileList: [],
-      roles: []
+      roles: [],
+      rules: {
+        name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入编码', trigger: 'blur' }],
+        gender: [{ required: true, message: '请选择性别', trigger: 'blur' }],
+        mailbox: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+        cellphone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
+        roleid: [{ required: true, message: '请选择角色', trigger: 'blur' }]
+      }
     };
   },
   async created() {
@@ -159,7 +183,7 @@ export default {
         return Promise.resolve(true);
       }
       // 保存后上传头像
-      let url = '/api/DataService/UploadImage?fileType=avatar';
+      let url = '/api/System/UploadImage?fileType=avatar';
       // 关联实体id
       if (!sp.isNullOrEmpty(this.Id)) {
         url += `&objectId=${this.Id}`;
@@ -171,6 +195,9 @@ export default {
     remove() {
       this.data.avatar = null;
       this.fileList = [];
+    },
+    editPassword() {
+      this.$refs.pwd.editVisible = true;
     }
   }
 };

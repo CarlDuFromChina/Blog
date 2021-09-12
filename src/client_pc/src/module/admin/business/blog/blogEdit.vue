@@ -19,17 +19,17 @@
       </div>
     </div>
     <a-modal title="发布文章" v-model="editVisible" @ok="editVisible = false">
-      <a-form-model ref="form" :model="data">
+      <a-form-model ref="form" :model="data" :rules="rules">
         <a-row>
           <a-col>
-            <a-form-model-item label="标题">
+            <a-form-model-item label="标题" prop="title">
               <a-input v-model="data.title"></a-input>
             </a-form-model-item>
           </a-col>
         </a-row>
         <a-row>
           <a-col>
-            <a-form-model-item label="分类">
+            <a-form-model-item label="分类" prop="blog_type">
               <sp-select
                 v-model="data.blog_type"
                 :options="selectDataList.classification"
@@ -114,18 +114,17 @@ export default {
       selectEntityNameList: ['classification'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
-      token: '',
-      tags: []
+      tags: [],
+      data: {
+        is_series: false,
+        disable_comment: false
+      },
+      token: this.$store.getters.getToken,
+      rules: {
+        title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }]
+      }
     };
-  },
-  created() {
-    // 编辑博客
-    if (!this.$route.params.id) {
-      this.data.is_series = false;
-      this.data.disable_comment = false;
-    }
-    // 获取token和url
-    this.token = this.$store.getters.getToken;
   },
   computed: {
     // 请求头
@@ -183,7 +182,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/DataService/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
+      const url = '/api/System/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -203,17 +202,21 @@ export default {
     },
     // 保存博客
     save() {
-      this.editVisible = false;
-      this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
-      if (this.tags) {
-        this.data.tags = this.tags;
-      }
-      sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
-        .then(() => {
-          this.$message.success('发布成功！');
-          this.$router.back();
-        })
-        .catch(error => this.$message.error(error));
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.editVisible = false;
+          this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+          if (this.tags) {
+            this.data.tags = this.tags;
+          }
+          sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
+            .then(() => {
+              this.$message.success('发布成功！');
+              this.$router.back();
+            })
+            .catch(error => this.$message.error(error));
+        }
+      });
     },
     // 返回上页
     goBack() {
@@ -249,6 +252,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import 'blog.less';
 /deep/ .v-note-wrapper {
   z-index: 100;
 }

@@ -1,7 +1,6 @@
 import index from './index/index.js';
 import login from './login';
 import admin from './admin';
-import notFound from './404';
 import shortUrl from './shortUrl';
 
 export default [
@@ -15,4 +14,4 @@ export default [
     name: 'readingNoteReadonly',
     component: () => import('./admin/business/readingNote/readingNoteReadonly')
   }
-].concat(index, login, admin, notFound, shortUrl);
+].concat(index, login, admin, shortUrl);

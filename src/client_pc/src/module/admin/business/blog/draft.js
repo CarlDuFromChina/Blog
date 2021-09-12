@@ -98,19 +98,25 @@ export default {
               this.data.blogId = blogId;
               this.data.content = content;
               this.data.title = title;
-              sp.post('api/Draft/DeleteData', [this.draft.Id]); // 删除草稿
+              sp.post('api/Draft/DeleteData', [this.draft.Id])
+                .finally(() => {
+                  this.$emit('open-watch');
+                });
             },
             onCancel: () => {
               sp.post('api/Draft/DeleteData', [this.draft.Id]).then(() => {
                 this.$message.info('已删除草稿');
-              });
+              })
+                .finally(() => {
+                  this.$emit('open-watch');
+                });
             }
           });
         } else {
           this.draft.draftId = uuid.generate();
           this.draft.blogId = this.Id;
+          this.$emit('open-watch');
         }
-        this.$emit('open-watch');
       });
     },
     /**
@@ -179,7 +185,8 @@ export default {
         okText: '保存',
         cancelText: '取消',
         onOk: () => {
-          save();
+          this.editVisible = true;
+          this.$nextTick(() => this.save());
         },
         onCancel: () => {
           this.$router.back();

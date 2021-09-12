@@ -1,31 +1,29 @@
 <template>
-  <div class="index" v-infinite-scroll="loadMore" :infinite-scroll-distance="10">
+  <div class="index">
     <!-- 菜单 -->
     <sp-menu :menus="menus" @menu-change="menuChange">
       <template slot="menus">
-        <sp-menu-item @click="login" style="float:right;">登录</sp-menu-item>
-        <sp-menu-item @click="register" style="float:right;">注册</sp-menu-item>
+        <sp-menu-item style="float:right;" v-show="!isLoggedIn" disableHover>
+          <a-button icon="login" type="primary" @click="login">登录</a-button>
+        </sp-menu-item>
+        <sp-menu-item style="float:right;" v-show="isLoggedIn" disableHover>
+          <a-dropdown>
+            <a-menu slot="overlay">
+              <a-menu-item key="2" @click="goBg" v-show="showAdmin"><a-icon type="appstore" />后台</a-menu-item>
+              <a-menu-item key="3" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
+              <a-menu-item key="4" @click="logout"><a-icon type="logout" />注销</a-menu-item>
+            </a-menu>
+            <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />
+          </a-dropdown>
+        </sp-menu-item>
       </template>
-      <div class="header-img">
-        <div class="scene">
-          <span>Hi, Karl</span>
-        </div>
-        <div class="information">
-          <img src="../../assets/images/smartboy.jpg" alt="" style="width:100px;height:100px;border-radius:50px" />
-          <h2>Any advanced technology is no different from magic.</h2>
-        </div>
-      </div>
     </sp-menu>
     <!-- 菜单 -->
-    <div id="container" class="container">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
-    </div>
-    <div class="footer">
-      <div class="footer-wrapper">
-        <p>Made By Karl Du</p>
-        <a href="http://www.miitbeian.gov.cn">苏ICP备2020054977号</a>
+    <div id="container" v-infinite-scroll="loadMore" :infinite-scroll-distance="10">
+      <div class="container">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </div>
     <transition name="hehe">
@@ -35,21 +33,30 @@
         </div>
       </div>
     </transition>
+    <a-modal v-model="userInfoEditVisible" title="编辑" @ok="saveUserInfo" width="60%" okText="确认" cancelText="取消">
+      <user-info-edit ref="userInfoEdit" :related-attr="getUserParam()" @close="userInfoEditVisible = false"></user-info-edit>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
+import { clearAuth } from '../../lib/login';
+import userInfoEdit from '../admin/core/userInfo/userInfoEdit.vue';
 
 export default {
   name: 'index',
   directives: { infiniteScroll },
+  components: { userInfoEdit },
   data() {
     return {
       bottom: 100,
       scrollTop: 0,
       btnFlag: false,
       activeIndex: '1',
+      userInfoEditVisible: false,
+      messageCount: 0,
+      showAdmin: false,
       menus: [
         {
           name: '首页',
@@ -68,12 +75,6 @@ export default {
           click: () => {
             this.$router.push({ name: 'readingNote' });
           }
-        },
-        {
-          name: '关于',
-          click: () => {
-            this.$router.push({ name: 'aboutme' });
-          }
         }
       ]
     };
@@ -81,15 +82,33 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
   },
+  created() {
+    if (this.isLoggedIn) {
+      sp.get('api/System/GetShowAdmin').then(resp => {
+        this.showAdmin = resp;
+      });
+    }
+  },
   destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
   },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    userName() {
+      return this.$store.getters.userName;
+    }
+  },
   methods: {
+    getAvatar() {
+      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
+    },
     // 点击图片回到顶部方法，加计时器是为了过渡顺滑
     backTop() {
       let timer = setInterval(() => {
         let ispeed = Math.floor(-this.scrollTop / 5);
-        document.querySelector('.index').scrollTop = document.documentElement.scrollTop = document.body.scrollTop = this.scrollTop + ispeed;
+        document.querySelector('.container').scrollTop = document.documentElement.scrollTop = document.body.scrollTop = this.scrollTop + ispeed;
         if (this.scrollTop === 0) {
           clearInterval(timer);
         }
@@ -98,8 +117,9 @@ export default {
     // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
     scrollToTop() {
       let scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.querySelector('.index').scrollTop;
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || document.querySelector('.container').scrollTop;
       this.scrollTop = scrollTop;
+      this.$bus.$emit('scroll', scrollTop);
       if (this.scrollTop > 300) {
         this.btnFlag = true;
       } else {
@@ -108,12 +128,16 @@ export default {
     },
     // 跳转登录页
     login() {
-      this.$router.push({
-        name: 'login'
-      });
+      if (!this.isLoggedIn) {
+        this.$router.push({ name: 'login' });
+      }
     },
-    register() {
-      this.$message.error('暂未开放注册');
+    logout() {
+      clearAuth(this.$store);
+      this.$message.success('注销成功');
+    },
+    goBg() {
+      this.$router.push({ name: 'workplace' });
     },
     // 菜单切换
     menuChange() {
@@ -121,6 +145,14 @@ export default {
     },
     loadMore() {
       this.$bus.$emit('load-more');
+    },
+    saveUserInfo() {
+      this.$refs.userInfoEdit.saveData();
+    },
+    getUserParam() {
+      return {
+        id: sp.getUserId()
+      };
     }
   }
 };
@@ -142,71 +174,10 @@ export default {
 .index {
   background: #edeef2;
   height: 100%;
-  overflow-y: scroll;
-}
-.header-img {
-  height: 650px;
-  position: relative;
-  width: 100%;
-  background-size: cover;
-  background-position: center 50%;
-  background-repeat: no-repeat;
-  margin-bottom: 150px;
-  background-image: url('http://mangoya.cn/upload/theme/yourName/20fbf79218e1c60c9bc96c1442f916fa.jpg');
-  .scene {
-    width: 100%;
-    text-align: center;
-    font-size: 100px;
-    font-weight: 200;
-    color: #fff;
-    position: absolute;
-    left: 0;
-    top: 160px;
-    font-family: 'Sigmar One', Arial;
-    text-shadow: 0 2px 2px #47456d;
-    > span {
-      text-shadow: 1px 1px 0 #ff3f1a, -1px -1px 0 #00a7e0;
-    }
-  }
-  .information {
-    text-align: center;
-    width: 70%;
-    margin: auto;
-    position: relative;
-    top: 480px;
-    padding: 40px 0;
-    font-size: 16px;
-    opacity: 0.98;
-    background: rgba(230, 244, 249, 0.8);
-    border-radius: 5px;
-    z-index: 1;
-    animation: b 1s ease-out;
-    -webkit-animation: b 1s ease-out;
-    > h2 {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-  }
 }
 .container {
   max-width: 80%;
-  margin: 0 auto;
+  margin: 10px auto 0;
   padding: 0 10px 0px 10px;
-}
-.footer {
-  color: #888;
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: center;
-  width: 100%;
-  min-height: 50px;
-  .footer-wrapper {
-    width: 100%;
-    background: #232323;
-    padding: 15px 10px 10px 10px;
-    box-sizing: border-box;
-    width: 100% !important;
-  }
 }
 </style>

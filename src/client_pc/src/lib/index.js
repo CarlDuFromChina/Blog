@@ -6,6 +6,15 @@ import spExtension from './sp';
 
 window.sp = Object.assign({}, common, http, spExtension);
 window.uuid = Object.assign({}, uuid);
+const serverUrl = localStorage.getItem('server_url');
+if (process.env.NODE_ENV === 'development') {
+  if (!sp.isNullOrEmpty(serverUrl)) {
+    store.commit('updateServerUrl', serverUrl);
+    console.info('服务器地址修改为：' + serverUrl);
+  } else {
+    console.info('你可以通过localStorage添加server_url属性指定请求地址');
+  }
+}
 
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
@@ -23,9 +32,6 @@ axios.interceptors.response.use(
       return Promise.resolve(true);
     }
     return Promise.resolve(response);
-  },
-  () => {
-    return Promise.reject(new Error('服务器开小差了'));
   }
 );
 

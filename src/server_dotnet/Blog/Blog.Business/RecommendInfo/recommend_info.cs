@@ -51,6 +51,7 @@ namespace Blog.RecommendInfo
         /// 推荐类型
         /// </summary>
         private string _recommend_type;
+        [DataMember]
         [Attr("recommend_type", "推荐类型", AttrType.Varchar, 100)]
         public string recommend_type
         {

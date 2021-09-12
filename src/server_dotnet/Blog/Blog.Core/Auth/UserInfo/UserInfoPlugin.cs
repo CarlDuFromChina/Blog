@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Data;
+using Blog.Core.Module.Role;
 using Blog.Core.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace Blog.Core.Auth.UserInfo
         {
             switch (context.Action)
             {
+                case EntityAction.PreCreate:
+                case EntityAction.PreUpdate:
+                    CheckUserInfo(context.Entity, context.Broker);
+                    break;
                 case EntityAction.PostCreate:
                     CreateAuthInfo(context.Entity, context.Broker);
                     break;
@@ -64,7 +69,21 @@ WHERE user_infoid = @id
             var authInfo = broker.Retrieve<auth_user>(sql, new Dictionary<string, object>() { { "@id", entity["user_infoId"]?.ToString() } });
             AssertUtil.CheckNull<SpException>(authInfo, "用户Id不能为空", "C37CCF94-6B27-4BF4-AF29-DBEDC9E53E5D");
             authInfo.name = entity["name"]?.ToString();
+            authInfo.roleid = entity["roleid"]?.ToString();
+            authInfo.roleidName = entity["roleidName"]?.ToString();
             new AuthUserService(broker).UpdateData(authInfo);
+        }
+
+        /// <summary>
+        /// 检查用户信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="broker"></param>
+        private void CheckUserInfo(BaseEntity entity, IPersistBroker broker)
+        {
+            var allowUpdateRole = new SysRoleService(broker).AllowCreateOrUpdateRole(entity["roleid"].ToString());
+            AssertUtil.CheckBoolean<SpException>(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleidName"]}]", "2ABD2CBA-A7CB-4F61-841F-7CD4E6C1BD69");
+            AssertUtil.CheckBoolean<SpException>(entity.Id == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新", "");
         }
 
         /// <summary>

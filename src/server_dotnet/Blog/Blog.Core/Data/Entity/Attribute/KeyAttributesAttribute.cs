@@ -9,7 +9,7 @@ namespace Blog.Core.Data
     /// 主键自定义属性
     /// TODO：使用 Plugin 方式做主键唯一性检查
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class,  AllowMultiple = true)]
     public sealed class KeyAttributesAttribute : Attribute
     {
         /// <summary>

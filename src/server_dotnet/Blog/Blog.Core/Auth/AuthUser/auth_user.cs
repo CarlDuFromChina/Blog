@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Blog.Core.Auth
 {
     [Entity("auth_user", "用户授权", true)]
-    [KeyAttributes("用户Id不能重复", "user_infoId")]
+    [KeyAttributes("请勿重复创建用户", "code")]
     public partial class auth_user : BaseEntity
     {
         /// <summary>

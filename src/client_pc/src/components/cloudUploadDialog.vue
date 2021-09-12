@@ -14,25 +14,26 @@
       <a-input-search placeholder="请输入关键词" enter-button @search="loadData" v-model="searchValue" />
     </a-form-model-item>
     <a-spin :spinning="loading" class="gallery">
-      <a-card
-        hoverable
+      <a-col
         v-for="item in dataList"
         class="item"
         :key="item.id"
         :class="{ active: (selected || {}).id == item.id }"
+        :span="6"
         @click="handleSelect(item)"
       >
-        <img slot="cover" alt="example" :src="item.previewURL" />
-      </a-card>
-      <a-empty v-show="!dataList || dataList.length == 0" style="width: 100%"></a-empty>
+        <img alt="example" :src="item.previewURL" />
+      </a-col>
+      <a-empty v-show="!dataList || dataList.length == 0" style="width: 100%;"></a-empty>
     </a-spin>
     <a-pagination
       show-size-changer
-      :default-current="pageIndex"
-      :default-pageSize="pageSize"
+      :current="pageIndex"
+      :pageSize="pageSize"
       :total="total"
       @showSizeChange="sizeChange"
       @change="currentPage"
+      style="padding-top: 20px;"
     />
     <span slot="footer" class="dialog-footer">
       <a-button @click="visible = false">取 消</a-button>
@@ -57,11 +58,17 @@ export default {
       baseUrl: sp.getServerUrl(),
       source: 1,
       pageSize: 12,
-      searchValue: ''
+      searchValue: '',
+      isSearchValueChanged: false
     };
   },
   created() {
     this.loadData();
+  },
+  watch: {
+    searchValue() {
+      this.isSearchValueChanged = true;
+    }
   },
   methods: {
     handleSelect(item) {
@@ -110,6 +117,10 @@ export default {
     },
     async loadData() {
       this.loading = true;
+      if (this.isSearchValueChanged) {
+        this.pageIndex = 1;
+        this.isSearchValueChanged = false;
+      }
       try {
         if (this.source === 1) {
           await this.getLocalData();
@@ -127,10 +138,10 @@ export default {
     uploadImages() {
       return sp.post('api/Gallery/UploadImage', this.selected).then(resp => {
         this.$emit('selected', {
-          surfaceid: resp.Item1,
-          surface_url: `api/SysFile/Download?objectId=${resp.Item1}`,
-          big_surfaceid: resp.Item2,
-          big_surface_url: `api/SysFile/Download?objectId=${resp.Item2}`
+          surfaceid: resp[0],
+          surface_url: `api/SysFile/Download?objectId=${resp[0]}`,
+          big_surfaceid: resp[1],
+          big_surface_url: `api/SysFile/Download?objectId=${resp[1]}`
         });
       });
     },
@@ -162,22 +173,14 @@ export default {
     display: flex;
     flex-wrap: wrap;
   }
-  /deep/ .ant-card-cover {
-    max-width: 200px;
-    min-width: 100%;
-    max-height: 150px;
-    width: 200px;
-    height: 150px;
-  }
   .item {
-    width: 20%;
-    margin: 10px;
+    max-height: 150px;
+    padding: 12px;
     img {
-      max-width: 200px;
+      max-width: 100%;
+      max-height: 100%;
       min-width: 100%;
-      max-height: 150px;
-      width: 200px;
-      height: 150px;
+      min-height: 100%;
     }
   }
   .active {

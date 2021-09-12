@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core.Auth;
+using Blog.Core.Data;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -88,5 +89,6 @@ namespace Blog.Blog
         {
             return new BlogService().GetActivity();
         }
+
     }
 }

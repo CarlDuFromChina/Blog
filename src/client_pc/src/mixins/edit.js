@@ -9,7 +9,8 @@ export default {
       Id: '',
       controllerName: '',
       data: {},
-      loading: false
+      loading: false,
+      privilege: {}
     };
   },
   created() {
@@ -19,6 +20,11 @@ export default {
     } else if (this.$route.params && this.$route.params.id) {
       this.Id = this.$route.params.id;
       this.loadData();
+    }
+    if (!sp.isNullOrEmpty(this.controllerName)) {
+      sp.get(`api/${this.controllerName}/GetPrivilege`).then(resp => {
+        this.privilege = resp;
+      });
     }
   },
   computed: {

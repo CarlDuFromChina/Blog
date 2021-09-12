@@ -27,17 +27,5 @@ namespace Blog.WeChat.WeChatNews
         {
             new WeChatNewsService().CreateData(title, thumb_media_id, author, digest, show_cover_pic, content, content_source_url, need_open_comment, only_fans_can_comment);
         }
-
-        /// <summary>
-        /// 获取图文素材
-        /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public WeChatNewsResponse GetDataList(int pageIndex, int pageSize)
-        {
-            return new WeChatNewsService().GetDataList(pageIndex, pageSize);
-        }
     }
 }

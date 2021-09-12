@@ -144,11 +144,6 @@ WHERE user_infoid = @id;
             return data;
         }
 
-        public auth_user GetDataById(string id)
-        {
-            return Broker.Retrieve<auth_user>(id);
-        }
-
         /// <summary>
         /// 锁定用户
         /// </summary>

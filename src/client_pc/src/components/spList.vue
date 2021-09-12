@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ height: '100%', overflowY: 'auto' }">
     <!-- 按钮组 -->
     <slot name="header">
       <sp-header>

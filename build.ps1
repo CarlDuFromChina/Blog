@@ -53,33 +53,35 @@ function Write-Error-Message {
 }
 
 # Reset Build folder
-If (Test-Path .\build) {
-  Remove-Item -Recurse -Force ".\build\*"
+If (Test-Path .\release) {
+  Remove-Item -Recurse -Force ".\release\*"
 }
 else
 {
-  New-Item -ItemType directory ".\build\"
+  New-Item -ItemType directory ".\release\"
 }
 
-if (Test-Path .\build\web) {
-  Remove-Item -Recurse -Force ".\build\web\*"
+if (Test-Path .\release\web) {
+  Remove-Item -Recurse -Force ".\release\web\*"
 }
 else
 {
-  New-Item -ItemType directory ".\build\web"
+  New-Item -ItemType directory ".\release\web"
 }
-New-Item -ItemType directory ".\build\web\debug\"
+New-Item -ItemType directory ".\release\web\debug\"
 
 # Restore Dotnet Packages
 Write-Section-Message "Build dotnet"
-Remove-Item -Recurse -Force ".\src\server_dotnet\Blog\build\netcoreapp3.1\*"
+Remove-Item -Recurse -Force ".\src\server_dotnet\Blog\build\*"
 
 # Build Dotnet files
-$buildException = dotnet build ".\src\server_dotnet\Blog\Blog.sln" -f netcoreapp3.1 -r win-x64 -c Release --no-incremental
+Push-Location ".\src\server_dotnet\Blog"
+$buildException = dotnet build ".\Blog.sln" -f netcoreapp3.1 -r win-x64 -c Release --no-incremental
 If (! $?) { Throw $buildException }
-New-Item -ItemType directory ".\build\server"
+Pop-Location
+New-Item -ItemType directory ".\release\server"
 $release = ".\src\server_dotnet\Blog\build\netcoreapp3.1\win-x64\*"
-Copy-Item -Force -Recurse $release ".\build\server\"
+Copy-Item -Force -Recurse $release ".\release\server\"
 Write-Success-Message "OK."
 
 # Build pc.vue
@@ -93,7 +95,7 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release2 = ".\src\client_pc\dist\*"
-Copy-Item -Force -Recurse $release2 ".\build\web\"
+Copy-Item -Force -Recurse $release2 ".\release\web\"
 
 # Build mobile.vue
 
@@ -107,11 +109,11 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release3 = ".\src\client_mobile\dist\*"
-Copy-Item -Force -Recurse $release3 ".\build\web\debug\"
+Copy-Item -Force -Recurse $release3 ".\release\web\debug\"
 
 ## Compression
 Write-Section-Message "Compression..."
-Compress-Archive ".\build\web\*" -DestinationPath ".\build\web.zip" -Force
-Compress-Archive ".\build\server\*" -DestinationPath ".\build\server.zip" -Force
+Compress-Archive ".\release\web\*" -DestinationPath ".\release\web.zip" -Force
+Compress-Archive ".\release\server\*" -DestinationPath ".\release\server.zip" -Force
 # Done
 Write-Section-Message "Finished!"

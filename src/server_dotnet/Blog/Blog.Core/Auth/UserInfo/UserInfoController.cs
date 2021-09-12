@@ -16,5 +16,15 @@ namespace Blog.Core.Auth.UserInfo
         {
             return base.GetData(id);
         }
+
+        /// <summary>
+        /// 是否需要填充信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public bool InfoFilled()
+        {
+            return new UserInfoService().InfoFilled();
+        }
     }
 }

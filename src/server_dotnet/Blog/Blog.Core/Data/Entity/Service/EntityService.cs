@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Blog.Core.Auth;
+using Blog.Core.Auth.Privilege;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Module.SysEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
@@ -9,7 +12,7 @@ namespace Blog.Core.Data
     /// 实体服务类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EntityService<T>
+    public abstract class EntityService<T>
         where T : BaseEntity, new()
     {
         /// <summary>
@@ -20,13 +23,7 @@ namespace Blog.Core.Data
         /// <summary>
         /// 数据库持久化
         /// </summary>
-        protected IPersistBroker Broker
-        {
-            get
-            {
-                return _context.Broker;
-            }
-        }
+        protected IPersistBroker Broker => _context.Broker;
 
         #region 实体表单
 
@@ -43,7 +40,7 @@ namespace Blog.Core.Data
                 {
                     Sql = sql,
                     CustomFilter = new List<string>() { "name" }, // name 是每个实体必须要添加字段
-                    OrderBy = "",
+                    OrderBy = "createdon DESC",
                     ViewId = ""
                 }
             };
@@ -132,5 +129,28 @@ namespace Blog.Core.Data
             _context.Delete(ids);
         }
         #endregion
+
+        /// <summary>
+        /// 获取用户对实体的权限
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public EntityPrivilegeResponse GetPrivilege()
+        {
+            var sql = @"
+SELECT * FROM sys_role_privilege
+WHERE sys_roleid = @id and object_type = 'sys_entity'
+and objectid = @entityid";
+            var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().EntityName)?.Id } };
+            var data = Broker.Retrieve<sys_role_privilege>(sql, paramList);
+
+            return new EntityPrivilegeResponse()
+            {
+                read = data.privilege >= 1,
+                create = data.privilege >= 3,
+                delete = data.privilege >= 7
+            };
+        }
     }
 }

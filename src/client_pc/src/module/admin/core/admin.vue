@@ -17,29 +17,36 @@
         <slot></slot>
         <a-dropdown>
           <a-menu slot="overlay">
-            <a-menu-item key="1" @click="editPassword">修改密码</a-menu-item>
-            <a-menu-item key="2" @click="logout">退出</a-menu-item>
+            <a-menu-item key="1" @click="() => this.$router.push({ name: 'notification' })"
+              ><a-badge :dot="messageCount > 0"><a-icon type="notification" />消息</a-badge></a-menu-item
+            >
+            <a-menu-item key="2" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
+            <a-menu-item key="3" @click="logout"><a-icon type="logout" />退出</a-menu-item>
           </a-menu>
-          <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
+          <a-badge :count="messageCount">
+            <a-avatar :src="imageUrl" shape="circle" style="cursor: pointer" />
+          </a-badge>
         </a-dropdown>
       </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <div :style="{ background: '#fff', minHeight: '800px' }">
+      <a-layout-content :style="{ margin: '24px 16px', overflow: 'hidden' }">
+        <div :style="{ background: '#fff', height: '100%' }">
           <router-view :key="$route.path"></router-view>
         </div>
       </a-layout-content>
     </a-layout>
-    <edit-password ref="pwd"></edit-password>
+    <a-modal v-model="userInfoEditVisible" title="编辑" @ok="saveUserInfo" width="60%" okText="确认" cancelText="取消">
+      <user-info-edit ref="userInfoEdit" :related-attr="userParam" @close="userInfoEditVisible = false"></user-info-edit>
+    </a-modal>
   </a-layout>
 </template>
 
 <script>
-import editPassword from './editPasssword/editPassword';
 import { clearAuth } from '@/lib/login';
+import userInfoEdit from './userInfo/userInfoEdit.vue';
 
 export default {
   name: 'admin',
-  components: { editPassword },
+  components: { userInfoEdit },
   data() {
     return {
       menus: [],
@@ -50,14 +57,19 @@ export default {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         password2: [{ required: true, message: '请再次输入密码', trigger: 'blur' }]
       },
-      imageUrl: ''
+      imageUrl: '',
+      userParam: {
+        id: sp.getUserId()
+      },
+      userInfoEditVisible: false,
+      messageCount: 0
     };
   },
   created() {
     this.getMenu();
+    this.imageUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
     sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
       this.$store.commit('updateUser', resp);
-      this.imageUrl = this.$store.getters.getAvatar;
     });
   },
   methods: {
@@ -105,13 +117,10 @@ export default {
         this.$router.push({ path: keyPath[0] });
       }
     },
-    editPassword() {
-      this.$refs.pwd.editVisible = true;
-    },
     logout() {
       this.$message.success('退出成功');
       clearAuth(this.$store);
-      this.$router.replace('/login');
+      this.$router.push({ name: 'index' });
     },
     onOpenChange(openKeys) {
       const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
@@ -121,6 +130,9 @@ export default {
       } else {
         this.openKeys = !sp.isNil(latestOpenKey) ? [latestOpenKey] : [];
       }
+    },
+    saveUserInfo() {
+      this.$refs.userInfoEdit.saveData();
     }
   }
 };

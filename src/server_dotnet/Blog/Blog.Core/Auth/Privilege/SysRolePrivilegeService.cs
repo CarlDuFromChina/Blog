@@ -1,6 +1,8 @@
 ﻿using Blog.Core.Auth.Role.BasicRole;
+using Blog.Core.Auth.UserInfo;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
+using Blog.Core.Module.SysEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

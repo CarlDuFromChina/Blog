@@ -8067,10 +8067,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-core@1.0.20:
-  version "1.0.20"
-  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.20.tgz#9e83e72959bdd87725362064c1bfc9937138a1e2"
-  integrity sha512-eUgILEE9p/PRt/5bgBzIAY9IKVStWaLg5jT3rDE3qD95a0g3xfbe/xS7sM56Qxob9WRV0woolmV3m04FKVy7ug==
+web-core@1.0.21:
+  version "1.0.21"
+  resolved "http://npm.karldu.cn/web-core/-/web-core-1.0.21.tgz#1c2dd5d6fc642049aed235662fc10a818e99acbe"
+  integrity sha512-k0RtuZwFDCYTy0gHodorzuCDI7GubyTCznqOabfOtDcO3CdI5tEE34L+ovwq5Y0EPruj5UvICyJP5u+Yj5f4pw==
   dependencies:
     axios "^0.21.1"
     crypto-js "^4.0.0"

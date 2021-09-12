@@ -16,14 +16,16 @@ namespace Blog.Blog
                 case EntityAction.PostUpdate:
                     var id = context.Entity.Id;
                     var sql = @"
-UPDATE sys_file SET objectid = @objectid WHERE sys_fileid = @id
+UPDATE sys_file
+SET objectid = @objectid
+WHERE sys_fileid = @id
 ";
                     var paramList = new Dictionary<string, object>()
                     {
                         { "@id", entity.surfaceid },
                         { "@objectid", id }
                     };
-                    context.Broker.Execute(sql,  paramList);
+                    context.Broker.Execute(sql, paramList);
                     new DraftService(context.Broker).DeleteDataByBlogId(id); // 删除草稿
                     break;
                 default:

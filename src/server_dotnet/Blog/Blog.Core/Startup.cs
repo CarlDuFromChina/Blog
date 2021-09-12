@@ -1,8 +1,10 @@
 using Blog.Core.Auth;
+using Blog.Core.Config;
 using Blog.Core.Data.Entity;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
 using Blog.Core.Profiles;
+using Blog.Core.Setup;
 using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +24,8 @@ namespace Blog.Core
 {
     public class Startup
     {
+        private readonly SwaggerConfig SwaggerConfig = SwaggerConfig.Config;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -58,10 +62,17 @@ namespace Blog.Core
 
             services.AddHttpContextAccessor();
 
-            ServiceContainer.AddServices(services);
+            // 添加依赖注入服务
+            services.AddServices();
 
-            AuthorizationSetup.AddAuthorizationSetup(services);
+            // 添加Jwt认证服务
+            services.AddAuthorizationSetup();
 
+            // 添加Swagger
+            if (SwaggerConfig.Enable)
+                services.AddSwagger();
+
+            // 添加AutoMapper
             services.AddAutoMapper(MapperHelper.MapType());
         }
 
@@ -88,6 +99,16 @@ namespace Blog.Core
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            if (SwaggerConfig.Enable)
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint($"{SwaggerConfig.Version}/swagger.json", SwaggerConfig.Title);
+                    c.RoutePrefix = SwaggerConfig.RoutePrefix;
+                });
+            }
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Data
 {
+    /// <summary>
+    /// 持久化存储
+    /// </summary>
     internal class PersistBroker : IPersistBroker, IDisposable
     {
         /// <summary>
@@ -31,17 +34,19 @@ namespace Blog.Core.Data
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public string Create(BaseEntity entity)
+        public string Create(BaseEntity entity, bool usePlugin = true)
         {
             return this.ExecuteTransaction(() =>
             {
                 #region 创建前 Plugin
                 var context = new PersistBrokerPluginContext() { Entity = entity, Broker = this, Action = EntityAction.PreCreate, EntityName = entity.EntityName };
-
                 ServiceContainer.ResolveAll<IPersistBrokerBeforeCreateOrUpdate>()?
                     .Each(item => item.Execute(context));
-                ServiceContainer.ResolveAll<IPersistBrokerPlugin>(item => item.StartsWith(entity.EntityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
-                    .Each(item => item.Execute(context));
+                if (usePlugin)
+                {
+                    ServiceContainer.ResolveAll<IPersistBrokerPlugin>(item => item.StartsWith(entity.EntityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
+                        .Each(item => item.Execute(context));
+                }
                 #endregion
 
                 var sql = "INSERT INTO {0}({1}) Values({2})";
@@ -60,9 +65,12 @@ namespace Blog.Core.Data
                 this.Execute(sql, paramList);
 
                 #region 创建后 Plugin
-                context.Action = EntityAction.PostCreate;
-                ServiceContainer.ResolveAll<IPersistBrokerPlugin>(item => item.StartsWith(entity.EntityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
-                    .Each(item => item.Execute(context));
+                if (usePlugin)
+                {
+                    context.Action = EntityAction.PostCreate;
+                    ServiceContainer.ResolveAll<IPersistBrokerPlugin>(item => item.StartsWith(entity.EntityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
+                        .Each(item => item.Execute(context));
+                }
                 #endregion
 
                 return entity.Id;

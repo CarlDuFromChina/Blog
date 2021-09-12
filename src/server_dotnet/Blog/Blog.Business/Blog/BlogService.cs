@@ -1,7 +1,12 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core;
+using Blog.Core.Data;
+using Blog.Core.Module.Role;
+using Blog.Core.Profiles;
+using Blog.Core.Utils;
 using Blog.WeChat;
 using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
+using System;
 using System.Collections.Generic;
 
 namespace Blog.Blog
@@ -33,7 +38,7 @@ namespace Blog.Blog
                     ViewId = "C94EDAAE-0C59-41E6-A373-D4816C2FD882",
                     CustomFilter = new List<string>(){ "title" },
                     Name = "全部博客",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
                 },
                 new EntityView()
                 {
@@ -71,7 +76,7 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
                     ViewId = "ACCE50D6-81A5-4240-BD82-126A50764FAB",
                     CustomFilter = new List<string>() { "title" },
                     Name = "全部系列",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
                 }
             };
         }
@@ -153,11 +158,6 @@ WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND create
 GROUP BY to_char(createdon, 'YYYY-MM-DD')
 ";
             return Broker.Query<BlogActivityModel>(sql);
-        }
-
-        public override string CreateData(blog t)
-        {
-            return base.CreateData(t);
         }
     }
 }

@@ -23,6 +23,7 @@ Vue.use(Vuex);
 
 Vue.prototype.$bus = new Vue();
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
+moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
 Vue.prototype.$indexDB = new storage.IndexedDB();
 Vue.prototype.$echarts = echarts;
@@ -30,12 +31,6 @@ Vue.prototype.$echarts = echarts;
 // 如果是移动端则跳转到移动端应用
 if (window.device.mobile()) {
   window.location.href = `${window.location.origin}/debug/#/`;
-}
-
-const serverUrl = localStorage.getItem('server_url');
-if (process.env.NODE_ENV === 'development' && !sp.isNullOrEmpty(serverUrl)) {
-  store.commit('updateServerUrl', serverUrl);
-  console.info('服务器地址修改为：' + serverUrl);
 }
 
 /* eslint-disable no-new */

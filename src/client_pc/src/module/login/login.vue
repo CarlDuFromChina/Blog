@@ -19,7 +19,7 @@
           </a-input-password>
         </a-form-model-item>
         <a-form-model-item>
-          <a href="#/login/forget" class="forget-pwd">忘记密码</a>
+          <a @click="forgetPwd" class="forget-pwd">忘记密码</a>
         </a-form-model-item>
         <a-form-model-item>
           <a-button style="width: 100%" type="primary" @click="signIn" :loading="loading">登录</a-button>
@@ -77,7 +77,7 @@ export default {
       });
     },
     test() {
-      sp.get('api/DataService/test').then(resp => {
+      sp.get('api/System/test').then(resp => {
         if (resp) {
           this.$router.push({ name: 'workplace' });
         } else {
@@ -116,7 +116,7 @@ export default {
       try {
         const valid = await this.validate();
         if (valid) {
-          const key = await sp.get('api/DataService/GetPublicKey');
+          const key = await sp.get('api/System/GetPublicKey');
           const url = 'api/AuthUser/login';
           const { rsa, md5 } = encrypt;
           const data = {
@@ -129,7 +129,7 @@ export default {
             .then(resp => {
               if (resp.result) {
                 saveAuth(this.$store, resp);
-                that.$router.push({ name: 'workplace' });
+                that.$router.push({ name: 'index' });
                 that.$message.success(resp.message);
               } else {
                 this.isLoginFailed = true;
@@ -148,6 +148,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    forgetPwd() {
+      this.$message.warn('请联系管理员重置密码');
     }
   }
 };
