@@ -129,7 +129,7 @@ namespace Blog.Core.Module.DataService
             if (user == null)
                 return false;
 
-            if (user.roleid == UserIdentityUtil.ANONYMOUS_ID)
+            if (user.roleid != UserIdentityUtil.ANONYMOUS_ID)
                 return true;
 
             return false;
