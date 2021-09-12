@@ -55,9 +55,6 @@ export default {
 
 <style lang="less" scoped>
 .sp-menu-header {
-  // transition: all 0.2s;
-  // transform: translate3d(0, -100%, 0);
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
   color: #222226;
   background: #fff;
   font-size: 14px;
