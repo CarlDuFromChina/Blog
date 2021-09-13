@@ -67,7 +67,7 @@ namespace Blog.Blog
         /// 点赞
         /// </summary>
         /// <param name="blogId"></param>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public void Upvote(string blogId)
         {
             new BlogService().Upvote(blogId);

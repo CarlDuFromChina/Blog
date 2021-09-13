@@ -25,86 +25,43 @@ namespace Blog.Core.Module.MessageRemind
             }
         }
 
-        
+        public string _receiverId;
         /// <summary>
-        /// 关联实体id
+        /// 接收人id
         /// </summary>
-        private string _object_id;
         [DataMember]
-        [Attr("object_id", "关联实体id", AttrType.Varchar, 100)]
-        public string object_id
+        [Attr("receiverId", "接收人", AttrType.Varchar, 100)]
+        public string receiverId
         {
             get
             {
-                return this._object_id;
+                return this._receiverId;
             }
             set
             {
-                this._object_id = value;
-                SetAttributeValue("object_id", value);
+                this._receiverId = value;
+                SetAttributeValue("receiverId", value);
             }
         }
 
-
+        public string _receiverIdName;
         /// <summary>
-        /// 关联实体name
+        /// 接收人名称
         /// </summary>
-        private string _object_idName;
         [DataMember]
-        [Attr("object_idname", "关联实体名", AttrType.Varchar, 100)]
-        public string object_idName
+        [Attr("receiverIdName", "接收人", AttrType.Varchar, 100)]
+        public string receiverIdName
         {
             get
             {
-                return this._object_idName;
+                return this._receiverIdName;
             }
             set
             {
-                this._object_idName = value;
-                SetAttributeValue("object_idName", value);
+                this._receiverIdName = value;
+                SetAttributeValue("receiverIdName", value);
             }
         }
-
-
-        /// <summary>
-        /// 实体
-        /// </summary>
-        private string _object_type;
-        [DataMember]
-        [Attr("object_type", "实体类型", AttrType.Varchar, 100)]
-        public string object_type
-        {
-            get
-            {
-                return this._object_type;
-            }
-            set
-            {
-                this._object_type = value;
-                SetAttributeValue("object_type", value);
-            }
-        }
-
-
-        /// <summary>
-        /// 实体名
-        /// </summary>
-        private string _object_typeName;
-        [DataMember]
-        [Attr("object_typename", "实体名", AttrType.Varchar, 100)]
-        public string object_typeName
-        {
-            get
-            {
-                return this._object_typeName;
-            }
-            set
-            {
-                this._object_typeName = value;
-                SetAttributeValue("object_typeName", value);
-            }
-        }
-
 
         /// <summary>
         /// 是否阅读
@@ -151,7 +108,7 @@ namespace Blog.Core.Module.MessageRemind
         /// </summary>
         private string _content;
         [DataMember]
-        [Attr("content", "消息内容", AttrType.Varchar, 500)]
+        [Attr("content", "消息内容", AttrType.Text)]
         public string content
         {
             get
@@ -165,6 +122,24 @@ namespace Blog.Core.Module.MessageRemind
             }
         }
 
+        private string _message_type;
+        /// <summary>
+        /// 消息类型
+        /// </summary>
+        [DataMember]
+        [Attr("message_type", "消息类型", AttrType.Varchar, 100)]
+        public string message_type
+        {
+            get
+            {
+                return this._message_type;
+            }
+            set
+            {
+                this._message_type = value;
+                SetAttributeValue("message_type", value);
+            }
+        }
     }
 }
 

@@ -21,6 +21,7 @@
     <None Remove="version\2.0\2021070706-选项（sys_param）初始化.sql" />
     <None Remove="version\2.0\2021070901-新增日志保留天数配置.sql" />
     <None Remove="version\2.0\2021070902-新增启用草稿系统参数.sql" />
+    <None Remove="version\2.3\2021091301-删除消息提醒表.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +53,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070902-新增启用草稿系统参数.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.3\2021091301-删除消息提醒表.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

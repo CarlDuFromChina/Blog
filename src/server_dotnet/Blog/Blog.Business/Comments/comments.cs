@@ -42,6 +42,22 @@ namespace Blog.Comments
             }
         }
 
+        private string _comment_type;
+        [DataMember]
+        [Attr("comment_type", "评论类型", AttrType.Varchar)]
+        public string comment_type
+        {
+            get
+            {
+                return this._comment_type;
+            }
+            set
+            {
+                this._comment_type = value;
+                SetAttributeValue("comment_type", value);
+            }
+        }
+
         /// <summary>
         /// 实体Id
         /// </summary>
@@ -77,6 +93,45 @@ namespace Blog.Comments
             {
                 this._object_name = value;
                 SetAttributeValue("object_name", value);
+            }
+        }
+
+
+        public string _object_ownerid;
+        /// <summary>
+        /// 对象拥有者
+        /// </summary>
+        [DataMember]
+        [Attr("object_ownerid", "对象拥有者", AttrType.Varchar, 100)]
+        public string object_ownerid
+        {
+            get
+            {
+                return this._object_ownerid;
+            }
+            set
+            {
+                this._object_ownerid = value;
+                SetAttributeValue("object_ownerid", value);
+            }
+        }
+
+        public string _object_owneridName;
+        /// <summary>
+        /// 对象拥有者
+        /// </summary>
+        [DataMember]
+        [Attr("object_owneridName", "对象拥有者", AttrType.Varchar, 100)]
+        public string object_owneridName
+        {
+            get
+            {
+                return this._object_owneridName;
+            }
+            set
+            {
+                this._object_owneridName = value;
+                SetAttributeValue("object_owneridName", value);
             }
         }
 

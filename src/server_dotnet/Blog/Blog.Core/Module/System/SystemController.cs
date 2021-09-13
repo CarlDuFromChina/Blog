@@ -71,6 +71,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost, AllowAnonymous]
         public LoginResponse Login(LoginRequest model)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());

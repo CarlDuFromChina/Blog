@@ -35,7 +35,7 @@
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comments :object-id="Id" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
+            <sp-comments :object-id="Id" :data="data" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">

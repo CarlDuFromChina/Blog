@@ -82,6 +82,7 @@ export default {
         comment: this.value,
         objectid: this.data.objectId,
         object_name: this.data.object_name,
+        comment_type: 'reply',
         replyid: this.data.createdBy,
         replyidName: this.data.createdByName,
         parentid: this.data.parentid || this.data.Id

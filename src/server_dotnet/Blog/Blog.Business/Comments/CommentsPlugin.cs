@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Data;
 using Blog.Core.Module.MessageRemind;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,22 @@ namespace Blog.Comments
                         var messageRemind = new message_remind()
                         {
                             Id = Guid.NewGuid().ToString(),
-                            name = "评论提醒",
-                            object_id = data.Id,
-                            object_idName = data.name,
-                            object_type = "comments",
-                            object_typeName = "评论",
+                            name = $"{data.name}消息提醒",
                             is_read = false,
                             is_readName = "否",
-                            content = $"您的博客有一条新的评论：{data.comment}"
+                            content = JsonConvert.SerializeObject(data),
+                            message_type = data.comment_type
                         };
+                        if (data.comment_type == "comment")
+                        {
+                            messageRemind.receiverId = data.object_ownerid;
+                            messageRemind.receiverIdName = data.object_owneridName;
+                        }
+                        else if (data.comment_type == "reply")
+                        {
+                            messageRemind.receiverId = data.replyid;
+                            messageRemind.receiverIdName = data.replyidName;
+                        }
                         broker.Create(messageRemind);
                     }
                     break;

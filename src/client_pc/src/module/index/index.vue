@@ -16,6 +16,11 @@
             <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />
           </a-dropdown>
         </sp-menu-item>
+        <sp-menu-item style="float:right" v-show="isLoggedIn" disableHover>
+          <a-badge :count="messageCount">
+            <sp-icon name="sp-blog-notice" size="24"></sp-icon>
+          </a-badge>
+        </sp-menu-item>
       </template>
     </sp-menu>
     <!-- 菜单 -->
@@ -86,6 +91,9 @@ export default {
     if (this.isLoggedIn) {
       sp.get('api/System/GetShowAdmin').then(resp => {
         this.showAdmin = resp;
+      });
+      sp.get('api/MessageRemind/GetUnReadMessageCount').then(resp => {
+        this.messageCount = resp;
       });
     }
   },

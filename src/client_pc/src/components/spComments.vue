@@ -45,6 +45,9 @@ export default {
       default: '',
       required: true
     },
+    data: {
+      type: Object
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -99,6 +102,9 @@ export default {
           Id: uuid.generate(),
           name: '评论',
           comment: this.value,
+          comment_type: 'comment',
+          object_ownerid: this.data.createdBy,
+          object_owneridName: this.data.createdByName,
           objectid: this.objectId,
           object_name: this.objectName
         };
