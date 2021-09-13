@@ -63,25 +63,91 @@ namespace Blog.Core.Module.DataService
             return IdenticonResult.FromValue(id, 64);
         }
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public LoginResponse Login(LoginRequest model)
+        {
+            var code = model.code;
+            var pwd = model.password;
+            var publicKey = model.publicKey;
+
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+
+            var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
+
+            if (authUser == null)
+            {
+                return new LoginResponse() { result = false, message = "用户名或密码错误" };
+            }
+
+            if (authUser.is_lock)
+            {
+                return new LoginResponse() { result = false, message = "用户已被锁定，请联系管理员" };
+            }
+
+            if (string.IsNullOrEmpty(pwd) ||
+                string.IsNullOrEmpty(publicKey) ||
+                !string.Equals(authUser.password, RSAUtil.Decrypt(pwd, publicKey))
+                )
+            {
+                var message = "用户名或密码错误";
+                if (!authUser.try_times.HasValue)
+                {
+                    authUser.try_times = 1;
+                }
+                else
+                {
+                    authUser.try_times += 1;
+                    if (authUser.try_times > 1)
+                    {
+                        message = $"用户名或密码已连续错误{authUser.try_times}次，超过五次账号锁定";
+                    }
+                }
+
+                if (authUser.try_times >= 5)
+                {
+                    authUser.is_lock = true;
+                    message = $"用户已被锁定，请联系管理员";
+                }
+
+                Broker.Update(authUser);
+                return new LoginResponse() { result = false, message = message };
+            }
+
+            if (authUser.try_times > 0)
+            {
+                authUser.try_times = 0;
+            }
+            authUser.last_login_time = DateTime.Now;
+            Broker.Update(authUser);
+
+            // 返回登录结果、用户信息、用户验证票据信息
+            var oUser = new LoginResponse
+            {
+                result = true,
+                userName = code,
+                token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.Id }),
+                userId = authUser.user_infoid,
+                message = "登录成功"
+            };
+            return oUser;
+        }
 
         /// <summary>
         /// 注册
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public LoginResponse Login(LoginRequest model)
+        public LoginResponse Signup(LoginRequest model)
         {
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
 
             return Broker.ExecuteTransaction(() =>
             {
-                var loginResponse = new AuthUserService(Broker).Login(model.code, model.password, model.publicKey);
-                if (loginResponse.result)
-                {
-                    return loginResponse;
-                }
-
                 if (!model.code.Contains("@"))
                     return new LoginResponse(false, "注册失败，请使用邮箱作为账号");
 
@@ -113,6 +179,51 @@ namespace Blog.Core.Module.DataService
                     level = LoginMesageLevel.Warning.ToString()
                 };
             });
+        }
+
+        /// <summary>
+        /// 登录或注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public LoginResponse SignInOrSignUp(LoginRequest model)
+        {
+            var resp = Login(model);
+            if (resp.result)
+                return resp;
+
+            return Signup(model);
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="password"></param>
+        public void EditPassword(string password)
+        {
+            var sql = $@"
+UPDATE auth_user
+SET password = @password
+WHERE user_infoid = @id;
+";
+            var user = UserIdentityUtil.GetCurrentUser();
+            var paramList = new Dictionary<string, object>() { { "@id", user.Id }, { "@password", password } };
+            Broker.Execute(sql, paramList);
+        }
+
+        /// <summary>
+        /// 充值密码
+        /// </summary>
+        /// <param name="id"></param>
+        public void ResetPassword(string id)
+        {
+            var sql = $@"
+UPDATE auth_user
+SET password = @password
+WHERE user_infoid = @id;
+";
+            var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
+            Broker.Execute(sql, paramList);
         }
 
         /// <summary>

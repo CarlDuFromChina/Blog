@@ -67,17 +67,64 @@ namespace Blog.Core.Module.DataService
         }
 
         /// <summary>
-        /// 注册
+        /// 登录
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, AllowAnonymous]
         public LoginResponse Login(LoginRequest model)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             return new SystemService().Login(model);
         }
 
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, AllowAnonymous]
+        public LoginResponse Signup(LoginRequest model)
+        {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+            return new SystemService().Signup(model);
+        }
+
+        /// <summary>
+        /// 登录或注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost, AllowAnonymous]
+        public LoginResponse SignInOrSignUp(LoginRequest model)
+        {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+            return new SystemService().SignInOrSignUp(model);
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="password"></param>
+        [HttpPost]
+        public void EditPassword([FromBody] string password)
+        {
+            new SystemService().EditPassword(password);
+        }
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet]
+        public void ResetPassword(string id)
+        {
+            new SystemService().ResetPassword(id);
+        }
+
+        /// <summary>
+        /// 是否展示后台
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public bool GetShowAdmin()
         {

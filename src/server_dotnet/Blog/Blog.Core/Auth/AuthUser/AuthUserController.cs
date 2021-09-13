@@ -11,20 +11,6 @@ namespace Blog.Core.Auth
     public class AuthUserController : EntityBaseController<auth_user, AuthUserService>
     {
         /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [HttpPost, AllowAnonymous]
-        public LoginResponse Login([FromBody]LoginRequest request)
-        {
-            string code = request.code;
-            string pwd = request.password;
-            string publicKey = request.publicKey;
-            return new AuthUserService().Login(code, pwd, publicKey);
-        }
-
-        /// <summary>
         /// 刷新Token
         /// </summary>
         /// <returns></returns>
@@ -34,16 +20,6 @@ namespace Blog.Core.Auth
             var tokenHeader = Core.HttpContext.Current.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
             var user = JwtHelper.SerializeJwt(tokenHeader);
             return JwtHelper.CreateAccessToken(user);
-        }
-
-        /// <summary>
-        /// 修改密码
-        /// </summary>
-        /// <param name="password"></param>
-        [HttpPost]
-        public void EditPassword([FromBody]string password)
-        {
-            new AuthUserService().EditPassword(password);
         }
 
         /// <summary>
