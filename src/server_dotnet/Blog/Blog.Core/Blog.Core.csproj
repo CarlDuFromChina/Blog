@@ -8,6 +8,7 @@
     <Compile Remove="Scripts\**" />
     <EmbeddedResource Remove="Scripts\**" />
     <None Remove="Scripts\**" />
+    <None Remove="version\2.3\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -87,6 +88,7 @@
 
   <ItemGroup>
     <Folder Include="Module\SysConfig\" />
+    <Folder Include="version\2.3\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
