@@ -1,18 +1,6 @@
 <template>
   <div id="blog" class="blog blog__readonly">
-    <div class="blog-header">
-      <sp-icon
-        name="sp-blog-logo"
-        @click="() => this.$router.push({ name: 'home' })"
-        size="32"
-        style="display: inline-flex; border-radius: 6px; cursor: pointer"
-      ></sp-icon>
-      <a-menu mode="horizontal">
-        <a-menu-item key="index" @click="() => this.$router.push({ name: 'home' })"> 首页 </a-menu-item>
-        <a-menu-item key="friend" @click="() => this.$router.push({ name: 'friends' })"> 友人帐 </a-menu-item>
-        <a-menu-item key="note" @click="() => this.$router.push({ name: 'readingNote' })"> 读书笔记 </a-menu-item>
-      </a-menu>
-    </div>
+    <blog-menu></blog-menu>
     <div class="blog-body" style="background-color: #e9ecef">
       <div class="bodyWrapper">
         <a-layout>
@@ -114,6 +102,7 @@
 <script>
 import Vue from 'vue';
 import 'mavon-editor/src/lib/css/markdown.css';
+import blogMenu from '../../../index/blogMenu.vue';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
@@ -178,6 +167,7 @@ const tocObj = {
 
 export default {
   name: 'blogReadonly',
+  components: { blogMenu },
   data() {
     return {
       Id: this.$route.params.id,
@@ -308,14 +298,6 @@ export default {
   &.blog__readonly {
     overflow-y: auto;
     overflow-x: hidden;
-    .blog-header {
-      width: 100%;
-      height: 60px;
-      display: inline-block;
-      line-height: 60px;
-      padding-left: 20px;
-      background: #fff;
-    }
     .blog-body {
       background-color: #e9ecef;
       color: #212529;

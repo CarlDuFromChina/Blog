@@ -96,11 +96,25 @@ WHERE message_remindid IN (in@ids)
         /// 获取未读消息数量
         /// </summary>
         /// <returns></returns>
-        public int GetUnReadMessageCount()
+        public object GetUnReadMessageCount()
         {
             var userid = UserIdentityUtil.GetCurrentUserId();
-            var result = Broker.ExecuteScalar("SELECT COUNT(1) FROM message_remind WHERE receiverid = @id AND is_read = 0", new Dictionary<string, object>() { { "@id", userid } });
-            return result == null ? 0 : Convert.ToInt32(result);
+            var paramList = new Dictionary<string, object>() { { "@id", userid } };
+            var sql = @"
+SELECT COUNT(1)
+FROM message_remind
+WHERE receiverid = @id AND is_read = 0";
+            var total = Broker.ExecuteScalar(sql, paramList);
+            var upvote = Broker.ExecuteScalar($"{sql} AND message_type = 'upvote'", paramList);
+            var comment = Broker.ExecuteScalar($"{sql} AND message_type IN ('comment', 'reply')", paramList);
+            var system = Broker.ExecuteScalar($"{sql} AND message_type = 'system'", paramList);
+            return new
+            {
+                total = Convert.ToInt32(total),
+                upvote = Convert.ToInt32(upvote),
+                comment = Convert.ToInt32(comment),
+                system = Convert.ToInt32(system)
+            };
         }
     }
 }

@@ -1,29 +1,6 @@
 <template>
   <div class="index">
-    <!-- 菜单 -->
-    <sp-menu :menus="menus" @menu-change="menuChange">
-      <template slot="menus">
-        <sp-menu-item style="float:right;" v-show="!isLoggedIn" disableHover>
-          <a-button icon="login" type="primary" @click="login">登录</a-button>
-        </sp-menu-item>
-        <sp-menu-item style="float:right;" v-show="isLoggedIn" disableHover>
-          <a-dropdown>
-            <a-menu slot="overlay">
-              <a-menu-item key="2" @click="goBg" v-show="showAdmin"><a-icon type="appstore" />后台</a-menu-item>
-              <a-menu-item key="3" @click="() => (userInfoEditVisible = true)"><a-icon type="setting" />设置</a-menu-item>
-              <a-menu-item key="4" @click="logout"><a-icon type="logout" />注销</a-menu-item>
-            </a-menu>
-            <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />
-          </a-dropdown>
-        </sp-menu-item>
-        <sp-menu-item style="float:right" v-show="isLoggedIn" disableHover @click="() => this.$router.push({ name: 'messageRemind' })">
-          <a-badge :count="messageCount">
-            <sp-icon name="sp-blog-notice" size="24"></sp-icon>
-          </a-badge>
-        </sp-menu-item>
-      </template>
-    </sp-menu>
-    <!-- 菜单 -->
+    <blog-menu></blog-menu>
     <div id="container" v-infinite-scroll="loadMore" :infinite-scroll-distance="10">
       <div class="container">
         <keep-alive>
@@ -46,56 +23,24 @@
 
 <script>
 import infiniteScroll from 'vue-infinite-scroll';
-import { clearAuth } from '../../lib/login';
 import userInfoEdit from '../admin/core/userInfo/userInfoEdit.vue';
+import blogMenu from './blogMenu.vue';
 
 export default {
   name: 'index',
   directives: { infiniteScroll },
-  components: { userInfoEdit },
+  components: { userInfoEdit, blogMenu },
   data() {
     return {
       bottom: 100,
       scrollTop: 0,
       btnFlag: false,
       activeIndex: '1',
-      userInfoEditVisible: false,
-      messageCount: 0,
-      showAdmin: false,
-      menus: [
-        {
-          name: '首页',
-          click: () => {
-            this.$router.push({ name: 'home' });
-          }
-        },
-        {
-          name: '友人帐',
-          click: () => {
-            this.$router.push({ name: 'friends' });
-          }
-        },
-        {
-          name: '读书笔记',
-          click: () => {
-            this.$router.push({ name: 'readingNote' });
-          }
-        }
-      ]
+      userInfoEditVisible: false
     };
   },
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
-  },
-  created() {
-    if (this.isLoggedIn) {
-      sp.get('api/System/GetShowAdmin').then(resp => {
-        this.showAdmin = resp;
-      });
-      sp.get('api/MessageRemind/GetUnReadMessageCount').then(resp => {
-        this.messageCount = resp;
-      });
-    }
   },
   destroyed() {
     window.removeEventListener('scroll', this.scrollToTop, true);
@@ -109,9 +54,6 @@ export default {
     }
   },
   methods: {
-    getAvatar() {
-      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
-    },
     // 点击图片回到顶部方法，加计时器是为了过渡顺滑
     backTop() {
       let timer = setInterval(() => {
@@ -133,23 +75,6 @@ export default {
       } else {
         this.btnFlag = false;
       }
-    },
-    // 跳转登录页
-    login() {
-      if (!this.isLoggedIn) {
-        this.$router.push({ name: 'login' });
-      }
-    },
-    logout() {
-      clearAuth(this.$store);
-      this.$message.success('注销成功');
-    },
-    goBg() {
-      this.$router.push({ name: 'workplace' });
-    },
-    // 菜单切换
-    menuChange() {
-      document.getElementById('container').scrollIntoView();
     },
     loadMore() {
       this.$bus.$emit('load-more');

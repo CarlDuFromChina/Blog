@@ -1,13 +1,16 @@
 <template>
   <sp-card class="message">
-    <a-tabs default-active-key="1" :animated="false">
-      <a-tab-pane key="1" tab="点赞提醒">
+    <a-tabs default-active-key="1" :animated="false" @change="clearCount">
+      <a-tab-pane key="1">
+        <a-badge slot="tab" :dot="upvote > 0">点赞提醒</a-badge>
         <message-list view="upvote" key="1"> </message-list>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="评论消息">
+      <a-tab-pane key="2">
+        <a-badge slot="tab" :dot="comment > 0">评论消息</a-badge>
         <message-list view="comment" key="2"> </message-list>
       </a-tab-pane>
-      <a-tab-pane key="3" tab="系统消息">
+      <a-tab-pane key="3">
+        <a-badge slot="tab" :dot="system > 0">系统消息</a-badge>
         <message-list view="system" key="3"> </message-list>
       </a-tab-pane>
     </a-tabs>
@@ -19,7 +22,41 @@ import messageList from './messageList.vue';
 
 export default {
   name: 'messageRemind',
-  components: { messageList }
+  components: { messageList },
+  data() {
+    return {
+      upvote: 0,
+      comment: 0,
+      system: 0
+    };
+  },
+  activated() {
+    this.refreshCount();
+  },
+  methods: {
+    async refreshCount() {
+      const result = await sp.get('api/MessageRemind/GetUnReadMessageCount');
+      const { upvote, comment, system } = result;
+      this.upvote = upvote;
+      this.comment = comment;
+      this.system = system;
+    },
+    clearCount(tab) {
+      switch (tab) {
+        case '1':
+          this.upvote = 0;
+          break;
+        case '2':
+          this.comment = 0;
+          break;
+        case '3':
+          this.system = 0;
+          break;
+        default:
+          break;
+      }
+    }
+  }
 };
 </script>
 
