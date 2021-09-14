@@ -16,7 +16,35 @@
     <div class="blog-body" style="background-color: #e9ecef">
       <div class="bodyWrapper">
         <a-layout>
-          <a-layout-sider width="70%" theme="light">
+          <a-layout-sider width="10%" theme="light" style="text-align: center">
+            <div class="toolbar">
+              <div class="toolbar-item">
+                <a-badge
+                  :count="data.upvote_times || 0"
+                  :number-style="{
+                    backgroundColor: '#fff',
+                    color: '#999',
+                    boxShadow: '0 0 0 1px #d9d9d9 inset'
+                  }"
+                >
+                  <a-icon type="like" :theme="isUp ? 'filled' : 'outlined'" @click="upvote"></a-icon>
+                </a-badge>
+              </div>
+              <div class="toolbar-item">
+                <a-badge
+                  :count="data.reading_times || 0"
+                  :number-style="{
+                    backgroundColor: '#fff',
+                    color: '#999',
+                    boxShadow: '0 0 0 1px #d9d9d9 inset'
+                  }"
+                >
+                  <a-icon type="message" @click="goCommentLocation"></a-icon>
+                </a-badge>
+              </div>
+            </div>
+          </a-layout-sider>
+          <a-layout-sider width="60%" theme="light">
             <a-card>
               <a-skeleton :loading="loading">
                 <div class="block">
@@ -35,7 +63,7 @@
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comments :object-id="Id" :data="data" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
+            <sp-comments id="comment" :object-id="Id" :data="data" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
@@ -160,6 +188,7 @@ export default {
       formatterContent: '',
       user: {},
       height: null,
+      isUp: false,
       baseUrl: sp.getServerUrl()
     };
   },
@@ -216,6 +245,9 @@ export default {
     getBlogEl() {
       return document.getElementById('blog');
     },
+    goCommentLocation() {
+      document.getElementById('comment').scrollIntoView();
+    },
     loadRecommand() {
       sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
         this.recommandList = resp;
@@ -259,8 +291,12 @@ export default {
       }
     },
     upvote() {
-      this.data.upvote_times = (this.data.upvote_times || 0) + 1;
-      sp.get(`/api/Blog/Upvote?blogid=${this.Id}`);
+      if (!this.$store.getters.isLoggedIn) {
+        this.$router.push({ name: 'login' });
+      }
+      sp.get(`/api/Blog/Upvote?id=${this.Id}`).then(resp => {
+        this.$set(this.data, 'upvote_times', resp ? (this.data.upvote_times || 0) + 1 : (this.data.upvote_times || 0) - 1);
+      });
     }
   }
 };
@@ -407,6 +443,30 @@ export default {
   }
   .item:hover {
     background: hsla(0, 0%, 85.1%, 0.1);
+  }
+}
+
+.toolbar {
+  position: fixed;
+  top: 16rem;
+  &-item {
+    display: block;
+    position: relative;
+    margin-bottom: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #fff;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 4%);
+    cursor: pointer;
+    /deep/ svg {
+      height: 2.5rem !important;
+      vertical-align: middle;
+      font-size: 1.5rem;
+      color: #b2bac2;
+    }
   }
 }
 </style>

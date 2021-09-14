@@ -213,7 +213,7 @@ UPDATE {0} SET {1} WHERE {2} = @id;
         public int DeleteByWhere(string entityName, string where, Dictionary<string, object> paramList = null)
         {
             var sql = "DELETE FROM {0} WHERE 1=1 {1}";
-            sql = string.Format(sql, string.IsNullOrEmpty(where) ? "" : $" AND {where}");
+            sql = string.Format(sql, entityName, string.IsNullOrEmpty(where) ? "" : $" AND {where}");
             int result = this.Execute(sql, paramList);
             return result;
         }

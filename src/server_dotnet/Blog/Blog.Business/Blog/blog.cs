@@ -123,27 +123,6 @@ namespace Blog.Blog
             }
         }
 
-
-        /// <summary>
-        /// 点赞次数
-        /// </summary>
-        private int? _upvote_times;
-        [DataMember]
-        [Attr("upvote_times", "点赞次数", AttrType.Int4)]
-        public int? upvote_times
-        {
-            get
-            {
-                return this._upvote_times;
-            }
-            set
-            {
-                this._upvote_times = value;
-                SetAttributeValue("upvote_times", value);
-            }
-        }
-
-
         /// <summary>
         /// 是否是系列
         /// </summary>

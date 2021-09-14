@@ -16,7 +16,7 @@
             <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />
           </a-dropdown>
         </sp-menu-item>
-        <sp-menu-item style="float:right" v-show="isLoggedIn" disableHover>
+        <sp-menu-item style="float:right" v-show="isLoggedIn" disableHover @click="() => this.$router.push({ name: 'messageRemind' })">
           <a-badge :count="messageCount">
             <sp-icon name="sp-blog-notice" size="24"></sp-icon>
           </a-badge>

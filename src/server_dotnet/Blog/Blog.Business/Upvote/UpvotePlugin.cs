@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Blog.Core;
+using Blog.Core.Data;
 using Blog.Core.Module.MessageRemind;
 using Newtonsoft.Json;
 using System;
@@ -30,6 +31,19 @@ namespace Blog.Business.Upvote
                             content = JsonConvert.SerializeObject(data)
                         };
                         context.Broker.Create(message);
+                    }
+                    break;
+                case EntityAction.PreDelete:
+                    {
+                        var data = context.Broker.Retrieve<upvote>(context.Entity.Id);
+                        var sql = @"
+SELECT * FROM (
+	SELECT *, content::jsonb ->> 'objectId' AS objectid
+	FROM message_remind WHERE 1=1  AND message_type = 'upvote'
+) t1
+WHERE t1.objectid = @id";
+                        var dataList = context.Broker.RetrieveMultiple<message_remind>(sql, new Dictionary<string, object>() { { "@id", data.objectId } });
+                        dataList.Each(item => context.Broker.Delete(item));
                     }
                     break;
                 default:

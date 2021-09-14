@@ -1,4 +1,5 @@
-﻿using Blog.Core;
+﻿using Blog.Business.Upvote;
+using Blog.Core;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
@@ -57,8 +58,8 @@ SELECT
 	blog.is_series,
 	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
-	COALESCE(blog.upvote_times, 0) upvote_times,
-	(SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid) message,
+	COALESCE((SELECT COUNT(1) FROM upvote WHERE objectid = blog.blogid), 0) upvote_times,
+	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) message,
 	blog.surfaceid,
 	blog.surface_url
 FROM
@@ -94,6 +95,8 @@ WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
 UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
 ";
                 var data = base.GetData(id);
+                var count = Convert.ToInt32(Broker.ExecuteScalar("SELECT COUNT(1) FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", id } }));
+                data.upvote_times = count;
                 Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
                 return data;
             });
@@ -120,12 +123,29 @@ WHERE
         /// 点赞
         /// </summary>
         /// <param name="blogId"></param>
-        public void Upvote(string blogId)
+        public bool Upvote(string blogId)
         {
-            var sql = @"
-UPDATE blog SET upvote_times = COALESCE(upvote_times, 0) + 1 WHERE blogid = @id
-";
-            Broker.Execute(sql, new Dictionary<string, object>() { { "@id", blogId } });
+            var data = Broker.Retrieve<upvote>("SELECT * FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", blogId } });
+            if (data != null)
+            {
+                Broker.Delete(data);
+                return false;
+            }
+            else
+            {
+                var blog = Broker.Retrieve<blog>(blogId);
+                data = new upvote()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    objectId = blog.Id,
+                    objectIdName = blog.title,
+                    object_ownerid = blog.createdBy,
+                    object_owneridName = blog.createdByName,
+                    object_type = "blog"
+                };
+                Broker.Create(data);
+                return true;
+            }
         }
 
         /// <summary>

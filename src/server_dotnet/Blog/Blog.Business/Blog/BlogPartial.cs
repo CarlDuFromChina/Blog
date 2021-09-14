@@ -11,6 +11,9 @@ namespace Blog.Blog
     {
         [DataMember]
         public int message { get; set; }
+
+        [DataMember]
+        public int upvote_times { get; set; }
     }
 
     public class BlogActivityModel

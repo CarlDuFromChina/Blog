@@ -96,6 +96,24 @@ namespace Blog.Comments
             }
         }
 
+        private string _object_title;
+        /// <summary>
+        /// 对象标题
+        /// </summary>
+        [DataMember]
+        [Attr("object_title", "对象标题", AttrType.Varchar, 100)]
+        public string object_title
+        {
+            get
+            {
+                return this._object_title;
+            }
+            set
+            {
+                this._object_title = value;
+                SetAttributeValue("object_title", value);
+            }
+        }
 
         public string _object_ownerid;
         /// <summary>

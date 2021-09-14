@@ -68,9 +68,9 @@ namespace Blog.Blog
         /// </summary>
         /// <param name="blogId"></param>
         [HttpGet]
-        public void Upvote(string blogId)
+        public bool Upvote(string id)
         {
-            new BlogService().Upvote(blogId);
+            return new BlogService().Upvote(id);
         }
 
         [HttpPost]

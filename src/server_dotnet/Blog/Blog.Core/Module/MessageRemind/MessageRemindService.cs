@@ -37,26 +37,59 @@ WHERE message_type IN ('comment', 'reply')",
                 },
                 new EntityView()
                 {
-                    ViewId = "9E778EBC-9961-4CF7-B352-36DF30F33735",
+                    ViewId = "FBAF583B-4B25-477B-B5DC-C5D110976A9A",
                     Name = "点赞消息",
                     Sql = @"
 SELECT * FROM message_remind
 WHERE message_type = 'upvote'",
                     OrderBy = "createdon DESC"
                 },
+                new EntityView()
+                {
+                    ViewId = "F7A3E0A9-4951-4EA7-A486-5B35056AC17A",
+                    Name = "系统消息",
+                    Sql = @"
+SELECT * FROM message_remind
+WHERE message_type = 'system'",
+                    OrderBy = "createdon DESC"
+                },
             };
+        }
+
+        public void ReadMessage(IEnumerable<string> ids)
+        {
+            var sql = @"
+UPDATE message_remind
+SET	is_read = 1, is_readname = '是'
+WHERE message_remindid IN (in@ids)
+";
+            Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids )} });
         }
 
         public override DataModel<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
+            if (searchList.IsEmpty())
+            {
+                searchList = new List<SearchCondition>();
+            }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
-            return base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+            var model = base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+            var ids = model.DataList.Where(item => !item.is_read).Select(item => item.Id);
+            ReadMessage(ids);
+            return model;
         }
 
         public override IList<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
+            if (searchList.IsEmpty())
+            {
+                searchList = new List<SearchCondition>();
+            }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
-            return base.GetDataList(searchList, orderBy, viewId, searchValue);
+            var model = base.GetDataList(searchList, orderBy, viewId, searchValue);
+            var ids = model.Where(item => !item.is_read).Select(item => item.Id);
+            ReadMessage(ids);
+            return model;
         }
 
         /// <summary>

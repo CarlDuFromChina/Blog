@@ -106,7 +106,8 @@ export default {
           object_ownerid: this.data.createdBy,
           object_owneridName: this.data.createdByName,
           objectid: this.objectId,
-          object_name: this.objectName
+          object_name: this.objectName,
+          object_title: this.data.title
         };
         sp.post('api/Comments/CreateData', comment).then(resp => {
           this.getDataList();
