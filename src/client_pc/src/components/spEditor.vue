@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import E from 'wangeditor';
-
 export default {
   name: 'sp-editor',
   props: {
@@ -59,6 +57,7 @@ export default {
     }
   },
   mounted() {
+    const E = require('wangeditor');
     this.editor = new E(this.$refs.editor);
     this.editor.config.onchange = html => {
       this.$emit('input', html);

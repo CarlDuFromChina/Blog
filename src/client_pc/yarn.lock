@@ -72,21 +72,6 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@babel/runtime-corejs3@^7.11.2":
-  version "7.14.7"
-  resolved "http://npm.karldu.cn/@babel%2fruntime-corejs3/-/runtime-corejs3-7.14.7.tgz#0ef292bbce40ca00f874c9724ef175a12476465c"
-  integrity sha1-DvKSu85AygD4dMlyTvF1oSR2Rlw=
-  dependencies:
-    core-js-pure "^3.15.0"
-    regenerator-runtime "^0.13.4"
-
-"@babel/runtime@^7.11.2":
-  version "7.14.6"
-  resolved "http://npm.karldu.cn/@babel%2fruntime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
-  integrity sha1-U1IDvAiS78fexgvcJ7Ls9uQJBi0=
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "http://npm.karldu.cn/@babel%2ftemplate/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -2020,11 +2005,6 @@ copy-webpack-plugin@^4.0.1:
     minimatch "^3.0.4"
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
-
-core-js-pure@^3.15.0:
-  version "3.15.2"
-  resolved "http://npm.karldu.cn/core-js-pure/-/core-js-pure-3.15.2.tgz#c8e0874822705f3385d3197af9348f7c9ae2e3ce"
-  integrity sha1-yOCHSCJwXzOF0xl6+TSPfJri484=
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.12"
@@ -6594,11 +6574,6 @@ regenerator-runtime@^0.11.0:
   resolved "http://npm.karldu.cn/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
 
-regenerator-runtime@^0.13.4:
-  version "0.13.7"
-  resolved "http://npm.karldu.cn/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
-  integrity sha1-ysLazIoepnX+qrrriugziYrkb1U=
-
 regenerator-transform@^0.10.0:
   version "0.10.1"
   resolved "http://npm.karldu.cn/regenerator-transform/-/regenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
@@ -7642,11 +7617,6 @@ tslib@^1.10.0:
   resolved "http://npm.karldu.cn/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=
 
-tslib@^2.1.0:
-  version "2.3.0"
-  resolved "http://npm.karldu.cn/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
-  integrity sha1-gDuM2rPhK6WBpMpByIObuw2ssJ4=
-
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "http://npm.karldu.cn/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
@@ -8025,15 +7995,6 @@ vuex@^3.6.2:
   version "3.6.2"
   resolved "http://npm.karldu.cn/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
   integrity sha1-I2vAhqhww655lG8QfxbeWdWJXnE=
-
-wangeditor@^4.7.5:
-  version "4.7.5"
-  resolved "http://npm.karldu.cn/wangeditor/-/wangeditor-4.7.5.tgz#51de4d32a837f5b500c1bca7a317fd2600a39062"
-  integrity sha1-Ud5NMqg39bUAwbynoxf9JgCjkGI=
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-    "@babel/runtime-corejs3" "^7.11.2"
-    tslib "^2.1.0"
 
 warning@^4.0.0:
   version "4.0.3"
