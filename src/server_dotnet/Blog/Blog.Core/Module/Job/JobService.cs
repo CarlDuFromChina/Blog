@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Data;
 using Blog.Core.Job;
 using Quartz;
+using Sixpence.Core;
 using System.Collections.Generic;
 using System.Linq;
 

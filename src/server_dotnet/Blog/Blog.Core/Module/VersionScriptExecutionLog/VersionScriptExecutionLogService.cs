@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Data;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;

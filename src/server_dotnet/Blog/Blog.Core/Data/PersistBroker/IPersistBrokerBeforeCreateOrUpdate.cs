@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,12 +79,12 @@ namespace Blog.Core.Data
 
                    var paramList = new Dictionary<string, object>() { { "@id", entity.Id } };
                    var sqlParam = new List<string>() { $" AND {entity.EntityName}Id <> @id" }; // 排除自身
-                   item.AttributeList.Distinct().Each(attr =>
-                   {
-                       var keyValue = ParseSqlUtil.GetSpecialValue($"@{attr}", entity[attr]);
-                       sqlParam.Add($" AND {attr} = {keyValue.name}");
-                       paramList.Add(keyValue.name, keyValue.value);
-                   });
+             item.AttributeList.Distinct().Each(attr =>
+             {
+                           var keyValue = ParseSqlUtil.GetSpecialValue($"@{attr}", entity[attr]);
+                           sqlParam.Add($" AND {attr} = {keyValue.name}");
+                           paramList.Add(keyValue.name, keyValue.value);
+                       });
 
                    var sql = string.Format(@"SELECT {0}Id FROM {0} WHERE 1 = 1 ", entity.EntityName) + string.Join("", sqlParam);
                    AssertUtil.CheckBoolean<SpException>(broker.Query<string>(sql, paramList)?.Count() > 0, item.RepeatMessage, "7293452C-AFCA-408D-9EBD-B1CECD206A7D");

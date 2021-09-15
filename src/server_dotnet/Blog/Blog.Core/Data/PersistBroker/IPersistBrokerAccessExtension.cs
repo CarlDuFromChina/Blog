@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Module.SysEntity;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

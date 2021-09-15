@@ -4,7 +4,7 @@ using Blog.Core.Data;
 using Blog.WeChat.Message;
 using System;
 using System.Collections.Generic;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {

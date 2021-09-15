@@ -3,7 +3,7 @@ using Blog.Core;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.WeChat;
 using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;

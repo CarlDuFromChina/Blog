@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Data;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ UPDATE message_remind
 SET	is_read = 1, is_readname = '是'
 WHERE message_remindid IN (in@ids)
 ";
-            Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids )} });
+            Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } });
         }
 
         public override DataModel<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")

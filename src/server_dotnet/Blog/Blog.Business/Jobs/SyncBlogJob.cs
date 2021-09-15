@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Job;
 using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using AutoMapper;
 using Blog.Core;
 using Blog.Core.Profiles;
+using Sixpence.Core;
 
 namespace Blog.Jobs
 {

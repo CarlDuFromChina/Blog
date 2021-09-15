@@ -1,5 +1,6 @@
 ﻿using Blog.Core;
 using Blog.Core.Data;
+using Sixpence.Core;
 using System.Collections.Generic;
 using System.Linq;
 

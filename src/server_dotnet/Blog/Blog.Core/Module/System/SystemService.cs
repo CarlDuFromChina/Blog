@@ -7,7 +7,7 @@ using Blog.Core.Module.Role;
 using Blog.Core.Module.Vertification.Mail;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Jdenticon.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
+using Sixpence.Core;
 
 namespace Blog.Core.Module.DataService
 {
@@ -171,8 +172,8 @@ namespace Blog.Core.Module.DataService
                 };
                 Broker.Create(data);
 
-                // 返回登录结果、用户信息、用户验证票据信息
-                return new LoginResponse()
+          // 返回登录结果、用户信息、用户验证票据信息
+          return new LoginResponse()
                 {
                     result = false,
                     message = $"已向{data.mail_address}发送激活邮件，请在两个小时内激活",

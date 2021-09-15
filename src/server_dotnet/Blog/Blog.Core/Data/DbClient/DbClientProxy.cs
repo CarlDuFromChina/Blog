@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Data.Driver;
-using Blog.Core.Logging;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Logging;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;

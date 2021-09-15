@@ -1,4 +1,4 @@
-﻿using Blog.Core.Logging;
+﻿using Sixpence.Core.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Security.Authentication;
 using System.Text;
+using Sixpence.Core;
 
 namespace Blog.Core.WebApi
 {

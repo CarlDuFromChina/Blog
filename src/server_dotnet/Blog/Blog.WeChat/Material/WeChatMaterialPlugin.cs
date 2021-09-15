@@ -12,13 +12,14 @@ using Blog.Core.Config;
 using Blog.Core.Data;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.Core.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.Core;
 
 namespace Blog.WeChat.Material
 {

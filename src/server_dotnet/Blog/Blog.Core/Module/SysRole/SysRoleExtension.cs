@@ -3,11 +3,12 @@ using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.Role.BasicRole;
 using Blog.Core.Data;
 using Blog.Core.Module.Role;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sixpence.Core;
 
 namespace Blog.Core.Module.SysRole
 {
@@ -24,11 +25,11 @@ namespace Blog.Core.Module.SysRole
                 item.GetMissingPrivilege()
                     .Each(item =>
                     {
-                        if (!item.Value.IsEmpty())
-                        {
-                            privileges.AddRange(item.Value);
-                        }
-                    });
+                            if (!item.Value.IsEmpty())
+                            {
+                                privileges.AddRange(item.Value);
+                            }
+                        });
             });
 
             broker.ExecuteTransaction(() => broker.BulkCreate(privileges));

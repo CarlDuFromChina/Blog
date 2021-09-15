@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using Blog.Core;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Auth;
+using Sixpence.Core;
 
 namespace Blog.WeChat.Material
 {
@@ -86,7 +87,7 @@ namespace Blog.WeChat.Material
             var config = StoreConfig.Config;
             var stream = ServiceContainer.Resolve<IStoreStrategy>(config?.Type).GetStream(fileId);
             var media = WeChatApi.AddMaterial(type, stream, file.name, file.content_type);
-            
+
             // 创建素材记录
             var user = UserIdentityUtil.GetCurrentUser();
             var material = new wechat_material()
@@ -100,7 +101,7 @@ namespace Blog.WeChat.Material
                 createdBy = user.Id,
                 createdByName = user.Name,
                 modifiedBy = user.Id,
-                modifiedByName= user.Name,
+                modifiedByName = user.Name,
                 modifiedOn = DateTime.Now,
                 createdOn = DateTime.Now
             };

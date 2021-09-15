@@ -1,9 +1,10 @@
-﻿using Blog.Core.Utils;
+﻿using Sixpence.Core.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sixpence.Core;
 
 namespace Blog.Core.Setup
 {
@@ -12,7 +13,7 @@ namespace Blog.Core.Setup
         public static void AddServices(this IServiceCollection services)
         {
             ServiceContainer.Services = services;
-            var types = AssemblyUtil.GetAssemblies().GetTypes();
+            var types = AssemblyUtil.GetAssemblies("Blog.*.dll").GetTypes();
             var interfaces = types.Where(item => item.IsInterface && item.IsDefined(typeof(ServiceRegisterAttribute), false)).ToList();
             interfaces.ForEach(item =>
             {

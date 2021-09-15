@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -88,7 +89,7 @@ WHERE hash_code = @code
                 hash_code = hash_code,
                 file_path = filePath,
                 file_type = fileType,
-                content_type = contentType,  
+                content_type = contentType,
             };
             sysImage.DownloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}";
 

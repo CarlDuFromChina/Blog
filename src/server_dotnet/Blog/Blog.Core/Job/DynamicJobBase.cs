@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using log4net;
 using Quartz;
 using System;

@@ -7,7 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Blog.Core;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
+using Sixpence.Core;
 
 namespace Blog.WeChat
 {

@@ -2,12 +2,14 @@
 using Blog.Core.Job;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Sixpence.Core;
+using Blog.Core.Utils;
 
 namespace Blog.Core.Module.Job
 {
@@ -47,7 +49,7 @@ WHERE
 ";
             var dataList = broker.RetrieveMultiple<sys_file>(sql);
             var ids = dataList.Select(item => item.Id).ToList();
-            
+
             new SysFileService(broker).DeleteData(ids);
             Logger.Info($"找到{ids.Count}张过期图片文件，已删除");
         }
@@ -59,7 +61,7 @@ WHERE
         {
             try
             {
-                var fileList = FileUtil.GetFileList("*.log", FolderType.Log, SearchOption.TopDirectoryOnly);
+                var fileList = FileHelper.GetFileList("*.log", FolderType.Log, SearchOption.TopDirectoryOnly);
                 var targetPath = FolderType.LogArchive.GetPath();
                 fileList.Each(item =>
                 {
@@ -84,7 +86,7 @@ WHERE
         private void DeleteLog()
         {
             var days = SysConfigFactory.GetValue<BackupLogSysConfig>();
-            var files = FileUtil.GetFileList("*.log", FolderType.LogArchive);
+            var files = FileHelper.GetFileList("*.log", FolderType.LogArchive);
             var logNameList = new List<string>();
 
             // 需要保留的log

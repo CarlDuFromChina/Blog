@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Blog.Core.Profiles
         /// <returns></returns>
         public static Type[] MapType()
         {
-            Type[] types = AssemblyUtil.GetTypes<IProfile>().ToArray();
+            Type[] types = AssemblyUtil.GetTypes<IProfile>("Blog.*.dll").ToArray();
 
             List<Type> allList = new List<Type>();
 

@@ -2,7 +2,8 @@
 using Blog.Core.Data;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Blog.Core.Module.Gallery
             var result = HttpUtil.DownloadImage(url, out var contentType);
             var stream = StreamUtil.BytesToStream(result);
             var hash_code = SHAUtil.GetFileSHA1(stream);
-            
+
             var config = StoreConfig.Config;
             var fileName = $"{hash_code}.{url.Substring(url.LastIndexOf("/") + 1).GetFileType()}";
             ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, fileName, out var filePath);

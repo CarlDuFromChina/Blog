@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;

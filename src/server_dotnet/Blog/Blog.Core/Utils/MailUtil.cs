@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Logging;
 using log4net;
+using Sixpence.Core;
+using Sixpence.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net;

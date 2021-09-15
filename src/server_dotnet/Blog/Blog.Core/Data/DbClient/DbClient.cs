@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Data.Driver;
 using Dapper;
 using Npgsql;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Blog.Core;
 using Blog.Core.Profiles;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

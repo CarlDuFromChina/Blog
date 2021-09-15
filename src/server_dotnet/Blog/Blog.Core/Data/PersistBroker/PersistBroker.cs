@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Data.DbClient;
 using Blog.Core.Data.Driver;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

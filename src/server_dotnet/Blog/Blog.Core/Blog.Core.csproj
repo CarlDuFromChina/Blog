@@ -91,6 +91,10 @@
     <Folder Include="version\2.3\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sixpence.Core\Sixpence.Core.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

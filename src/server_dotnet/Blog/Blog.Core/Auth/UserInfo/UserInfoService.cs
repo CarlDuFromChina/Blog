@@ -1,5 +1,6 @@
 ﻿using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System.Collections.Generic;
 
 namespace Blog.Core.Auth.UserInfo

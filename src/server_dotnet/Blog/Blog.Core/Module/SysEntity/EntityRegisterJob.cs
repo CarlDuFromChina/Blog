@@ -3,6 +3,7 @@ using Blog.Core.Data;
 using Blog.Core.Job;
 using Blog.Core.Module.SysAttrs;
 using Quartz;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

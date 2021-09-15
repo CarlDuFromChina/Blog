@@ -18,7 +18,8 @@ using Blog.Core.Job;
 using Blog.WeChat.FocusUser;
 using Blog.Core.Data;
 using Blog.Core.Auth;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
+using Sixpence.Core;
 
 namespace Blog.Jobs
 {
@@ -45,34 +46,34 @@ namespace Blog.Jobs
                     var dataList = focusUsers.user_list
                         .Select(focusUser =>
                         {
-                            var wechat_user = new wechat_user()
-                            {
-                                Id = focusUser.openid,
-                                subscribe = Convert.ToInt32(focusUser.subscribe),
-                                nickname = focusUser.nickname,
-                                name = focusUser.nickname,
-                                sex = focusUser.sex,
-                                language = focusUser.language,
-                                city = focusUser.city,
-                                province = focusUser.province,
-                                country = focusUser.country,
-                                headimgurl = focusUser.headimgurl,
-                                subscribe_time = focusUser.subscribe_time.ToDateTime(),
-                                unionid = focusUser.unionid,
-                                remark = focusUser.remark,
-                                groupid = focusUser.groupid,
-                                subscribe_scene = focusUser.subscribe_scene,
-                                qr_scene = focusUser.qr_scene,
-                                qr_scene_str = focusUser.qr_scene_str,
-                                createdBy = user.Id,
-                                createdByName = user.Name,
-                                modifiedBy = user.Id,
-                                modifiedByName = user.Name,
-                                createdOn = DateTime.Now,
-                                modifiedOn = DateTime.Now,
-                            };
-                            return wechat_user;
-                        })
+                                  var wechat_user = new wechat_user()
+                                  {
+                                      Id = focusUser.openid,
+                                      subscribe = Convert.ToInt32(focusUser.subscribe),
+                                      nickname = focusUser.nickname,
+                                      name = focusUser.nickname,
+                                      sex = focusUser.sex,
+                                      language = focusUser.language,
+                                      city = focusUser.city,
+                                      province = focusUser.province,
+                                      country = focusUser.country,
+                                      headimgurl = focusUser.headimgurl,
+                                      subscribe_time = focusUser.subscribe_time.ToDateTime(),
+                                      unionid = focusUser.unionid,
+                                      remark = focusUser.remark,
+                                      groupid = focusUser.groupid,
+                                      subscribe_scene = focusUser.subscribe_scene,
+                                      qr_scene = focusUser.qr_scene,
+                                      qr_scene_str = focusUser.qr_scene_str,
+                                      createdBy = user.Id,
+                                      createdByName = user.Name,
+                                      modifiedBy = user.Id,
+                                      modifiedByName = user.Name,
+                                      createdOn = DateTime.Now,
+                                      modifiedOn = DateTime.Now,
+                                  };
+                                  return wechat_user;
+                              })
                         .ToList();
                     broker.BulkCreateOrUpdate(dataList);
                     Logger.Debug($"创建或更新{dataList.Count}条关注用户信息");

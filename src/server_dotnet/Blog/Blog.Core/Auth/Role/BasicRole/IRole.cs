@@ -3,6 +3,7 @@ using Blog.Core.Data;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
 using Blog.Core.Module.SysMenu;
+using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,8 +1,8 @@
 ﻿using Blog.Core.Auth.Role;
 using Blog.Core.Data;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

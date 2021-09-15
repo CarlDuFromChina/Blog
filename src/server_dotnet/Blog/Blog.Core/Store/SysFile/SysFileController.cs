@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Module.DataService;
 using Blog.Core.Profiles;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using Sixpence.Core;
 
 namespace Blog.Core.Store.SysFile
 {
@@ -27,7 +28,7 @@ namespace Blog.Core.Store.SysFile
 
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        public List<FileInfoModel> Upload([FromForm]List<IFormFile> files, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        public List<FileInfoModel> Upload([FromForm] List<IFormFile> files, [FromQuery] string fileType, [FromQuery] string objectId = "")
         {
             if (files == null || !files.Any())
                 throw new SpException("上传文件不能为空", "");
@@ -74,12 +75,12 @@ namespace Blog.Core.Store.SysFile
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<ImageInfo> UploadImage([FromForm]IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId)
+        public IEnumerable<ImageInfo> UploadImage([FromForm] IFormFile file, [FromQuery] string fileType, [FromQuery] string objectId)
         {
             var stream = file.OpenReadStream();
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
-            
+
             var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
 
             var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));

@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -38,7 +39,7 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         }
         public auth_user GetDataByCode(string code)
         {
-            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>(){ { "@code", code } });
+            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", code } });
             return data;
         }
 
