@@ -31,58 +31,22 @@ namespace Blog.Draft
         /// <summary>
         /// 博客id
         /// </summary>
-        private string _blogid;
         [DataMember]
         [Attr("blogid", "博客id", AttrType.Varchar, 100)]
-        public string blogId
-        {
-            get
-            {
-                return this._blogid;
-            }
-            set
-            {
-                this._blogid = value;
-                SetAttributeValue("blogId", value);
-            }
-        }
+        public string blogId { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        private string _content;
         [DataMember]
         [Attr("content", "内容", AttrType.Text)]
-        public string content
-        {
-            get
-            {
-                return this._content;
-            }
-            set
-            {
-                this._content = value;
-                SetAttributeValue("content", value);
-            }
-        }
+        public string content { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
-        private string _title;
         [DataMember]
         [Attr("title", "标题", AttrType.Varchar, 100)]
-        public string title
-        {
-            get
-            {
-                return this._title;
-            }
-            set
-            {
-                this._title = value;
-                SetAttributeValue("title", value);
-            }
-        }
+        public string title { get; set; }
     }
 }

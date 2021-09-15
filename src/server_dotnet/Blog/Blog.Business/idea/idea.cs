@@ -31,20 +31,8 @@ namespace Blog.idea
         /// <summary>
         /// 内容
         /// </summary>
-        private string _content;
         [DataMember]
         [Attr("content", "想法id", AttrType.Text)]
-        public string content
-        {
-            get
-            {
-                return this._content;
-            }
-            set
-            {
-                this._content = value;
-                SetAttributeValue("content", value);
-            }
-        }
+        public string content { get; set; }
     }
 }

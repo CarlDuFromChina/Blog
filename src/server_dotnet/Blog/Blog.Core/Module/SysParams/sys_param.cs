@@ -30,53 +30,17 @@ namespace Blog.Core.Module.SysParams
         /// <summary>
         /// 编码
         /// </summary>
-        private string _code;
         [DataMember]
         [Attr("code", "编码", AttrType.Varchar, 100)]
-        public string code
-        {
-            get
-            {
-                return this._code;
-            }
-            set
-            {
-                this._code = value;
-                SetAttributeValue("code", value);
-            }
-        }
+        public string code { get; set; }
 
-        private string _sys_paramGroupId;
         [DataMember]
         [Attr("sys_paramgroupid", "选项集id", AttrType.Varchar, 100)]
-        public string sys_paramGroupId
-        {
-            get
-            {
-                return this._sys_paramGroupId;
-            }
-            set
-            {
-                this._sys_paramGroupId = value;
-                SetAttributeValue("sys_paramGroupId", value);
-            }
-        }
+        public string sys_paramGroupId { get; set; }
 
-        private string _sys_paramGroupIdName;
+
         [DataMember]
         [Attr("sys_paramgroupidname", "选项集名", AttrType.Varchar, 100)]
-        public string sys_paramGroupIdName
-        {
-            get
-            {
-                return this._sys_paramGroupIdName;
-            }
-            set
-            {
-                this._sys_paramGroupIdName = value;
-                SetAttributeValue("sys_paramGroupIdName", value);
-            }
-        }
-
+        public string sys_paramGroupIdName { get; set; }
     }
 }

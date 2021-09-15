@@ -29,41 +29,16 @@ namespace Blog.Classification
         /// <summary>
         /// 编码
         /// </summary>
-        private string _code;
         [DataMember]
         [Attr("code", "编码", AttrType.Varchar, 100)]
-        public string code
-        {
-            get
-            {
-                return this._code;
-            }
-            set
-            {
-                this._code = value;
-                SetAttributeValue("code", value);
-            }
-        }
-
+        public string code { get; set; }
 
         /// <summary>
         /// 是否付费阅读
         /// </summary>
-        private int _is_free;
         [DataMember]
         [Attr("is_free", "是否付费阅读", AttrType.Int4)]
-        public int is_free
-        {
-            get
-            {
-                return this._is_free;
-            }
-            set
-            {
-                this._is_free = value;
-                SetAttributeValue("is_free", value);
-            }
-        }
+        public int is_free { get; set; }
 
     }
 }

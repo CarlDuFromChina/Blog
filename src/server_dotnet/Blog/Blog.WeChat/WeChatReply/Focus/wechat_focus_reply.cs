@@ -28,65 +28,25 @@ namespace Blog.WeChat.WeChatReply.Focus
             }
         }
 
-
         /// <summary>
         /// 内容
         /// </summary>
-        private string _content;
         [DataMember]
         [Attr("content", "内容", AttrType.Text)]
-        public string content
-        {
-            get
-            {
-                return this._content;
-            }
-            set
-            {
-                this._content = value;
-                SetAttributeValue("content", value);
-            }
-        }
-
+        public string content { get; set; }
 
         /// <summary>
         /// 公众号
         /// </summary>
-        private string _wechat;
         [DataMember]
         [Attr("wechat", "公众号", AttrType.Varchar, 100)]
-        public string wechat
-        {
-            get
-            {
-                return this._wechat;
-            }
-            set
-            {
-                this._wechat = value;
-                SetAttributeValue("wechat", value);
-            }
-        }
-
+        public string wechat { get; set; }
 
         /// <summary>
         /// 启用
         /// </summary>
-        private int? _checked;
         [DataMember]
         [Attr("checked", "启用", AttrType.Int4)]
-        public int? @checked
-        {
-            get
-            {
-                return this._checked;
-            }
-            set
-            {
-                this._checked = value;
-                SetAttributeValue("checked", value);
-            }
-        }
-
+        public int? @checked { get; set; }
     }
 }

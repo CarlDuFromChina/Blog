@@ -22,10 +22,10 @@ namespace Blog.Core.Data
 
                 broker.DbClient.CommitTransaction();
             }
-            catch
+            catch (Exception ex)
             {
                 broker.DbClient.Rollback();
-                throw;
+                throw ex;
             }
             finally
             {
@@ -54,10 +54,10 @@ namespace Blog.Core.Data
 
                 return t;
             }
-            catch
+            catch (Exception ex)
             {
                 broker.DbClient.Rollback();
-                throw;
+                throw ex;
             }
             finally
             {

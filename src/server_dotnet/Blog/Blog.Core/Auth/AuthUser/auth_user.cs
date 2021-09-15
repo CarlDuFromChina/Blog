@@ -26,171 +26,61 @@ namespace Blog.Core.Auth
             }
         }
 
-        private string _code;
         [DataMember]
         [Attr("code", "编码", AttrType.Varchar, 100)]
-        public string code
-        {
-            get
-            {
-                return _code;
-            }
-            set
-            {
-                _code = value;
-                SetAttributeValue("code", value);
-            }
-        }
+        public string code { get; set; }
 
-        private string _password;
         [DataMember]
         [Attr("password", "密码", AttrType.Varchar, 100)]
-        public string password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = value;
-                SetAttributeValue("password", value);
-            }
-        }
+        public string password { get; set; }
 
         /// <summary>
         /// 角色权限id
         /// </summary>
-        private string _roleid;
         [DataMember]
         [Attr("roleid", "角色权限id", AttrType.Varchar, 100)]
-        public string roleid
-        {
-            get
-            {
-                return _roleid;
-            }
-            set
-            {
-                _roleid = value;
-                SetAttributeValue("roleid", value);
-            }
-        }
+        public string roleid { get; set; }
 
         /// <summary>
         /// 角色权限名
         /// </summary>
-        private string _roleidName;
         [DataMember]
         [Attr("roleidname", "角色权限名", AttrType.Varchar, 100)]
-        public string roleidName
-        {
-            get
-            {
-                return _roleidName;
-            }
-            set
-            {
-                _roleidName = value;
-                SetAttributeValue("roleidName", value);
-            }
-        }
+        public string roleidName { get; set; }
 
         /// <summary>
         /// 用户id
         /// </summary>
-        private string _user_infoid;
         [DataMember]
         [Attr("user_infoid", "用户id", AttrType.Varchar, 100)]
-        public string user_infoid
-        {
-            get
-            {
-                return _user_infoid;
-            }
-            set
-            {
-                _user_infoid = value;
-                SetAttributeValue("user_infoid", value);
-            }
-        }
+        public string user_infoid { get; set; }
 
         /// <summary>
         /// 锁定
         /// </summary>
-        private bool _is_lock;
         [DataMember]
         [Attr("is_lock", "锁定", AttrType.Int4)]
-        public bool is_lock
-        {
-            get
-            {
-                return this._is_lock;
-            }
-            set
-            {
-                this._is_lock = value;
-                SetAttributeValue("is_lock", value);
-            }
-        }
+        public bool is_lock { get; set; }
 
         /// <summary>
         /// 是否锁定
         /// </summary>
-        private string _is_lockName;
         [DataMember]
         [Attr("is_lockname", "是否锁定", AttrType.Varchar, 100)]
-        public string is_lockName
-        {
-            get
-            {
-                return this._is_lockName;
-            }
-            set
-            {
-                this._is_lockName = value;
-                SetAttributeValue("is_lockName", value);
-            }
-        }
-
-        private DateTime? _last_login_time;
+        public string is_lockName { get; set; }
 
         /// <summary>
         /// 上次登录时间
         /// </summary>
         [DataMember]
         [Attr("last_login_time", "上次登录时间", AttrType.Timestamp)]
-        public DateTime? last_login_time
-        {
-            get
-            {
-                return _last_login_time;
-            }
-            set
-            {
-                _last_login_time = value;
-                SetAttributeValue("last_login_time", value);
-            }
-        }
-
-        private int? _try_times;
+        public DateTime? last_login_time { get; set; }
 
         /// <summary>
         /// 尝试登录次数
         /// </summary>
         [DataMember]
         [Attr("try_times", "尝试登录次数", AttrType.Int4)]
-        public int? try_times
-        {
-            get
-            {
-                return _try_times;
-            }
-            set
-            {
-                _try_times = value;
-                SetAttributeValue("try_times", value);
-            }
-        }
+        public int? try_times { get; set; }
     }
 }

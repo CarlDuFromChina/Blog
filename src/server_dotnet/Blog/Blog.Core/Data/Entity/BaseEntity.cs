@@ -64,27 +64,8 @@ namespace Blog.Core.Data
         /// <summary>
         ///  实体id
         /// </summary>
-        private string _id;
         [DataMember]
-        public string Id
-        {
-            get
-            {
-                if (_id == null)
-                {
-                    if (this.ContainKey(EntityName + "Id") && GetAttributes()[EntityName + "Id"] != null)
-                    {
-                        _id = this.GetAttributeValue<string>(EntityName + "Id");
-                    }
-                }
-                return _id;
-            }
-            set
-            {
-                _id = value;
-                SetAttributeValue($"{EntityName}Id", value);
-            }
-        }
+        public string Id { get; set; }
 
         /// <summary>
         /// 名称
@@ -161,7 +142,10 @@ namespace Blog.Core.Data
         public IDictionary<string, object> GetAttributes()
         {
             var attributes = new Dictionary<string, object>();
-            this.GetType().GetProperties().ToList().ForEach(item =>
+            this.GetType()
+                .GetProperties()
+                .Where(item => item.IsDefined(typeof(AttrAttribute), false))
+                .ToList().ForEach(item =>
             {
                 attributes.Add(item.Name, item.GetValue(this));
             });

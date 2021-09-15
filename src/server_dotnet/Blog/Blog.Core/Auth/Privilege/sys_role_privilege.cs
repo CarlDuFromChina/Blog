@@ -30,22 +30,9 @@ namespace Blog.Core.Auth.Privilege
         /// <summary>
         /// 角色id
         /// </summary>
-        private string _sys_roleid;
         [DataMember]
         [Attr("sys_roleid", "角色id", AttrType.Varchar, 100)]
-        public string sys_roleid
-        {
-            get
-            {
-                return this._sys_roleid;
-            }
-            set
-            {
-                this._sys_roleid = value;
-                SetAttributeValue("sys_roleid", value);
-            }
-        }
-
+        public string sys_roleid { get; set; }
 
         /// <summary>
         /// 角色名
@@ -53,97 +40,35 @@ namespace Blog.Core.Auth.Privilege
         private string _sys_roleidName;
         [DataMember]
         [Attr("sys_roleidname", "角色名", AttrType.Varchar, 100)]
-        public string sys_roleidName
-        {
-            get
-            {
-                return this._sys_roleidName;
-            }
-            set
-            {
-                this._sys_roleidName = value;
-                SetAttributeValue("sys_roleidName", value);
-            }
-        }
+        public string sys_roleidName { get; set; }
 
         /// <summary>
         /// 权限值
         /// </summary>
-        private int? _privilege;
         [DataMember]
         [Attr("privilege", "权限值", AttrType.Int4)]
-        public int? privilege
-        {
-            get
-            {
-                return this._privilege;
-            }
-            set
-            {
-                this._privilege = value;
-                SetAttributeValue("privilege", value);
-            }
-        }
-
-        private string _objectid;
+        public int? privilege { get; set; }
 
         /// <summary>
         /// 对象id
         /// </summary>
         [DataMember]
         [Attr("objectid", "实体id", AttrType.Varchar, 100)]
-        public string objectid
-        {
-            get
-            {
-                return this._objectid;
-            }
-            set
-            {
-                this._objectid = value;
-                SetAttributeValue("objectid", value);
-            }
-        }
-
-        private string _objectidName;
+        public string objectid { get; set; }
 
         /// <summary>
         /// 对象名
         /// </summary>
         [DataMember]
         [Attr("objectidname", "实体名", AttrType.Varchar, 100)]
-        public string objectidName
-        {
-            get
-            {
-                return this._objectidName;
-            }
-            set
-            {
-                this._objectidName = value;
-                SetAttributeValue("objectidName", value);
-            }
-        }
+        public string objectidName { get; set; }
 
-        private string _object_type;
-        
         /// <summary>
         /// 对象类型
         /// </summary>
         [DataMember]
         [Attr("object_type", "对象类型", AttrType.Varchar, 100)]
-        public string object_type
-        {
-            get
-            {
-                return _object_type;
-            }
-            set
-            {
-                _object_type = value;
-                SetAttributeValue("object_type", value);
-            }
-        }
+        public string object_type { get; set; }
     }
 }
 

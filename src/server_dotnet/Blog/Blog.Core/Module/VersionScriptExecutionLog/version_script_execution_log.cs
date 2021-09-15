@@ -14,7 +14,7 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
         /// </summary>
         [DataMember]
         [Attr("version_script_execution_logid", "实体id", AttrType.Varchar, 100)]
-        public string sys_roleId
+        public string version_script_execution_logid
         {
             get
             {
@@ -25,25 +25,12 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
                 this.Id = value;
             }
         }
-        
-        private bool _is_success;
 
         /// <summary>
         /// 是否执行成功
         /// </summary>
         [DataMember]
         [Attr("is_success", "是否执行成功", AttrType.Int4)]
-        public bool is_success
-        {
-            get
-            {
-                return this._is_success;
-            }
-            set
-            {
-                this._is_success = value;
-                SetAttributeValue("is_success", value);
-            }
-        }
+        public bool is_success { get; set; }
     }
 }
