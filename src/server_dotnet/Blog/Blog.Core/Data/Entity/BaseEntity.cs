@@ -60,6 +60,7 @@ namespace Blog.Core.Data
         private string _mainKeyName;
         public string MainKeyName { get { return this._mainKeyName ?? EntityName + "id"; } set { _mainKeyName = value; } }
 
+        #region 实体基础字段
         /// <summary>
         ///  实体id
         /// </summary>
@@ -71,9 +72,9 @@ namespace Blog.Core.Data
             {
                 if (_id == null)
                 {
-                    if (Attributes.ContainsKey(EntityName + "Id") && Attributes[EntityName + "Id"] != null)
+                    if (this.ContainKey(EntityName + "Id") && GetAttributes()[EntityName + "Id"] != null)
                     {
-                        _id = Attributes[EntityName + "Id"].ToString();
+                        _id = this.GetAttributeValue<string>(EntityName + "Id");
                     }
                 }
                 return _id;
@@ -88,135 +89,47 @@ namespace Blog.Core.Data
         /// <summary>
         /// 名称
         /// </summary>
-        private string _name;
         [DataMember, Attr("name", "名称", AttrType.Varchar, 100)]
-        public string name
-        {
-            get
-            {
-                return this._name;
-            }
-            set
-            {
-                this._name = value;
-                SetAttributeValue("name", value);
-            }
-        }
+        public string name { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
-        private string _createdby;
         [DataMember, Attr("createdby", "创建人id", AttrType.Varchar, 100, true)]
-        public string createdBy
-        {
-            get
-            {
-                return this._createdby;
-            }
-            set
-            {
-                this._createdby = value;
-                SetAttributeValue("createdBy", value);
-            }
-        }
+        public string createdBy { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
-        private string _createdbyname;
         [DataMember, Attr("createdbyname", "创建人名称", AttrType.Varchar, 100, true)]
-        public string createdByName
-        {
-            get
-            {
-                return this._createdbyname;
-            }
-            set
-            {
-                this._createdbyname = value;
-                SetAttributeValue("createdByName", value);
-            }
-        }
+        public string createdByName { get; set; }
 
         /// <summary>
         /// 创建日期
         /// </summary>
-        private DateTime? _createdon;
         [DataMember, Attr("createdon", "创建日期", AttrType.Timestamp, 6, true)]
-        public DateTime? createdOn
-        {
-            get
-            {
-                return this._createdon;
-            }
-            set
-            {
-                this._createdon = value;
-                SetAttributeValue("createdOn", value);
-            }
-        }
+        public DateTime? createdOn { get; set; }
 
         /// <summary>
         /// 修改人
         /// </summary>
-        private string _modifiedby;
         [DataMember, Attr("modifiedby", "修改人id", AttrType.Varchar, 100, true)]
-        public string modifiedBy
-        {
-            get
-            {
-                return this._modifiedby;
-            }
-            set
-            {
-                this._modifiedby = value;
-                SetAttributeValue("modifiedBy", value);
-            }
-        }
+        public string modifiedBy { get; set; }
 
         /// <summary>
         /// 修改人
         /// </summary>
-        private string _modifiedbyname;
         [DataMember, Attr("modifiedbyname", "修改人名称", AttrType.Varchar, 100, true)]
-        public string modifiedByName
-        {
-            get
-            {
-                return this._modifiedbyname;
-            }
-            set
-            {
-                this._modifiedbyname = value;
-                SetAttributeValue("modifiedByName", value);
-            }
-        }
+        public string modifiedByName { get; set; }
+
 
         /// <summary>
         /// 创建日期
         /// </summary>
-        private DateTime? _modifiedon;
         [DataMember, Attr("modifiedon", "创建日期", AttrType.Timestamp, 6, true)]
-        public DateTime? modifiedOn
-        {
-            get
-            {
-                return this._modifiedon;
-            }
-            set
-            {
-                this._modifiedon = value;
-                SetAttributeValue("modifiedOn", value);
-            }
-        }
+        public DateTime? modifiedOn { get; set; }
 
-        /// <summary>
-        /// 实体属性
-        /// </summary>
-        private readonly Dictionary<string, object> _attributes = new Dictionary<string, object>();
-
-        public Dictionary<string, object> Attributes => _attributes;
+        #endregion
 
         /// <summary>
         /// 索引器
@@ -230,40 +143,55 @@ namespace Blog.Core.Data
         }
 
         #region Methods
-        /// <summary>
-        ///获取属性字段值
-        /// </summary>
-        /// <param name="attributeLogicalName">字段名称</param>
-        public object GetAttributeValue(string attributeLogicalName)
+        public IEnumerable<string> GetKeys()
         {
-            return _attributes.ContainsKey(attributeLogicalName)
-                    ? _attributes[attributeLogicalName]
-                    : null;
+            return this.GetType().GetProperties().Select(item => item.Name);
         }
 
-        /// <summary>
-        /// 获取属性字段值
-        /// </summary>
-        /// <param name="attributeLogicalName">字段名称</param>
-        /// <typeparam name="T">类型</typeparam>
-        /// <returns></returns>
-        public T GetAttributeValue<T>(string attributeLogicalName) where T : class
+        public bool ContainKey(string name)
         {
-            if (_attributes.ContainsKey(attributeLogicalName))
+            return GetKeys().Contains(name);
+        }
+
+        public IEnumerable<object> GetValues()
+        {
+            return this.GetType().GetProperties().Select(item => item.GetValue(this));
+        }
+
+        public IDictionary<string, object> GetAttributes()
+        {
+            var attributes = new Dictionary<string, object>();
+            this.GetType().GetProperties().ToList().ForEach(item =>
             {
-                return _attributes[attributeLogicalName] as T;
+                attributes.Add(item.Name, item.GetValue(this));
+            });
+            return attributes;
+        }
+
+        public object GetAttributeValue(string name)
+        {
+            if (ContainKey(name))
+            {
+                return this.GetType().GetProperty(name).GetValue(this);
             }
             return null;
         }
 
-        /// <summary>
-        /// 给字段赋值
-        /// </summary>
-        /// <param name="attributeLogicalName"></param>
-        /// <param name="value"></param>
-        public void SetAttributeValue(string attributeLogicalName, object value)
+        public T GetAttributeValue<T>(string name) where T : class
         {
-            _attributes[attributeLogicalName] = value;
+            if (ContainKey(name))
+            {
+                return this.GetType().GetProperty(name).GetValue(this) as T;
+            }
+            return null;
+        }
+
+        public void SetAttributeValue(string name, object value)
+        {
+            if (ContainKey(name))
+            {
+                this.GetType().GetProperty(name).SetValue(this, value);
+            }
         }
 
         /// <summary>

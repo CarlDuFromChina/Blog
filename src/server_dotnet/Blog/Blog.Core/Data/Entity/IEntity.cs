@@ -24,16 +24,41 @@ namespace Blog.Core.Data
         /// <summary>
         /// 获取属性值
         /// </summary>
-        /// <param name="attributeLogicalName"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        object GetAttributeValue(string attributeLogicalName);
+        object GetAttributeValue(string name);
 
         /// <summary>
         /// 设置属性值
         /// </summary>
-        /// <param name="attributeLogicalName"></param>
+        /// <param name="name"></param>
         /// <param name="value"></param>
-        void SetAttributeValue(string attributeLogicalName, object value);
+        void SetAttributeValue(string name, object value);
+
+        /// <summary>
+        /// 获取所有字段
+        /// </summary>
+        /// <returns></returns>
+        IDictionary<string, object> GetAttributes();
+
+        /// <summary>
+        /// 获取所有值
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<object> GetValues();
+
+        /// <summary>
+        /// 获取所有键
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetKeys();
+
+        /// <summary>
+        /// 是否存在该键
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        bool ContainKey(string name);
 
         /// <summary>
         /// 是否是系统实体

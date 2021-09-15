@@ -30,12 +30,12 @@ namespace Blog.Core.Data
             {
                 case EntityAction.PreCreate:
                     {
-                        if ((!entity.Attributes.ContainsKey("createdBy") || entity.GetAttributeValue("createdBy") == null) && entity.GetType().GetProperty("createdBy") != null)
+                        if ((!entity.GetAttributes().ContainsKey("createdBy") || entity.GetAttributeValue("createdBy") == null) && entity.GetType().GetProperty("createdBy") != null)
                         {
                             entity.SetAttributeValue("createdBy", user.Id);
                             entity.SetAttributeValue("createdByName", user.Name);
                         }
-                        if ((!entity.Attributes.ContainsKey("createdOn") || entity.GetAttributeValue("createdOn") == null) && entity.GetType().GetProperty("createdOn") != null)
+                        if ((!entity.GetAttributes().ContainsKey("createdOn") || entity.GetAttributeValue("createdOn") == null) && entity.GetType().GetProperty("createdOn") != null)
                         {
                             entity.SetAttributeValue("createdOn", DateTime.Now);
                         }
@@ -99,7 +99,7 @@ namespace Blog.Core.Data
         {
             var dic = new Dictionary<string, object>();
 
-            entity.Attributes
+            entity.GetAttributes()
                 .Where(item => item.Value is bool)
                 .Each(item =>
                 {

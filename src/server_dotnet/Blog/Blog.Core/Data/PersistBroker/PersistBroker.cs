@@ -54,7 +54,7 @@ namespace Blog.Core.Data
                 var attrs = new List<string>();
                 var values = new List<object>();
                 var paramList = new Dictionary<string, object>();
-                foreach (var attr in entity.Attributes)
+                foreach (var attr in entity.GetAttributes())
                 {
                     var attrName = attr.Key == "Id" ? entity.MainKeyName : attr.Key;
                     var keyValue = ParseSqlUtil.GetSpecialValue($"@{attrName}", attr.Value);
@@ -176,7 +176,7 @@ UPDATE {0} SET {1} WHERE {2} = @id;
                 #region 处理属性
                 var attributes = new List<string>();
                 int count = 0;
-                foreach (var item in entity.Attributes)
+                foreach (var item in entity.GetAttributes())
                 {
                     if (item.Key != "Id" && item.Key != entity.EntityName + "Id")
                     {
