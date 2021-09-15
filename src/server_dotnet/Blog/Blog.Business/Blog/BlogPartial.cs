@@ -12,6 +12,9 @@ namespace Blog.Blog
         [DataMember]
         public int message { get; set; }
 
+        /// <summary>
+        /// 点赞数
+        /// </summary>
         [DataMember]
         public int upvote_times { get; set; }
     }
