@@ -2,15 +2,15 @@
   <sp-card class="message">
     <a-tabs default-active-key="1" :animated="false" @change="clearCount">
       <a-tab-pane key="1">
-        <a-badge slot="tab" :dot="upvote > 0">点赞提醒</a-badge>
+        <a-badge slot="tab" :dot="upvote > 0"><a-icon type="like" />点赞提醒</a-badge>
         <message-list view="upvote" key="1"> </message-list>
       </a-tab-pane>
       <a-tab-pane key="2">
-        <a-badge slot="tab" :dot="comment > 0">评论消息</a-badge>
+        <a-badge slot="tab" :dot="comment > 0"><a-icon type="message" />评论消息</a-badge>
         <message-list view="comment" key="2"> </message-list>
       </a-tab-pane>
       <a-tab-pane key="3">
-        <a-badge slot="tab" :dot="system > 0">系统消息</a-badge>
+        <a-badge slot="tab" :dot="system > 0"><a-icon type="windows" />系统消息</a-badge>
         <message-list view="system" key="3"> </message-list>
       </a-tab-pane>
     </a-tabs>
