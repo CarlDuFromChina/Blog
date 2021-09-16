@@ -1,11 +1,9 @@
-﻿using Blog.Core;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Utils;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Test
 {
