@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Blog
 {

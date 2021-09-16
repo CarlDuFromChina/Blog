@@ -20,15 +20,20 @@ namespace Sixpence.Core.Utils
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static List<Assembly> GetAssemblies(string name)
+        public static List<Assembly> GetAssemblies(params string[] name)
         {
-            if (string.IsNullOrEmpty(name)) return new List<Assembly>() { Assembly.GetCallingAssembly() };
+            if (name == null || name.Length == 0) return new List<Assembly>() { Assembly.GetCallingAssembly() };
 
-            return assemblies.GetOrAdd(name, key =>
+            var list = new List<Assembly>();
+            for (int i = 0; i < name.Length; i++)
             {
-                var fileList = FileUtil.GetFileList(key);
-                return fileList?.Select(item => Assembly.Load(AssemblyName.GetAssemblyName(item)))?.ToList();
-            });
+                list.AddRange(assemblies.GetOrAdd(name[i], key =>
+                {
+                    var fileList = FileUtil.GetFileList(key);
+                    return fileList?.Select(item => Assembly.Load(AssemblyName.GetAssemblyName(item)))?.ToList();
+                }));
+            }
+            return list;
         }
 
         /// <summary>

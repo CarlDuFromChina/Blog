@@ -1,8 +1,10 @@
 ﻿using Blog.Core;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core;
 using System.Collections.Generic;
 using System.Linq;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Comments
 {

@@ -1,11 +1,13 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Models;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.MessageRemind
 {

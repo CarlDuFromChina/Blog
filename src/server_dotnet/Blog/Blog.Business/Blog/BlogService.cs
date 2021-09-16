@@ -1,6 +1,6 @@
 ﻿using Blog.Business.Upvote;
 using Blog.Core;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
 using Sixpence.Core.Utils;
@@ -9,6 +9,7 @@ using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Blog
 {

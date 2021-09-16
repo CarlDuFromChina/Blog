@@ -1,9 +1,11 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Sixpence.EntityFramework.SelectOption;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.SysParamGroup
 {

@@ -1,7 +1,8 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core;
 using Sixpence.Core.Utils;
+using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;
 using System.Web;

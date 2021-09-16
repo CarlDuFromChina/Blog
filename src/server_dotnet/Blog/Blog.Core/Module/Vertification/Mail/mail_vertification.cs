@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

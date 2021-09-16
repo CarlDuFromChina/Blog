@@ -10,10 +10,10 @@ namespace Sixpence.Core.Setup
 {
     public static class ServiceContainerSetup
     {
-        public static void AddServices(this IServiceCollection services)
+        public static void AddSixpenceServices(this IServiceCollection services)
         {
             ServiceContainer.Services = services;
-            var types = AssemblyUtil.GetAssemblies("Blog.*.dll").GetTypes();
+            var types = AssemblyUtil.GetAssemblies("Sixpence.*.dll").GetTypes();
             var interfaces = types.Where(item => item.IsInterface && item.IsDefined(typeof(ServiceRegisterAttribute), false)).ToList();
             interfaces.ForEach(item =>
             {

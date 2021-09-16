@@ -1,5 +1,5 @@
 ﻿using Blog.Core;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.MessageRemind;
 using Newtonsoft.Json;
 using Sixpence.Core;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Business.Upvote
 {

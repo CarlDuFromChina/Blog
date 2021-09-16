@@ -1,10 +1,11 @@
 ﻿using log4net;
 using Blog.Core.WebApi;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.WeChat.Message;
 using System;
 using System.Collections.Generic;
 using Sixpence.Core.Logging;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {

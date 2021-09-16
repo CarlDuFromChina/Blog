@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth.Role.BasicRole;
 using Blog.Core.Auth.UserInfo;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
 using Sixpence.Core;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Auth.Privilege
 {

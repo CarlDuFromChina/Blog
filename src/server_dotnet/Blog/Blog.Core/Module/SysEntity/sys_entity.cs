@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
+using Sixpence.EntityFramework.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

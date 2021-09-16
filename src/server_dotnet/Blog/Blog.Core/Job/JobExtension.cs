@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Utils;
 using Microsoft.AspNetCore.Builder;
 using Quartz;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.Core;
+using Sixpence.EntityFramework.SelectOption;
 
 namespace Blog.Core.Job
 {
@@ -46,7 +47,7 @@ namespace Blog.Core.Job
         public static IApplicationBuilder UseJob(this IApplicationBuilder app)
         {
             AssemblyUtil
-                .GetAssemblies("Blog.*.dll")
+                .GetAssemblies("Blog.*.dll", "Sixpence.*.dll")
                 .GetTypes()
                 .Where(type => !type.IsAbstract && !type.IsInterface && type.GetInterfaces().Contains(typeof(IJob)) && !type.IsDefined(typeof(DynamicJobAttribute), true))
                 .Each(type => ServiceContainer.Register(typeof(IJob), type));

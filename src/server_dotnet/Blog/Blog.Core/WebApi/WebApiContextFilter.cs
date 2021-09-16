@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sixpence.Core.Current;
 
 namespace Blog.Core.WebApi
 {

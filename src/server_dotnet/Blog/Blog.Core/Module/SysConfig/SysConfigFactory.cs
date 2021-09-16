@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;
 using System.Linq;

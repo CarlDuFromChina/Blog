@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Test", "Blog.Test\Blog
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sixpence.Core", "Sixpence.Core\Sixpence.Core.csproj", "{01AE204F-7C5A-48ED-8582-4A15B90DE073}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.Core", "Sixpence.Core\Sixpence.Core.csproj", "{01AE204F-7C5A-48ED-8582-4A15B90DE073}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sixpence.EntityFramework", "Sixpence.EntityFramework\Sixpence.EntityFramework.csproj", "{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +43,17 @@ Global
 		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{01AE204F-7C5A-48ED-8582-4A15B90DE073} = {FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}
+		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1} = {FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10ECDEFA-B6B3-4C39-A34C-A3C57888E23A}

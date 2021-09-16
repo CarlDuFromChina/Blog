@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Logging;
 using Quartz;
 using Quartz.Impl;

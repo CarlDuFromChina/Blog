@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
 ﻿using Blog.Core.Config;
+using Sixpence.Core.Config;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

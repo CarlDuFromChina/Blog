@@ -1,5 +1,5 @@
 
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -37,7 +37,6 @@ namespace Blog.Core.Auth.Privilege
         /// <summary>
         /// 角色名
         /// </summary>
-        private string _sys_roleidName;
         [DataMember]
         [Attr("sys_roleidname", "角色名", AttrType.Varchar, 100)]
         public string sys_roleidName { get; set; }

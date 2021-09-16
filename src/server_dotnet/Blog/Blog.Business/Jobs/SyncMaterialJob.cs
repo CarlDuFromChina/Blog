@@ -9,11 +9,12 @@ Description：同步微信素材Job
 
 using System;
 using Blog.Core.Auth.UserInfo;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Job;
 using Blog.WeChat;
 using Blog.WeChat.Material;
 using Quartz;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Jobs
 {

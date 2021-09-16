@@ -1,10 +1,11 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core;
 using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Store.SysFile
 {

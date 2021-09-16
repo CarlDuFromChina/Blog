@@ -12,9 +12,10 @@ using System;
 using System.Linq;
 using Quartz;
 using Blog.Core.Job;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.WeChat.WeChatNews;
 using Blog.Core.Auth.UserInfo;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Jobs
 {

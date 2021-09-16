@@ -93,6 +93,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sixpence.Core\Sixpence.Core.csproj" />
+    <ProjectReference Include="..\Sixpence.EntityFramework\Sixpence.EntityFramework.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -1,12 +1,13 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Sixpence.Core.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.Vertification.Mail
 {

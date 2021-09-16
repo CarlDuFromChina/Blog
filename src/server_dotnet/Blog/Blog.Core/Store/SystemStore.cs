@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth.Role;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Logging;
 using Blog.Core.Store.SysFile;
 using Sixpence.Core.Utils;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Store
 {

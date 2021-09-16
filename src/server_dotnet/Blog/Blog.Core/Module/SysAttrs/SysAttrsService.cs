@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysEntity;
 using Sixpence.Core;
 using Sixpence.Core.Utils;
@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Core.Module.SysAttrs
 {

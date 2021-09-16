@@ -1,9 +1,10 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.VersionScriptExecutionLog
 {

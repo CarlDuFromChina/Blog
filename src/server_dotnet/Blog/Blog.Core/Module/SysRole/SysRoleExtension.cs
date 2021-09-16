@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.Role.BasicRole;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Sixpence.Core.Utils;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.SysRole
 {

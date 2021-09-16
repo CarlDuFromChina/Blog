@@ -1,5 +1,5 @@
 ﻿using Blog.Core;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Utils;
 using NUnit.Framework;
 using System;

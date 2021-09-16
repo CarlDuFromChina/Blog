@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System.Runtime.Serialization;
 
 namespace Blog.Blog

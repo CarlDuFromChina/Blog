@@ -9,7 +9,7 @@ Description：素材Plugin
 
 using Blog.Core;
 using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
 using Sixpence.Core.Utils;
@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.WeChat.Material
 {

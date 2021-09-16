@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Job;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Sixpence.Core.Utils;
 using AutoMapper;
 using Blog.Core;
 using Blog.Core.Profiles;
 using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Jobs
 {

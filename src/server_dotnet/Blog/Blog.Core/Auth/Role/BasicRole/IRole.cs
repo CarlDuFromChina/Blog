@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
 using Blog.Core.Module.SysMenu;
