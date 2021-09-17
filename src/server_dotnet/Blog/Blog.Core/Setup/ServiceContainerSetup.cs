@@ -13,7 +13,7 @@ namespace Blog.Core.Setup
         public static void AddServices(this IServiceCollection services)
         {
             ServiceContainer.Services = services;
-            var types = AssemblyUtil.GetAssemblies("Blog.*.dll").GetTypes();
+            var types = AssemblyUtil.GetAssemblies("Blog.*.dll", "Sixpence.*.dll").GetTypes();
             var interfaces = types.Where(item => item.IsInterface && item.IsDefined(typeof(ServiceRegisterAttribute), false)).ToList();
             interfaces.ForEach(item =>
             {

@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
-using Sixpence.Core.Setup;
 using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
@@ -61,9 +60,6 @@ namespace Blog.Core
             });
 
             services.AddHttpContextAccessor();
-
-            // 添加依赖注入服务
-            services.AddSixpenceServices();
 
             // 添加依赖注入服务
             services.AddServices();
