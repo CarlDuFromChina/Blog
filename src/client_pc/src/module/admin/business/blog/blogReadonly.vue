@@ -441,7 +441,7 @@ export default {
     background-position: 50%;
     background-repeat: no-repeat;
     border-radius: 50%;
-    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 4%);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
     cursor: pointer;
     /deep/ svg {
       height: 2.5rem !important;
