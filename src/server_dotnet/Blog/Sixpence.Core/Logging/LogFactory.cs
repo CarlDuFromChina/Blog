@@ -22,6 +22,12 @@ namespace Sixpence.Core.Logging
     {
         private static readonly Object lockObject = new object();
 
+        static LogFactory()
+        {
+            ILoggerRepository repository = LoggerManager.CreateRepository("SixpenceCoreLogging");
+            XmlConfigurator.Configure(repository, new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config")));
+        }
+
         /// <summary>
         /// 获取日志
         /// </summary>

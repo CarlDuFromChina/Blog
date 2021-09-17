@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <None Remove="log4net.config" />
     <None Remove="version\2.0\2021070702-角色（sys_role）初始化数据.sql" />
     <None Remove="version\2.0\2021070703-用户信息（user_info）初始化.sql" />
     <None Remove="version\2.0\2021070703-用户角色（auth_user）初始化.sql" />
@@ -28,9 +27,6 @@
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070702-角色（sys_role）初始化数据.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -67,7 +63,6 @@
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Jdenticon.AspNetCore" Version="3.1.2" />
-    <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.16" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />

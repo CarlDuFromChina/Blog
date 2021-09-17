@@ -12,10 +12,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Test", "Blog.Test\Blog.Test.csproj", "{AE26548F-E95D-4A86-9F8B-0A28C8F65365}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}"
+	ProjectSection(SolutionItems) = preProject
+		Blog.Core\log4net.config = Blog.Core\log4net.config
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.Core", "Sixpence.Core\Sixpence.Core.csproj", "{01AE204F-7C5A-48ED-8582-4A15B90DE073}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sixpence.EntityFramework", "Sixpence.EntityFramework\Sixpence.EntityFramework.csproj", "{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.EntityFramework", "Sixpence.EntityFramework\Sixpence.EntityFramework.csproj", "{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
