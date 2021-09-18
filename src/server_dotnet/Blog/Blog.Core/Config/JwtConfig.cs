@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class JwtConfig : ConfigBase<JwtConfig>
+    public class JwtConfig : BaseAppConfig<JwtConfig>
     {
         /// <summary>
         /// 颁发者

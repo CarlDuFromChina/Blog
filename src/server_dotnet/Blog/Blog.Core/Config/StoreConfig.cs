@@ -14,7 +14,7 @@ namespace Blog.Core.Config
 
         static StoreConfig()
         {
-            Config = AppConfig.GetConfig<StoreConfig>(nameof(StoreConfig).Replace("Config", ""));
+            Config = new JsonConfig().GetConfig<StoreConfig>(nameof(StoreConfig).Replace("Config", ""));
             if (string.IsNullOrEmpty(Config.Temp))
             {
                 Config.Temp = GetTempPath();

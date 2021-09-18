@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sixpence.EntityFramework
 {
-    public class DBSourceConfig : ConfigBase<DBSourceConfig>
+    public class DBSourceConfig : BaseAppConfig<DBSourceConfig>
     {
         public DBNode Main { get; set; }
         public DBNode StandBy { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Blog.Core.Config
 {
-    public class MailConfig : ConfigBase<MailConfig>
+    public class MailConfig : BaseAppConfig<MailConfig>
     {
         public string Name { get; set; }
         public string SMTP { get; set; }

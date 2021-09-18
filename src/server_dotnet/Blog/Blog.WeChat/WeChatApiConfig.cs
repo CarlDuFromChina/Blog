@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Sixpence.Core.Config;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +12,7 @@ namespace Blog.WeChat
 
         static WeChatApiConfig()
         {
-            //构建Configuration
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("wechatApi.json");
-            Configuration = builder.Build();
+            Configuration = new JsonConfig("wechatApi.json").Configuration;
         }
 
         public static T GetValue<T>(string keyName)

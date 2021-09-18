@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace Sixpence.Core.Config
 {
-    public static class AppConfig
+    public class JsonConfig
     {
-        public static IConfiguration Configuration { get; private set; }
+        public IConfiguration Configuration { get; private set; }
 
-        static AppConfig()
+        public JsonConfig() : this("appsettings.json") { }
+
+        public JsonConfig(string configName)
         {
             //构建Configuration
             var builder = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json");
+                .AddJsonFile(configName);
             Configuration = builder.Build();
         }
 
-        public static T GetValue<T>(string keyName)
+        public T GetValue<T>(string keyName)
         {
             return Configuration.GetValue<T>(keyName);
         }
 
-        public static T GetConfig<T>(string keyName) where T : class
+        public T GetConfig<T>(string keyName) where T : class
         {
             return Configuration.GetSection(keyName).Get<T>();
         }
