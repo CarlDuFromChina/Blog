@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Sixpence.Core.Logging
@@ -24,8 +25,7 @@ namespace Sixpence.Core.Logging
 
         static LogFactory()
         {
-            ILoggerRepository repository = LoggerManager.CreateRepository("SixpenceCoreLogging");
-            XmlConfigurator.Configure(repository, new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config")));
+            XmlConfigurator.Configure(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config")));
         }
 
         /// <summary>
