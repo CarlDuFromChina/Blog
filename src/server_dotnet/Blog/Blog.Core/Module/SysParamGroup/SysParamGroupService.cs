@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Sixpence.EntityFramework.SelectOption;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Core;
 
 namespace Blog.Core.Module.SysParamGroup
 {
@@ -65,6 +66,12 @@ WHERE sys_paramgroup.code = @code
 
         public IEnumerable<SelectOption> GetEntities(string code)
         {
+            var resolve = ServiceContainer.Resolve<IEntityOptionProvider>(name => code.ToLower() == name.Replace("_", "").Replace("EntityOptionProvider", "").ToLower());
+            if (resolve != null)
+            {
+                return resolve.GetOptions();
+            }
+
             var entity = Broker.Retrieve<sys_entity>(@"select * from sys_entity se where code = @code", new Dictionary<string, object>() { { "@code", code } });
             if (entity != null)
             {

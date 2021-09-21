@@ -118,7 +118,7 @@ namespace Sixpence.EntityFramework.DbClient
             }
             sql = ConvertSqlToDialectSql(sql, paramListClone);
             LogUtils.Debug(sql + paramListClone.ToLogString());
-            return dbClient.ExecuteScalar(sql, paramList);
+            return dbClient.ExecuteScalar(sql, paramListClone);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Sixpence.EntityFramework.DbClient
             }
             sql = ConvertSqlToDialectSql(sql, paramListClone);
             LogUtils.Debug(sql + paramListClone.ToLogString());
-            return dbClient.Query<T>(sql, paramList);
+            return dbClient.Query<T>(sql, paramListClone);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Sixpence.EntityFramework.DbClient
             }
             sql = ConvertSqlToDialectSql(sql, paramListClone);
             LogUtils.Debug(sql + paramListClone.ToLogString());
-            return dbClient.Query(sql, paramList);
+            return dbClient.Query(sql, paramListClone);
         }
 
         /// <summary>
