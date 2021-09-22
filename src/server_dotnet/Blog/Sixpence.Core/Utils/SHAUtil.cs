@@ -81,7 +81,8 @@ namespace Sixpence.Core.Utils
                 }
                 algorithm = System.Security.Cryptography.MD5.Create();
             }
-            return algorithm.ComputeHash(stream);
+            var bytes = stream.ToByteArray();
+            return algorithm.ComputeHash(bytes);
         }
 
         /// <summary>

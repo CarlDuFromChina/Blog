@@ -12,7 +12,7 @@
         <a-button type="primary" @click="downloadImg">点击下载</a-button>
       </template>
     </a-modal>
-    <gallery-edit v-model="editVisible"></gallery-edit>
+    <gallery-edit v-model="editVisible" @saved="refresh"></gallery-edit>
   </div>
 </template>
 
@@ -49,6 +49,13 @@ export default {
     this.loadData();
   },
   methods: {
+    refresh() {
+      this.pageIndex = 1;
+      this.total = 0;
+      this.isFirstLoad = true;
+      this.dataList = [];
+      this.loadData();
+    },
     showModal(event, { index, value }) {
       // 阻止a标签跳转
       event.preventDefault();

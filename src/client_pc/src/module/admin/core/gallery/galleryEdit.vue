@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="上传" v-model="editVisible" width="850px">
+  <a-modal title="上传" v-model="editVisible" width="850px" destroyOnClose>
     <a-form-model ref="form" :model="data">
       <a-row>
         <a-col>
@@ -87,6 +87,7 @@ export default {
     },
     postSave() {
       this.$emit('input', false);
+      this.$emit('saved');
     },
     changeTags(val) {
       this.tags = val;
@@ -124,7 +125,6 @@ export default {
             url: `${this.baseUrl}${thumbnail.downloadUrl}`
           }
         ];
-        console.log(this.data);
       });
     },
     beforeUpload(file, fileList) {
