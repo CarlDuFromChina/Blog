@@ -32,19 +32,7 @@ namespace Blog.Blog
 
         public override IList<EntityView> GetViewList()
         {
-            return new List<EntityView>()
-            {
-                new EntityView()
-                {
-                    Sql = "SELECT * FROM blog",
-                    ViewId = "C94EDAAE-0C59-41E6-A373-D4816C2FD882",
-                    CustomFilter = new List<string>(){ "title" },
-                    Name = "全部博客",
-                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
-                },
-                new EntityView()
-                {
-                    Sql = $@"
+            var sql = $@"
 SELECT
 	blog.blogid,
 	blog.title,
@@ -65,11 +53,32 @@ SELECT
 	blog.surface_url
 FROM
 	blog
-WHERE 1=1 AND blog.is_show = 1 AND blog.is_series = 0
-",
+WHERE 1=1 AND blog.is_show = 1";
+
+            return new List<EntityView>()
+            {
+                new EntityView()
+                {
+                    Sql = "SELECT * FROM blog",
+                    ViewId = "C94EDAAE-0C59-41E6-A373-D4816C2FD882",
+                    CustomFilter = new List<string>(){ "title" },
+                    Name = "全部博客",
+                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
+                },
+                new EntityView()
+                {
+                    Sql = sql + " AND blog.is_series = 0",
                     ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
                     CustomFilter = new List<string>() { "title" },
                     Name = "展示的博客",
+                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                },
+                new EntityView()
+                {
+                    Sql = sql + " AND blog.is_series = 1",
+                    ViewId = "834F8083-47BC-42F3-A6B2-DE25BE755714",
+                    CustomFilter = new List<string>() { "title" },
+                    Name = "展示的系列",
                     OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
                 },
                 new EntityView()

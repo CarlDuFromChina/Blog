@@ -10,6 +10,10 @@
       <links style="margin-bottom:20px;"></links>
       <!-- 推荐 -->
 
+      <!-- 精品文章 -->
+      <series-list style="margin-bottom:20px;"></series-list>
+      <!-- 精品文章 -->
+
       <!-- 推荐博客 -->
       <recommand-list style="margin-bottom:20px;"></recommand-list>
       <!-- 推荐博客 -->
@@ -34,10 +38,11 @@ import recommandList from './recommandList';
 import links from './links';
 import idea from './idea';
 import blogList from './blogList';
+import seriesList from './seriesList.vue';
 
 export default {
   name: 'home',
-  components: { recommandList, links, idea, blogList },
+  components: { recommandList, links, idea, blogList, seriesList },
   data() {
     return {
       loading: 'false',
