@@ -11,6 +11,11 @@ namespace Sixpence.EntityFramework.Driver
 {
     public class MySqlDriver : IDbDriver
     {
+        public void AddLimit(ref string sql, int? index, int size)
+        {
+            throw new NotImplementedException();
+        }
+
         public void BulkCopy(IDbConnection conn, DataTable dataTable, string tableName)
         {
             throw new NotImplementedException();

@@ -117,5 +117,17 @@ WHERE rolname = '{name}'";
                 writer.Complete();
             }
         }
+
+        public void AddLimit(ref string sql, int? index, int size)
+        {
+            if (index.HasValue)
+            {
+                sql += $" LIMIT {size} OFFSET {(index - 1) * size}";
+            }
+            else
+            {
+                sql += $" LIMIT {size}";
+            }
+        }
     }
 }

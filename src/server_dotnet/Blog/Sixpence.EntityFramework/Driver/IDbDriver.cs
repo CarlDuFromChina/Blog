@@ -27,5 +27,6 @@ namespace Sixpence.EntityFramework.Driver
         string GetDropColumnSql(string tableName, List<Column> columns);
         string CreateTemporaryTable(IDbConnection conn, string tableName);
         void BulkCopy(IDbConnection conn, DataTable dataTable, string tableName);
+        void AddLimit(ref string sql, int? index, int size);
     }
 }

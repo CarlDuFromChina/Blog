@@ -277,7 +277,7 @@ UPDATE {0} SET {1} WHERE {2} = @id;
                     sql += $" {orderby}";
             }
 
-            sql += $" LIMIT {pageSize} OFFSET {pageSize * (pageIndex - 1)}";
+            DbClient.Driver.AddLimit(ref sql, pageIndex, pageSize);
             return RetrieveMultiple<T>(sql, paramList);
         }
 

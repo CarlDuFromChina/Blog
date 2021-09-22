@@ -126,7 +126,7 @@ FROM
 WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
-            return Broker.DbClient.Query<string>(sql);
+            return Broker.DbClient.Query<string>(sql, param: null);
         }
 
         /// <summary>
