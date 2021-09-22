@@ -182,7 +182,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/System/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
+      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {

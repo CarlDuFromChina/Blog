@@ -183,7 +183,7 @@ export default {
         return Promise.resolve(true);
       }
       // 保存后上传头像
-      let url = '/api/System/UploadImage?fileType=avatar';
+      let url = '/api/SysFile/UploadImage?fileType=avatar';
       // 关联实体id
       if (!sp.isNullOrEmpty(this.Id)) {
         url += `&objectId=${this.Id}`;
