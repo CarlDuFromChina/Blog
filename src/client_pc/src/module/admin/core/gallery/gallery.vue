@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative">
+  <div style="overflow-y: scroll; height: 100%">
     <sp-header>
       <div v-if="buttons && buttons.length > 0" style="display:inline-block">
         <sp-button-list :buttons="buttons" @search-change="loadData" @unfold="showMore = true" @fold="showMore = false"></sp-button-list>
