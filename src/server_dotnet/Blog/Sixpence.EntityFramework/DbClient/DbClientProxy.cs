@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Sixpence.Core.Extensions;
 
 namespace Sixpence.EntityFramework.DbClient
 {
@@ -243,6 +244,17 @@ namespace Sixpence.EntityFramework.DbClient
         }
 
         /// <summary>
+        /// 将SQL转换为本地化SQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public string ConvertSqlToDialectSql(string sql, object param = null)
+        {
+            return ConvertSqlToDialectSql(sql, param.ToDictionary());
+        }
+
+        /// <summary>
         /// 释放资源
         /// </summary>
         public void Dispose()
@@ -258,6 +270,34 @@ namespace Sixpence.EntityFramework.DbClient
         public void BulkCopy(DataTable dataTable, string tableName)
         {
             dbClient.BulkCopy(dataTable, tableName);
+        }
+
+        public IEnumerable<T> Query<T>(string sql, object param = null)
+        {
+            var paramList = param.ToDictionary();
+            sql = ConvertSqlToDialectSql(sql, paramList);
+            LogUtils.Debug(sql + paramList.ToLogString());
+            return dbClient.Query<T>(sql, param);
+        }
+
+        public T QueryFirst<T>(string sql, IDictionary<string, object> paramList = null)
+        {
+            var paramListClone = new Dictionary<string, object>();
+            if (paramList != null)
+            {
+                paramListClone = paramListClone.Concat(paramList).ToDictionary(k => k.Key, v => v.Value);
+            }
+            sql = ConvertSqlToDialectSql(sql, paramListClone);
+            LogUtils.Debug(sql + paramListClone.ToLogString());
+            return dbClient.QueryFirst<T>(sql, paramList);
+        }
+
+        public T QueryFirst<T>(string sql, object param = null)
+        {
+            var paramList = param.ToDictionary();
+            sql = ConvertSqlToDialectSql(sql, paramList);
+            LogUtils.Debug(sql + paramList.ToLogString());
+            return dbClient.QueryFirst<T>(sql, param);
         }
     }
 }

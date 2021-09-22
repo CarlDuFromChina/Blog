@@ -76,6 +76,33 @@ namespace Sixpence.EntityFramework.DbClient
         IEnumerable<T> Query<T>(string sql, IDictionary<string, object> paramList = null);
 
         /// <summary>
+        /// 根据SQL查询，返回传入类型集合
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        IEnumerable<T> Query<T>(string sql, object param = null);
+
+        /// <summary>
+        /// 查询单条数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="paramList"></param>
+        /// <returns></returns>
+        T QueryFirst<T>(string sql, IDictionary<string, object> paramList = null);
+
+        /// <summary>
+        /// 查询单条数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        T QueryFirst<T>(string sql, object param = null);
+
+        /// <summary>
         /// 根据SQL查询，返回DataTable
         /// </summary>
         /// <param name="sql"></param>
