@@ -19,6 +19,11 @@ namespace Blog.Core.Store.SysFile
 {
     public class SysFileController : EntityBaseController<sys_file, SysFileService>
     {
+        /// <summary>
+        /// 通用下载接口
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
         [HttpGet, AllowAnonymous]
         public Task<IActionResult> Download(string objectId)
         {
@@ -26,6 +31,13 @@ namespace Blog.Core.Store.SysFile
             return ServiceContainer.Resolve<IStoreStrategy>(config?.Type).DownLoad(objectId);
         }
 
+        /// <summary>
+        /// 通用上传接口
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="fileType"></param>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
         public List<FileInfoModel> Upload([FromForm] List<IFormFile> files, [FromQuery] string fileType, [FromQuery] string objectId = "")
@@ -70,40 +82,30 @@ namespace Blog.Core.Store.SysFile
             return fileList;
         }
 
+        /// 上传图片
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        public FileInfoModel UploadImage([FromForm]IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        public ImageInfo UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
-            if (file == null)
-                throw new SpException("上传文件不能为空", "");
-
             var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
+            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
 
-            // 获取文件哈希码，将哈希码作为文件名
-            var hash_code = SHAUtil.GetFileSHA1(stream);
-            var fileName = $"{hash_code}.{file.FileName.GetFileType()}";
-            var config = StoreConfig.Config;
-            ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(file.OpenReadStream(), fileName, out var filePath);
-            var sysImage = new sys_file()
-            {
-                sys_fileId = Guid.NewGuid().ToString(),
-                name = fileName,
-                hash_code = hash_code,
-                file_path = filePath,
-                file_type = fileType,
-                content_type = file.ContentType
-            };
-            if (!string.IsNullOrEmpty(objectId))
-            {
-                sysImage.objectId = objectId;
-            }
-            new SysFileService().CreateData(sysImage);
-            return new FileInfoModel
-            {
-                id = sysImage.Id,
-                name = sysImage.name,
-                downloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}"
-            };
+            return MapperHelper.Map<ImageInfo>(image);
+        }
+
+        /// <summary>
+        /// 上传图片，自动生成预览图片
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [RequestSizeLimit(100 * 1024 * 1024)]
+        public IEnumerable<ImageInfo> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        {
+            return new SysFileService().UploadBigImage(file, fileType, objectId);
         }
     }
 }

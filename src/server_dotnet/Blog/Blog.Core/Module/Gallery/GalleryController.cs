@@ -29,28 +29,5 @@ namespace Blog.Core.Module.Gallery
         {
             return new GalleryService().UploadImage(image);
         }
-
-        /// <summary>
-        /// 上传图片，自动生成预览图片
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public IEnumerable<ImageInfo> UploadImage([FromForm] IFormFile file, [FromQuery] string fileType, [FromQuery] string objectId)
-        {
-            var stream = file.OpenReadStream();
-            var contentType = file.ContentType;
-            var suffix = file.FileName.GetFileType();
-
-            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
-
-            var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
-            var image2 = new SysFileService().UploadFile(thumbStream, suffix, fileType, contentType, objectId);
-
-            return new List<ImageInfo>()
-            {
-                MapperHelper.Map<ImageInfo>(image),
-                MapperHelper.Map<ImageInfo>(image2)
-            };
-        }
     }
 }

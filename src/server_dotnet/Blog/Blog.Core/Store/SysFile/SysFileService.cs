@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Sixpence.EntityFramework.Broker;
+using Microsoft.AspNetCore.Http;
+using Blog.Core.Module.DataService;
+using Blog.Core.Profiles;
 
 namespace Blog.Core.Store.SysFile
 {
@@ -102,6 +105,32 @@ WHERE hash_code = @code
             CreateData(sysImage);
 
             return sysImage;
+        }
+
+        /// <summary>
+        /// 上传大图并自动生成缩略图
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="fileType"></param>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        public IEnumerable<ImageInfo> UploadBigImage(IFormFile file, string fileType, string objectId = "")
+        {
+            var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
+
+            return Broker.ExecuteTransaction(() =>
+            {
+                var image = UploadFile(stream, suffix, fileType, contentType, objectId);
+                var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
+                var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
+                return new List<ImageInfo>()
+                {
+                    MapperHelper.Map<ImageInfo>(image),
+                    MapperHelper.Map<ImageInfo>(image2)
+                };
+            });
         }
     }
 }

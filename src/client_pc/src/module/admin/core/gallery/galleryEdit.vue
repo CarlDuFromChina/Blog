@@ -57,6 +57,7 @@ export default {
       baseUrl: sp.getServerUrl(),
       smallImage: [],
       bigImage: [],
+      token: this.$store.getters.getToken,
       tags: []
     };
   },
@@ -68,6 +69,12 @@ export default {
       set(value) {
         this.$emit('input', value);
       }
+    },
+    // 请求头
+    headers() {
+      return {
+        Authorization: 'Bearer ' + this.token
+      };
     }
   },
   methods: {
@@ -93,7 +100,7 @@ export default {
       this.tags = val;
     },
     upload(param) {
-      const url = '/api/Gallery/UploadImage?fileType=gallery';
+      const url = '/api/SysFile/UploadBigImage?fileType=gallery&objectId=';
       const formData = new FormData();
       formData.append('file', param.file);
       return sp.post(url, formData, this.headers).then(resp => resp);
