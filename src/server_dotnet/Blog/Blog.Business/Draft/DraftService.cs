@@ -60,5 +60,22 @@ WHERE blogid = @blogid
 ";
             Broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
+
+        public override string CreateOrUpdateData(draft t)
+        {
+            var data = _context.SingleQuery(t.Id);
+            if (data != null)
+            {
+                t.createdBy = data.createdBy;
+                t.createdByName = data.createdByName;
+                t.createdOn = data.createdOn;
+                _context.Update(t);
+            }
+            else
+            {
+                return _context.Create(t);
+            }
+            return t.Id;
+        }
     }
 }
