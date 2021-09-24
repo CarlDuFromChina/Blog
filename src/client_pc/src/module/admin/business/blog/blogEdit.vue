@@ -40,20 +40,23 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="摘要">
+              <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :autosize="{ minRows: 2, maxRows: 4 }" allow-clear />
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="6">
             <a-form-model-item label="系列">
               <a-switch v-model="data.is_series"></a-switch>
             </a-form-model-item>
           </a-col>
-        </a-row>
-        <a-row>
-          <a-col>
-            <a-form-model-item label="是否前台显示">
+          <a-col :span="6">
+            <a-form-model-item label="发布">
               <a-switch v-model="data.is_show"></a-switch>
             </a-form-model-item>
           </a-col>
-        </a-row>
-        <a-row>
-          <a-col>
+          <a-col :span="6">
             <a-form-model-item label="禁止评论">
               <a-switch v-model="data.disable_comment"></a-switch>
             </a-form-model-item>
@@ -208,7 +211,9 @@ export default {
         if (valid) {
           this.editVisible = false;
           this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
-          this.data.brief = htmlToText(this.html);
+          if (sp.isNullOrEmpty(this.data.brief)) {
+            this.data.brief = htmlToText(this.html, { baseElement: 'p', limits: { ellipsis: '...', maxInputLength: 200 } });
+          }
           if (this.tags) {
             this.data.tags = this.tags;
           }
