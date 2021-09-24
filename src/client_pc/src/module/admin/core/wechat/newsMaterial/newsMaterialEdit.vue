@@ -27,6 +27,13 @@ export default {
     return {
       controllerName: 'WeChatNews'
     };
+  },
+  methods: {
+    loadComplete() {
+      if (!sp.isNullOrEmpty(this.data.content)) {
+        this.data.content = JSON.parse(this.data.content);
+      }
+    }
   }
 };
 </script>

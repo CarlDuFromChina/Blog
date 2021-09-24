@@ -16,6 +16,7 @@ using Sixpence.EntityFramework.Entity;
 using Blog.WeChat.WeChatNews;
 using Blog.Core.Auth.UserInfo;
 using Sixpence.EntityFramework.Broker;
+using Blog.Core.Auth;
 
 namespace Blog.Jobs
 {
@@ -36,7 +37,7 @@ namespace Blog.Jobs
                 broker.ExecuteTransaction(() =>
                 {
                     var result = new WeChatNewsService(broker).GetDataList(1, 5000);
-                    var user = broker.Retrieve<user_info>("5B4A52AF-052E-48F0-82BB-108CC834E864");
+                    var user = UserIdentityUtil.GetCurrentUser() ?? UserIdentityUtil.GetSystem();
                     var dataList = (from item in result.item
                                     let news = item.content.news_item.FirstOrDefault()
                                     select new wechat_news()
@@ -49,10 +50,10 @@ namespace Blog.Jobs
                                         author = news?.author,
                                         digest = news?.digest,
                                         thumb_media_id = news?.thumb_media_id,
-                                        createdBy = user.user_infoId,
-                                        createdByName = user.name,
-                                        modifiedBy = user.user_infoId,
-                                        modifiedByName = user.name,
+                                        createdBy = user.Id,
+                                        createdByName = user.Name,
+                                        modifiedBy = user.Id,
+                                        modifiedByName = user.Name,
                                         createdOn = DateTime.Now,
                                         modifiedOn = DateTime.Now,
                                     })

@@ -1,5 +1,4 @@
-﻿using Blog.Blog;
-using Blog.Comments;
+﻿using Blog.Comments;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using System;

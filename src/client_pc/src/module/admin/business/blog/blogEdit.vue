@@ -248,7 +248,13 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/Blog/SyncToWeChat?id=${this.data.Id}`, `=${encodeURIComponent(this.html)}`);
+          sp.post(`api/Blog/SyncToWeChat`, { id: this.data.Id, content: encodeURIComponent(this.html) })
+            .then(() => {
+              this.$message.success('同步成功');
+            })
+            .catch(() => {
+              this.$message.error('同步异常');
+            });
         },
         onCancel: () => {
           this.$message.info('已取消');

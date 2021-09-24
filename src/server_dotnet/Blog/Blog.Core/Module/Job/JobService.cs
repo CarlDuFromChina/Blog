@@ -58,7 +58,7 @@ ORDER BY name
                 var job = item as JobBase;
                 if (job.Name == name)
                 {
-                    JobHelpers.RunOnceNow(job.Name, typeof(job).Namespace);
+                    JobHelpers.RunOnceNow(job.Name, job.GetType().Namespace);
                 }
             });
         }

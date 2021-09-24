@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Newtonsoft.Json.Linq;
 using Npgsql;
 using Sixpence.Core;
+using Sixpence.Core.Utils;
 using Sixpence.EntityFramework.DbClient;
 using Sixpence.EntityFramework.Models;
 using System;
@@ -108,12 +110,38 @@ WHERE rolname = '{name}'";
 
         public void BulkCopy(IDbConnection conn, DataTable dataTable, string tableName)
         {
-            var commandFormat = string.Format(System.Globalization.CultureInfo.InvariantCulture, "COPY {0} FROM STDIN BINARY", tableName);
-            using (var writer = (conn as NpgsqlConnection).BeginBinaryImport(commandFormat))
-            {
-                foreach (DataRow item in dataTable.Rows)
-                    writer.WriteRow(item.ItemArray);
+            var columnNameList = (from DataColumn column in dataTable.Columns select column.ColumnName.ToLower())
+                .ToList();
+            var columnNames = columnNameList.Aggregate((l, n) => l + "," + n);
+            var cn = conn as NpgsqlConnection;
+            if (conn == null) return;
 
+            using (var writer = cn.BeginBinaryImport($"COPY {tableName}({columnNames}) FROM STDIN (FORMAT BINARY)"))
+            {
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    writer.StartRow();
+                    foreach (var columnName in columnNameList)
+                    {
+                        if (string.IsNullOrWhiteSpace(dr[columnName].ToString()))
+                        {
+                            writer.WriteNull();
+                        }
+                        else
+                        {
+                            if (dataTable.Columns[columnName].DataType == typeof(int) || dataTable.Columns[columnName].DataType == typeof(long))
+                                writer.Write(ConvertUtil.ConToInt(dr[columnName]), NpgsqlTypes.NpgsqlDbType.Integer);
+                            else if (dataTable.Columns[columnName].DataType == typeof(decimal))
+                                writer.Write(ConvertUtil.ConToDecimal(dr[columnName]), NpgsqlTypes.NpgsqlDbType.Numeric);
+                            else if (dataTable.Columns[columnName].DataType == typeof(DateTime))
+                                writer.Write(ConvertUtil.ConToDateTime(dr[columnName]), NpgsqlTypes.NpgsqlDbType.Timestamp);
+                            else if (dataTable.Columns[columnName].DataType == typeof(JToken))
+                                writer.Write(dr[columnName].ToString(), NpgsqlTypes.NpgsqlDbType.Jsonb);
+                            else
+                                writer.Write(dr[columnName].ToString());
+                        }
+                    }
+                }
                 writer.Complete();
             }
         }

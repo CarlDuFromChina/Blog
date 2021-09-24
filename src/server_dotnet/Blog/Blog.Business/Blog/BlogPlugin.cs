@@ -4,7 +4,7 @@ using Sixpence.EntityFramework.Entity;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public class BlogPlugin : IPersistBrokerPlugin
     {

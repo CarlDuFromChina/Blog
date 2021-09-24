@@ -2,7 +2,7 @@
 using Sixpence.EntityFramework.Entity;
 using System.Runtime.Serialization;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     [Entity("blog", "博客", false)]
     public partial class blog : BaseEntity
@@ -138,6 +138,13 @@ namespace Blog.Blog
         [DataMember]
         [Attr("brief", "摘要", AttrType.Text)]
         public string brief { get; set; }
+
+        /// <summary>
+        /// 微信素材id
+        /// </summary>
+        [DataMember]
+        [Attr("wechat_newsid", "微信素材id", AttrType.Varchar, 100)]
+        public string wechat_newsid { get; set; }
     }
 }
 

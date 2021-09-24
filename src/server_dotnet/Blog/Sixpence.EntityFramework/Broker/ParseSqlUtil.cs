@@ -68,9 +68,9 @@ namespace Sixpence.EntityFramework.Broker
                 var _value = value as JToken;
                 if (_value.Type == JTokenType.Null)
                 {
-                    return (name + "::json", null);
+                    return (name + "::jsonb", null);
                 }
-                return (name + "::json", Regex.Replace(_value.ToString(), @"\s", "")); // 替换JArray的换行和空格
+                return (name + "::jsonb", Regex.Replace(_value.ToString(), @"\s", "")); // 替换JArray的换行和空格
             }
             else if (value is bool)
             {

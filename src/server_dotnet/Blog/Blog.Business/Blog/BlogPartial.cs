@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public partial class blog
     {

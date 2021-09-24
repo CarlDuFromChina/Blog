@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using Sixpence.EntityFramework.Broker;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public class BlogService : EntityService<blog>
     {
@@ -170,7 +170,8 @@ WHERE
             {
                 var data = GetData(id);
                 var media = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.surfaceid);
-                new WeChatNewsService(Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+                data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+                UpdateData(data);
             });
         }
 

@@ -88,7 +88,7 @@ namespace Blog.WeChat.WeChatNews
         /// <param name="content_source_url">图文消息的原文地址，即点击“阅读原文”后的URL</param>
         /// <param name="need_open_comment">Uint32 是否打开评论，0不打开，1打开</param>
         /// <param name="only_fans_can_comment">Uint32 是否粉丝才可评论，0所有人可评论，1粉丝才可评论</param>
-        public void CreateData(string title, string thumb_media_id, string author, string digest, bool show_cover_pic, string content, string content_source_url, bool need_open_comment, bool only_fans_can_comment)
+        public string CreateData(string title, string thumb_media_id, string author, string digest, bool show_cover_pic, string content, string content_source_url, bool need_open_comment, bool only_fans_can_comment)
         {
             var postData = new
             {
@@ -109,24 +109,17 @@ namespace Blog.WeChat.WeChatNews
                 }
             };
             var result = WeChatApi.AddNews(JsonConvert.SerializeObject(postData));
-            var user = UserIdentityUtil.GetCurrentUser();
             var data = new wechat_news()
             {
                 wechat_newsId = Guid.NewGuid().ToString(),
                 media_id = result.media_id,
                 author = author,
-                content = content,
+                content = JsonConvert.SerializeObject(content),
                 name = title,
                 digest = digest,
-                thumb_media_id = thumb_media_id,
-                createdBy = user.Id,
-                createdByName = user.Name,
-                modifiedBy = user.Id,
-                modifiedByName = user.Name,
-                createdOn = DateTime.Now,
-                modifiedOn = DateTime.Now
+                thumb_media_id = thumb_media_id
             };
-            CreateData(data);
+            return CreateData(data);
         }
     }
 }

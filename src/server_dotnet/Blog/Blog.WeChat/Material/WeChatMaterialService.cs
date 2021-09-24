@@ -90,7 +90,6 @@ namespace Blog.WeChat.Material
             var media = WeChatApi.AddMaterial(type, stream, file.name, file.content_type);
 
             // 创建素材记录
-            var user = UserIdentityUtil.GetCurrentUser();
             var material = new wechat_material()
             {
                 wechat_materialId = Guid.NewGuid().ToString(),
@@ -98,13 +97,7 @@ namespace Blog.WeChat.Material
                 url = media.url,
                 sys_fileid = fileId,
                 name = file.name,
-                type = type.ToMaterialTypeString(),
-                createdBy = user.Id,
-                createdByName = user.Name,
-                modifiedBy = user.Id,
-                modifiedByName = user.Name,
-                modifiedOn = DateTime.Now,
-                createdOn = DateTime.Now
+                type = type.ToMaterialTypeString()
             };
             CreateData(material);
             return media.media_id;

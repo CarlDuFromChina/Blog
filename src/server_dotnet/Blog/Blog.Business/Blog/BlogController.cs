@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Sixpence.EntityFramework.Models;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public class BlogController : EntityBaseController<blog, BlogService>
     {
@@ -75,10 +75,10 @@ namespace Blog.Blog
         }
 
         [HttpPost]
-        public void SyncToWeChat([FromQuery]string id, [FromBody]string htmlContent)
+        public void SyncToWeChat([FromBody]SyncToWeChatModel model)
         {
-            var content = HttpUtility.UrlDecode(htmlContent, Encoding.UTF8);
-            new BlogService().SyncToWeChat(id, content);
+            var content = HttpUtility.UrlDecode(model.content, Encoding.UTF8);
+            new BlogService().SyncToWeChat(model.id, content);
         }
 
         /// <summary>

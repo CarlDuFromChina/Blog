@@ -8,48 +8,45 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Config
 {
-    public class StoreConfig
+    public class StoreConfig : BaseAppConfig<StoreConfig>
     {
-        public static StoreConfig Config { get; private set; }
-
-        static StoreConfig()
-        {
-            Config = new JsonConfig().GetConfig<StoreConfig>(nameof(StoreConfig).Replace("Config", ""));
-            if (string.IsNullOrEmpty(Config.Temp))
-            {
-                Config.Temp = GetTempPath();
-            }
-            if (string.IsNullOrEmpty(Config.Storage))
-            {
-                Config.Storage = GetStoragePath();
-            }
-        }
-
         /// <summary>
         /// 存储方式（SystemStore、MinIOStore）
         /// </summary>
         public string Type { get; set; }
 
+        private string temp { get; set; }
         /// <summary>
         /// 临时文件路径
         /// </summary>
-        public string Temp { get; set; }
+        public string Temp
+        {
+            get
+            {
+                return string.IsNullOrEmpty(temp) ? GetCurrentSystemPath("temp") : temp;
+            }
+            set
+            {
+                temp = value;
+            }
+        }
 
+        private string storage;
         /// <summary>
         /// 文件路径
         /// </summary>
-        public string Storage { get; set; }
-
-
-        private static string GetTempPath()
+        public string Storage
         {
-            return GetCurrentSystemPath("temp");
+            get
+            {
+                return string.IsNullOrEmpty(storage) ? GetCurrentSystemPath("storage") : storage;
+            }
+            set
+            {
+                storage = value;
+            }
         }
 
-        private static string GetStoragePath()
-        {
-            return GetCurrentSystemPath("storage");
-        }
 
         private static string GetCurrentSystemPath(string folderName)
         {
