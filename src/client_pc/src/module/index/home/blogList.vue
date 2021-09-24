@@ -3,7 +3,7 @@
     <a-input-search placeholder="输入博客名快速搜索" class="search" size="large" enter-button @search="onSearch" />
     <sp-card class="blog-list">
       <a-list item-layout="vertical" size="large" :data-source="listData">
-        <a-list-item slot="renderItem" key="item.title" slot-scope="item">
+        <a-list-item slot="renderItem" :key="item.Id" slot-scope="item">
           <template slot="actions">
             <span :key="'eye'">
               <a-icon type="eye" style="margin-right: 8px" />
@@ -20,8 +20,16 @@
           </template>
           <a-list-item-meta :description="item.description">
             <span slot="title" style="font-size: 14px">
-              <a @click="readBlog(item)">{{ item.title }}</a>
-              <div>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+              <div>
+                <a @click="readBlog(item)">{{ item.title }}</a>
+              </div>
+              <div class="meta-container">
+                <span class="meta-container-author">{{ item.createdByName }}</span>
+                <span class="meta-container-date">{{ formtDate(item.createdOn) }}</span>
+                <a-tag v-for="(tag, index) in JSON.parse(item.tags)" :key="index" :color="colors[index % colors.length]">
+                  {{ tag }}
+                </a-tag>
+              </div>
             </span>
             <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width: 150px; height: 100px" />
           </a-list-item-meta>
@@ -48,7 +56,8 @@ export default {
       isLoadedAll: false,
       searchValue: '',
       viewId: '463BE7FE-5435-4841-A365-C9C946C0D655',
-      actions: [{ type: 'eye' }, { type: 'like-o' }, { type: 'message' }]
+      actions: [{ type: 'eye' }, { type: 'like-o' }, { type: 'message' }],
+      colors: ['pink', 'red', 'orange', 'green', 'cyan', 'blue', 'purple']
     };
   },
   async created() {
@@ -74,6 +83,9 @@ export default {
       this.listData = [];
       this.goFirst();
       this.fetchData();
+    },
+    formtDate(val) {
+      return this.$moment(val).fromNow();
     },
     fetchData() {
       try {
@@ -120,5 +132,42 @@ export default {
 
 .ant-list-vertical .ant-list-item-meta-title {
   margin-bottom: 0px;
+}
+
+.meta-container {
+  color: #86909c;
+  font-size: 13px;
+  &-author {
+    color: #4e5969;
+  }
+  &-date {
+    position: relative;
+    padding: 0 12px;
+    &::before {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+      width: 1px;
+      height: 14px;
+      background: #e5e6eb;
+      content: " ";
+      left: 6px;
+    }
+    &::after {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+      width: 1px;
+      height: 14px;
+      background: #e5e6eb;
+      content: " ";
+      right: 6px;
+    }
+  }
+  &-brief {
+    color: #86909c;
+  }
 }
 </style>
