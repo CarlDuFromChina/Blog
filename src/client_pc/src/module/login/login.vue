@@ -33,13 +33,19 @@
     <a-modal v-model="signupVisible" title="注册" :footer="false" destroyOnClose :width="300">
       <a-form-model ref="signupForm" :model="signupData" :rules="signupRules">
         <a-form-model-item prop="code">
-          <a-input v-model="signupData.code" placeholder="请输入邮箱" allowClear></a-input>
+          <a-input v-model="signupData.code" placeholder="请输入邮箱" allowClear :disabled="signupLoading"></a-input>
         </a-form-model-item>
         <a-form-model-item prop="password">
-          <a-input-password v-model="signupData.password" placeholder="请输入密码" type="password" @keyup.enter.native="signup"></a-input-password>
+          <a-input-password
+            v-model="signupData.password"
+            placeholder="请输入密码"
+            type="password"
+            :disabled="signupLoading"
+            @keyup.enter.native="signup"
+          ></a-input-password>
         </a-form-model-item>
       </a-form-model>
-      <a-button type="primary" block @click="signup">
+      <a-button type="primary" block @click="signup" :loading="signupLoading">
         注册
       </a-button>
     </a-modal>
@@ -64,6 +70,7 @@ export default {
         password: ''
       },
       loading: false,
+      signupLoading: false,
       rules: {
         code: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
@@ -175,9 +182,15 @@ export default {
     forgetPwd() {
       this.$message.warn('请联系管理员重置密码');
     },
-    signup() {
-      this.$refs.signupForm.validate().then(async () => {
-        try {
+    async signup() {
+      if (this.signupLoading) {
+        return;
+      }
+      this.signupLoading = true;
+      const originPwd = this.signupData.password;
+      try {
+        const valid = await this.$refs.signupForm.validate();
+        if (valid) {
           const key = await sp.get('api/System/GetPublicKey');
           const { rsa, md5 } = encrypt;
           this.signupData.publicKey = key;
@@ -196,11 +209,13 @@ export default {
               this.$message.error(resp.message);
             }
           }
-        } catch (error) {
-          this.$set(this.data, 'password', null);
-          this.$message.error('注册失败');
         }
-      });
+      } catch (error) {
+        this.$set(this.signupData, 'password', originPwd);
+        this.$message.error('注册失败');
+      } finally {
+        this.signupLoading = false;
+      }
     }
   }
 };
