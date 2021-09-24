@@ -30,6 +30,7 @@
                   {{ tag }}
                 </a-tag>
               </div>
+              <div class="meta-brief">{{ item.brief }}</div>
             </span>
             <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width: 150px; height: 100px" />
           </a-list-item-meta>
@@ -151,7 +152,7 @@ export default {
       width: 1px;
       height: 14px;
       background: #e5e6eb;
-      content: " ";
+      content: ' ';
       left: 6px;
     }
     &::after {
@@ -162,12 +163,21 @@ export default {
       width: 1px;
       height: 14px;
       background: #e5e6eb;
-      content: " ";
+      content: ' ';
       right: 6px;
     }
   }
-  &-brief {
-    color: #86909c;
-  }
+}
+
+.meta-brief {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  color: #86909c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  line-height: 22px;
 }
 </style>

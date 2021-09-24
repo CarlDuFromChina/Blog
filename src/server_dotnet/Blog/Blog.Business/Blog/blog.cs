@@ -131,6 +131,13 @@ namespace Blog.Blog
         [DataMember]
         [Attr("is_showname", "是否展示", AttrType.Varchar, 100)]
         public string is_showName { get; set; }
+
+        /// <summary>
+        /// 摘要
+        /// </summary>
+        [DataMember]
+        [Attr("brief", "摘要", AttrType.Text)]
+        public string brief { get; set; }
     }
 }
 

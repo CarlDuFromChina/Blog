@@ -50,7 +50,8 @@ SELECT
 	COALESCE((SELECT COUNT(1) FROM upvote WHERE objectid = blog.blogid), 0) upvote_times,
 	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) message,
 	blog.surfaceid,
-	blog.surface_url
+	blog.surface_url,
+	blog.brief
 FROM
 	blog
 WHERE 1=1 AND blog.is_show = 1";

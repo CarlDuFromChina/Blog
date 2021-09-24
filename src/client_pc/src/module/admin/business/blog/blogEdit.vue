@@ -101,6 +101,8 @@ import 'mavon-editor/dist/css/index.css';
 import { edit, select } from '@/mixins';
 import draft from './draft';
 
+const { htmlToText } = require('html-to-text');
+
 export default {
   name: 'blogEdit',
   components: { mavonEditor },
@@ -206,6 +208,7 @@ export default {
         if (valid) {
           this.editVisible = false;
           this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+          this.data.brief = htmlToText(this.html);
           if (this.tags) {
             this.data.tags = this.tags;
           }
