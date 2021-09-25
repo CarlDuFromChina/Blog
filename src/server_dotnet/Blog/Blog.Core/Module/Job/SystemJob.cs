@@ -28,31 +28,8 @@ namespace Blog.Core.Module.Job
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
-            DeletePictures(broker);
             ArchiveLog();
             DeleteTempFiles();
-        }
-
-        /// <summary>
-        /// 删除缓存照片
-        /// </summary>
-        /// <param name="broker"></param>
-        private void DeletePictures(IPersistBroker broker)
-        {
-            var sql = @"
-SELECT
-	* 
-FROM
-	sys_file 
-WHERE
-	objectid IS NULL 
-	AND (file_type = 'blog_content' OR file_type = 'blog_surface')
-";
-            var dataList = broker.RetrieveMultiple<sys_file>(sql);
-            var ids = dataList.Select(item => item.Id).ToList();
-
-            new SysFileService(broker).DeleteData(ids);
-            Logger.Info($"找到{ids.Count}张过期图片文件，已删除");
         }
 
         /// <summary>
