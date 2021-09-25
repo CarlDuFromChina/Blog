@@ -125,22 +125,22 @@ namespace Sixpence.EntityFramework.Entity
         }
 
         #region Methods
-        public IEnumerable<string> GetKeys()
+        public virtual IEnumerable<string> GetKeys()
         {
             return this.GetType().GetProperties().Select(item => item.Name);
         }
 
-        public bool ContainKey(string name)
+        public virtual bool ContainKey(string name)
         {
             return GetKeys().Contains(name);
         }
 
-        public IEnumerable<object> GetValues()
+        public virtual IEnumerable<object> GetValues()
         {
             return this.GetType().GetProperties().Select(item => item.GetValue(this));
         }
 
-        public IDictionary<string, object> GetAttributes()
+        public virtual IDictionary<string, object> GetAttributes()
         {
             var attributes = new Dictionary<string, object>();
             this.GetType()
@@ -153,7 +153,7 @@ namespace Sixpence.EntityFramework.Entity
             return attributes;
         }
 
-        public object GetAttributeValue(string name)
+        public virtual object GetAttributeValue(string name)
         {
             if (ContainKey(name))
             {
@@ -162,7 +162,7 @@ namespace Sixpence.EntityFramework.Entity
             return null;
         }
 
-        public T GetAttributeValue<T>(string name) where T : class
+        public virtual T GetAttributeValue<T>(string name) where T : class
         {
             if (ContainKey(name))
             {
@@ -171,7 +171,7 @@ namespace Sixpence.EntityFramework.Entity
             return null;
         }
 
-        public void SetAttributeValue(string name, object value)
+        public virtual void SetAttributeValue(string name, object value)
         {
             if (ContainKey(name))
             {
