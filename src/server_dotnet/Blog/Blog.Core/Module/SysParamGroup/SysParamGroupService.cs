@@ -66,7 +66,7 @@ WHERE sys_paramgroup.code = @code
 
         public IEnumerable<SelectOption> GetEntities(string code)
         {
-            var resolve = ServiceContainer.Resolve<IEntityOptionProvider>(name => code.ToLower() == name.Replace("_", "").Replace("EntityOptionProvider", "").ToLower());
+            var resolve = ServiceContainer.Resolve<IEntityOptionProvider>(name => code.Replace("_", "").ToLower() == name.Replace("EntityOptionProvider", "").ToLower());
             if (resolve != null)
             {
                 return resolve.GetOptions();
