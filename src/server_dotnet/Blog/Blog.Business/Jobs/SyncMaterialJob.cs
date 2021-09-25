@@ -25,7 +25,9 @@ namespace Blog.Jobs
         public override string Description => "同步微信素材";
 
         public override IScheduleBuilder ScheduleBuilder => CronScheduleBuilder.CronSchedule("0 0 4 * * ?");
-        
+
+        public override TriggerState DefaultTriggerState => TriggerState.Paused;
+
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();

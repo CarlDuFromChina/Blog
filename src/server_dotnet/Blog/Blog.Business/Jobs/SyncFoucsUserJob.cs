@@ -30,6 +30,8 @@ namespace Blog.Jobs
 
         public override string Description => "同步微信关注用户（手动）";
 
+        public override TriggerState DefaultTriggerState => TriggerState.Paused;
+
         public override void Executing(IJobExecutionContext context)
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
