@@ -1,4 +1,5 @@
 ﻿using Sixpence.Core;
+using Sixpence.Core.Extensions;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.DbClient;
 using Sixpence.EntityFramework.Driver;
@@ -88,7 +89,9 @@ namespace Sixpence.EntityFramework.Broker
         /// <returns></returns>
         public int Delete(string entityName, string id)
         {
+            var dataList = _dbClient.Query($"SELECT * FROM {entityName} WHERE {entityName}id = @id", new Dictionary<string, object>() { { "@id", id } });
             var entity = new SimpleEntity(entityName, id);
+            entity.Attributes = dataList.Rows[0].ToDictionary(dataList.Columns);
             var plugin = ServiceContainer.Resolve<IPersistBrokerPlugin>(item => item.StartsWith(entityName.Replace("_", ""), StringComparison.OrdinalIgnoreCase));
             plugin?.Execute(new PersistBrokerPluginContext() { Broker = this, Entity = entity, EntityName = entityName, Action = EntityAction.PreDelete });
 

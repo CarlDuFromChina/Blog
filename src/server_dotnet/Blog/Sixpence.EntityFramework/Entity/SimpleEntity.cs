@@ -16,5 +16,38 @@ namespace Sixpence.EntityFramework.Entity
             this.EntityName = entityName;
             this.Id = id;
         }
+
+        public Dictionary<string, object> Attributes { get; set; }
+
+        public override object GetAttributeValue(string name)
+        {
+            if (!ContainKey(name))
+                return null;
+
+            return Attributes[name];
+        }
+
+        public override T GetAttributeValue<T>(string name)
+        {
+            if (!ContainKey(name))
+                return null;
+
+            return Attributes[name] as T;
+        }
+        public override IDictionary<string, object> GetAttributes() => Attributes;
+
+        public override IEnumerable<string> GetKeys() => Attributes.Keys;
+
+        public override IEnumerable<object> GetValues() => Attributes.Values;
+
+        public override bool ContainKey(string name) => Attributes.ContainsKey(name);
+
+        public override void SetAttributeValue(string name, object value)
+        {
+            if (ContainKey(name))
+            {
+                Attributes[name] = value;
+            }
+        }
     }
 }

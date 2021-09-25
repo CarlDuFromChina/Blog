@@ -27,7 +27,6 @@ namespace Blog.Core.Module.Job
 
         public override void Executing(IJobExecutionContext context)
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
             ArchiveLog();
             DeleteTempFiles();
         }

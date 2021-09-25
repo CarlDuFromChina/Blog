@@ -28,21 +28,29 @@ namespace Blog.Core.Store.SysFile
                 case EntityAction.PreDelete:
                     break;
                 case EntityAction.PostDelete:
-                    var dataList = context.Broker.RetrieveMultiple<sys_file>(@"
+                    {
+                        #region 如果文件没有实体关联就删除
+                        var sql = @"
 SELECT
 	* 
 FROM
 	sys_file 
 WHERE
 	hash_code = @hash_code 
-	AND sys_fileid <> @Id
-", new Dictionary<string, object>() { { "@hash_code", entity.GetAttributeValue<string>("hash_code ") }, { "@id", entity.GetAttributeValue<string>("Id ") } });
-                    if (dataList == null || dataList.Count == 0)
-                    {
-                        var config = StoreConfig.Config;
-                        ServiceContainer.Resolve<IStoreStrategy>(config.Type).Delete(new List<string>() { entity.GetAttributeValue<string>("name") });
+	AND sys_fileid <> @Id";
+                        var paramList = new Dictionary<string, object>()
+                        {
+                            { "@hash_code", entity.GetAttributeValue<string>("hash_code") },
+                            { "@id", entity.GetAttributeValue<string>("sys_fileid") }
+                        };
+                        var dataList = context.Broker.RetrieveMultiple<sys_file>(sql, paramList);
+                        if (dataList.IsEmpty())
+                        {
+                            ServiceContainer.Resolve<IStoreStrategy>(StoreConfig.Config.Type).Delete(new List<string>() { entity.GetAttributeValue<string>("name") });
+                        }
+                        break;
+                        #endregion
                     }
-                    break;
                 default:
                     break;
             }
