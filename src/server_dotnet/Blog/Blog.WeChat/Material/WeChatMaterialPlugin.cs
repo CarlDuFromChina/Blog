@@ -58,6 +58,7 @@ namespace Blog.WeChat.Material
                     break;
                 case EntityAction.PreDelete:
                     WeChatApi.DeleteMaterial(entity.GetAttributeValue<string>("media_id"));
+                    context.Broker.Delete("sys_file", entity.GetAttributeValue<string>("sys_fileid"));
                     break;
                 default:
                     break;

@@ -70,8 +70,8 @@ export default {
           this.data = this.data.concat(
             resp.DataList.map(item => {
               return {
-                src: this.baseUrl + item.local_url,
-                href: 'https://www.baidu.com/',
+                src: this.baseUrl.trimEnd('/') + item.local_url,
+                href: this.baseUrl.trimEnd('/') + item.local_url,
                 info: item.name
               };
             })

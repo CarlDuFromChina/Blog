@@ -129,7 +129,8 @@ namespace Blog.WeChat
         /// <param name="model"></param>
         public static void UpdateNews(WeChatNewsUpdateModel model)
         {
-            var result = HttpUtil.Post(string.Format(WeChatApiConfig.GetValue("UpdateNewsApi"), WeChatService.AccessToken), JsonConvert.SerializeObject(model));
+            var url = string.Format(WeChatApiConfig.GetValue("UpdateNewsApi"), WeChatService.AccessToken);
+            var result = HttpUtil.Post(url, JsonConvert.SerializeObject(model));
             var resultJson = JObject.Parse(result);
             if (resultJson.GetValue("errcode") != null && resultJson.GetValue("errcode").ToString() != "0")
             {

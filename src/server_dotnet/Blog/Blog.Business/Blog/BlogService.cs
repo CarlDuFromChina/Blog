@@ -10,6 +10,7 @@ using Blog.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Core;
 
 namespace Blog.Business.Blog
 {
@@ -168,9 +169,38 @@ WHERE
         {
             Broker.ExecuteTransaction(() =>
             {
-                var data = GetData(id);
-                var media = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.surfaceid);
-                data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, media, data.createdByName, "", true, htmlContent, "", true, false);
+                blog data = GetData(id);
+                AssertUtil.CheckIsNullOrEmpty<SpException>(data.surfaceid, "请上传博客封面", "4365FB1F-2EE7-40CF-852C-F6CFA71E8DE2");
+                
+                // 如果封面素材未上传则创建封面素材
+                string mediaId = Broker.Retrieve<wechat_material>("SELECT * FROM wechat_material WHERE sys_fileid = @id", new Dictionary<string, object>() { { "@id", data.surfaceid } })?.media_id;
+                if (string.IsNullOrEmpty(mediaId))
+                {
+                    mediaId = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.surfaceid);
+                }
+
+                // 未创建图文素材则创建，已创建则更新
+                if (string.IsNullOrEmpty(data.wechat_newsid))
+                {
+                    data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, "", true, false);
+                }
+                else
+                {
+                    // 如果图文素材已经被删除，则创建
+                    var news = Broker.Retrieve<wechat_news>(data.wechat_newsid);
+                    if (news == null)
+                    {
+                        data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, "", true, false);
+                    }
+                    else
+                    {
+                        news.content = htmlContent;
+                        news.media_id = mediaId;
+                        new WeChatNewsService(Broker).UpdateData(news);
+                    }
+                }
+
+                // 图文素材id回写到博客
                 UpdateData(data);
             });
         }

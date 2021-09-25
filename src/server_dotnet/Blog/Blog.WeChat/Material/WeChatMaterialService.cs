@@ -88,6 +88,7 @@ namespace Blog.WeChat.Material
             var config = StoreConfig.Config;
             var stream = ServiceContainer.Resolve<IStoreStrategy>(config?.Type).GetStream(fileId);
             var media = WeChatApi.AddMaterial(type, stream, file.name, file.content_type);
+            stream.Dispose();
 
             // 创建素材记录
             var material = new wechat_material()
@@ -96,6 +97,7 @@ namespace Blog.WeChat.Material
                 media_id = media.media_id,
                 url = media.url,
                 sys_fileid = fileId,
+                local_url = $"/api/SysFile/Download?objectId={fileId}",
                 name = file.name,
                 type = type.ToMaterialTypeString()
             };
