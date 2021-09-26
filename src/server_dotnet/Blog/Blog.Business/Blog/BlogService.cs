@@ -195,7 +195,7 @@ WHERE
                     }
                     else
                     {
-                        news.content = JsonConvert.SerializeObject(htmlContent);
+                        news.html_content = htmlContent;
                         news.thumb_media_id = mediaId;
                         new WeChatNewsService(Broker).UpdateData(news);
                     }

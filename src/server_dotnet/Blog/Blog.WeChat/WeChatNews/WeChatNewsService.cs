@@ -55,7 +55,7 @@ namespace Blog.WeChat.WeChatNews
                     author = t.author,
                     digest = t.digest,
                     show_cover_pic = 1,
-                    content = t.content.ToObject<string>(),
+                    content = t.html_content,
                     content_source_url = ""
                 }
             };
@@ -111,10 +111,10 @@ namespace Blog.WeChat.WeChatNews
             var result = WeChatApi.AddNews(JsonConvert.SerializeObject(postData));
             var data = new wechat_news()
             {
-                wechat_newsId = Guid.NewGuid().ToString(),
+                wechat_newsId = result.media_id,
                 media_id = result.media_id,
                 author = author,
-                content = JsonConvert.SerializeObject(content),
+                html_content = content,
                 name = title,
                 digest = digest,
                 thumb_media_id = thumb_media_id

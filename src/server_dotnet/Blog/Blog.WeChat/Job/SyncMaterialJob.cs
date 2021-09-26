@@ -16,7 +16,7 @@ using Blog.WeChat.Material;
 using Quartz;
 using Sixpence.EntityFramework.Broker;
 
-namespace Blog.Jobs
+namespace Blog.WeChat.Job
 {
     public class SyncMaterialJob : JobBase
     {

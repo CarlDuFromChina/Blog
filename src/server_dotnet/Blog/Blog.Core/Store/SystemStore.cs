@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Sixpence.EntityFramework.Broker;
+using System.Web;
 
 namespace Blog.Core.Store
 {
@@ -40,7 +41,7 @@ namespace Blog.Core.Store
             if (fileInfo.Exists)
             {
                 var stream = await FileUtil.GetFileStreamAsync(fileInfo.FullName);
-                HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileInfo.Name);
+                HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileInfo.Name, System.Text.Encoding.UTF8));
                 return new FileStreamResult(stream, "application/octet-stream");
             }
             LogUtils.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");

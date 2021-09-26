@@ -38,6 +38,7 @@ namespace Blog.Core.Store.SysFile
 SELECT
 	sys_fileid,
 	NAME,
+	file_type,
 	content_type,
 	createdon,
 	createdbyname
@@ -55,6 +56,7 @@ FROM
 SELECT
 	sys_fileid,
 	NAME,
+	file_type,
 	createdon,
 	createdbyname,
 	concat('/api/SysFile/Download?objectId=', sys_fileid) AS downloadUrl

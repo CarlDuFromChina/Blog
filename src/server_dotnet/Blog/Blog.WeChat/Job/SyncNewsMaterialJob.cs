@@ -18,7 +18,7 @@ using Blog.Core.Auth.UserInfo;
 using Sixpence.EntityFramework.Broker;
 using Blog.Core.Auth;
 
-namespace Blog.Jobs
+namespace Blog.WeChat.Job
 {
     public class SyncNewsMaterialJob : JobBase
     {
@@ -45,7 +45,7 @@ namespace Blog.Jobs
                                     select new wechat_news()
                                     {
                                         wechat_newsId = item.media_id,
-                                        content = JsonConvert.SerializeObject(news?.content),
+                                        html_content = news?.content,
                                         media_id = item.media_id,
                                         update_time = item.update_time,
                                         name = news?.title,

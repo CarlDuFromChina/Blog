@@ -31,9 +31,8 @@ namespace Blog.WeChat.WeChatNews
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "内容", AttrType.JToken)]
-        public JToken content { get; set; }
-
+        [Attr("html_content", "内容", AttrType.Text)]
+        public string html_content { get; set; }
 
         /// <summary>
         /// 媒体id
