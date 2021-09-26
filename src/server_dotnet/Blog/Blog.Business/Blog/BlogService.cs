@@ -177,7 +177,7 @@ WHERE
                 string mediaId = Broker.Retrieve<wechat_material>("SELECT * FROM wechat_material WHERE sys_fileid = @id", new Dictionary<string, object>() { { "@id", data.surfaceid } })?.media_id;
                 if (string.IsNullOrEmpty(mediaId))
                 {
-                    mediaId = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.surfaceid);
+                    mediaId = new WeChatMaterialService(Broker).CreateData(MaterialType.image, data.big_surfaceid);
                 }
 
                 // 未创建图文素材则创建，已创建则更新
