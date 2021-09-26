@@ -39,9 +39,11 @@ namespace Blog.Core.Store
             var fileInfo = new FileInfo(Path.Combine(FolderType.Storage.GetPath(), data?.name ?? ""));
             if (fileInfo.Exists)
             {
-                var stream = await FileUtil.GetFileStreamAsync(fileInfo.FullName);
-                HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileInfo.Name);
-                return new FileStreamResult(stream, "application/octet-stream");
+                using (var stream = await FileUtil.GetFileStreamAsync(fileInfo.FullName))
+                {
+                    HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + fileInfo.Name);
+                    return new FileStreamResult(stream, "application/octet-stream");
+                }
             }
             LogUtils.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");
             throw new FileNotFoundException();
