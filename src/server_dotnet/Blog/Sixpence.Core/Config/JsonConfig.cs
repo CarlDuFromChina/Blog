@@ -10,8 +10,6 @@ namespace Sixpence.Core.Config
     {
         public IConfiguration Configuration { get; private set; }
 
-        public JsonConfig() : this("appsettings.json") { }
-
         public JsonConfig(string configName)
         {
             //构建Configuration

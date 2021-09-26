@@ -15,7 +15,7 @@ namespace Sixpence.Core.Config
         public static T Config { get; private set; }
         static BaseAppConfig()
         {
-            Config = new JsonConfig().GetConfig<T>(typeof(T).Name.Replace("Config", ""));
+            Config = new JsonConfig("appsettings.json").GetConfig<T>(typeof(T).Name.Replace("Config", ""));
         }
     }
 }
