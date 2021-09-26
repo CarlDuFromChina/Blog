@@ -127,10 +127,10 @@ namespace Blog.WeChat
         /// 修改永久图文素材
         /// </summary>
         /// <param name="model"></param>
-        public static void UpdateNews(WeChatNewsUpdateModel model)
+        public static void UpdateNews(string postData)
         {
             var url = string.Format(WeChatApiConfig.GetValue("UpdateNewsApi"), WeChatService.AccessToken);
-            var result = HttpUtil.Post(url, JsonConvert.SerializeObject(model));
+            var result = HttpUtil.Post(url, postData);
             var resultJson = JObject.Parse(result);
             if (resultJson.GetValue("errcode") != null && resultJson.GetValue("errcode").ToString() != "0")
             {

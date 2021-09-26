@@ -44,22 +44,22 @@ namespace Blog.WeChat.WeChatNews
         /// <param name="t"></param>
         public override void UpdateData(wechat_news t)
         {
-            var model = new WeChatNewsUpdateModel()
+            var model = new
             {
                 media_id = t.media_id,
                 index = 0,
-                articles = new Article()
+                articles = new
                 {
                     title = t.name,
                     thumb_media_id = t.thumb_media_id,
                     author = t.author,
                     digest = t.digest,
                     show_cover_pic = 1,
-                    content = t.content.ToString(),
+                    content = t.content.ToObject<string>(),
                     content_source_url = ""
                 }
             };
-            WeChatApi.UpdateNews(model);
+            WeChatApi.UpdateNews(JsonConvert.SerializeObject(model));
             base.UpdateData(t);
         }
 

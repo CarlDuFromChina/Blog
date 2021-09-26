@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.Core;
+using Newtonsoft.Json;
 
 namespace Blog.Business.Blog
 {
@@ -194,8 +195,8 @@ WHERE
                     }
                     else
                     {
-                        news.content = htmlContent;
-                        news.media_id = mediaId;
+                        news.content = JsonConvert.SerializeObject(htmlContent);
+                        news.thumb_media_id = mediaId;
                         new WeChatNewsService(Broker).UpdateData(news);
                     }
                 }
