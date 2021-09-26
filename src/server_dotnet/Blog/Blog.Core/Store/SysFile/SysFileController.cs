@@ -89,14 +89,12 @@ namespace Blog.Core.Store.SysFile
         [RequestSizeLimit(100 * 1024 * 1024)]
         public ImageInfo UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
-            using (var stream = file.OpenReadStream())
-            {
-                var contentType = file.ContentType;
-                var suffix = file.FileName.GetFileType();
-                var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
+            var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
+            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
 
-                return MapperHelper.Map<ImageInfo>(image);
-            }
+            return MapperHelper.Map<ImageInfo>(image);
         }
 
         /// <summary>

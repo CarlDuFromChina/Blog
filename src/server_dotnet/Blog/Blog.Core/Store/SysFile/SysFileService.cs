@@ -116,25 +116,21 @@ WHERE hash_code = @code
         /// <returns></returns>
         public IEnumerable<ImageInfo> UploadBigImage(IFormFile file, string fileType, string objectId = "")
         {
-            using (var stream = file.OpenReadStream())
-            {
-                var contentType = file.ContentType;
-                var suffix = file.FileName.GetFileType();
-                var image = UploadFile(stream, suffix, fileType, contentType, objectId);
+            var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
 
-                return Broker.ExecuteTransaction(() =>
+            return Broker.ExecuteTransaction(() =>
+            {
+                var image = UploadFile(stream, suffix, fileType, contentType, objectId);
+                var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
+                var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
+                return new List<ImageInfo>()
                 {
-                    using (var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? "")))
-                    {
-                        var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
-                        return new List<ImageInfo>()
-                    {
-                        MapperHelper.Map<ImageInfo>(image),
-                        MapperHelper.Map<ImageInfo>(image2)
-                    };
-                    }
-                });
-            }
+                    MapperHelper.Map<ImageInfo>(image),
+                    MapperHelper.Map<ImageInfo>(image2)
+                };
+            });
         }
     }
 }
