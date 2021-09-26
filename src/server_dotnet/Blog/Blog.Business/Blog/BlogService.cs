@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.Core;
 using Newtonsoft.Json;
+using Blog.Core.Config;
 
 namespace Blog.Business.Blog
 {
@@ -171,8 +172,9 @@ WHERE
             Broker.ExecuteTransaction(() =>
             {
                 blog data = GetData(id);
+                var contentUrl = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/#/blog/{id}";
                 AssertUtil.CheckIsNullOrEmpty<SpException>(data.surfaceid, "请上传博客封面", "4365FB1F-2EE7-40CF-852C-F6CFA71E8DE2");
-                
+
                 // 如果封面素材未上传则创建封面素材
                 string mediaId = Broker.Retrieve<wechat_material>("SELECT * FROM wechat_material WHERE sys_fileid = @id", new Dictionary<string, object>() { { "@id", data.surfaceid } })?.media_id;
                 if (string.IsNullOrEmpty(mediaId))
@@ -183,7 +185,7 @@ WHERE
                 // 未创建图文素材则创建，已创建则更新
                 if (string.IsNullOrEmpty(data.wechat_newsid))
                 {
-                    data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, "", true, false);
+                    data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, contentUrl, true, false);
                 }
                 else
                 {
@@ -191,12 +193,13 @@ WHERE
                     var news = Broker.Retrieve<wechat_news>(data.wechat_newsid);
                     if (news == null)
                     {
-                        data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, "", true, false);
+                        data.wechat_newsid = new WeChatNewsService(Broker).CreateData(data.title, mediaId, data.createdByName, "", true, htmlContent, contentUrl, true, false);
                     }
                     else
                     {
                         news.html_content = htmlContent;
                         news.thumb_media_id = mediaId;
+                        news.content_source_url = contentUrl;
                         new WeChatNewsService(Broker).UpdateData(news);
                     }
                 }

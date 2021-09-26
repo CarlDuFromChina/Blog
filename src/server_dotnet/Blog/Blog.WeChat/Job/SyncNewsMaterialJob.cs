@@ -52,6 +52,7 @@ namespace Blog.WeChat.Job
                                         author = news?.author,
                                         digest = news?.digest,
                                         thumb_media_id = news?.thumb_media_id,
+                                        content_source_url = news?.content_source_url,
                                         createdBy = user.Id,
                                         createdByName = user.Name,
                                         modifiedBy = user.Id,

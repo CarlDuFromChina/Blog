@@ -68,6 +68,13 @@ namespace Blog.WeChat.WeChatNews
         [DataMember]
         [Attr("digest", "摘要", AttrType.Varchar, 500)]
         public string digest { get; set; }
+
+        /// <summary>
+        /// 原文地址
+        /// </summary>
+        [DataMember]
+        [Attr("digest", "原文地址", AttrType.Text)]
+        public string content_source_url { get; set; }
     }
 }
 
