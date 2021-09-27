@@ -83,5 +83,23 @@ namespace Sixpence.Core
             }
             return "";
         }
+
+        /// <summary>
+        /// 替换匹配字符串
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="keyValuePairs"></param>
+        /// <returns></returns>
+        public static string Replace(this string value, Dictionary<string, string> keyValuePairs)
+        {
+            if (string.IsNullOrEmpty(value) || keyValuePairs.IsEmpty())
+            {
+                return value;
+            }
+
+            keyValuePairs.Each(item => value = value.Replace(item.Key, item.Value));
+
+            return value;
+        }
     }
 }

@@ -67,12 +67,12 @@ namespace Blog.WeChat.Material
         }
 
         /// <summary>
-        /// 上传素材
+        /// 上传素材（已上传则直接返回）
         /// </summary>
         /// <param name="type"></param>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public string CreateData(MaterialType type, string fileId)
+        public WeChatSuccessUploadResponse CreateData(MaterialType type, string fileId)
         {
             var file = new SysFileService().GetData(fileId);
             AssertUtil.CheckBoolean<SpException>(file == null, $"根据fileid：{fileId}未找到记录", "36B5F5C9-ED65-4CAC-BE60-712278056EA9");
@@ -81,7 +81,11 @@ namespace Blog.WeChat.Material
             var data = Broker.Retrieve<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.sys_fileId } });
             if (data != null)
             {
-                return data.media_id;
+                return new WeChatSuccessUploadResponse()
+                {
+                    media_id = data.media_id,
+                    url = data.url
+                };
             }
 
             // 获取文件流
@@ -102,7 +106,7 @@ namespace Blog.WeChat.Material
                 type = type.ToMaterialTypeString()
             };
             CreateData(material);
-            return media.media_id;
+            return media;
         }
     }
 }

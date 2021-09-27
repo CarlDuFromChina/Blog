@@ -43,7 +43,7 @@ namespace Blog.WeChat
     /// <summary>
     /// 微信图文素材
     /// </summary>
-    public class WeChatNewsMaterial : BaseWeChatMaterial<WeChatNewsMaterialItem> { }
+    public class WeChatNewsl : BaseWeChatMaterial<WeChatNewsMaterialItem> { }
 
     /// <summary>
     /// 微信其他素材

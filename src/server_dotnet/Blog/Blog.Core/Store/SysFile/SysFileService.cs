@@ -143,7 +143,7 @@ WHERE hash_code = @code
         public static string GetLocalUrl(string fileid)
         {
             var config = SystemConfig.Config;
-            return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId=${fileid}";
+            return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId={fileid}";
         }
     }
 }

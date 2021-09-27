@@ -17,6 +17,7 @@ using Blog.WeChat.WeChatNews;
 using Blog.Core.Auth.UserInfo;
 using Sixpence.EntityFramework.Broker;
 using Blog.Core.Auth;
+using Blog.WeChat.WeChatNewsMaterial;
 
 namespace Blog.WeChat.Job
 {
@@ -45,7 +46,7 @@ namespace Blog.WeChat.Job
                                     select new wechat_news()
                                     {
                                         wechat_newsId = item.media_id,
-                                        html_content = news?.content,
+                                        html_content = new WeChatNewsMaterialService(broker).ConvertWeChatUrlToLocalUrl(news?.content),
                                         media_id = item.media_id,
                                         update_time = item.update_time,
                                         name = news?.title,

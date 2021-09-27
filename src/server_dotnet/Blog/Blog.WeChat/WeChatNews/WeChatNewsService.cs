@@ -7,6 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Auth;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Core.Utils;
+using Blog.WeChat.Material;
+using Sixpence.Core;
+using Blog.WeChat.WeChatNewsMaterial;
 
 namespace Blog.WeChat.WeChatNews
 {
@@ -55,7 +59,7 @@ namespace Blog.WeChat.WeChatNews
                     author = t.author,
                     digest = t.digest,
                     show_cover_pic = 1,
-                    content = t.html_content,
+                    content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(t.html_content),
                     content_source_url = ""
                 }
             };
@@ -101,7 +105,7 @@ namespace Blog.WeChat.WeChatNews
                         author,
                         digest,
                         show_cover_pic = show_cover_pic ? 1 : 0,
-                        content,
+                        content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(content),
                         content_source_url,
                         need_open_comment = need_open_comment ? 1 : 0,
                         only_fans_can_comment = only_fans_can_comment ? 1: 0

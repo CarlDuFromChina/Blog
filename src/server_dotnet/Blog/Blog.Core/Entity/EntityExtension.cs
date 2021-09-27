@@ -101,10 +101,10 @@ namespace Sixpence.EntityFramework.Entity
                     #region 实体字段变更（删除字段）
                     attrsList.Each(attr =>
                     {
-                        if (!attrs.Any(item => item.Name == attr))
+                        if (!attrs.Any(item => item.Name.ToLower() == attr.ToLower()))
                         {
-                            var sql = @"DELETE FROM sys_attrs WHERE code = @code AND entityid = @entityid";
-                            broker.Execute(sql, new Dictionary<string, object>() { { "@code", attr }, { "@entityid", EntityCache.GetEntity(item.GetEntityName())?.Id } });
+                            var sql = @"DELETE FROM sys_attrs WHERE lower(code) = @code AND entityid = @entityid";
+                            broker.Execute(sql, new Dictionary<string, object>() { { "@code", attr.ToLower() }, { "@entityid", EntityCache.GetEntity(item.GetEntityName())?.Id } });
                             sql = broker.DbClient.Driver.GetDropColumnSql(item.GetEntityName(), new List<Column>() { new Column() { Name = attr } });
                             broker.Execute(sql);
                             logger.Debug($"实体{item.GetLogicalName()} （{item.GetEntityName()}）删除字段：{attr}");

@@ -13,5 +13,6 @@
   "BatchGetFocusUserApi": "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={0}",
   "CreateMenuApi": "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}",
   "GetMenuApi": "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token={0}",
-  "DeleteMenuApi": "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}"
+  "DeleteMenuApi": "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}",
+  "UploadImage": "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token={0}"
 }

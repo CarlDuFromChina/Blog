@@ -73,7 +73,7 @@ namespace Blog.WeChat.WeChatNews
         /// 原文地址
         /// </summary>
         [DataMember]
-        [Attr("digest", "原文地址", AttrType.Text)]
+        [Attr("content_source_url", "原文地址", AttrType.Text)]
         public string content_source_url { get; set; }
     }
 }
