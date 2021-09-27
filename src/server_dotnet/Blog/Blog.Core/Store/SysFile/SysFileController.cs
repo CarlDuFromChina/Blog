@@ -92,7 +92,7 @@ namespace Blog.Core.Store.SysFile
             var stream = file.OpenReadStream();
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
-            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId);
+            var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
 
             return MapperHelper.Map<ImageInfo>(image);
         }

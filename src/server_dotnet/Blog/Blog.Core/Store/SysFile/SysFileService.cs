@@ -78,11 +78,11 @@ WHERE hash_code = @code
             return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
         }
 
-        public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId)
+        public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId, string fileName = "")
         {
             // 获取文件哈希码，将哈希码作为文件名
             var hash_code = SHAUtil.GetFileSHA1(stream);
-            var newFileName = $"{hash_code}.{fileSuffix}";
+            var newFileName = string.IsNullOrEmpty(fileName) ? $"{Guid.NewGuid()}.{fileSuffix}" : fileName;
 
             // 保存图片到本地
             // TODO：执行失败回滚操作
@@ -124,7 +124,7 @@ WHERE hash_code = @code
 
             return Broker.ExecuteTransaction(() =>
             {
-                var image = UploadFile(stream, suffix, fileType, contentType, objectId);
+                var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
                 var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
                 var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
                 return new List<ImageInfo>()
@@ -133,6 +133,17 @@ WHERE hash_code = @code
                     MapperHelper.Map<ImageInfo>(image2)
                 };
             });
+        }
+
+        /// <summary>
+        /// 获取本地下载地址
+        /// </summary>
+        /// <param name="fileid"></param>
+        /// <returns></returns>
+        public static string GetLocalUrl(string fileid)
+        {
+            var config = SystemConfig.Config;
+            return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId=${fileid}";
         }
     }
 }
