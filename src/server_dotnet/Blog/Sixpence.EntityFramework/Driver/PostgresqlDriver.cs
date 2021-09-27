@@ -88,7 +88,7 @@ ALTER TABLE {tableName}
             var count = 0;
             foreach (var item in columns)
             {
-                var itemSql = $"DROP COLUMN {item.Name} {(++count == columns.Count ? ";" : ",")}";
+                var itemSql = $"DROP COLUMN IF EXISTS {item.Name} {(++count == columns.Count ? ";" : ",")}";
                 sql += itemSql;
             }
             return sql;

@@ -95,9 +95,24 @@ namespace Sixpence.EntityFramework.Entity
                     }
                     #endregion
 
-                    #region 字段变更自动写入记录（仅支持新增字段）
                     var attrs = item.GetAttrs();
                     var attrsList = new SysEntityService(broker).GetEntityAttrs(entity.Id).Select(e => e.code);
+
+                    #region 实体字段变更（删除字段）
+                    attrsList.Each(attr =>
+                    {
+                        if (!attrs.Any(item => item.Name == attr))
+                        {
+                            var sql = @"DELETE FROM sys_attrs WHERE code = @code AND entityid = @entityid";
+                            broker.Execute(sql, new Dictionary<string, object>() { { "@code", attr }, { "@entityid", EntityCache.GetEntity(item.GetEntityName())?.Id } });
+                            sql = broker.DbClient.Driver.GetDropColumnSql(item.GetEntityName(), new List<Column>() { new Column() { Name = attr } });
+                            broker.Execute(sql);
+                            logger.Debug($"实体{item.GetLogicalName()} （{item.GetEntityName()}）删除字段：{attr}");
+                        }
+                    });
+                    #endregion
+
+                    #region 实体字段变更（新增字段）
                     attrs.Each(attr =>
                     {
                         if (!attrsList.Contains(attr.Name))
@@ -118,10 +133,11 @@ namespace Sixpence.EntityFramework.Entity
                             var sql = broker.DbClient.Driver.GetAddColumnSql(_attr.entityCode, columns);
                             broker.Create(_attr);
                             broker.Execute(sql);
-                            logger.Info($"实体{item.GetLogicalName()}（{item.GetEntityName()}）创建字段：{attr.LogicalName}（{attr.Name}）成功");
+                            logger.Debug($"实体{item.GetLogicalName()}（{item.GetEntityName()}）创建字段：{attr.LogicalName}（{attr.Name}）成功");
                         }
                     });
                     #endregion
+
                 });
 
                 #endregion

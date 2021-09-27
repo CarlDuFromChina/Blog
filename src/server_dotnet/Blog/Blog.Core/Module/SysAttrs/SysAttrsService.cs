@@ -46,25 +46,25 @@ namespace Blog.Core.Module.SysAttrs
                 var entity = Broker.Retrieve<sys_entity>(id);
                 columns.ForEach(item =>
                 {
-                        var sql = @"
+                    var sql = @"
 SELECT * FROM sys_attrs
 WHERE entityid = @id AND code = @code;
 ";
-                        var count = Broker.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.Id }, { "@code", item.Name } }).Count();
-                        AssertUtil.CheckBoolean<SpException>(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加", "E86150F7-52CC-4FB7-A6C4-B743BF382E92");
-                        var attrModel = new sys_attrs()
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            code = item.Name,
-                            name = item.LogicalName,
-                            entityid = entity.Id,
-                            entityidname = entity.name,
-                            attr_type = item.Type.GetDescription(),
-                            attr_length = item.Length,
-                            isrequire = item.IsRequire == true
-                        };
-                        _context.Create(attrModel);
-                    });
+                    var count = Broker.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.Id }, { "@code", item.Name } }).Count();
+                    AssertUtil.CheckBoolean<SpException>(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加", "E86150F7-52CC-4FB7-A6C4-B743BF382E92");
+                    var attrModel = new sys_attrs()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        code = item.Name,
+                        name = item.LogicalName,
+                        entityid = entity.Id,
+                        entityidname = entity.name,
+                        attr_type = item.Type.GetDescription(),
+                        attr_length = item.Length,
+                        isrequire = item.IsRequire == true
+                    };
+                    _context.Create(attrModel);
+                });
                 Broker.Execute(Broker.DbClient.Driver.GetAddColumnSql(entity.code, columns));
             });
         }
@@ -101,8 +101,8 @@ WHERE entityid = @id AND code = @code;
                 var columns = new List<Column>();
                 dataList.ForEach(item =>
                 {
-                        columns.Add(new Column() { Name = item.code });
-                    });
+                    columns.Add(new Column() { Name = item.code });
+                });
 
                 base.DeleteData(ids);
 
