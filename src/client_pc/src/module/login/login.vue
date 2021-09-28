@@ -36,13 +36,13 @@
           <a-input v-model="signupData.code" placeholder="请输入邮箱" allowClear :disabled="signupLoading"></a-input>
         </a-form-model-item>
         <a-form-model-item prop="password">
-          <a-input-password
+          <a-input
             v-model="signupData.password"
             placeholder="请输入密码"
             type="password"
             :disabled="signupLoading"
             @keyup.enter.native="signup"
-          ></a-input-password>
+          ></a-input>
         </a-form-model-item>
       </a-form-model>
       <a-button type="primary" block @click="signup" :loading="signupLoading">
@@ -196,18 +196,13 @@ export default {
           this.signupData.publicKey = key;
           this.signupData.password = rsa.encrypt(md5.encrypt(this.signupData.password), key);
           const resp = await sp.post('api/System/Signup', this.signupData);
-          if (resp.result) {
-            saveAuth(this.$store, resp);
-            this.editVisible = false;
-            this.$message.success('注册成功');
-            this.$emit('closed');
-          } else {
+          if (resp.level === 'Warning') {
+            this.$message.warning(resp.message);
+            this.signupVisible = false;
             this.$set(this.signupData, 'password', null);
-            if (resp.level === 'Warning') {
-              this.$message.warning(resp.message);
-            } else {
-              this.$message.error(resp.message);
-            }
+          } else {
+            this.$message.error(resp.message);
+            this.$set(this.signupData, 'password', originPwd);
           }
         }
       } catch (error) {
