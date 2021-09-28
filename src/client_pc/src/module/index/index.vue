@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div id="index" class="index">
     <blog-menu @openUserEdit="() => (this.userInfoEditVisible = true)"></blog-menu>
     <div id="container" v-infinite-scroll="loadMore" :infinite-scroll-distance="10">
       <div class="container">

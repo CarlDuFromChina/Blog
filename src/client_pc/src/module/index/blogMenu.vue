@@ -32,21 +32,15 @@ export default {
       menus: [
         {
           name: '首页',
-          click: () => {
-            this.$router.push({ name: 'home' });
-          }
+          route: 'home'
         },
         {
           name: '友人帐',
-          click: () => {
-            this.$router.push({ name: 'friends' });
-          }
+          route: 'friends'
         },
         {
           name: '读书笔记',
-          click: () => {
-            this.$router.push({ name: 'readingNote' });
-          }
+          route: 'readingNote'
         }
       ],
       showAdmin: false,
@@ -77,7 +71,7 @@ export default {
     },
     // 菜单切换
     menuChange() {
-      document.getElementById('container').scrollIntoView();
+      document.getElementById('index').scrollIntoView();
     },
     // 跳转登录页
     login() {

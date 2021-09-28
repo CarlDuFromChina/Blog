@@ -48,7 +48,7 @@ li {
 
 .hover {
   &:hover {
-    background: #f0f0f5;
+    color: #1e80ff !important;
   }
 }
 </style>
