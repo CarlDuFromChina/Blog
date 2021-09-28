@@ -9,6 +9,7 @@ using Blog.Core.Auth.Role;
 using Blog.Core.Auth;
 using Sixpence.EntityFramework.SelectOption;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Core.Utils;
 
 namespace Blog.Core.Module.Role
 {
@@ -32,7 +33,14 @@ namespace Blog.Core.Module.Role
 select sys_roleid as Value, name as Name  from sys_role
 where is_basic = 1 
 ";
-            return Broker.Query<SelectOption>(sql);
+            var dataList = Broker.Query<SelectOption>(sql);
+            var currentRoleId = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId())?.roleid;
+            if (string.IsNullOrEmpty(currentRoleId))
+            {
+                return new List<SelectOption>();
+            }
+
+            return dataList.Where(item => UserIdentityUtil.IsOwner(currentRoleId, item.Value));
         }
 
         public sys_role GetGuest() => Broker.Retrieve<sys_role>("222222222-22222-2222-2222-222222222222");

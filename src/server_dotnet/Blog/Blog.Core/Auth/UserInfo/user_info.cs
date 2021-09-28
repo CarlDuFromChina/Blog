@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 namespace Blog.Core.Auth.UserInfo
 {
     [Entity("user_info", "用户", true)]
+    [KeyAttributes("昵称已被注册", "name")]
     [KeyAttributes("请勿重复创建用户", "code")]
     [KeyAttributes("邮箱已被注册", "mailbox")]
     [KeyAttributes("手机号码已被注册", "cellphone")]

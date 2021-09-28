@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <blog-menu></blog-menu>
+    <blog-menu @openUserEdit="() => (this.userInfoEditVisible = true)"></blog-menu>
     <div id="container" v-infinite-scroll="loadMore" :infinite-scroll-distance="10">
       <div class="container">
         <keep-alive>
@@ -38,6 +38,39 @@ export default {
       activeIndex: '1',
       userInfoEditVisible: false
     };
+  },
+  created() {
+    if (this.isLoggedIn) {
+      sp.get('api/UserInfo/InfoFilled').then(resp => {
+        if (resp) {
+          const key = `open${Date.now()}`;
+          this.$notification.open({
+            message: '系统提醒',
+            description: '请完善个人信息',
+            icon: <a-icon type="info-circle" style="color: #108ee9" />,
+            key,
+            btn: h => {
+              return h(
+                'a-button',
+                {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.$notification.close(key);
+                      this.userInfoEditVisible = true;
+                    }
+                  }
+                },
+                '立即前往'
+              );
+            }
+          });
+        }
+      });
+    }
   },
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);
