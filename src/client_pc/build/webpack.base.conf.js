@@ -28,7 +28,11 @@ module.exports = {
     moment: 'moment',
     marked: 'marked',
     echarts: 'echarts',
-    wangeditor: 'wangEditor'
+    wangeditor: 'wangEditor',
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    'vuex':'Vuex',
+    'ant-design-vue': 'antd'
   },
   output: {
     path: config.build.assetsRoot,
