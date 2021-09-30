@@ -77,7 +77,7 @@ export default {
         ).then(resp => {
           this.total = resp.RecordCount;
           resp.DataList.forEach(item => {
-            item.avatar = `${this.baseUrl}api/System/GetAvatar?id=${item.createdBy}`;
+            item.avatar = sp.getAvatar(item.createdBy);
             item.data = JSON.parse(item.content);
           });
           this.listData = this.listData.concat(resp.DataList);

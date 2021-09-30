@@ -77,7 +77,7 @@ export default {
     this.editor.config.uploadImgServer = `${sp.getServerUrl()}api/SysFile/UploadImage`; // 上传图片服务地址
     this.editor.config.uploadImgHooks = {
       customInsert: function(insertImgFn, result) {
-        insertImgFn(`${sp.getServerUrl()}${result.downloadUrl}`);
+        insertImgFn(sp.getDownloadUrl(result.downloadUrl));
       }
     };
     this.editor.customConfig = {

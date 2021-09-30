@@ -53,7 +53,7 @@ namespace Blog.WeChat.Material
                         };
                         var id = new SysFileService(context.Broker).CreateData(sysImage);
                         entity.sys_fileid = id;
-                        entity.local_url = $"/api/SysFile/Download?objectId={id}";
+                        entity.local_url = SysFileService.GetDownloadUrl(id);
                     }
                     break;
                 case EntityAction.PreDelete:

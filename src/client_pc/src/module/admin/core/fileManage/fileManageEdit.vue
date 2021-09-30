@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     imageUrl() {
-      return `${this.baseUrl}api/SysFile/Download?objectId=${this.data.Id}`;
+      return sp.getDownloadUrl(this.data.Id);
     }
   }
 };

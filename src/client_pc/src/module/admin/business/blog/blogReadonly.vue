@@ -37,7 +37,7 @@
               <a-skeleton :loading="loading">
                 <div class="block">
                   <div style="display: flex">
-                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
@@ -61,7 +61,7 @@
               <div class="block-body">
                 <a-skeleton :loading="loading">
                   <a style="display: flex">
-                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
@@ -179,7 +179,8 @@ export default {
       user: {},
       height: null,
       isUp: false,
-      baseUrl: sp.getServerUrl()
+      baseUrl: sp.getServerUrl(),
+      getAvatar: sp.getAvatar
     };
   },
   async created() {

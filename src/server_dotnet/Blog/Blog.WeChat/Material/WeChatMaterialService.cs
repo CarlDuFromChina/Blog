@@ -101,7 +101,7 @@ namespace Blog.WeChat.Material
                 media_id = media.media_id,
                 url = media.url,
                 sys_fileid = fileId,
-                local_url = $"/api/SysFile/Download?objectId={fileId}",
+                local_url = SysFileService.GetDownloadUrl(fileId),
                 name = file.name,
                 type = type.ToMaterialTypeString()
             };

@@ -32,7 +32,7 @@
               </div>
               <div class="meta-brief">{{ item.brief }}</div>
             </span>
-            <img :src="`${baseUrl}${item.surface_url}`" slot="avatar" style="width: 150px; height: 100px" />
+            <img :src="getSurface(item.surface_url)" slot="avatar" style="width: 150px; height: 100px" />
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -75,10 +75,11 @@ export default {
         this.fetchData();
       }, 500);
     });
-    this.user = await sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`);
-    this.avatar = `${this.baseUrl}api/SysFile/Download?objectId=${this.user.avatar}`;
   },
   methods: {
+    getSurface(url) {
+      return sp.getDownloadUrl(url);
+    },
     onSearch(value) {
       this.searchValue = value;
       this.listData = [];

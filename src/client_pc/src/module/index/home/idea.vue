@@ -17,7 +17,6 @@ export default {
   mixins: [pagination],
   data() {
     return {
-      baseUrl: sp.getServerUrl(),
       dataList: [],
       controllerName: 'idea',
       pageIndex: 1,
@@ -27,11 +26,6 @@ export default {
   },
   created() {
     this.loadData();
-  },
-  computed: {
-    avatar() {
-      return `${this.baseUrl}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
-    }
   },
   methods: {
     loadData() {

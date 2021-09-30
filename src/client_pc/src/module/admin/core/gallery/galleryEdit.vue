@@ -118,7 +118,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'big_image',
-            url: `${this.baseUrl}${image.downloadUrl}`
+            url: sp.getDownloadUrl(image.downloadUrl)
           }
         ];
 
@@ -129,7 +129,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'small_image',
-            url: `${this.baseUrl}${thumbnail.downloadUrl}`
+            url: sp.getDownloadUrl(thumbnail.downloadUrl)
           }
         ];
       });

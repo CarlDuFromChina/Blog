@@ -169,7 +169,7 @@ export default {
             uid: '-1',
             name: image.name,
             status: 'done',
-            url: `${this.baseUrl}api/SysFile/Download?objectId=${image.sys_fileId}`
+            url: sp.getDownloadUrl(image.sys_fileId)
           }
         ];
       }

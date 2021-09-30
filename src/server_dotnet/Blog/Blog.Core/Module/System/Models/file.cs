@@ -10,11 +10,4 @@ namespace Blog.Core.Module.DataService
         public string name { get; set; }
         public int? size { get; set; }
     }
-
-    public class ImageInfo
-    {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string downloadUrl { get; set; }
-    }
 }

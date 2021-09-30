@@ -49,34 +49,8 @@ namespace Blog.Core.Store.SysFile
 
             foreach (var file in files)
             {
-                var stream = file.OpenReadStream();
-
-                // 获取文件哈希码，将哈希码作为文件名
-                var hash_code = SHAUtil.GetFileSHA1(stream);
-                var fileName = $"{hash_code}.{file.FileName.GetFileType()}";
-                var config = StoreConfig.Config;
-                ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(file.OpenReadStream(), fileName, out var filePath);
-                var sysImage = new sys_file()
-                {
-                    sys_fileId = Guid.NewGuid().ToString(),
-                    name = fileName,
-                    hash_code = hash_code,
-                    file_path = filePath,
-                    file_type = fileType,
-                    content_type = file.ContentType
-                };
-                if (!string.IsNullOrEmpty(objectId))
-                {
-                    sysImage.objectId = objectId;
-                }
-                new SysFileService().CreateData(sysImage);
-                var fileModel = new FileInfoModel
-                {
-                    id = sysImage.Id,
-                    name = sysImage.name,
-                    downloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}"
-                };
-                fileList.Add(fileModel);
+                var sysFile = new SysFileService().UploadFile(file.OpenReadStream(), file.FileName.GetFileType(), fileType, file.ContentType, objectId, file.FileName);
+                fileList.Add(MapperHelper.Map<FileInfoModel>(sysFile));
             }
 
             return fileList;
@@ -87,14 +61,14 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        public ImageInfo UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        public FileInfoModel UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             var stream = file.OpenReadStream();
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
             var image = new SysFileService().UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
 
-            return MapperHelper.Map<ImageInfo>(image);
+            return MapperHelper.Map<FileInfoModel>(image);
         }
 
         /// <summary>
@@ -103,7 +77,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        public IEnumerable<ImageInfo> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
+        public IEnumerable<FileInfoModel> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             return new SysFileService().UploadBigImage(file, fileType, objectId);
         }

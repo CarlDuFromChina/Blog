@@ -52,14 +52,14 @@ FROM
                 {
                     Name = "图库",
                     ViewId = "3BCF6C07-2B49-4D69-9EB1-A3D5B721C976",
-                    Sql = @"
+                    Sql = $@"
 SELECT
 	sys_fileid,
 	NAME,
 	file_type,
 	createdon,
 	createdbyname,
-	concat('/api/SysFile/Download?objectId=', sys_fileid) AS downloadUrl
+	concat('{GetDownloadUrl("")}', sys_fileid) AS downloadUrl
 FROM
 	sys_file
 ",
@@ -88,25 +88,22 @@ WHERE hash_code = @code
             // TODO：执行失败回滚操作
             var config = StoreConfig.Config;
             ServiceContainer.Resolve<IStoreStrategy>(config.Type).Upload(stream, newFileName, out var filePath);
-            var sysImage = new sys_file()
+
+            var id = Guid.NewGuid().ToString();
+            var sysFile = new sys_file()
             {
-                sys_fileId = Guid.NewGuid().ToString(),
+                sys_fileId = id,
                 name = newFileName,
                 hash_code = hash_code,
                 file_path = filePath,
                 file_type = fileType,
+                objectId = objectId,
                 content_type = contentType,
+                DownloadUrl = GetDownloadUrl(id)
             };
-            sysImage.DownloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}";
+            CreateData(sysFile);
 
-            if (!string.IsNullOrEmpty(objectId))
-            {
-                sysImage.objectId = objectId;
-            }
-
-            CreateData(sysImage);
-
-            return sysImage;
+            return sysFile;
         }
 
         /// <summary>
@@ -116,7 +113,7 @@ WHERE hash_code = @code
         /// <param name="fileType"></param>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        public IEnumerable<ImageInfo> UploadBigImage(IFormFile file, string fileType, string objectId = "")
+        public IEnumerable<FileInfoModel> UploadBigImage(IFormFile file, string fileType, string objectId = "")
         {
             var stream = file.OpenReadStream();
             var contentType = file.ContentType;
@@ -127,10 +124,10 @@ WHERE hash_code = @code
                 var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
                 var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
                 var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
-                return new List<ImageInfo>()
+                return new List<FileInfoModel>()
                 {
-                    MapperHelper.Map<ImageInfo>(image),
-                    MapperHelper.Map<ImageInfo>(image2)
+                    MapperHelper.Map<FileInfoModel>(image),
+                    MapperHelper.Map<FileInfoModel>(image2)
                 };
             });
         }
@@ -140,8 +137,12 @@ WHERE hash_code = @code
         /// </summary>
         /// <param name="fileid"></param>
         /// <returns></returns>
-        public static string GetLocalUrl(string fileid)
+        public static string GetDownloadUrl(string fileid, bool isRelative = true)
         {
+            if (isRelative)
+            {
+                return $"/api/SysFile/Download?objectId={fileid}";
+            }
             var config = SystemConfig.Config;
             return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId={fileid}";
         }

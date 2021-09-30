@@ -44,7 +44,7 @@ namespace Blog.WeChat.WeChatNewsMaterial
                     fileid = fileid
                 };
                 data.media_url = WeChatApi.UploadImg(stream, file.name, file.content_type)?.url;
-                data.local_url = SysFileService.GetLocalUrl(fileid);
+                data.local_url = SysFileService.GetDownloadUrl(fileid, false);
                 CreateData(data);
             }
             return data.media_url;

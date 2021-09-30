@@ -75,8 +75,8 @@ namespace Blog.Core.Module.Gallery
                 };
                 data.previewid = DownloadImage(image.previewURL, data.Id);
                 data.imageid = DownloadImage(image.largeImageURL, data.Id);
-                data.preview_url = $"api/SysFile/Download?objectid={data.previewid}";
-                data.image_url = $"api/SysFile/Download?objectid={data.imageid}";
+                data.preview_url = SysFileService.GetDownloadUrl(data.previewid);
+                data.image_url = SysFileService.GetDownloadUrl(data.imageid);
                 base.CreateData(data);
                 return new List<string>() { data.previewid, data.imageid };
             });
