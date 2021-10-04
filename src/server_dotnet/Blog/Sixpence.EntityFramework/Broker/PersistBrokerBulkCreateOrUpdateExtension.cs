@@ -110,7 +110,7 @@ AND {tempTableName}.{mainKeyName} IS NOT NULL
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="broker"></param>
         /// <param name="dataList"></param>
-        public static void BulkCreateOrUpdate<TEntity>(this IPersistBroker broker, List<TEntity> dataList) where TEntity : BaseEntity, new()
+        public static void BulkCreateOrUpdate<TEntity>(this IPersistBroker broker, List<TEntity> dataList, List<string> updateFieldList = null) where TEntity : BaseEntity, new()
         {
             if (dataList.IsEmpty()) return;
 
@@ -128,13 +128,16 @@ AND {tempTableName}.{mainKeyName} IS NOT NULL
             client.BulkCopy(dataList.ToDataTable(dt.Columns), tempTableName);
 
             // 4. 获取更新字段
-            var updateFieldList = new List<string>();
-            foreach (DataColumn column in dt.Columns)
+            if (updateFieldList.IsEmpty())
             {
-                // 主键去除
-                if (!column.ColumnName.Equals(mainKeyName, StringComparison.InvariantCultureIgnoreCase))
+                updateFieldList = new List<string>();
+                foreach (DataColumn column in dt.Columns)
                 {
-                    updateFieldList.Add(column.ColumnName);
+                    // 主键去除
+                    if (!column.ColumnName.Equals(mainKeyName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        updateFieldList.Add(column.ColumnName);
+                    }
                 }
             }
 

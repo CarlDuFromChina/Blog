@@ -44,7 +44,7 @@ namespace Blog.Jobs
                             .ToList();
                         dataList.Each(item => item.author = "谢振国");
                         count = dataList.Count;
-                        broker.BulkCreateOrUpdate(dataList);
+                        broker.BulkCreateOrUpdate(dataList, new List<string>() { "content", "first_picture", "author", "description", "modifiedon", "modifiedbyname", "modifiedby" });
                     }
                 });
             }
