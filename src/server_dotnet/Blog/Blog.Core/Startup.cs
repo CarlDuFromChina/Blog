@@ -8,6 +8,7 @@ using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +37,9 @@ namespace Blog.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
+               .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>

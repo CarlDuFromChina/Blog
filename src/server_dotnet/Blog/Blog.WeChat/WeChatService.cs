@@ -95,12 +95,10 @@ namespace Blog.WeChat
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string ReplyMessage(Stream stream)
+        public static string ReplyMessage(string content)
         {
             XmlDocument xml = new XmlDocument();
-            var bytes = StreamUtil.StreamToBytes(stream);
-            var postString = Encoding.UTF8.GetString(bytes);
-            xml.LoadXml(postString);
+            xml.LoadXml(content);
 
             switch (xml.SelectSingleNode("xml").SelectSingleNode("MsgType").InnerText)
             {

@@ -55,7 +55,7 @@ namespace Blog.Core.Module.DataService
         [HttpGet, AllowAnonymous]
         public bool Test()
         {
-            var token = Core.HttpContext.Current.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
+            var token = HttpCurrentContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
             if (string.IsNullOrEmpty(token))
             {
                 return false;

@@ -17,7 +17,7 @@ namespace Blog.Core.Auth
         [HttpGet, Authorize(Policy = "Refresh")]
         public Token RefreshAccessToken()
         {
-            var tokenHeader = Core.HttpContext.Current.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
+            var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
             var user = JwtHelper.SerializeJwt(tokenHeader);
             return JwtHelper.CreateAccessToken(user);
         }

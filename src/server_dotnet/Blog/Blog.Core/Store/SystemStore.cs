@@ -1,6 +1,4 @@
-﻿using Blog.Core.Auth.Role;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+﻿using Sixpence.Core.Logging;
 using Blog.Core.Store.SysFile;
 using Sixpence.Core.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +39,7 @@ namespace Blog.Core.Store
             if (fileInfo.Exists)
             {
                 var stream = await FileUtil.GetFileStreamAsync(fileInfo.FullName);
-                HttpContext.Current.Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileInfo.Name, System.Text.Encoding.UTF8));
+                HttpCurrentContext.Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileInfo.Name, System.Text.Encoding.UTF8));
                 return new FileStreamResult(stream, "application/octet-stream");
             }
             LogUtils.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");
