@@ -7,7 +7,7 @@
           <a-layout-sider width="70%" theme="light">
             <a-card>
               <a-skeleton :loading="loading"> </a-skeleton>
-              <img :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+              <img :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
               <div class="bodyWrapper-title">{{ data.name }}</div>
               <div id="content" v-show="!loading"></div>
             </a-card>
@@ -60,7 +60,7 @@ export default {
       formatterContent: '',
       user: {},
       height: null,
-      baseUrl: sp.getServerUrl()
+      getDownloadUrl: sp.getDownloadUrl
     };
   },
   async mounted() {

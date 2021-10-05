@@ -86,9 +86,9 @@ export default {
           this.dataList = this.dataList.concat(
             resp.DataList.map(item => {
               return {
-                src: this.baseUrl + item.preview_url,
+                src: sp.getDownloadUrl(item.preview_url),
                 name: item.name,
-                infoUrl: this.baseUrl + item.image_url
+                infoUrl: sp.getDownloadUrl(item.image_url)
               };
             })
           );

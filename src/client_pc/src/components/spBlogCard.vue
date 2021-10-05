@@ -4,7 +4,7 @@
       <a-col :span="24" v-for="item in data" :key="item.Id">
         <sp-card class="card-item">
           <div class="card-item-wrapper">
-            <img alt="example" :src="imageName == 'surface_url' ? baseUrl + item[imageName] : item[imageName]" />
+            <img alt="example" :src="imageName == 'surface_url' ? getDownloadUrl(item[imageName]) : item[imageName]" />
             <div class="content">
               <h2 class="title">{{ item.name }}</h2>
               <div>
@@ -61,7 +61,7 @@ export default {
       isFirstLoad: true,
       busy: false,
       editVisible: false,
-      baseUrl: sp.getServerUrl(),
+      getDownloadUrl: sp.getDownloadUrl,
       data: [],
       loading: false
     };

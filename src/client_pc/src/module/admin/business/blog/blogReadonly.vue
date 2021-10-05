@@ -44,7 +44,7 @@
                     </div>
                   </div>
                 </div>
-                <img v-if="data.big_surface_url" :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+                <img v-if="data.big_surface_url" :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
@@ -179,7 +179,7 @@ export default {
       user: {},
       height: null,
       isUp: false,
-      baseUrl: sp.getServerUrl(),
+      getDownloadUrl: sp.getDownloadUrl,
       getAvatar: sp.getAvatar
     };
   },
