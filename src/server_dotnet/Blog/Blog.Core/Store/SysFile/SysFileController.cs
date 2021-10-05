@@ -63,6 +63,9 @@ namespace Blog.Core.Store.SysFile
         [RequestSizeLimit(100 * 1024 * 1024)]
         public FileInfoModel UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
+            if (file == null)
+                return null;
+            
             var stream = file.OpenReadStream();
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
@@ -79,6 +82,9 @@ namespace Blog.Core.Store.SysFile
         [RequestSizeLimit(100 * 1024 * 1024)]
         public IEnumerable<FileInfoModel> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
+            if (file == null)
+                return null;
+
             return new SysFileService().UploadBigImage(file, fileType, objectId);
         }
     }
