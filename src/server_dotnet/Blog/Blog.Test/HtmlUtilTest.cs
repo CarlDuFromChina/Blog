@@ -14,7 +14,7 @@ namespace Blog.Test
         {
             var html = @"<img src=""http://karldu.cn/api/SysFile/Download?objectId=09f1f7cb-5b69-44e4-9a30-2eac785520a0"" alt=""image.png"">";
             var list = HtmlUtil.GetHtmlImageUrlList(html);
-            Assert.IsTrue(list != null && list.Length > 0);
+            Assert.IsTrue(list != null && list.Count > 0);
             Assert.IsTrue(list[0] == "http://karldu.cn/api/SysFile/Download?objectId=09f1f7cb-5b69-44e4-9a30-2eac785520a0");
         }
     }
