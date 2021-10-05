@@ -19,8 +19,10 @@ namespace Blog.Core.WebApi
             // 1.异常日志记录
             LogUtils.Error(context.Exception.Message, context.Exception);
 
+            var exception = context.Exception.GetBaseException();
+
             // 统一处理报错信息
-            if (context.Exception is TimeoutException)
+            if (exception is TimeoutException)
             {
                 ContentResult result = new ContentResult
                 {
@@ -32,7 +34,7 @@ namespace Blog.Core.WebApi
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
             }
-            else if (context.Exception is FileNotFoundException)
+            else if (exception is FileNotFoundException)
             {
                 ContentResult result = new ContentResult
                 {
@@ -44,7 +46,7 @@ namespace Blog.Core.WebApi
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
-            else if (context.Exception is InvalidCredentialException)
+            else if (exception is InvalidCredentialException)
             {
                 ContentResult result = new ContentResult
                 {
@@ -56,7 +58,7 @@ namespace Blog.Core.WebApi
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             }
-            else if (context.Exception is SpException)
+            else if (exception is SpException)
             {
                 ContentResult result = new ContentResult
                 {
