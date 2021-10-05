@@ -305,7 +305,7 @@ export default {
       padding-top: 24px;
       padding-bottom: 40px;
       .bodyWrapper {
-        width: 80%;
+        width: 70%;
         min-height: 800px;
         margin: 0 auto;
         .ant-layout {

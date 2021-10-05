@@ -21,7 +21,7 @@
       </a-col>
     </a-row>
     <a-empty v-else style="padding-top:30%" />
-    <a-modal title="博客" v-model="editVisible" @ok="editVisible = false" width="80%">
+    <a-modal title="博客" v-model="editVisible" @ok="editVisible = false" width="70%">
       <div id="blogRead"></div>
     </a-modal>
   </div>

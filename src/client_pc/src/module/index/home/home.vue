@@ -14,13 +14,13 @@
       <recommand-list style="margin-bottom:20px;"></recommand-list>
       <!-- 推荐博客 -->
 
-      <!-- 项目链接 -->
-      <links style="margin-bottom:20px;"></links>
-      <!-- 项目链接 -->
-
       <!-- 想法 -->
       <idea :pageSize="5" style="margin-bottom:20px;"></idea>
       <!-- 想法 -->
+
+      <!-- 项目链接 -->
+      <links style="margin-bottom:20px;"></links>
+      <!-- 项目链接 -->
 
       <div class="more">
         <p>作者：Karl Du</p>

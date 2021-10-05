@@ -80,7 +80,7 @@ export default {
     .sp-menu-list {
       background: transparent;
       border-bottom: none !important;
-      max-width: 80%;
+      max-width: 70%;
       margin: 0 auto;
       border-right: none;
       list-style: none;

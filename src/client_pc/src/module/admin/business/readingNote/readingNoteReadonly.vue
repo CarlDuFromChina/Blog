@@ -1,6 +1,6 @@
 <template>
   <div class="blog blog__readonly">
-    <div class="blog-header"></div>
+    <blog-menu></blog-menu>
     <div class="blog-body" style="background-color:#e9ecef">
       <div class="bodyWrapper">
         <a-layout>
@@ -48,8 +48,11 @@
 </template>
 
 <script>
+import blogMenu from '../../../index/blogMenu.vue';
+
 export default {
   name: 'readingNoteReadonly',
+  components: { blogMenu },
   data() {
     return {
       Id: this.$route.params.id,
@@ -149,7 +152,7 @@ export default {
       padding-top: 24px;
       padding-bottom: 40px;
       .bodyWrapper {
-        width: 80%;
+        width: 70%;
         min-height: 800px;
         margin: 0 auto;
         .ant-layout {

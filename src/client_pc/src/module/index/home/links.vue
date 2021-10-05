@@ -1,13 +1,13 @@
 <template>
-  <sp-card title="链接" :empty="!items || items.length == 0">
+  <sp-card title="有趣的项目" :empty="!items || items.length == 0">
     <a class="item" v-for="(item, index) in items" :key="index" @click="openLink(item.link_url)">
-      <div class="item-start"><sp-icon :name="getIcon(item.link_type)" :size="15" style="padding-right:10px"></sp-icon>{{ item.name }}</div>
-      <div class="item-end tag" v-if="item.brief">
+      <div class="item-start">
+        <sp-icon :name="getIcon(item.link_type)" :size="15" style="padding-right:10px"></sp-icon>
         <a-tooltip>
           <template slot="title">
             {{ item.brief }}
           </template>
-          <span class="item-brief">{{ item.brief }}</span>
+          {{ item.name }}
         </a-tooltip>
       </div>
     </a>
@@ -38,42 +38,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.item {
-  display: flex;
-  padding: 10px;
-  cursor: pointer;
-  align-items: center;
-  white-space: nowrap;
-  justify-content: space-between;
-  &-start {
-    color: #000000;
-    width: 200px;
-  }
-  &-end {
-    color: #4a4a4a;
-  }
-  .tag {
-    align-items: center;
-    background-color: whitesmoke;
-    border-radius: 4px;
-    color: #4a4a4a;
-    display: inline-flex;
-    font-size: 0.75rem;
-    height: 2em;
-    justify-content: center;
-    line-height: 1.5;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    white-space: nowrap;
-  }
-  &-brief {
-    width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
-.item:hover {
-  background: hsla(0, 0%, 85.1%, 0.1);
-}
+@import url('./card');
 </style>

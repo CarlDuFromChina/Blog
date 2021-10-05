@@ -142,7 +142,7 @@ export default {
   height: 100%;
 }
 .container {
-  max-width: 80%;
+  max-width: 60%;
   margin: 10px auto 0;
   padding: 0 10px 0px 10px;
 }
