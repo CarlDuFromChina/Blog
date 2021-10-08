@@ -1,13 +1,13 @@
 <template>
   <div class="blog blog__readonly">
-    <div class="blog-header"></div>
+    <blog-menu></blog-menu>
     <div class="blog-body" style="background-color:#e9ecef">
       <div class="bodyWrapper">
         <a-layout>
           <a-layout-sider width="70%" theme="light">
             <a-card>
               <a-skeleton :loading="loading"> </a-skeleton>
-              <img :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+              <img :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
               <div class="bodyWrapper-title">{{ data.name }}</div>
               <div id="content" v-show="!loading"></div>
             </a-card>
@@ -48,8 +48,11 @@
 </template>
 
 <script>
+import blogMenu from '../../../index/blogMenu.vue';
+
 export default {
   name: 'readingNoteReadonly',
+  components: { blogMenu },
   data() {
     return {
       Id: this.$route.params.id,
@@ -60,7 +63,7 @@ export default {
       formatterContent: '',
       user: {},
       height: null,
-      baseUrl: sp.getServerUrl()
+      getDownloadUrl: sp.getDownloadUrl
     };
   },
   async mounted() {
@@ -149,7 +152,7 @@ export default {
       padding-top: 24px;
       padding-bottom: 40px;
       .bodyWrapper {
-        width: 80%;
+        width: 70%;
         min-height: 800px;
         margin: 0 auto;
         .ant-layout {

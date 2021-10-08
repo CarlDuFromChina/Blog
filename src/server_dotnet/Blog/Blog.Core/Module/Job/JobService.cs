@@ -1,8 +1,10 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Job;
 using Quartz;
+using Sixpence.Core;
 using System.Collections.Generic;
 using System.Linq;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.Job
 {
@@ -56,7 +58,7 @@ ORDER BY name
                 var job = item as JobBase;
                 if (job.Name == name)
                 {
-                    JobHelpers.RunOnceNow(job.Name, typeof(job).Namespace);
+                    JobHelpers.RunOnceNow(job.Name, job.GetType().Namespace);
                 }
             });
         }

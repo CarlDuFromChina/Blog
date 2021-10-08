@@ -92,7 +92,7 @@ export default {
       return sp.get(url).then(resp => {
         this.dataList = resp.DataList.map(item => ({
           id: item.Id,
-          previewURL: `${this.baseUrl}${item.preview_url}`,
+          previewURL: sp.getDownloadUrl(item.preview_url),
           preview_url: item.preview_url,
           previewid: item.previewid,
           image_url: item.image_url,

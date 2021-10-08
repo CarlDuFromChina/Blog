@@ -9,7 +9,7 @@
           <span class="desc">{{ '我想给世界留下有价值的东西' }}</span>
         </a-form-model-item>
         <a-form-model-item prop="code">
-          <a-input v-model="data.code" placeholder="邮箱或者手机号">
+          <a-input v-model="data.code" placeholder="邮箱或者手机号" allowClear>
             <a-icon slot="prefix" type="user" style="color: rgba(0, 0, 0, 0.25)" />
           </a-input>
         </a-form-model-item>
@@ -19,6 +19,7 @@
           </a-input-password>
         </a-form-model-item>
         <a-form-model-item>
+          <a @click="() => (signupVisible = true)" class="signup">注册</a>
           <a @click="forgetPwd" class="forget-pwd">忘记密码</a>
         </a-form-model-item>
         <a-form-model-item>
@@ -28,6 +29,25 @@
     </div>
     <a-modal v-model="visible" :destroyOnClose="true" title="验证" :footer="false">
       <div ref="mask" id="mask"></div>
+    </a-modal>
+    <a-modal v-model="signupVisible" title="注册" :footer="false" destroyOnClose :width="300">
+      <a-form-model ref="signupForm" :model="signupData" :rules="signupRules">
+        <a-form-model-item prop="code">
+          <a-input v-model="signupData.code" placeholder="请输入邮箱" allowClear :disabled="signupLoading"></a-input>
+        </a-form-model-item>
+        <a-form-model-item prop="password">
+          <a-input
+            v-model="signupData.password"
+            placeholder="请输入密码"
+            type="password"
+            :disabled="signupLoading"
+            @keyup.enter.native="signup"
+          ></a-input>
+        </a-form-model-item>
+      </a-form-model>
+      <a-button type="primary" block @click="signup" :loading="signupLoading">
+        注册
+      </a-button>
     </a-modal>
   </div>
 </template>
@@ -45,12 +65,22 @@ export default {
         code: '',
         password: ''
       },
+      signupData: {
+        code: '',
+        password: ''
+      },
       loading: false,
+      signupLoading: false,
       rules: {
         code: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
+      signupRules: {
+        code: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+      },
       visible: false,
+      signupVisible: false,
       isLoginFailed: false,
       isPassCheck: false
     };
@@ -117,7 +147,7 @@ export default {
         const valid = await this.validate();
         if (valid) {
           const key = await sp.get('api/System/GetPublicKey');
-          const url = 'api/AuthUser/login';
+          const url = 'api/System/Login';
           const { rsa, md5 } = encrypt;
           const data = {
             code: this.data.code,
@@ -151,6 +181,36 @@ export default {
     },
     forgetPwd() {
       this.$message.warn('请联系管理员重置密码');
+    },
+    async signup() {
+      if (this.signupLoading) {
+        return;
+      }
+      this.signupLoading = true;
+      const originPwd = this.signupData.password;
+      try {
+        const valid = await this.$refs.signupForm.validate();
+        if (valid) {
+          const key = await sp.get('api/System/GetPublicKey');
+          const { rsa, md5 } = encrypt;
+          this.signupData.publicKey = key;
+          this.signupData.password = rsa.encrypt(md5.encrypt(this.signupData.password), key);
+          const resp = await sp.post('api/System/Signup', this.signupData);
+          if (resp.level === 'Warning') {
+            this.$message.warning(resp.message);
+            this.signupVisible = false;
+            this.$set(this.signupData, 'password', null);
+          } else {
+            this.$message.error(resp.message);
+            this.$set(this.signupData, 'password', originPwd);
+          }
+        }
+      } catch (error) {
+        this.$set(this.signupData, 'password', originPwd);
+        this.$message.error('注册失败');
+      } finally {
+        this.signupLoading = false;
+      }
     }
   }
 };
@@ -186,6 +246,10 @@ export default {
     }
     .forget-pwd {
       float: right;
+      color: #52c41a;
+    }
+    .signup {
+      float: left;
       color: #52c41a;
     }
   }

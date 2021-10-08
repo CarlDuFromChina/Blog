@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysAttrs;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Policy;
 using System.Web;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Core.Module.SysEntity
 {
@@ -151,7 +153,7 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             }
 
             var content = $@"
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Runtime.Serialization;
 

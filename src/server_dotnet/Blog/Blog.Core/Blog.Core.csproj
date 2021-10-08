@@ -8,11 +8,11 @@
     <Compile Remove="Scripts\**" />
     <EmbeddedResource Remove="Scripts\**" />
     <None Remove="Scripts\**" />
+    <None Remove="version\2.3\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <None Remove="log4net.config" />
     <None Remove="version\2.0\2021070702-角色（sys_role）初始化数据.sql" />
     <None Remove="version\2.0\2021070703-用户信息（user_info）初始化.sql" />
     <None Remove="version\2.0\2021070703-用户角色（auth_user）初始化.sql" />
@@ -21,14 +21,12 @@
     <None Remove="version\2.0\2021070706-选项（sys_param）初始化.sql" />
     <None Remove="version\2.0\2021070901-新增日志保留天数配置.sql" />
     <None Remove="version\2.0\2021070902-新增启用草稿系统参数.sql" />
+    <None Remove="version\2.3\2021091301-删除消息提醒表.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070702-角色（sys_role）初始化数据.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -54,6 +52,9 @@
     <Content Include="version\2.0\2021070902-新增启用草稿系统参数.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="version\2.3\2021091301-删除消息提醒表.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -62,7 +63,6 @@
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Jdenticon.AspNetCore" Version="3.1.2" />
-    <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.16" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
@@ -71,7 +71,6 @@
     <PackageReference Include="Microsoft.IdentityModel.Logging" Version="6.11.1" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Npgsql" Version="5.0.7" />
     <PackageReference Include="Quartz" Version="3.3.2" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
@@ -83,6 +82,12 @@
 
   <ItemGroup>
     <Folder Include="Module\SysConfig\" />
+    <Folder Include="version\2.3\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sixpence.Core\Sixpence.Core.csproj" />
+    <ProjectReference Include="..\Sixpence.EntityFramework\Sixpence.EntityFramework.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

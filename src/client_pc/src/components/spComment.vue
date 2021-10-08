@@ -1,5 +1,5 @@
 <template>
-  <a-comment :avatar="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="padding: 10px">
+  <a-comment :avatar="getAvatar(data.createdBy)" style="padding: 10px">
     <a slot="author">
       <template v-if="data.name === '名称'">
         {{ data.createdByName }}
@@ -49,7 +49,7 @@ export default {
       controllerName: 'Comments',
       showReply: false,
       value: '',
-      baseUrl: sp.getServerUrl()
+      getAvatar: sp.getAvatar
     };
   },
   computed: {
@@ -82,6 +82,7 @@ export default {
         comment: this.value,
         objectid: this.data.objectId,
         object_name: this.data.object_name,
+        comment_type: 'reply',
         replyid: this.data.createdBy,
         replyidName: this.data.createdByName,
         parentid: this.data.parentid || this.data.Id

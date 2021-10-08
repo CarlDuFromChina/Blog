@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Sixpence.Core.Config;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Blog.Core.Config
 {
-    public class SwaggerConfig : ConfigBase<SwaggerConfig>
+    public class SwaggerConfig : BaseAppConfig<SwaggerConfig>
     {
         /// <summary>
         /// 开关

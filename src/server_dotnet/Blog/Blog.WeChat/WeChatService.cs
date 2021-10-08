@@ -7,9 +7,10 @@ using System;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.Core;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
+using Sixpence.Core;
 
 namespace Blog.WeChat
 {
@@ -94,12 +95,10 @@ namespace Blog.WeChat
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static string ReplyMessage(Stream stream)
+        public static string ReplyMessage(string content)
         {
             XmlDocument xml = new XmlDocument();
-            var bytes = StreamUtil.StreamToBytes(stream);
-            var postString = Encoding.UTF8.GetString(bytes);
-            xml.LoadXml(postString);
+            xml.LoadXml(content);
 
             switch (xml.SelectSingleNode("xml").SelectSingleNode("MsgType").InnerText)
             {

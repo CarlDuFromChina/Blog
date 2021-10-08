@@ -1,5 +1,9 @@
 <template>
-  <vue-waterfall-easy style="position: absolute" :imgsArr="data" @scrollReachBottom="loadData"></vue-waterfall-easy>
+  <vue-waterfall-easy ref="waterfall" style="height: 100%" :imgsArr="data" @scrollReachBottom="loadData">
+    <div slot="waterfall-head">
+      <sp-header></sp-header>
+    </div>
+  </vue-waterfall-easy>
 </template>
 
 <script>
@@ -70,8 +74,8 @@ export default {
           this.data = this.data.concat(
             resp.DataList.map(item => {
               return {
-                src: this.baseUrl + item.local_url,
-                href: 'https://www.baidu.com/',
+                src: this.baseUrl.trimEnd('/') + item.local_url,
+                href: this.baseUrl.trimEnd('/') + item.local_url,
                 info: item.name
               };
             })
@@ -82,6 +86,9 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+          if (this.total === this.data.length) {
+            this.$refs.waterfall.waterfallOver();
+          }
         });
     },
     async getSysParam() {
@@ -90,3 +97,14 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+/deep/ .vue-waterfall-easy-scroll {
+  max-width: 100% !important;
+}
+
+/deep/ .vue-waterfall-easy {
+  max-width: 100% !important;
+  width: calc(100% - 60px) !important;
+}
+</style>

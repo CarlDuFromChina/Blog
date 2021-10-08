@@ -50,6 +50,7 @@
                 ref="file"
                 list-type="picture-card"
                 :file-list="fileList"
+                @preview="handlePreview"
                 @change="handleAvatarChange"
                 :remove="remove"
                 :before-upload="beforeUpload"
@@ -107,12 +108,24 @@
       </a-tab-pane>
     </a-tabs>
     <edit-password ref="pwd"></edit-password>
+    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="previewImage" />
+    </a-modal>
   </a-form-model>
 </template>
 
 <script>
 import { edit } from '@/mixins';
 import editPassword from '../editPasssword/editPassword.vue';
+
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 
 export default {
   name: 'userInfo-edit',
@@ -133,7 +146,9 @@ export default {
         mailbox: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
         cellphone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
         roleid: [{ required: true, message: '请选择角色', trigger: 'blur' }]
-      }
+      },
+      previewImage: '',
+      previewVisible: false
     };
   },
   async created() {
@@ -169,7 +184,7 @@ export default {
             uid: '-1',
             name: image.name,
             status: 'done',
-            url: `${this.baseUrl}api/SysFile/Download?objectId=${image.sys_fileId}`
+            url: sp.getDownloadUrl(image.sys_fileId, false)
           }
         ];
       }
@@ -183,21 +198,38 @@ export default {
         return Promise.resolve(true);
       }
       // 保存后上传头像
-      let url = '/api/System/UploadImage?fileType=avatar';
+      let url = '/api/SysFile/UploadImage?fileType=avatar';
       // 关联实体id
       if (!sp.isNullOrEmpty(this.Id)) {
         url += `&objectId=${this.Id}`;
       }
       const formData = new FormData();
       formData.append('file', this.fileList[0]);
-      return sp.post(url, formData, this.headers).then(resp => (this.data.avatar = resp.id));
+      return sp.post(url, formData, this.headers).then(resp => {
+        this.data.avatar = resp.id;
+        return true;
+      });
+    },
+    postSave() {
+      location.reload();
     },
     remove() {
       this.data.avatar = null;
       this.fileList = [];
+      this.avatarChange = false;
     },
     editPassword() {
       this.$refs.pwd.editVisible = true;
+    },
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      this.previewImage = file.url || file.preview;
+      this.previewVisible = true;
     }
   }
 };

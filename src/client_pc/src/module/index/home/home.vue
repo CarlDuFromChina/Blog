@@ -6,9 +6,9 @@
     </a-layout-sider>
     <!-- 博客 -->
     <a-layout-sider width="30%" style="overflow:hidden" theme="light">
-      <!-- 推荐 -->
-      <links style="margin-bottom:20px;"></links>
-      <!-- 推荐 -->
+      <!-- 精品文章 -->
+      <series-list style="margin-bottom:20px;"></series-list>
+      <!-- 精品文章 -->
 
       <!-- 推荐博客 -->
       <recommand-list style="margin-bottom:20px;"></recommand-list>
@@ -17,6 +17,10 @@
       <!-- 想法 -->
       <idea :pageSize="5" style="margin-bottom:20px;"></idea>
       <!-- 想法 -->
+
+      <!-- 项目链接 -->
+      <links style="margin-bottom:20px;"></links>
+      <!-- 项目链接 -->
 
       <div class="more">
         <p>作者：Karl Du</p>
@@ -34,10 +38,11 @@ import recommandList from './recommandList';
 import links from './links';
 import idea from './idea';
 import blogList from './blogList';
+import seriesList from './seriesList.vue';
 
 export default {
   name: 'home',
-  components: { recommandList, links, idea, blogList },
+  components: { recommandList, links, idea, blogList, seriesList },
   data() {
     return {
       loading: 'false',

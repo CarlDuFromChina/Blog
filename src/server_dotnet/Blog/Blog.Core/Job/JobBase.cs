@@ -1,12 +1,14 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
-using Blog.Core.Logging;
+using Sixpence.EntityFramework.Entity;
+using Sixpence.Core.Logging;
 using log4net;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.Core.Current;
 
 namespace Blog.Core.Job
 {
@@ -66,18 +68,18 @@ namespace Blog.Core.Job
                 {
                     broker.ExecuteTransaction(() =>
                     {
-                        Executing(context);
-                        // 更新下次执行时间
-                        var nextTime = JobHelpers.GetJobNextTime(Name);
-                        var nextTimeSql = "";
-                        var paramList = new Dictionary<string, object>() {
+                          Executing(context);
+                    // 更新下次执行时间
+                    var nextTime = JobHelpers.GetJobNextTime(Name);
+                          var nextTimeSql = "";
+                          var paramList = new Dictionary<string, object>() {
                             { "@time", DateTime.Now },
                             { "@name", Name }
                         };
-                        paramList.Add("@nextTime", nextTime.UtcDateTime);
-                        nextTimeSql = ", nextruntime = @nextTime";
-                        broker.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
-                    });
+                          paramList.Add("@nextTime", nextTime.UtcDateTime);
+                          nextTimeSql = ", nextruntime = @nextTime";
+                          broker.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
+                      });
                 }
                 catch (Exception e)
                 {

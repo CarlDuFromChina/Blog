@@ -7,7 +7,8 @@ Description：
 ********************************************************/
 #endregion
 
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

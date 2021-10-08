@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,8 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Sixpence.EntityFramework.Models;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public class BlogController : EntityBaseController<blog, BlogService>
     {
@@ -67,17 +68,17 @@ namespace Blog.Blog
         /// 点赞
         /// </summary>
         /// <param name="blogId"></param>
-        [HttpGet, AllowAnonymous]
-        public void Upvote(string blogId)
+        [HttpGet]
+        public bool Upvote(string id)
         {
-            new BlogService().Upvote(blogId);
+            return new BlogService().Upvote(id);
         }
 
         [HttpPost]
-        public void SyncToWeChat([FromQuery]string id, [FromBody]string htmlContent)
+        public void SyncToWeChat([FromBody]SyncToWeChatModel model)
         {
-            var content = HttpUtility.UrlDecode(htmlContent, Encoding.UTF8);
-            new BlogService().SyncToWeChat(id, content);
+            var content = HttpUtility.UrlDecode(model.content, Encoding.UTF8);
+            new BlogService().SyncToWeChat(model.id, content);
         }
 
         /// <summary>

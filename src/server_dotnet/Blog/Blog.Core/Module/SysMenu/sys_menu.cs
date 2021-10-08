@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,131 +30,48 @@ namespace Blog.Core.Module.SysMenu
         /// <summary>
         /// 上级菜单
         /// </summary>
-        private string _parentid;
         [DataMember]
         [Attr("parentid", "上级菜单id", AttrType.Varchar, 100)]
-        public string parentid
-        {
-            get
-            {
-                return this._parentid;
-            }
-            set
-            {
-                this._parentid = value;
-                SetAttributeValue("parentid", value);
-            }
-        }
+        public string parentid { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
-        private string _parentidname;
         [DataMember]
         [Attr("parentidname", "上级菜单名", AttrType.Varchar, 100)]
-        public string parentIdName
-        {
-            get
-            {
-                return this._parentidname;
-            }
-            set
-            {
-                this._parentidname = value;
-                SetAttributeValue("parentidname", value);
-            }
-        }
+        public string parentIdName { get; set; }
 
         /// <summary>
         /// 路由地址
         /// </summary>
-        private string _router;
         [DataMember]
         [Attr("router", "路由地址", AttrType.Varchar, 200)]
-        public string router
-        {
-            get
-            {
-                return this._router;
-            }
-            set
-            {
-                this._router = value;
-                SetAttributeValue("Router", value);
-            }
-        }
+        public string router { get; set; }
 
         /// <summary>
         /// 菜单索引
         /// </summary>
-        private int? _menu_index;
         [DataMember]
         [Attr("menu_index", "菜单索引", AttrType.Int4)]
-        public int? menu_Index
-        {
-            get
-            {
-                return this._menu_index;
-            }
-            set
-            {
-                this._menu_index = value;
-                SetAttributeValue("Menu_Index", value);
-            }
-        }
+        public int? menu_Index { get; set; }
 
         /// <summary>
         /// 状态
         /// </summary>
-        private int? _statecode;
         [DataMember]
         [Attr("statecode", "状态", AttrType.Int4)]
-        public int? stateCode
-        {
-            get
-            {
-                return this._statecode;
-            }
-            set
-            {
-                this._statecode = value;
-                SetAttributeValue("stateCode", value);
-            }
-        }
+        public int? stateCode { get; set; }
 
-        private string _statecodename;
+
         [DataMember]
         [Attr("statecodename", "状态", AttrType.Varchar, 100)]
-        public string stateCodeName
-        {
-            get
-            {
-                return this._statecodename;
-            }
-            set
-            {
-                this._statecodename = value;
-                SetAttributeValue("stateCodeName", value);
-            }
-        }
+        public string stateCodeName { get; set; }
 
         /// <summary>
         /// 图标
         /// </summary>
-        private string _icon;
         [DataMember]
         [Attr("icon", "图标", AttrType.Varchar, 100)]
-        public string icon
-        {
-            get
-            {
-                return this._icon;
-            }
-            set
-            {
-                this._icon = value;
-                SetAttributeValue("icon", value);
-            }
-        }
+        public string icon { get; set; }
     }
 }

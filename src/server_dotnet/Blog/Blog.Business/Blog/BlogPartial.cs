@@ -5,12 +5,18 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Blog
+namespace Blog.Business.Blog
 {
     public partial class blog
     {
         [DataMember]
         public int message { get; set; }
+
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        [DataMember]
+        public int upvote_times { get; set; }
     }
 
     public class BlogActivityModel

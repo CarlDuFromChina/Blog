@@ -27,7 +27,12 @@ module.exports = {
   externals: {
     moment: 'moment',
     marked: 'marked',
-    echarts: 'echarts'
+    echarts: 'echarts',
+    wangeditor: 'wangEditor',
+    vue: 'Vue',
+    'vue-router': 'VueRouter',
+    'vuex':'Vuex',
+    'ant-design-vue': 'antd'
   },
   output: {
     path: config.build.assetsRoot,
@@ -39,7 +44,7 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      'appconfig': resolve('appconfig.json')
+      appconfig: resolve('appconfig.json')
     }
   },
   module: {

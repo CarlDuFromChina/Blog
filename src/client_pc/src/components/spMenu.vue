@@ -4,7 +4,7 @@
       <a-row>
         <a-col>
           <ul class="sp-menu-list">
-            <sp-menu-item v-for="(item, index) in menus" :key="index" @click="menuChange(item)">
+            <sp-menu-item v-for="(item, index) in menus" :key="index" @click="menuChange(item, index)" :style="{ color: getColor(index) }">
               {{ item.name }}
             </sp-menu-item>
             <slot name="menus"></slot>
@@ -26,9 +26,17 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      currentIndex: 0
+    };
   },
   mounted() {
+    this.menus.forEach((item, index) => {
+      if (item.route === this.$route.name) {
+        this.currentIndex = index;
+      }
+    });
+    console.log(this.$route.name);
     this.$bus.$on('scroll', val => {
       const ref = this.$refs.header;
       if (val !== 0) {
@@ -45,9 +53,16 @@ export default {
     this.$bus.$off('scroll');
   },
   methods: {
-    menuChange(item) {
+    getColor(index) {
+      if (this.currentIndex === index) {
+        return '#1e80ff';
+      }
+      return '#222226';
+    },
+    menuChange(item, index) {
+      this.currentIndex = index;
       this.$emit('menu-change');
-      item.click();
+      this.$router.push({ name: item.route });
     }
   }
 };
@@ -65,7 +80,7 @@ export default {
     .sp-menu-list {
       background: transparent;
       border-bottom: none !important;
-      max-width: 80%;
+      max-width: 70%;
       margin: 0 auto;
       border-right: none;
       list-style: none;

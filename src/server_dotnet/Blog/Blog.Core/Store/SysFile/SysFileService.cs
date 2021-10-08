@@ -1,9 +1,14 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.EntityFramework.Entity;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Sixpence.EntityFramework.Broker;
+using Microsoft.AspNetCore.Http;
+using Blog.Core.Module.DataService;
+using Blog.Core.Profiles;
 
 namespace Blog.Core.Store.SysFile
 {
@@ -33,6 +38,7 @@ namespace Blog.Core.Store.SysFile
 SELECT
 	sys_fileid,
 	NAME,
+	file_type,
 	content_type,
 	createdon,
 	createdbyname
@@ -46,13 +52,14 @@ FROM
                 {
                     Name = "图库",
                     ViewId = "3BCF6C07-2B49-4D69-9EB1-A3D5B721C976",
-                    Sql = @"
+                    Sql = $@"
 SELECT
 	sys_fileid,
 	NAME,
+	file_type,
 	createdon,
 	createdbyname,
-	concat('/api/SysFile/Download?objectId=', sys_fileid) AS downloadUrl
+	concat('{GetDownloadUrl("")}', sys_fileid) AS downloadUrl
 FROM
 	sys_file
 ",
@@ -71,35 +78,73 @@ WHERE hash_code = @code
             return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
         }
 
-        public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId)
+        public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId, string fileName = "")
         {
             // 获取文件哈希码，将哈希码作为文件名
             var hash_code = SHAUtil.GetFileSHA1(stream);
-            var newFileName = $"{hash_code}.{fileSuffix}";
+            var newFileName = string.IsNullOrEmpty(fileName) ? $"{Guid.NewGuid()}.{fileSuffix}" : fileName;
 
             // 保存图片到本地
             // TODO：执行失败回滚操作
             var config = StoreConfig.Config;
             ServiceContainer.Resolve<IStoreStrategy>(config.Type).Upload(stream, newFileName, out var filePath);
-            var sysImage = new sys_file()
+
+            var id = Guid.NewGuid().ToString();
+            var sysFile = new sys_file()
             {
-                sys_fileId = Guid.NewGuid().ToString(),
+                sys_fileId = id,
                 name = newFileName,
                 hash_code = hash_code,
                 file_path = filePath,
                 file_type = fileType,
-                content_type = contentType,  
+                objectId = objectId,
+                content_type = contentType,
+                DownloadUrl = GetDownloadUrl(id)
             };
-            sysImage.DownloadUrl = $"api/SysFile/Download?objectId={sysImage.sys_fileId}";
+            CreateData(sysFile);
 
-            if (!string.IsNullOrEmpty(objectId))
+            return sysFile;
+        }
+
+        /// <summary>
+        /// 上传大图并自动生成缩略图
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="fileType"></param>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        public IEnumerable<FileInfoModel> UploadBigImage(IFormFile file, string fileType, string objectId = "")
+        {
+            var stream = file.OpenReadStream();
+            var contentType = file.ContentType;
+            var suffix = file.FileName.GetFileType();
+
+            return Broker.ExecuteTransaction(() =>
             {
-                sysImage.objectId = objectId;
+                var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
+                var thumbStream = ImageUtil.GetThumbnail(Path.Combine(FolderType.Storage.GetPath(), image?.name ?? ""));
+                var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
+                return new List<FileInfoModel>()
+                {
+                    MapperHelper.Map<FileInfoModel>(image),
+                    MapperHelper.Map<FileInfoModel>(image2)
+                };
+            });
+        }
+
+        /// <summary>
+        /// 获取本地下载地址
+        /// </summary>
+        /// <param name="fileid"></param>
+        /// <returns></returns>
+        public static string GetDownloadUrl(string fileid, bool isRelative = true)
+        {
+            if (isRelative)
+            {
+                return $"/api/SysFile/Download?objectId={fileid}";
             }
-
-            CreateData(sysImage);
-
-            return sysImage;
+            var config = SystemConfig.Config;
+            return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId={fileid}";
         }
     }
 }

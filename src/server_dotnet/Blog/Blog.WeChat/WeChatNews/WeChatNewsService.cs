@@ -1,11 +1,16 @@
 ﻿using Newtonsoft.Json;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Auth;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.Core.Utils;
+using Blog.WeChat.Material;
+using Sixpence.Core;
+using Blog.WeChat.WeChatNewsMaterial;
 
 namespace Blog.WeChat.WeChatNews
 {
@@ -43,22 +48,22 @@ namespace Blog.WeChat.WeChatNews
         /// <param name="t"></param>
         public override void UpdateData(wechat_news t)
         {
-            var model = new WeChatNewsUpdateModel()
+            var model = new
             {
                 media_id = t.media_id,
                 index = 0,
-                articles = new Article()
+                articles = new
                 {
                     title = t.name,
                     thumb_media_id = t.thumb_media_id,
                     author = t.author,
                     digest = t.digest,
                     show_cover_pic = 1,
-                    content = t.content.ToString(),
+                    content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(t.html_content),
                     content_source_url = ""
                 }
             };
-            WeChatApi.UpdateNews(model);
+            WeChatApi.UpdateNews(JsonConvert.SerializeObject(model));
             base.UpdateData(t);
         }
 
@@ -87,7 +92,7 @@ namespace Blog.WeChat.WeChatNews
         /// <param name="content_source_url">图文消息的原文地址，即点击“阅读原文”后的URL</param>
         /// <param name="need_open_comment">Uint32 是否打开评论，0不打开，1打开</param>
         /// <param name="only_fans_can_comment">Uint32 是否粉丝才可评论，0所有人可评论，1粉丝才可评论</param>
-        public void CreateData(string title, string thumb_media_id, string author, string digest, bool show_cover_pic, string content, string content_source_url, bool need_open_comment, bool only_fans_can_comment)
+        public string CreateData(string title, string thumb_media_id, string author, string digest, bool show_cover_pic, string content, string content_source_url, bool need_open_comment, bool only_fans_can_comment)
         {
             var postData = new
             {
@@ -100,7 +105,7 @@ namespace Blog.WeChat.WeChatNews
                         author,
                         digest,
                         show_cover_pic = show_cover_pic ? 1 : 0,
-                        content,
+                        content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(content),
                         content_source_url,
                         need_open_comment = need_open_comment ? 1 : 0,
                         only_fans_can_comment = only_fans_can_comment ? 1: 0
@@ -108,24 +113,17 @@ namespace Blog.WeChat.WeChatNews
                 }
             };
             var result = WeChatApi.AddNews(JsonConvert.SerializeObject(postData));
-            var user = UserIdentityUtil.GetCurrentUser();
             var data = new wechat_news()
             {
-                wechat_newsId = Guid.NewGuid().ToString(),
+                wechat_newsId = result.media_id,
                 media_id = result.media_id,
                 author = author,
-                content = content,
+                html_content = content,
                 name = title,
                 digest = digest,
-                thumb_media_id = thumb_media_id,
-                createdBy = user.Id,
-                createdByName = user.Name,
-                modifiedBy = user.Id,
-                modifiedByName = user.Name,
-                createdOn = DateTime.Now,
-                modifiedOn = DateTime.Now
+                thumb_media_id = thumb_media_id
             };
-            CreateData(data);
+            return CreateData(data);
         }
     }
 }

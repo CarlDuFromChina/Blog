@@ -71,6 +71,9 @@ export default {
     sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
       this.$store.commit('updateUser', resp);
     });
+    sp.get('api/MessageRemind/GetUnReadMessageCount').then(resp => {
+      this.messageCount = resp.total;
+    });
   },
   methods: {
     goHome() {

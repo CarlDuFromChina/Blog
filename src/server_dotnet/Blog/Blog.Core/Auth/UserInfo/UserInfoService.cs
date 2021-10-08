@@ -1,6 +1,8 @@
-﻿using Blog.Core.Data;
-using Blog.Core.Utils;
+﻿using Sixpence.EntityFramework.Entity;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System.Collections.Generic;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Auth.UserInfo
 {
@@ -73,6 +75,10 @@ WHERE code = @code";
         {
             var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
             AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
+            if (user.Id == UserIdentityUtil.ADMIN_ID)
+            {
+                return false;
+            }
             return !user.gender.HasValue || AssertUtil.CheckEmpty(user.mailbox, user.cellphone, user.realname);
         }
     }

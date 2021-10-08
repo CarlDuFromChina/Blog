@@ -1,6 +1,8 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.EntityFramework.Entity;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
+using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -36,111 +38,9 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
             var authUser = Broker.Retrieve<auth_user>(sql, paramList);
             return authUser;
         }
-
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="pwd"></param>
-        /// <returns></returns>
-        public LoginResponse Login(string code, string pwd, string publicKey)
-        {
-            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
-
-            var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
-
-            if (authUser == null)
-            {
-                return new LoginResponse() { result = false, message = "用户名或密码错误" };
-            }
-
-            if (authUser.is_lock)
-            {
-                return new LoginResponse() { result = false, message = "用户已被锁定，请联系管理员" };
-            }
-
-            if (string.IsNullOrEmpty(pwd) ||
-                string.IsNullOrEmpty(publicKey) ||
-                !string.Equals(authUser.password, RSAUtil.Decrypt(pwd, publicKey))
-                )
-            {
-                var message = "用户名或密码错误";
-                if (!authUser.try_times.HasValue)
-                {
-                    authUser.try_times = 1;
-                }
-                else
-                {
-                    authUser.try_times += 1;
-                    if (authUser.try_times > 1)
-                    {
-                        message = $"用户名或密码已连续错误{authUser.try_times}次，超过五次账号锁定";
-                    }
-                }
-
-                if (authUser.try_times >= 5)
-                {
-                    authUser.is_lock = true;
-                    message = $"用户已被锁定，请联系管理员";
-                }
-
-                Broker.Update(authUser);
-                return new LoginResponse() { result = false, message = message };
-            }
-
-            if (authUser.try_times > 0)
-            {
-                authUser.try_times = 0;
-            }
-            authUser.last_login_time = DateTime.Now;
-            Broker.Update(authUser);
-
-            // 返回登录结果、用户信息、用户验证票据信息
-            var oUser = new LoginResponse
-            {
-                result = true,
-                userName = code,
-                token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.Id }),
-                userId = authUser.user_infoid,
-                message = "登录成功"
-            };
-            return oUser;
-        }
-
-        /// <summary>
-        /// 修改密码
-        /// </summary>
-        /// <param name="password"></param>
-        public void EditPassword(string password)
-        {
-            var sql = $@"
-UPDATE auth_user
-SET password = @password
-WHERE user_infoid = @id;
-";
-            var user = UserIdentityUtil.GetCurrentUser();
-            var paramList = new Dictionary<string, object>() { { "@id",  user.Id}, { "@password", password } };
-            Broker.Execute(sql, paramList);
-        }
-
-        /// <summary>
-        /// 充值密码
-        /// </summary>
-        /// <param name="id"></param>
-        public void ResetPassword(string id)
-        {
-            var sql = $@"
-UPDATE auth_user
-SET password = @password
-WHERE user_infoid = @id;
-";
-            var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
-            Broker.Execute(sql, paramList);
-        }
-
         public auth_user GetDataByCode(string code)
         {
-            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>(){ { "@code", code } });
+            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", code } });
             return data;
         }
 

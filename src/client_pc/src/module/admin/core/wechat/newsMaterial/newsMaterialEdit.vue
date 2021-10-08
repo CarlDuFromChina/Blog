@@ -10,7 +10,7 @@
     <a-row :gutter="24">
       <a-col :span="24">
         <a-form-model-item label="内容">
-          <sp-editor v-model="data.content"></sp-editor>
+          <sp-editor v-model="data.html_content"></sp-editor>
         </a-form-model-item>
       </a-col>
     </a-row>

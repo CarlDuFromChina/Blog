@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core;
 using Blog.Core.Job;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using Blog.WeChat.RobotMessageTask;
+using Sixpence.Core;
 
 namespace Blog.WeChat
 {

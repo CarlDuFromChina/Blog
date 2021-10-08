@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,20 +30,8 @@ namespace Blog.Core.Module.SysParamGroup
         /// <summary>
         /// 编码
         /// </summary>
-        private string _code;
         [DataMember]
         [Attr("code", "编码", AttrType.Varchar, 100)]
-        public string code
-        {
-            get
-            {
-                return this._code;
-            }
-            set
-            {
-                this._code = value;
-                SetAttributeValue("code", value);
-            }
-        }
+        public string code { get; set; }
     }
 }

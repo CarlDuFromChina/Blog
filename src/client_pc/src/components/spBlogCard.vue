@@ -4,7 +4,7 @@
       <a-col :span="24" v-for="item in data" :key="item.Id">
         <sp-card class="card-item">
           <div class="card-item-wrapper">
-            <img alt="example" :src="imageName == 'surface_url' ? baseUrl + item[imageName] : item[imageName]" />
+            <img alt="example" :src="imageName == 'surface_url' ? getDownloadUrl(item[imageName]) : item[imageName]" />
             <div class="content">
               <h2 class="title">{{ item.name }}</h2>
               <div>
@@ -13,7 +13,7 @@
               <div>
                 <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
               </div>
-              <div>{{ item.description }}</div>
+              <div class="description">{{ item.description }}</div>
               <div><a-button class="readme" type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
             </div>
           </div>
@@ -21,7 +21,7 @@
       </a-col>
     </a-row>
     <a-empty v-else style="padding-top:30%" />
-    <a-modal title="博客" v-model="editVisible" @ok="editVisible = false" width="80%">
+    <a-modal title="博客" v-model="editVisible" @ok="editVisible = false" width="70%">
       <div id="blogRead"></div>
     </a-modal>
   </div>
@@ -61,7 +61,7 @@ export default {
       isFirstLoad: true,
       busy: false,
       editVisible: false,
-      baseUrl: sp.getServerUrl(),
+      getDownloadUrl: sp.getDownloadUrl,
       data: [],
       loading: false
     };
@@ -139,7 +139,6 @@ export default {
 }
 
 .card-list {
-  width: 1200px;
   margin: 0 auto;
   .card-item {
     width: 100%;
@@ -160,6 +159,15 @@ export default {
         .title {
           font-size: 18px;
           font-weight: 600;
+        }
+        .description {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          word-wrap: break-word;
         }
         .svg-icon {
           padding-right: 10px;

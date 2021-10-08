@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="上传" v-model="editVisible" width="850px">
+  <a-modal title="上传" v-model="editVisible" width="850px" destroyOnClose>
     <a-form-model ref="form" :model="data">
       <a-row>
         <a-col>
@@ -57,6 +57,7 @@ export default {
       baseUrl: sp.getServerUrl(),
       smallImage: [],
       bigImage: [],
+      token: this.$store.getters.getToken,
       tags: []
     };
   },
@@ -68,6 +69,12 @@ export default {
       set(value) {
         this.$emit('input', value);
       }
+    },
+    // 请求头
+    headers() {
+      return {
+        Authorization: 'Bearer ' + this.token
+      };
     }
   },
   methods: {
@@ -87,12 +94,13 @@ export default {
     },
     postSave() {
       this.$emit('input', false);
+      this.$emit('saved');
     },
     changeTags(val) {
       this.tags = val;
     },
     upload(param) {
-      const url = '/api/SysFile/UploadImage?fileType=gallery';
+      const url = '/api/SysFile/UploadBigImage?fileType=gallery&objectId=';
       const formData = new FormData();
       formData.append('file', param.file);
       return sp.post(url, formData, this.headers).then(resp => resp);
@@ -110,7 +118,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'big_image',
-            url: `${this.baseUrl}${image.downloadUrl}`
+            url: sp.getDownloadUrl(image.downloadUrl)
           }
         ];
 
@@ -121,10 +129,9 @@ export default {
             uid: '0',
             status: 'done',
             name: 'small_image',
-            url: `${this.baseUrl}${thumbnail.downloadUrl}`
+            url: sp.getDownloadUrl(thumbnail.downloadUrl)
           }
         ];
-        console.log(this.data);
       });
     },
     beforeUpload(file, fileList) {

@@ -1,12 +1,13 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Data;
-using Blog.Core.Logging;
+using Sixpence.EntityFramework.Entity;
+using Sixpence.Core.Logging;
 using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sixpence.Core;
 
 namespace Blog.Core.Job
 {
@@ -25,44 +26,40 @@ namespace Blog.Core.Job
         {
             var logger = LogFactory.GetLogger("startup");
             var jobs = ServiceContainer.ResolveAll<IJob>().ToList();
+            StartService();
             logger.Info($"共发现{jobs.Count}个Job待运行");
-            jobs
-                .Each(item =>
+            jobs.Each(item => {
+                if (item == null)
                 {
-                    if (item == null)
+                    return;
+                }
+
+                // 创建 Job
+                var instance = item as JobBase;
+
+                if (sched.CheckExists(instance.JobKey).Result)
+                {
+                    return;
+                }
+
+                var job = instance.GetJobBuilder().Build();
+                job.JobDataMap.Add("User", UserIdentityUtil.GetSystem());
+
+                var triggerBuilder = instance.GetTriggerBuilder();
+
+                if (triggerBuilder != null)
+                {
+                    // 创建 trigger
+                    ITrigger trigger = triggerBuilder.Build();
+                    // 使用 trigger 规划执行任务 job
+                    sched.ScheduleJob(job, trigger);
+                    logger.Info($"作业[{instance.Name}]运行成功");
+                    if (instance.DefaultTriggerState == TriggerState.Paused)
                     {
-                        return;
+                        sched.PauseTrigger(trigger.Key);
                     }
-
-                    // 创建 Job
-                    var instance = item as JobBase;
-
-                    if (sched.CheckExists(instance.JobKey).Result)
-                    {
-                        return;
-                    }
-
-                    StartService();
-
-
-                    var job = instance.GetJobBuilder().Build();
-                    job.JobDataMap.Add("User", UserIdentityUtil.GetAdmin());
-
-                    var triggerBuilder = instance.GetTriggerBuilder();
-
-                    if (triggerBuilder != null)
-                    {
-                        // 创建 trigger
-                        ITrigger trigger = triggerBuilder.Build();
-                        // 使用 trigger 规划执行任务 job
-                        sched.ScheduleJob(job, trigger);
-                        logger.Info($"作业[{instance.Name}]运行成功");
-                        if (instance.DefaultTriggerState == TriggerState.Paused)
-                        {
-                            sched.PauseTrigger(trigger.Key);
-                        }
-                    }
-                });
+                }
+            });
         }
 
         /// <summary>

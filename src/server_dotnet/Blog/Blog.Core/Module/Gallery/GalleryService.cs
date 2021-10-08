@@ -1,13 +1,15 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.Gallery
 {
@@ -44,7 +46,7 @@ namespace Blog.Core.Module.Gallery
             var result = HttpUtil.DownloadImage(url, out var contentType);
             var stream = StreamUtil.BytesToStream(result);
             var hash_code = SHAUtil.GetFileSHA1(stream);
-            
+
             var config = StoreConfig.Config;
             var fileName = $"{hash_code}.{url.Substring(url.LastIndexOf("/") + 1).GetFileType()}";
             ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, fileName, out var filePath);
@@ -73,8 +75,8 @@ namespace Blog.Core.Module.Gallery
                 };
                 data.previewid = DownloadImage(image.previewURL, data.Id);
                 data.imageid = DownloadImage(image.largeImageURL, data.Id);
-                data.preview_url = $"api/SysFile/Download?objectid={data.previewid}";
-                data.image_url = $"api/SysFile/Download?objectid={data.imageid}";
+                data.preview_url = SysFileService.GetDownloadUrl(data.previewid);
+                data.image_url = SysFileService.GetDownloadUrl(data.imageid);
                 base.CreateData(data);
                 return new List<string>() { data.previewid, data.imageid };
             });

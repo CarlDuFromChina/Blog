@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -26,115 +26,71 @@ namespace Blog.Comments
         /// <summary>
         /// 评论
         /// </summary>
-        private string _comment;
         [DataMember]
         [Attr("comment", "评论", AttrType.Text)]
-        public string comment
-        {
-            get
-            {
-                return this._comment;
-            }
-            set
-            {
-                this._comment = value;
-                SetAttributeValue("comment", value);
-            }
-        }
+        public string comment { get; set; }
+
+        /// <summary>
+        /// 评论类型
+        /// </summary>
+        [DataMember]
+        [Attr("comment_type", "评论类型", AttrType.Varchar)]
+        public string comment_type { get; set; }
 
         /// <summary>
         /// 实体Id
         /// </summary>
-        private string _objectid;
         [DataMember]
         [Attr("objectid", "实体Id", AttrType.Varchar, 100)]
-        public string objectId
-        {
-            get
-            {
-                return this._objectid;
-            }
-            set
-            {
-                this._objectid = value;
-                SetAttributeValue("objectId", value);
-            }
-        }
+        public string objectId { get; set; }
 
         /// <summary>
         /// 类型名
         /// </summary>
-        private string _object_name;
         [DataMember]
         [Attr("object_name", "类型名", AttrType.Varchar, 100)]
-        public string object_name
-        {
-            get
-            {
-                return this._object_name;
-            }
-            set
-            {
-                this._object_name = value;
-                SetAttributeValue("object_name", value);
-            }
-        }
+        public string object_name { get; set; }
 
-        private string _parentid;
+        /// <summary>
+        /// 对象标题
+        /// </summary>
+        [DataMember]
+        [Attr("object_title", "对象标题", AttrType.Varchar, 100)]
+        public string object_title { get; set; }
+
+        /// <summary>
+        /// 对象拥有者
+        /// </summary>
+        [DataMember]
+        [Attr("object_ownerid", "对象拥有者", AttrType.Varchar, 100)]
+        public string object_ownerid { get; set; }
+
+        /// <summary>
+        /// 对象拥有者
+        /// </summary>
+        [DataMember]
+        [Attr("object_owneridName", "对象拥有者", AttrType.Varchar, 100)]
+        public string object_owneridName { get; set; }
+
         /// <summary>
         /// 父节点
         /// </summary>
         [DataMember]
         [Attr("parentid", "父节点", AttrType.Varchar, 100)]
-        public string parentid
-        {
-            get
-            {
-                return this._parentid;
-            }
-            set
-            {
-                this._parentid = value;
-                SetAttributeValue("parentid", value);
-            }
-        }
+        public string parentid { get; set; }
 
-        private string _replyid;
         /// <summary>
         /// 回复人
         /// </summary>
         [DataMember]
         [Attr("replyid", "回复人", AttrType.Varchar, 100)]
-        public string replyid
-        {
-            get
-            {
-                return this._replyid;
-            }
-            set
-            {
-                this._replyid = value;
-                SetAttributeValue("replyid", value);
-            }
-        }
+        public string replyid { get; set; }
 
-        private string _replyidName;
         /// <summary>
         /// 回复人
         /// </summary>
         [DataMember]
         [Attr("replyidName", "回复人", AttrType.Varchar, 100)]
-        public string replyidName
-        {
-            get
-            {
-                return this._replyidName;
-            }
-            set
-            {
-                this._replyidName = value;
-                SetAttributeValue("replyidName", value);
-            }
-        }
+        public string replyidName { get; set; }
     }
 }

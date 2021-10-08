@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 
 namespace Blog.WeChat.Robot
 {

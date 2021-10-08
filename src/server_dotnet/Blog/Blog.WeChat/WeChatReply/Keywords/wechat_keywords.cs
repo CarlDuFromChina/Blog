@@ -1,5 +1,5 @@
 
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -30,22 +30,9 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// <summary>
         /// 回复内容
         /// </summary>
-        private string _reply_content;
         [DataMember]
         [Attr("reply_content", "回复内容", AttrType.Text)]
-        public string reply_content
-        {
-            get
-            {
-                return this._reply_content;
-            }
-            set
-            {
-                this._reply_content = value;
-                SetAttributeValue("reply_content", value);
-            }
-        }
-
+        public string reply_content { get; set; }
     }
 }
 

@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Job;
-using Blog.Core.Data;
-using Blog.Core.Utils;
+using Sixpence.EntityFramework.Entity;
+using Sixpence.Core.Utils;
 using AutoMapper;
 using Blog.Core;
 using Blog.Core.Profiles;
+using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Jobs
 {
@@ -42,7 +44,7 @@ namespace Blog.Jobs
                             .ToList();
                         dataList.Each(item => item.author = "谢振国");
                         count = dataList.Count;
-                        broker.BulkCreateOrUpdate(dataList);
+                        broker.BulkCreateOrUpdate(dataList, new List<string>() { "content", "first_picture", "author", "description", "modifiedon", "modifiedbyname", "modifiedby" });
                     }
                 });
             }

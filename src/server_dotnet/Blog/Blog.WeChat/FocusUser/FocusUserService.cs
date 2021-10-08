@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.WeChat.FocusUser
 {
@@ -32,11 +33,11 @@ namespace Blog.WeChat.FocusUser
             return openIds;
         }
 
-       /// <summary>
-       /// 获取关注用户信息
-       /// </summary>
-       /// <param name="userList">OpenId列表</param>
-       /// <returns></returns>
+        /// <summary>
+        /// 获取关注用户信息
+        /// </summary>
+        /// <param name="userList">OpenId列表</param>
+        /// <returns></returns>
         public FocusUsersModel GetFocusUsers(string userList)
         {
             var resp2 = WeChatApi.BatchGetFocusUser(JsonConvert.SerializeObject(userList));

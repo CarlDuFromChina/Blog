@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import E from 'wangeditor';
-
 export default {
   name: 'sp-editor',
   props: {
@@ -59,6 +57,7 @@ export default {
     }
   },
   mounted() {
+    const E = require('wangeditor');
     this.editor = new E(this.$refs.editor);
     this.editor.config.onchange = html => {
       this.$emit('input', html);
@@ -75,10 +74,10 @@ export default {
       Authorization: `Bearer ${localStorage.getItem('Token') || ''}`
     };
     this.editor.config.uploadImgMaxLength = 1; // 最多一次上传一张照片
-    this.editor.config.uploadImgServer = `${sp.getServerUrl()}api/System/UploadImage`; // 上传图片服务地址
+    this.editor.config.uploadImgServer = `${sp.getServerUrl()}api/SysFile/UploadImage`; // 上传图片服务地址
     this.editor.config.uploadImgHooks = {
       customInsert: function(insertImgFn, result) {
-        insertImgFn(`${sp.getServerUrl()}${result.downloadUrl}`);
+        insertImgFn(sp.getDownloadUrl(result.downloadUrl));
       }
     };
     this.editor.customConfig = {

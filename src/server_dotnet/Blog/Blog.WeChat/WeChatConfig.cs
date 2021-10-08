@@ -1,4 +1,5 @@
 ﻿using Blog.Core.Config;
+using Sixpence.Core.Config;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace Blog.WeChat
 {
-    public class WeChatConfig : ConfigBase<WeChatConfig>
+    public class WeChatConfig : BaseAppConfig<WeChatConfig>
     {
         public string Token { get; set; }
 

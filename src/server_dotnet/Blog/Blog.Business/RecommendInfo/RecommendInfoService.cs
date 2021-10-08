@@ -1,4 +1,5 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,8 @@ WHERE
 	recommend_type = @type 
 ORDER BY
 	createdon DESC 
-	LIMIT 5
 ";
+            Broker.DbClient.Driver.AddLimit(ref sql, null, 5);
             var paramList = new Dictionary<string, object>() { { "@type", type } };
             var data = Broker.RetrieveMultiple<recommend_info>(sql, paramList);
             return data;

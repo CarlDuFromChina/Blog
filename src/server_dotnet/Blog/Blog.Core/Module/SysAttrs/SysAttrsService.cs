@@ -1,10 +1,13 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysEntity;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Sixpence.EntityFramework.Broker;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Core.Module.SysAttrs
 {
@@ -74,7 +77,7 @@ WHERE entityid = @id AND code = @code;
         public override string CreateData(sys_attrs t)
         {
             var id = default(string);
-            var columns = new List<Column>() { { new Column() {  Name = t?.code, LogicalName = t?.name, Type = t.attr_type.GetEnum<AttrType>(), Length = t.attr_length.Value, IsRequire = t.isrequire } } };
+            var columns = new List<Column>() { { new Column() { Name = t?.code, LogicalName = t?.name, Type = t.attr_type.GetEnum<AttrType>(), Length = t.attr_length.Value, IsRequire = t.isrequire } } };
             var sql = Broker.DbClient.Driver.GetAddColumnSql(t.entityCode, columns);
 
             Broker.ExecuteTransaction(() =>

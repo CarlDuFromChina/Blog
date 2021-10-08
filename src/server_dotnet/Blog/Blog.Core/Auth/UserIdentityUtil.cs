@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sixpence.Core.Current;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -111,6 +112,24 @@ namespace Blog.Core.Auth
                 Id = SYSTEM_ID,
                 Name = "系统"
             };
+        }
+
+        /// <summary>
+        /// 是否权限等级高于对方
+        /// </summary>
+        /// <param name="currentid"></param>
+        /// <param name="compareId"></param>
+        /// <returns></returns>
+        public static bool IsOwner(string currentid, string compareId)
+        {
+            var dictionary = new Dictionary<string, int>()
+            {
+                { ADMIN_ID, 1 },
+                { SYSTEM_ID, 2 },
+                { USER_ID,4 },
+                { ANONYMOUS_ID, 9 }
+            };
+            return dictionary[currentid] <= dictionary[compareId];
         }
     }
 }

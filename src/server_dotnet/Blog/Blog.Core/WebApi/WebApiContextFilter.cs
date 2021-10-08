@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Blog.Core.Auth;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using Blog.Core.Profiles;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sixpence.Core.Current;
 
 namespace Blog.Core.WebApi
 {

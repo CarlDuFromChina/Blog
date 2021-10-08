@@ -1,0 +1,31 @@
+.card {
+  /deep/ .ant-card-body {
+    padding: 0px;
+  }
+  .item {
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    &-start {
+      font-size: 14px;
+      color: #515767;
+      flex-grow: 1;
+      margin: 0;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+    &-end {
+      font-size: 12px;
+      color: #8a919f;
+      flex-shrink: 0;
+    }
+  }
+  .item:hover {
+    background: hsla(0, 0%, 85.1%, 0.1);
+  }
+}

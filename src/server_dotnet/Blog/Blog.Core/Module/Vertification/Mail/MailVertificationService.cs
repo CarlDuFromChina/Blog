@@ -1,12 +1,13 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Module.Vertification.Mail
 {
@@ -54,8 +55,8 @@ AND expire_time > CURRENT_TIMESTAMP";
                 if (data.expire_time < DateTime.Now)
                     return "激活失败，激活链接已过期";
 
-                #region 创建用户
-                var model = JsonConvert.DeserializeObject<LoginRequest>(data.login_request.ToString());
+          #region 创建用户
+          var model = JsonConvert.DeserializeObject<LoginRequest>(data.login_request.ToString());
                 var role = new SysRoleService(Broker).GetGuest();
                 var user = new user_info()
                 {
@@ -84,9 +85,9 @@ AND expire_time > CURRENT_TIMESTAMP";
                     password = model.password
                 };
                 Broker.Create(_authUser);
-                #endregion
+          #endregion
 
-                data.is_active = true;
+          data.is_active = true;
                 Broker.Update(data);
 
                 return "激活成功";

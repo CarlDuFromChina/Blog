@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using System.Collections.Generic;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Core.Auth;
+using Sixpence.EntityFramework.Models;
 
 namespace Blog.Comments
 {

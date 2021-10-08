@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Blog.Core.Logging;
+using Sixpence.Core.Logging;
 using log4net;
 using Quartz;
 using System;
@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.Core.Current;
 
 namespace Blog.Core.Job
 {

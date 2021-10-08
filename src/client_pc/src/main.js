@@ -2,7 +2,6 @@ import App from './App';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
 import router from './router';
 import store from './store';
 import './lib';
@@ -11,7 +10,6 @@ import 'mavon-editor/dist/css/index.css';
 import './assets/icons';
 import './style/index.less';
 import './directives';
-import storage from 'web-storage';
 import 'current-device';
 
 const moment = require('moment');
@@ -25,7 +23,6 @@ Vue.prototype.$bus = new Vue();
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
 moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
-Vue.prototype.$indexDB = new storage.IndexedDB();
 Vue.prototype.$echarts = echarts;
 
 // 如果是移动端则跳转到移动端应用

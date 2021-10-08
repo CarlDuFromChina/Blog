@@ -40,20 +40,23 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="摘要">
+              <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :autosize="{ minRows: 2, maxRows: 4 }" allow-clear />
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="6">
             <a-form-model-item label="系列">
               <a-switch v-model="data.is_series"></a-switch>
             </a-form-model-item>
           </a-col>
-        </a-row>
-        <a-row>
-          <a-col>
-            <a-form-model-item label="是否前台显示">
+          <a-col :span="6">
+            <a-form-model-item label="发布">
               <a-switch v-model="data.is_show"></a-switch>
             </a-form-model-item>
           </a-col>
-        </a-row>
-        <a-row>
-          <a-col>
+          <a-col :span="6">
             <a-form-model-item label="禁止评论">
               <a-switch v-model="data.disable_comment"></a-switch>
             </a-form-model-item>
@@ -101,6 +104,8 @@ import 'mavon-editor/dist/css/index.css';
 import { edit, select } from '@/mixins';
 import draft from './draft';
 
+const { htmlToText } = require('html-to-text');
+
 export default {
   name: 'blogEdit',
   components: { mavonEditor },
@@ -145,7 +150,7 @@ export default {
           uid: '0',
           status: 'done',
           name: 'surface',
-          url: `${this.baseUrl}${this.data.surface_url}`
+          url: sp.getDownloadUrl(this.data.surface_url)
         }
       ];
     },
@@ -159,7 +164,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'surface',
-            url: `${this.baseUrl}${this.data.surface_url}`
+            url: sp.getDownloadUrl(this.data.surface_url)
           }
         ];
       }
@@ -182,12 +187,12 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/System/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
+      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
         let oStr = `(${pos})`;
-        let nStr = `(${this.baseUrl}${resp.downloadUrl})`;
+        let nStr = sp.getDownloadUrl(resp.downloadUrl);
         let index = this.data.content.indexOf(oStr);
         let str = this.data.content.replace(oStr, '');
         let insertStr = (soure, start, newStr) => {
@@ -206,6 +211,9 @@ export default {
         if (valid) {
           this.editVisible = false;
           this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+          if (sp.isNullOrEmpty(this.data.brief)) {
+            this.data.brief = htmlToText(this.html, { baseElement: 'p', limits: { ellipsis: '...', maxInputLength: 200 } });
+          }
           if (this.tags) {
             this.data.tags = this.tags;
           }
@@ -240,7 +248,13 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/Blog/SyncToWeChat?id=${this.data.Id}`, `=${encodeURIComponent(this.html)}`);
+          sp.post(`api/Blog/SyncToWeChat`, { id: this.data.Id, content: encodeURIComponent(this.html) })
+            .then(() => {
+              this.$message.success('同步成功');
+            })
+            .catch(() => {
+              this.$message.error('同步异常');
+            });
         },
         onCancel: () => {
           this.$message.info('已取消');

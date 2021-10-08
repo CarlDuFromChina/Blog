@@ -1,11 +1,13 @@
 ﻿using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Auth.UserInfo
 {

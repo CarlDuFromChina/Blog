@@ -7,7 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Blog.Core;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
+using Sixpence.Core;
 
 namespace Blog.WeChat
 {
@@ -88,6 +89,40 @@ namespace Blog.WeChat
         }
 
         /// <summary>
+        /// 上传图文消息素材
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="fileName"></param>
+        /// <param name="contentType"></param>
+        /// <returns></returns>
+        public static WeChatSuccessUploadResponse UploadImg(Stream stream, string fileName, string contentType)
+        {
+            var url = string.Format(WeChatApiConfig.GetValue("UploadImage"), WeChatService.AccessToken);
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            // 设置当前流的位置为流的开始
+            stream.Seek(0, SeekOrigin.Begin);
+            var postData = new UploadFile
+            {
+                Name = "media",
+                Filename = fileName,
+                ContentType = contentType,
+                Data = bytes
+            };
+            var result = HttpUtil.Post(url, postData);
+            var resultJson = JObject.Parse(result);
+            if (resultJson.GetValue("errcode") != null && resultJson.GetValue("errcode").ToString() != "0")
+            {
+                var error = JsonConvert.DeserializeObject<WeChatErrorResponse>(result);
+                throw new SpException("添加素材失败：" + error.errmsg);
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<WeChatSuccessUploadResponse>(result);
+            }
+        }
+
+        /// <summary>
         /// 新增永久素材（音乐、视频、图片）
         /// </summary>
         /// <param name="type"></param>
@@ -126,9 +161,10 @@ namespace Blog.WeChat
         /// 修改永久图文素材
         /// </summary>
         /// <param name="model"></param>
-        public static void UpdateNews(WeChatNewsUpdateModel model)
+        public static void UpdateNews(string postData)
         {
-            var result = HttpUtil.Post(string.Format(WeChatApiConfig.GetValue("UpdateNewsApi"), WeChatService.AccessToken), JsonConvert.SerializeObject(model));
+            var url = string.Format(WeChatApiConfig.GetValue("UpdateNewsApi"), WeChatService.AccessToken);
+            var result = HttpUtil.Post(url, postData);
             var resultJson = JObject.Parse(result);
             if (resultJson.GetValue("errcode") != null && resultJson.GetValue("errcode").ToString() != "0")
             {

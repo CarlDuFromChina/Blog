@@ -1,10 +1,13 @@
 <template>
-  <div>123</div>
+  <message-list></message-list>
 </template>
 
 <script>
+import messageList from '../../../index/messageRemind/index.vue';
+
 export default {
-  name: 'notification'
+  name: 'notification',
+  components: { messageList }
 };
 </script>
 

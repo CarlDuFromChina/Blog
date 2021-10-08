@@ -113,7 +113,7 @@ export default {
             uid: '0',
             status: 'done',
             name: 'surface',
-            url: `${this.baseUrl}${this.data.surface_url}`
+            url: sp.getDownloadUrl(this.data.surface_url)
           }
         ];
       }
@@ -128,7 +128,7 @@ export default {
           uid: '0',
           status: 'done',
           name: 'surface',
-          url: `${this.baseUrl}${this.data.surface_url}`
+          url: sp.getDownloadUrl(this.data.surface_url)
         }
       ];
     },

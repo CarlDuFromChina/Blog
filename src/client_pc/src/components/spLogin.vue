@@ -43,7 +43,7 @@ export default {
           const { rsa, md5 } = encrypt;
           this.data.publicKey = key;
           this.data.password = rsa.encrypt(md5.encrypt(this.data.password), key);
-          const resp = await sp.post('api/System/Login', this.data);
+          const resp = await sp.post('api/System/SignInOrSignUp', this.data);
           if (resp.result) {
             saveAuth(this.$store, resp);
             this.editVisible = false;

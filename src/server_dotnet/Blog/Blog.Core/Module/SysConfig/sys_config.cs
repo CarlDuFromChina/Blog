@@ -1,4 +1,4 @@
-﻿using Blog.Core.Data;
+﻿using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,58 +30,22 @@ namespace Blog.Core.Module.SysConfig
         /// <summary>
         /// 编码
         /// </summary>
-        private string _code;
         [DataMember]
         [Attr("code", "编码", AttrType.Varchar, 100)]
-        public string code
-        {
-            get
-            {
-                return this._code;
-            }
-            set
-            {
-                this._code = value;
-                SetAttributeValue("code", value);
-            }
-        }
+        public string code { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        private string _description;
         [DataMember]
         [Attr("description", "描述", AttrType.Varchar, 100)]
-        public string description
-        {
-            get
-            {
-                return this._description;
-            }
-            set
-            {
-                this._description = value;
-                SetAttributeValue("description", value);
-            }
-        }
+        public string description { get; set; }
 
         /// <summary>
         /// 值
         /// </summary>
-        private string _value;
         [DataMember]
         [Attr("value", "描述", AttrType.Text)]
-        public string value
-        {
-            get
-            {
-                return this._value;
-            }
-            set
-            {
-                this._value = value;
-                SetAttributeValue("value", value);
-            }
-        }
+        public string value { get; set; }
     }
 }

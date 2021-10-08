@@ -9,16 +9,18 @@ Description：素材Plugin
 
 using Blog.Core;
 using Blog.Core.Config;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Blog.Core.Utils;
+using Sixpence.Core.Utils;
 using Blog.Core.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.WeChat.Material
 {
@@ -51,11 +53,12 @@ namespace Blog.WeChat.Material
                         };
                         var id = new SysFileService(context.Broker).CreateData(sysImage);
                         entity.sys_fileid = id;
-                        entity.local_url = $"/api/SysFile/Download?objectId={id}";
+                        entity.local_url = SysFileService.GetDownloadUrl(id);
                     }
                     break;
                 case EntityAction.PreDelete:
                     WeChatApi.DeleteMaterial(entity.GetAttributeValue<string>("media_id"));
+                    context.Broker.Delete("sys_file", entity.GetAttributeValue<string>("sys_fileid"));
                     break;
                 default:
                     break;

@@ -1,14 +1,16 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Blog.Core.Data;
+using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
 using Blog.Core.Module.SysMenu;
-using Blog.Core.Utils;
+using Sixpence.Core;
+using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Core.Auth.Role.BasicRole
 {

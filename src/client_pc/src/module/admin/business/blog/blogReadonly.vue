@@ -1,41 +1,57 @@
 <template>
   <div id="blog" class="blog blog__readonly">
-    <div class="blog-header">
-      <sp-icon
-        name="sp-blog-logo"
-        @click="() => this.$router.push({ name: 'home' })"
-        size="32"
-        style="display: inline-flex; border-radius: 6px; cursor: pointer"
-      ></sp-icon>
-      <a-menu mode="horizontal">
-        <a-menu-item key="index" @click="() => this.$router.push({ name: 'home' })"> 首页 </a-menu-item>
-        <a-menu-item key="friend" @click="() => this.$router.push({ name: 'friends' })"> 友人帐 </a-menu-item>
-        <a-menu-item key="note" @click="() => this.$router.push({ name: 'readingNote' })"> 读书笔记 </a-menu-item>
-      </a-menu>
-    </div>
+    <blog-menu></blog-menu>
     <div class="blog-body" style="background-color: #e9ecef">
       <div class="bodyWrapper">
         <a-layout>
-          <a-layout-sider width="70%" theme="light">
+          <a-layout-sider width="10%" theme="light" style="text-align: center">
+            <div class="toolbar">
+              <div class="toolbar-item">
+                <a-badge
+                  :count="data.upvote_times || 0"
+                  :number-style="{
+                    backgroundColor: '#fff',
+                    color: '#999',
+                    boxShadow: '0 0 0 1px #d9d9d9 inset'
+                  }"
+                >
+                  <a-icon type="like" :theme="isUp ? 'filled' : 'outlined'" @click="upvote"></a-icon>
+                </a-badge>
+              </div>
+              <div class="toolbar-item">
+                <a-badge
+                  :count="data.reading_times || 0"
+                  :number-style="{
+                    backgroundColor: '#fff',
+                    color: '#999',
+                    boxShadow: '0 0 0 1px #d9d9d9 inset'
+                  }"
+                >
+                  <a-icon type="message" @click="goCommentLocation"></a-icon>
+                </a-badge>
+              </div>
+            </div>
+          </a-layout-sider>
+          <a-layout-sider width="60%" theme="light">
             <a-card>
               <a-skeleton :loading="loading">
                 <div class="block">
                   <div style="display: flex">
-                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
-                <img v-if="data.big_surface_url" :src="baseUrl + data.big_surface_url" class="bodyWrapper-background" />
+                <img v-if="data.big_surface_url" :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
                 <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comments :object-id="Id" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
+            <sp-comments id="comment" :object-id="Id" :data="data" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
@@ -45,7 +61,7 @@
               <div class="block-body">
                 <a-skeleton :loading="loading">
                   <a style="display: flex">
-                    <a-avatar :src="`${baseUrl}api/System/GetAvatar?id=${data.createdBy}`" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
@@ -86,6 +102,7 @@
 <script>
 import Vue from 'vue';
 import 'mavon-editor/src/lib/css/markdown.css';
+import blogMenu from '../../../index/blogMenu.vue';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
@@ -150,6 +167,7 @@ const tocObj = {
 
 export default {
   name: 'blogReadonly',
+  components: { blogMenu },
   data() {
     return {
       Id: this.$route.params.id,
@@ -160,7 +178,9 @@ export default {
       formatterContent: '',
       user: {},
       height: null,
-      baseUrl: sp.getServerUrl()
+      isUp: false,
+      getDownloadUrl: sp.getDownloadUrl,
+      getAvatar: sp.getAvatar
     };
   },
   async created() {
@@ -169,10 +189,18 @@ export default {
       document.title = this.data.title;
     }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
+    if (this.isLoggedIn) {
+      this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.Id}`);
+    }
     this.loadRecommand();
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
   },
   watch: {
     'data.content': {
@@ -215,6 +243,9 @@ export default {
   methods: {
     getBlogEl() {
       return document.getElementById('blog');
+    },
+    goCommentLocation() {
+      document.getElementById('comment').scrollIntoView();
     },
     loadRecommand() {
       sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
@@ -259,8 +290,17 @@ export default {
       }
     },
     upvote() {
-      this.data.upvote_times = (this.data.upvote_times || 0) + 1;
-      sp.get(`/api/Blog/Upvote?blogid=${this.Id}`);
+      if (!this.$store.getters.isLoggedIn) {
+        this.$router.push({ name: 'login' });
+      }
+      sp.get(`/api/Blog/Upvote?id=${this.Id}`).then(resp => {
+        if (resp) {
+          this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) + 1);
+        } else {
+          this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) - 1);
+        }
+        this.isUp = resp;
+      });
     }
   }
 };
@@ -272,21 +312,13 @@ export default {
   &.blog__readonly {
     overflow-y: auto;
     overflow-x: hidden;
-    .blog-header {
-      width: 100%;
-      height: 60px;
-      display: inline-block;
-      line-height: 60px;
-      padding-left: 20px;
-      background: #fff;
-    }
     .blog-body {
       background-color: #e9ecef;
       color: #212529;
       padding-top: 24px;
       padding-bottom: 40px;
       .bodyWrapper {
-        width: 80%;
+        width: 70%;
         min-height: 800px;
         margin: 0 auto;
         .ant-layout {
@@ -407,6 +439,30 @@ export default {
   }
   .item:hover {
     background: hsla(0, 0%, 85.1%, 0.1);
+  }
+}
+
+.toolbar {
+  position: fixed;
+  top: 16rem;
+  &-item {
+    display: block;
+    position: relative;
+    margin-bottom: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #fff;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    /deep/ svg {
+      height: 2.5rem !important;
+      vertical-align: middle;
+      font-size: 1.5rem;
+      color: #b2bac2;
+    }
   }
 }
 </style>

@@ -1,6 +1,5 @@
 using Blog.Core.Auth;
 using Blog.Core.Config;
-using Blog.Core.Data.Entity;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
 using Blog.Core.Profiles;
@@ -9,17 +8,19 @@ using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using Sixpence.EntityFramework;
+using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-[assembly: XmlConfigurator(ConfigFile = @"log4net.config", Watch = true)]
 namespace Blog.Core
 {
     public class Startup
@@ -36,6 +37,9 @@ namespace Blog.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<KestrelServerOptions>(x => x.AllowSynchronousIO = true)
+               .Configure<IISServerOptions>(x => x.AllowSynchronousIO = true);
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -63,7 +67,10 @@ namespace Blog.Core
             services.AddHttpContextAccessor();
 
             // 添加依赖注入服务
-            services.AddServices();
+            services.AddServices(options =>
+            {
+                options.Assembly.Add("Blog.*.dll");
+            });
 
             // 添加Jwt认证服务
             services.AddAuthorizationSetup();
