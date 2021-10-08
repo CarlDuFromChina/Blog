@@ -1,4 +1,5 @@
 ﻿using Blog.Comments;
+using Blog.Core.Auth;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using System;
@@ -21,5 +22,14 @@ namespace Blog.Business.Upvote
             this._context = new EntityContext<upvote>(broker);
         }
         #endregion
+
+        public bool IsUp(string objectid)
+        {
+            var sql = @"
+SELECT * FROM upvote
+WHERE objectid = @objectid AND createdby = @ownerid";
+            var data = Broker.Retrieve<upvote>(sql, new Dictionary<string, object>() { { "@objectid", objectid }, { "@ownerid", UserIdentityUtil.GetCurrentUserId() } });
+            return data != null;
+        }
     }
 }

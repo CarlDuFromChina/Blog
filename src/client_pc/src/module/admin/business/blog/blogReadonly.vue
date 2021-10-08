@@ -189,10 +189,18 @@ export default {
       document.title = this.data.title;
     }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
+    if (this.isLoggedIn) {
+      this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.Id}`);
+    }
     this.loadRecommand();
   },
   mounted() {
     document.getElementById('blog').addEventListener('scroll', this.handleScroll);
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
   },
   watch: {
     'data.content': {
@@ -286,7 +294,12 @@ export default {
         this.$router.push({ name: 'login' });
       }
       sp.get(`/api/Blog/Upvote?id=${this.Id}`).then(resp => {
-        this.$set(this.data, 'upvote_times', resp ? (this.data.upvote_times || 0) + 1 : (this.data.upvote_times || 0) - 1);
+        if (resp) {
+          this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) + 1);
+        } else {
+          this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) - 1);
+        }
+        this.isUp = resp;
       });
     }
   }
