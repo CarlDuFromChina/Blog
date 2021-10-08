@@ -37,7 +37,7 @@
         </a-list-item>
       </a-list>
       <a-spin :spinning="loading" :delay="100" style="width: 100%; padding: 10px 0; text-align: center">
-        <span v-if="isLoadedAll">到底了....</span>
+        <span v-if="isLoadedAll && pageIndex > 2">到底了....</span>
       </a-spin>
     </sp-card>
   </div>

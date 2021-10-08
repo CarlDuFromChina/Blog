@@ -13,7 +13,7 @@
               <div>
                 <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
               </div>
-              <div>{{ item.description }}</div>
+              <div class="description">{{ item.description }}</div>
               <div><a-button class="readme" type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
             </div>
           </div>
@@ -139,7 +139,6 @@ export default {
 }
 
 .card-list {
-  width: 1200px;
   margin: 0 auto;
   .card-item {
     width: 100%;
@@ -160,6 +159,15 @@ export default {
         .title {
           font-size: 18px;
           font-weight: 600;
+        }
+        .description {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          word-wrap: break-word;
         }
         .svg-icon {
           padding-right: 10px;

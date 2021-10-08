@@ -2,7 +2,7 @@
   <div>
     <sp-blog-card ref="blog" :getDataApi="getDataApi" imageName="first_picture"></sp-blog-card>
     <a-spin :spinning="loading" :delay="100" style="width:100%;padding: 10px 0;text-align:center;">
-      <span v-if="isLoadedAll">到底了....</span>
+      <span v-if="isLoadedAll && pageIndex > 1">到底了....</span>
     </a-spin>
   </div>
 </template>
@@ -38,6 +38,9 @@ export default {
     });
   },
   computed: {
+    pageIndex() {
+      return this.$refs.blog.pageIndex;
+    },
     getDataApi() {
       return `api/${this.controllerName}/GetViewData?orderBy=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC&&pageSize=$pageSize&pageIndex=$pageIndex&searchList=`;
     }
