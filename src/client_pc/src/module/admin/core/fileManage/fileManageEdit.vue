@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     imageUrl() {
-      return sp.getDownloadUrl(this.data.Id);
+      return sp.getDownloadUrl(this.data.Id, false);
     }
   }
 };

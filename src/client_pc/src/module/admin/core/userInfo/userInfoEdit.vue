@@ -184,7 +184,7 @@ export default {
             uid: '-1',
             name: image.name,
             status: 'done',
-            url: sp.getDownloadUrl(`api/SysFile/Download?objectId=${image.sys_fileId}`)
+            url: sp.getDownloadUrl(image.sys_fileId, false)
           }
         ];
       }

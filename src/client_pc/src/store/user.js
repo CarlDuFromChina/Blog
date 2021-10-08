@@ -7,7 +7,7 @@ export default {
       return state.user;
     },
     getAvatar(state) {
-      return `${sp.getServerUrl()}api/SysFile/Download?objectId=${state.user.avatar}`;
+      return sp.getDownloadUrl(state.user.avatar);
     }
   },
   mutations: {

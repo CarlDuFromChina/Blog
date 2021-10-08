@@ -5,10 +5,11 @@ function getServerUrl() {
   return url.charAt(url.length - 1) === '/' ? url : url + '/';
 }
 
-function getDownloadUrl(url) {
-  if (sp.isNullOrEmpty(url)) {
+function getDownloadUrl(value, isUrl = true) {
+  if (sp.isNullOrEmpty(value)) {
     return '';
   }
+  const url = isUrl ? value : `/api/SysFile/Download?objectId=${value}`;
   if (url.charAt(0) === '/') {
     return `${getServerUrl().trimEnd('/')}${url}`;
   }
