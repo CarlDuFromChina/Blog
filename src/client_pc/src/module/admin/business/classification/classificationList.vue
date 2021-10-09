@@ -13,6 +13,7 @@ export default {
       editComponent,
       columns: [
         { prop: 'name', label: '名称' },
+        { prop: 'index', label: '索引' },
         { prop: 'is_freeName', label: '是否付费' }
       ],
       operations: ['new', 'delete', 'search']

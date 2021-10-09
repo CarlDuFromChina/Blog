@@ -27,20 +27,18 @@ namespace Blog.Core.Module.SysMenu
         public override IList<sys_menu> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
             var data = base.GetDataList(searchList, orderBy, viewId).Filter().ToList();
-            var firstMenu = data.Where(e => string.IsNullOrEmpty(e.parentid)).ToList();
-            firstMenu.ForEach(item =>
-            {
-                item.children = new List<sys_menu>();
-                data.ForEach(item2 =>
+            var firstMenu = data
+                .Where(e => string.IsNullOrEmpty(e.parentid))
+                .Select(item =>
                 {
-                    if (item2.parentid == item.Id)
-                    {
-                        item.children.Add(item2);
-                    }
-                });
-                item.children = item.children.OrderBy(e => e.menu_Index).ToList();
-            });
-            firstMenu = firstMenu.OrderBy(e => e.menu_Index).ToList();
+                    item.children = data
+                        .Where(e => e.parentid == item.Id)
+                        .OrderBy(e => e.menu_Index)
+                        .ToList();
+                    return item;
+                })
+                .OrderBy(e => e.menu_Index)
+                .ToList();
             return firstMenu;
         }
 

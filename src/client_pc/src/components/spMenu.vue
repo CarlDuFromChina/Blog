@@ -64,7 +64,7 @@ export default {
     menuChange(item, index) {
       this.currentIndex = index;
       this.$emit('menu-change');
-      this.$router.push({ name: item.route });
+      this.$router.push({ path: item.route });
     }
   }
 };

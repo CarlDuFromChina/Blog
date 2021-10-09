@@ -3,7 +3,7 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace Blog.Classification
+namespace Blog.Business.Classification
 {
     [Entity("classification", "博客分类", false)]
     public partial class classification : BaseEntity
@@ -40,6 +40,12 @@ namespace Blog.Classification
         [Attr("is_free", "是否付费阅读", AttrType.Int4)]
         public int is_free { get; set; }
 
+        /// <summary>
+        /// 索引
+        /// </summary>
+        [DataMember]
+        [Attr("index", "索引", AttrType.Int4)]
+        public int index { get; set; }
     }
 }
 
