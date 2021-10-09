@@ -3,7 +3,7 @@ export default {
     return {
       pageIndex: 1,
       pageSize: 20,
-      pagerCount: 5,
+      pageCount: 5,
       total: 0
     };
   },

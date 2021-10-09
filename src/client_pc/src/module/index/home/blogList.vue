@@ -1,6 +1,5 @@
 <template>
   <div>
-    <a-input-search placeholder="输入博客名快速搜索" class="search" size="large" enter-button @search="onSearch" />
     <sp-card class="blog-list">
       <a-list item-layout="vertical" size="large" :data-source="listData">
         <a-list-item slot="renderItem" :key="item.Id" slot-scope="item">
@@ -62,7 +61,6 @@ export default {
     };
   },
   async created() {
-    this.fetchData();
     this.$bus.$on('load-more', () => {
       if (this.isLoadedAll) {
         return;
@@ -81,7 +79,7 @@ export default {
       return sp.getDownloadUrl(url);
     },
     onSearch(value) {
-      this.searchValue = value;
+      this.searchValue = value || '';
       this.listData = [];
       this.goFirst();
       this.fetchData();

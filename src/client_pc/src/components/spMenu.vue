@@ -31,12 +31,7 @@ export default {
     };
   },
   mounted() {
-    this.menus.forEach((item, index) => {
-      if (item.route === this.$route.name) {
-        this.currentIndex = index;
-      }
-    });
-    console.log(this.$route.name);
+    this.setCurrentMenu();
     this.$bus.$on('scroll', val => {
       const ref = this.$refs.header;
       if (val !== 0) {
@@ -53,6 +48,13 @@ export default {
     this.$bus.$off('scroll');
   },
   methods: {
+    setCurrentMenu() {
+      this.menus.forEach((item, index) => {
+        if (item.route === this.$route.name) {
+          this.currentIndex = index;
+        }
+      });
+    },
     getColor(index) {
       if (this.currentIndex === index) {
         return '#1e80ff';
