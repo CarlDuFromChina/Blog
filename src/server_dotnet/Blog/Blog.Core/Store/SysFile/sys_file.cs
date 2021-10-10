@@ -32,11 +32,11 @@ namespace Blog.Core.Store.SysFile
         public string objectId { get; set; }
 
         /// <summary>
-        /// 文件路径
+        /// 真实文件名
         /// </summary>
         [DataMember]
-        [Attr("file_path", "文件路径", AttrType.Text)]
-        public string file_path { get; set; }
+        [Attr("real_name", "真实文件名", AttrType.Varchar, 500)]
+        public string real_name { get; set; }
 
         /// <summary>
         /// 哈希值

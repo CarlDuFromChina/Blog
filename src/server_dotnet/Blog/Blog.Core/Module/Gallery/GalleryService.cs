@@ -48,15 +48,16 @@ namespace Blog.Core.Module.Gallery
             var hash_code = SHAUtil.GetFileSHA1(stream);
 
             var config = StoreConfig.Config;
-            var fileName = $"{hash_code}.{url.Substring(url.LastIndexOf("/") + 1).GetFileType()}";
+            var id = Guid.NewGuid().ToString();
+            var fileName = $"{id}.{url.Substring(url.LastIndexOf("/") + 1).GetFileType()}";
             ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, fileName, out var filePath);
 
             var data = new sys_file()
             {
-                sys_fileId = Guid.NewGuid().ToString(),
+                sys_fileId = id,
                 name = fileName,
+                real_name = fileName,
                 hash_code = hash_code,
-                file_path = filePath,
                 file_type = "gallery",
                 content_type = contentType,
                 objectId = objectid

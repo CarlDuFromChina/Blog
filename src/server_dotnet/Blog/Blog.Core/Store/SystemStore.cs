@@ -22,7 +22,7 @@ namespace Blog.Core.Store
         {
             fileName.ToList().ForEach(item =>
             {
-                var filePath = Path.Combine(FolderType.Storage.GetPath(), item);
+                var filePath = sys_file.GetFilePath(item);
                 FileUtil.DeleteFile(filePath);
             });
         }
@@ -35,7 +35,7 @@ namespace Blog.Core.Store
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
             var data = broker.Retrieve<sys_file>(objectId) ?? broker.Retrieve<sys_file>("select * from sys_file where hash_code = @id", new Dictionary<string, object>() { { "@id", objectId } });
-            var fileInfo = new FileInfo(Path.Combine(FolderType.Storage.GetPath(), data?.name ?? ""));
+            var fileInfo = new FileInfo(data.GetFilePath());
             if (fileInfo.Exists)
             {
                 var stream = await FileUtil.GetFileStreamAsync(fileInfo.FullName);
@@ -55,7 +55,7 @@ namespace Blog.Core.Store
         {
             var broker = PersistBrokerFactory.GetPersistBroker();
             var data = broker.Retrieve<sys_file>(id);
-            return FileUtil.GetFileStream(Path.Combine(FolderType.Storage.GetPath(), data.name));
+            return FileUtil.GetFileStream(data.GetFilePath());
         }
 
         /// <summary>
@@ -66,8 +66,7 @@ namespace Blog.Core.Store
         public void Upload(Stream stream, string fileName, out string filePath)
         {
             filePath = $"{Path.AltDirectorySeparatorChar}storage{Path.AltDirectorySeparatorChar}{fileName}"; // 相对路径
-            var path = Path.Combine(FolderType.Storage.GetPath(), fileName); // 绝对路径
-            FileUtil.SaveFile(stream, path);
+            FileUtil.SaveFile(stream, sys_file.GetFilePath(fileName));
         }
     }
 }

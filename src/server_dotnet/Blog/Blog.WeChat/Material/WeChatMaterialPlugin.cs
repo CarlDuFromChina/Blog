@@ -37,21 +37,22 @@ namespace Blog.WeChat.Material
                     if (string.IsNullOrEmpty(entity.sys_fileid))
                     {
                         var result = HttpUtil.DownloadImage(entity.url, out var contentType);
+                        var id = Guid.NewGuid().ToString();
                         var stream = StreamUtil.BytesToStream(result);
                         var hash_code = SHAUtil.GetFileSHA1(stream);
                         var config = StoreConfig.Config;
                         ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, entity.name, out var filePath);
                         var sysImage = new sys_file()
                         {
-                            sys_fileId = Guid.NewGuid().ToString(),
+                            sys_fileId = id,
                             name = entity.name,
+                            real_name = entity.name,
                             hash_code = hash_code,
-                            file_path = filePath,
                             file_type = "wechat_material",
                             content_type = contentType,
                             objectId = entity.Id
                         };
-                        var id = new SysFileService(context.Broker).CreateData(sysImage);
+                        new SysFileService(context.Broker).CreateData(sysImage);
                         entity.sys_fileid = id;
                         entity.local_url = SysFileService.GetDownloadUrl(id);
                     }

@@ -46,7 +46,7 @@ WHERE
                         var dataList = context.Broker.RetrieveMultiple<sys_file>(sql, paramList);
                         if (dataList.IsEmpty())
                         {
-                            ServiceContainer.Resolve<IStoreStrategy>(StoreConfig.Config.Type).Delete(new List<string>() { entity.GetAttributeValue<string>("name") });
+                            ServiceContainer.Resolve<IStoreStrategy>(StoreConfig.Config.Type).Delete(new List<string>() { entity.GetAttributeValue<string>("real_name") });
                         }
                         break;
                         #endregion
