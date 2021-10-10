@@ -8,6 +8,7 @@
     <Compile Remove="Scripts\**" />
     <EmbeddedResource Remove="Scripts\**" />
     <None Remove="Scripts\**" />
+    <None Remove="version\2.3.1\2021101001-字段real_name初始化.sql" />
     <None Remove="version\2.3\" />
   </ItemGroup>
 
@@ -50,6 +51,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070902-新增启用草稿系统参数.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.3.1\2021101001-字段real_name初始化.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.3\2021091301-删除消息提醒表.sql">

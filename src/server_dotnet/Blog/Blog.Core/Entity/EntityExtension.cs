@@ -52,30 +52,6 @@ namespace Sixpence.EntityFramework.Entity
                 });
                 #endregion
 
-                #region 执行版本更新脚本
-                {
-                    var vLogger = LogFactory.GetLogger("version");
-                    FileHelper.GetFileList("*.sql", FolderType.Version)
-                            .OrderBy(item => Path.GetFileName(item))
-                            .ToList()
-                            .Each(sqlFile =>
-                            {
-                                try
-                                {
-                                    var count = new VersionScriptExecutionLogService(broker).ExecuteScript(sqlFile);
-                                    if (count == 1)
-                                    {
-                                        vLogger.Info($"脚本：{Path.GetFileName(sqlFile)}执行成功");
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    vLogger.Error($"脚本：{Path.GetFileName(sqlFile)}执行失败", ex);
-                                }
-                            });
-                }
-                #endregion
-
                 #region 创建实体记录和实体字段数据
                 entityList.Each(item =>
                 {
@@ -91,7 +67,7 @@ namespace Sixpence.EntityFramework.Entity
                             code = item.GetEntityName(),
                             is_sys = item.IsSystemEntity()
                         };
-                        broker.Create(entity);
+                        broker.Create(entity, false);
                     }
                     #endregion
 
@@ -140,6 +116,30 @@ namespace Sixpence.EntityFramework.Entity
 
                 });
 
+                #endregion
+
+                #region 执行版本更新脚本
+                {
+                    var vLogger = LogFactory.GetLogger("version");
+                    FileHelper.GetFileList("*.sql", FolderType.Version)
+                            .OrderBy(item => Path.GetFileName(item))
+                            .ToList()
+                            .Each(sqlFile =>
+                            {
+                                try
+                                {
+                                    var count = new VersionScriptExecutionLogService(broker).ExecuteScript(sqlFile);
+                                    if (count == 1)
+                                    {
+                                        vLogger.Info($"脚本：{Path.GetFileName(sqlFile)}执行成功");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    vLogger.Error($"脚本：{Path.GetFileName(sqlFile)}执行失败", ex);
+                                }
+                            });
+                }
                 #endregion
             });
 
