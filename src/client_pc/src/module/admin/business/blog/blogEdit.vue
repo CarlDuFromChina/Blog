@@ -152,6 +152,26 @@ export default {
       };
     }
   },
+  watch: {
+    'data.blog_type': {
+      handler(newVal, oldVal) {
+        if (this.selectDataList.classification) {
+          let item = this.selectDataList.classification.find(item => item.Value === oldVal);
+          if (item) {
+            const index = this.tags.indexOf(item.Name);
+            if (index !== -1) {
+              this.tags.splice(index, 1);
+            }
+          }
+
+          item = this.selectDataList.classification.find(item => item.Value === newVal);
+          if (item && new Set(this.tags.concat(item.Name)).size === this.tags.concat(item.Name).length) {
+            this.tags.push(item.Name);
+          }
+        }
+      }
+    }
+  },
   methods: {
     selected(item) {
       this.data.surfaceid = item.surfaceid;
