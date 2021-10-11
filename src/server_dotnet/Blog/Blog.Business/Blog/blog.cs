@@ -145,6 +145,20 @@ namespace Blog.Business.Blog
         [DataMember]
         [Attr("wechat_newsid", "微信素材id", AttrType.Varchar, 100)]
         public string wechat_newsid { get; set; }
+
+        /// <summary>
+        /// 文章类型
+        /// </summary>
+        [DataMember]
+        [Attr("article_type", "文章类型", AttrType.Varchar, 100)]
+        public string article_type { get; set; }
+
+        /// <summary>
+        /// 文章类型
+        /// </summary>
+        [DataMember]
+        [Attr("article_typename", "文章类型", AttrType.Varchar, 100)]
+        public string article_typeName { get; set; }
     }
 }
 

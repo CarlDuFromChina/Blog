@@ -40,6 +40,17 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="文章类型" prop="article_type">
+              <sp-select
+                v-model="data.article_type"
+                :options="selectDataList.article_type"
+                @change="item => (data.article_typeName = item.name)"
+              ></sp-select>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
             <a-form-model-item label="摘要">
               <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :autosize="{ minRows: 2, maxRows: 4 }" allow-clear />
             </a-form-model-item>
@@ -116,6 +127,7 @@ export default {
       configs: {},
       editVisible: false,
       controllerName: 'blog',
+      selectParamNameList: ['article_type'],
       selectEntityNameList: ['classification'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
@@ -127,7 +139,8 @@ export default {
       token: this.$store.getters.getToken,
       rules: {
         title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }]
+        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
+        article_type: [{ required: true, message: '请选择文章类型', trigger: 'blur' }]
       }
     };
   },

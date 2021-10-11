@@ -41,6 +41,7 @@ SELECT
 	blog.title,
 	blog.blog_type,
 	blog.blog_typeName,
+	blog.article_typeName,
 	blog.createdBy,
 	blog.createdbyname,
 	blog.modifiedBy,
