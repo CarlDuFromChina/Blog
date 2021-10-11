@@ -4,7 +4,7 @@
       <a-input v-model="data.name"></a-input>
     </a-form-model-item>
     <a-form-model-item label="编码">
-      <a-input v-model="data.code" :disabled="pageState==='edit'"></a-input>
+      <a-input v-model="data.code" :disabled="pageState === 'edit'"></a-input>
     </a-form-model-item>
     <a-form-model-item label="索引">
       <a-input-number v-model="data.index"></a-input-number>
@@ -37,6 +37,13 @@ export default {
       set(val) {
         this.data.is_free = val ? 1 : 0;
       }
+    }
+  },
+  methods: {
+    postSave() {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 };

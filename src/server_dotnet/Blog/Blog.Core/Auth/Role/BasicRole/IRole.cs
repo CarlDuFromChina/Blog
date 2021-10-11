@@ -1,9 +1,7 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
-using Blog.Core.Module.SysEntity;
-using Blog.Core.Module.SysMenu;
 using Sixpence.Core;
+using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +46,7 @@ namespace Blog.Core.Auth.Role.BasicRole
         /// 获取初始化权限
         /// </summary>
         /// <returns></returns>
-        IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege();
+        IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege(IPersistBroker broker);
     }
 
     public enum RoleType

@@ -15,11 +15,13 @@ namespace Blog.Core.Module.SysMenu
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
+                    // 创建权限
+                    new SysRolePrivilegeService(broker).CreateRoleMissingPrivilege();
                     // 重新注册权限并清除缓存
                     UserPrivilegesCache.Clear(broker);
                     break;
                 case EntityAction.PostDelete:
-                    var privileges = new SysRolePrivilegeService(broker).GetPrivileges(context.Entity.Id).ToArray();
+                    var privileges = new SysRolePrivilegeService(broker).GetPrivileges(context.Entity.Id)?.ToArray();
                     broker.Delete(privileges);
                     UserPrivilegesCache.Clear(broker);
                     break;

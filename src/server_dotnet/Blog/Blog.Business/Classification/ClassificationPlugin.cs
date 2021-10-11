@@ -20,7 +20,7 @@ namespace Blog.Business.Classification
                     break;
                 case EntityAction.PostDelete:
                     {
-                        var menu = context.Broker.Retrieve<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", context.Entity.GetAttributeValue<string>("code")} });
+                        var menu = context.Broker.Retrieve<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{context.Entity.GetAttributeValue<string>("code")}"} });
                         if (menu != null)
                         {
                             context.Broker.Delete(menu);
