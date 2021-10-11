@@ -38,5 +38,13 @@ namespace Blog.Core.Module.SysParamGroup
             }
             return new SysParamGroupService().GetEntitiyList(codeList);
         }
+
+        [HttpGet]
+        public IActionResult Export(string id)
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+            var result = new SysParamGroupService().Export(id);
+            return File(result.bytes, result.ContentType, result.fileName);
+        }
     }
 }
