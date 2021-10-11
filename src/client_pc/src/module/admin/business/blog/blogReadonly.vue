@@ -380,12 +380,6 @@ export default {
     }
   }
 }
-.anchor-fix {
-  display: block;
-  height: 20px; /*same height as header*/
-  margin-top: -20px; /*same height as header*/
-  visibility: hidden;
-}
 
 /deep/ .block {
   .content-item {
@@ -464,5 +458,13 @@ export default {
       color: #b2bac2;
     }
   }
+}
+</style>
+
+<style lang="less">
+.anchor-fix {
+  display: block;
+  height: 0; /*same height as header*/
+  visibility: hidden;
 }
 </style>
