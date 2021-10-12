@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Sixpence.EntityFramework.Broker;
+using Blog.Core.Config;
+using Blog.Core.Module.DataService;
+using Sixpence.Core.Logging;
 
 namespace Blog.Core.Module.Vertification.Mail
 {
@@ -30,13 +33,14 @@ namespace Blog.Core.Module.Vertification.Mail
         /// </summary>
         /// <param name="mail"></param>
         /// <returns></returns>
-        public mail_vertification GetDataByMailAdress(string mail)
+        public mail_vertification GetDataByMailAdress(string mail, MailType mailType = MailType.Activation)
         {
             var sql = @"SELECT * FROM mail_vertification
 WHERE mail_address = @address
 AND is_active = 0
-AND expire_time > CURRENT_TIMESTAMP";
-            return Broker.Retrieve<mail_vertification>(sql, new Dictionary<string, object>() { { "@address", mail } });
+AND expire_time > CURRENT_TIMESTAMP
+AND mail_type = @type";
+            return Broker.Retrieve<mail_vertification>(sql, new Dictionary<string, object>() { { "@address", mail }, { "@type", mailType.ToString() } });
         }
 
         /// <summary>
@@ -55,8 +59,8 @@ AND expire_time > CURRENT_TIMESTAMP";
                 if (data.expire_time < DateTime.Now)
                     return "激活失败，激活链接已过期";
 
-          #region 创建用户
-          var model = JsonConvert.DeserializeObject<LoginRequest>(data.login_request.ToString());
+                #region 创建用户
+                var model = JsonConvert.DeserializeObject<LoginRequest>(data.login_request.ToString());
                 var role = new SysRoleService(Broker).GetGuest();
                 var user = new user_info()
                 {
@@ -85,13 +89,42 @@ AND expire_time > CURRENT_TIMESTAMP";
                     password = model.password
                 };
                 Broker.Create(_authUser);
-          #endregion
+                #endregion
 
-          data.is_active = true;
+                data.is_active = true;
                 Broker.Update(data);
 
                 return "激活成功";
             });
+        }
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string ResetPassword(string id)
+        {
+            try
+            {
+                return Broker.ExecuteTransaction(() =>
+                {
+                    var data = GetData(id);
+                    if (data == null)
+                        return "重置失败";
+
+                    if (data.expire_time < DateTime.Now)
+                        return "重置失败，重置链接已过期";
+
+                    new SystemService(Broker).ResetPassword(data.createdBy);
+                    return $"重置成功，初始密码为：{SystemConfig.Config.DefaultPassword}";
+                });
+            }
+            catch (Exception ex)
+            {
+                LogUtils.Error("重置密码失败", ex);
+                return "服务器内部错误，请联系管理员";
+            }
         }
     }
 }

@@ -56,5 +56,18 @@ namespace Blog.Core.Module.Vertification.Mail
         [DataMember]
         [Attr("is_active", "是否激活", AttrType.Int4)]
         public bool is_active { get; set; }
+
+        /// <summary>
+        /// 激活类型
+        /// </summary>
+        [DataMember]
+        [Attr("mail_type", "激活类型", AttrType.Varchar, 100)]
+        public string mail_type { get; set; }
+    }
+
+    public enum MailType
+    {
+        Activation,
+        ResetPassword
     }
 }

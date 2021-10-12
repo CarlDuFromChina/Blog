@@ -18,12 +18,26 @@ using System.IO;
 using System.Web;
 using Sixpence.Core;
 using Sixpence.EntityFramework.Broker;
+using Blog.Core.Profiles;
+using Sixpence.Core.Current;
 
 namespace Blog.Core.Module.DataService
 {
     public class SystemService
     {
-        private IPersistBroker Broker = PersistBrokerFactory.GetPersistBroker();
+        private IPersistBroker Broker;
+
+        #region 构造函数
+        public SystemService()
+        {
+            Broker = PersistBrokerFactory.GetPersistBroker();
+        }
+
+        public SystemService(IPersistBroker broker)
+        {
+            Broker = broker;
+        }
+        #endregion
 
         /// <summary>
         /// 获取公钥
@@ -169,7 +183,8 @@ namespace Blog.Core.Module.DataService
                     expire_time = DateTime.Now.AddHours(2),
                     is_active = false,
                     login_request = JsonConvert.SerializeObject(model),
-                    mail_address = model.code
+                    mail_address = model.code,
+                    mail_type = MailType.Activation.ToString()
                 };
                 Broker.Create(data);
 
@@ -226,6 +241,31 @@ WHERE user_infoid = @id;
 ";
             var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
             Broker.Execute(sql, paramList);
+        }
+
+        /// <summary>
+        /// 忘记密码
+        /// </summary>
+        /// <param name="code"></param>
+        public void ForgetPassword(string code)
+        {
+            var user = Broker.Retrieve<user_info>("SELECT * FROM user_info WHERE code = @mail OR mailbox = @mail", new Dictionary<string, object>() { { "@mail", code } });
+            AssertUtil.CheckNull<SpException>(user, "用户不存在", "5E507D9C-47BC-4586-880D-D9E42D02FEA4");
+            UserIdentityUtil.SetCurrentUser(MapperHelper.Map<CurrentUserModel>(user));
+            var id = Guid.NewGuid().ToString();
+            var sms = new mail_vertification()
+            {
+                Id = id,
+                name = "重置密码",
+                content = $@"你好,<br/><br/>
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ResetPassword?id={id}"">链接</a>重置密码
+",
+                expire_time = DateTime.Now.AddHours(2),
+                is_active = false,
+                mail_address = user.mailbox,
+                mail_type = MailType.ResetPassword.ToString()
+            };
+            Broker.Create(sms);
         }
 
         /// <summary>

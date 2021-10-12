@@ -20,7 +20,7 @@
         </a-form-model-item>
         <a-form-model-item>
           <a @click="() => (signupVisible = true)" class="signup">注册</a>
-          <a @click="forgetPwd" class="forget-pwd">忘记密码</a>
+          <a @click="() => (forgetVisible = true)" class="forget-pwd">忘记密码</a>
         </a-form-model-item>
         <a-form-model-item>
           <a-button style="width: 100%" type="primary" @click="signIn" :loading="loading">登录</a-button>
@@ -49,6 +49,16 @@
         注册
       </a-button>
     </a-modal>
+    <a-modal v-model="forgetVisible" title="忘记密码" :footer="false" destroyOnClose :width="300">
+      <a-form-model ref="forgetForm" :model="forgetData" :rules="forgetRules">
+        <a-form-model-item prop="code">
+          <a-input v-model="forgetData.code" placeholder="请输入用户注册邮箱" allowClear :disabled="forgetLoading"></a-input>
+        </a-form-model-item>
+      </a-form-model>
+      <a-button type="primary" block @click="forgetPwd" :loading="forgetLoading">
+        确定
+      </a-button>
+    </a-modal>
   </div>
 </template>
 
@@ -69,8 +79,12 @@ export default {
         code: '',
         password: ''
       },
+      forgetData: {
+        code: ''
+      },
       loading: false,
       signupLoading: false,
+      forgetLoading: false,
       rules: {
         code: [{ required: true, message: '请输入账号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
@@ -79,10 +93,14 @@ export default {
         code: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
+      forgetRules: {
+        code: [{ required: true, message: '请输入用户注册邮箱', trigger: 'blur' }]
+      },
       visible: false,
       signupVisible: false,
       isLoginFailed: false,
-      isPassCheck: false
+      isPassCheck: false,
+      forgetVisible: false
     };
   },
   created() {
@@ -180,7 +198,26 @@ export default {
       }
     },
     forgetPwd() {
-      this.$message.warn('请联系管理员重置密码');
+      if (this.forgetLoading) {
+        return;
+      }
+      this.forgetLoading = true;
+      this.$refs.forgetForm.validate(resp => {
+        if (resp) {
+          sp.get(`api/System/ForgetPassword?code=${this.forgetData.code}`)
+            .then(() => {
+              this.$message.error('重置密码邮件已发送');
+            })
+            .catch(err => {
+              this.$message.error(err);
+            })
+            .finally(() => {
+              this.forgetLoading = false;
+            });
+        } else {
+          this.forgetLoading = false;
+        }
+      });
     },
     async signup() {
       if (this.signupLoading) {
