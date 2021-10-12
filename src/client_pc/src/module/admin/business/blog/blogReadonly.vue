@@ -10,17 +10,17 @@
                 <a-badge
                   :count="data.upvote_times || 0"
                   :number-style="{
-                    backgroundColor: '#fff',
-                    color: '#999',
+                    backgroundColor: isUp ? '#349dfe' : '#fff',
+                    color: isUp ? '#fff' : '#999',
                     boxShadow: '0 0 0 1px #d9d9d9 inset'
                   }"
                 >
-                  <a-icon type="like" :theme="isUp ? 'filled' : 'outlined'" @click="upvote"></a-icon>
+                  <a-icon type="like" :theme="isUp ? 'twoTone' : 'outlined'" @click="upvote"></a-icon>
                 </a-badge>
               </div>
               <div class="toolbar-item">
                 <a-badge
-                  :count="data.reading_times || 0"
+                  :count="data.comment_count || 0"
                   :number-style="{
                     backgroundColor: '#fff',
                     color: '#999',

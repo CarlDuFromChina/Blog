@@ -52,7 +52,7 @@ SELECT
 	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
 	COALESCE((SELECT COUNT(1) FROM upvote WHERE objectid = blog.blogid), 0) upvote_times,
-	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) message,
+	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) comment_count,
 	blog.surfaceid,
 	blog.surface_url,
 	blog.brief
@@ -106,13 +106,11 @@ WHERE 1=1 AND blog.is_show = 1";
         {
             return Broker.ExecuteTransaction(() =>
             {
-                var sql = @"
-UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id
-";
                 var data = base.GetData(id);
-                var count = Convert.ToInt32(Broker.ExecuteScalar("SELECT COUNT(1) FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", id } }));
-                data.upvote_times = count;
-                Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
+                var paramList = new Dictionary<string, object>() { { "@id", id } };
+                data.upvote_times = Broker.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
+                data.comment_count = Broker.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
+                Broker.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id", paramList);
                 return data;
             });
         }

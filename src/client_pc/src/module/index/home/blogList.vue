@@ -14,7 +14,7 @@
             </span>
             <span :key="'message'">
               <a-icon type="message" style="margin-right: 8px" />
-              {{ item.message || 0 }}
+              {{ item.comment_count || 0 }}
             </span>
           </template>
           <a-list-item-meta :description="item.description">
