@@ -14,24 +14,25 @@ namespace Blog.Core.Module.SysAttrs
     {
         public void Execute(PersistBrokerPluginContext context)
         {
+            var entity = context.Entity;
+            var broker = context.Broker;
+
             switch (context.Action)
             {
-                case EntityAction.PostCreate:
+                case EntityAction.PreCreate:
                     {
-                        var data = context.Entity as sys_attrs;
+                        var data = entity as sys_attrs;
                         var columns = new List<Column>() { MapperHelper.Map<Column>(data) };
-                        var sql = context.Broker.DbClient.Driver.GetAddColumnSql(data.entityCode, columns);
-                        context.Broker.Execute(sql);
+                        broker.Execute(broker.DbClient.Driver.GetAddColumnSql(data.entityCode, columns));
                     }
                     break;
                 case EntityAction.PostDelete:
                     {
-                        var column = new Column() { Name = context.Entity.GetAttributeValue<string>("code") };
-                        var tableName = context.Broker.Retrieve<sys_entity>(context.Entity.GetAttributeValue<string>("entityid"))?.code;
+                        var column = new Column() { Name = entity.GetAttributeValue<string>("code") };
+                        var tableName = broker.Retrieve<sys_entity>(entity.GetAttributeValue<string>("entityid"))?.code;
                         if (!string.IsNullOrEmpty(tableName))
                         {
-                            var sql = context.Broker.DbClient.Driver.GetDropColumnSql(tableName, new List<Column>() { column });
-                            context.Broker.Execute(sql);
+                            broker.Execute(broker.DbClient.Driver.GetDropColumnSql(tableName, new List<Column>() { column }));
                         }
                     }
                     break;

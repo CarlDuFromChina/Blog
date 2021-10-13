@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sixpence.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -83,6 +84,31 @@ namespace Sixpence.EntityFramework.Entity
                     return "JToken";
                 case DataType.Boolean:
                     return "bool";
+                default:
+                    throw new NotSupportedException("类型不支持");
+            }
+        }
+
+        public static object Convert(string value, DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.Varchar:
+                case DataType.Text:
+                case DataType.Timestamp:
+                case DataType.Date:
+                case DataType.Time:
+                    return value;
+                case DataType.Int4:
+                case DataType.Int8:
+                    return ConvertUtil.ConToInt(value);
+                case DataType.Numeric:
+                    return ConvertUtil.ConToDecimal(value);
+                case DataType.Jsonb:
+                case DataType.Json:
+                    return value;
+                case DataType.Boolean:
+                    return ConvertUtil.ConToBoolean(value);
                 default:
                     throw new NotSupportedException("类型不支持");
             }

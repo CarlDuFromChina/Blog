@@ -62,7 +62,8 @@ WHERE entityid = @id AND code = @code;
                         entityidname = entity.name,
                         attr_type = item.Type.ToString().ToLower(),
                         attr_length = item.Length,
-                        isrequire = item.IsRequire == true
+                        isrequire = item.IsRequire == true,
+                        default_value = ConvertUtil.ConToString(item.DefaultValue)
                     };
                     Broker.Create(attrModel, false);
                 });

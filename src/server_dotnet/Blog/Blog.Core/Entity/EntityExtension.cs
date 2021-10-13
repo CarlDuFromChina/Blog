@@ -8,6 +8,7 @@ using Blog.Core.Utils;
 using Microsoft.AspNetCore.Builder;
 using Sixpence.Core;
 using Sixpence.Core.Logging;
+using Sixpence.Core.Utils;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using Sixpence.EntityFramework.Models;
@@ -27,7 +28,7 @@ namespace Sixpence.EntityFramework.Entity
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             var broker = PersistBrokerFactory.GetPersistBroker();
             var dialect = broker.DbClient.Driver;
-            var entityList = ServiceContainer.ResolveAll<IEntity>();
+            var entityList = ServiceContainer.ResolveAll<IEntity>().OrderByDescending(item => item.GetEntityName() == typeof(sys_attrs).Name);
             broker.ExecuteTransaction(() =>
             {
                 #region 创建表
@@ -127,7 +128,8 @@ namespace Sixpence.EntityFramework.Entity
                                 entityCode = entity.code,
                                 attr_type = attr.Type.ToString().ToLower(),
                                 attr_length = attr.Length,
-                                isrequire = attr.IsRequire.HasValue && attr.IsRequire.Value
+                                isrequire = attr.IsRequire.HasValue && attr.IsRequire.Value,
+                                default_value = ConvertUtil.ConToString(attr.DefaultValue)
                             };
                             broker.Create(_attr);
                             logger.Debug($"实体{item.GetLogicalName()}（{item.GetEntityName()}）创建字段：{attr.LogicalName}（{attr.Name}）成功");

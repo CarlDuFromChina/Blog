@@ -159,6 +159,20 @@ namespace Blog.Business.Blog
         [DataMember]
         [Attr("article_typename", "文章类型", DataType.Varchar, 100)]
         public string article_typeName { get; set; }
+
+        /// <summary>
+        /// 是否置顶
+        /// </summary>
+        [DataMember]
+        [Attr("is_top", "是否置顶", DataType.Int4, true, 0)]
+        public bool is_pop { get; set; }
+
+        /// <summary>
+        /// 是否置顶
+        /// </summary>
+        [DataMember]
+        [Attr("is_topname", "是否置顶", DataType.Varchar, true, "否")]
+        public bool is_popName { get; set; }
     }
 }
 

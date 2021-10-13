@@ -68,5 +68,12 @@ namespace Blog.Core.Module.SysAttrs
         [DataMember]
         [Attr("isrequire", "是否必填", DataType.Int4)]
         public bool isrequire { get; set; }
+
+        /// <summary>
+        /// 默认值
+        /// </summary>
+        [DataMember]
+        [Attr("default_value", "默认值", DataType.Varchar, 200)]
+        public string default_value { get; set; }
     }
 }
