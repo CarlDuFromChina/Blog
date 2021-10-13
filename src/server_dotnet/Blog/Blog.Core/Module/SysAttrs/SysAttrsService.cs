@@ -60,59 +60,13 @@ WHERE entityid = @id AND code = @code;
                         name = item.LogicalName,
                         entityid = entity.Id,
                         entityidname = entity.name,
-                        attr_type = item.Type.GetDescription(),
+                        attr_type = item.Type.ToString().ToLower(),
                         attr_length = item.Length,
                         isrequire = item.IsRequire == true
                     };
-                    _context.Create(attrModel);
+                    Broker.Create(attrModel, false);
                 });
                 Broker.Execute(Broker.DbClient.Driver.GetAddColumnSql(entity.code, columns));
-            });
-        }
-
-        /// <summary>
-        /// 创建字段
-        /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        public override string CreateData(sys_attrs t)
-        {
-            var id = default(string);
-            var columns = new List<Column>() { MapperHelper.Map<Column>(t) };
-            var sql = Broker.DbClient.Driver.GetAddColumnSql(t.entityCode, columns);
-
-            Broker.ExecuteTransaction(() =>
-            {
-                id = base.CreateData(t);
-                Broker.Execute(sql);
-            });
-
-            return id;
-        }
-
-        /// <summary>
-        /// 删除实体
-        /// </summary>
-        /// <param name="ids"></param>
-        public override void DeleteData(List<string> ids)
-        {
-            Broker.ExecuteTransaction(() =>
-            {
-                var dataList = Broker.RetrieveMultiple<sys_attrs>(ids).ToList();
-                var columns = new List<Column>();
-                dataList.ForEach(item =>
-                {
-                    columns.Add(new Column() { Name = item.code });
-                });
-
-                base.DeleteData(ids);
-
-                if (dataList.Count > 0)
-                {
-                    var tableName = new SysEntityService(Broker).GetData(dataList[0].entityid)?.code;
-                    var sql = Broker.DbClient.Driver.GetDropColumnSql(tableName, columns);
-                    Broker.Execute(sql);
-                }
             });
         }
     }

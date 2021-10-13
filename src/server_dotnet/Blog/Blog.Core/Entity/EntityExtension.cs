@@ -125,14 +125,11 @@ namespace Sixpence.EntityFramework.Entity
                                 entityid = entity.Id,
                                 entityidname = entity.name,
                                 entityCode = entity.code,
-                                attr_type = attr.Type.GetDescription(),
+                                attr_type = attr.Type.ToString().ToLower(),
                                 attr_length = attr.Length,
                                 isrequire = attr.IsRequire.HasValue && attr.IsRequire.Value
                             };
-                            var columns = new List<Column>() { ServiceContainer.Resolve<IMapper>().Map<Column>(_attr) };
-                            var sql = broker.DbClient.Driver.GetAddColumnSql(_attr.entityCode, columns);
                             broker.Create(_attr);
-                            broker.Execute(sql);
                             logger.Debug($"实体{item.GetLogicalName()}（{item.GetEntityName()}）创建字段：{attr.LogicalName}（{attr.Name}）成功");
                         }
                     });
