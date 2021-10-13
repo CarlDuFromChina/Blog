@@ -71,44 +71,44 @@ namespace Sixpence.EntityFramework.Entity
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember, Attr("name", "名称", AttrType.Varchar, 100)]
+        [DataMember, Attr("name", "名称", DataType.Varchar, 100)]
         public string name { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
-        [DataMember, Attr("createdby", "创建人id", AttrType.Varchar, 100, true)]
+        [DataMember, Attr("createdby", "创建人id", DataType.Varchar, 100, true)]
         public string createdBy { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
-        [DataMember, Attr("createdbyname", "创建人名称", AttrType.Varchar, 100, true)]
+        [DataMember, Attr("createdbyname", "创建人名称", DataType.Varchar, 100, true)]
         public string createdByName { get; set; }
 
         /// <summary>
         /// 创建日期
         /// </summary>
-        [DataMember, Attr("createdon", "创建日期", AttrType.Timestamp, 6, true)]
+        [DataMember, Attr("createdon", "创建日期", DataType.Timestamp, 6, true)]
         public DateTime? createdOn { get; set; }
 
         /// <summary>
         /// 修改人
         /// </summary>
-        [DataMember, Attr("modifiedby", "修改人id", AttrType.Varchar, 100, true)]
+        [DataMember, Attr("modifiedby", "修改人id", DataType.Varchar, 100, true)]
         public string modifiedBy { get; set; }
 
         /// <summary>
         /// 修改人
         /// </summary>
-        [DataMember, Attr("modifiedbyname", "修改人名称", AttrType.Varchar, 100, true)]
+        [DataMember, Attr("modifiedbyname", "修改人名称", DataType.Varchar, 100, true)]
         public string modifiedByName { get; set; }
 
 
         /// <summary>
         /// 创建日期
         /// </summary>
-        [DataMember, Attr("modifiedon", "创建日期", AttrType.Timestamp, 6, true)]
+        [DataMember, Attr("modifiedon", "创建日期", DataType.Timestamp, 6, true)]
         public DateTime? modifiedOn { get; set; }
 
         #endregion

@@ -11,7 +11,7 @@ namespace Blog.Core.Store.SysFile
     public partial class sys_file : BaseEntity
     {
         [DataMember]
-        [Attr("sys_fileid", "实体id", AttrType.Varchar, 100)]
+        [Attr("sys_fileid", "实体id", DataType.Varchar, 100)]
         public string sys_fileId
         {
             get
@@ -28,35 +28,35 @@ namespace Blog.Core.Store.SysFile
         /// 文件对象
         /// </summary>
         [DataMember]
-        [Attr("objectid", "文件对象", AttrType.Varchar, 100)]
+        [Attr("objectid", "文件对象", DataType.Varchar, 100)]
         public string objectId { get; set; }
 
         /// <summary>
         /// 文件路径
         /// </summary>
         [DataMember]
-        [Attr("file_path", "文件路径", AttrType.Text)]
+        [Attr("file_path", "文件路径", DataType.Text)]
         public string file_path { get; set; }
 
         /// <summary>
         /// 哈希值
         /// </summary>
         [DataMember]
-        [Attr("hash_code", "哈希值", AttrType.Varchar, 40)]
+        [Attr("hash_code", "哈希值", DataType.Varchar, 40)]
         public string hash_code { get; set; }
 
         /// <summary>
         /// 文件类型
         /// </summary>
         [DataMember]
-        [Attr("file_type", "文件类型", AttrType.Varchar, 100)]
+        [Attr("file_type", "文件类型", DataType.Varchar, 100)]
         public string file_type { get; set; }
 
         /// <summary>
         /// 内容类型
         /// </summary>
         [DataMember]
-        [Attr("content_type", "内容类型", AttrType.Varchar, 100)]
+        [Attr("content_type", "内容类型", DataType.Varchar, 100)]
         public string content_type { get; set; }
     }
 }

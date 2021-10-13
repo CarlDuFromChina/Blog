@@ -11,7 +11,7 @@ namespace Blog.Core.Module.Job
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("jobid", "实体id", AttrType.Varchar, 100)]
+        [Attr("jobid", "实体id", DataType.Varchar, 100)]
         public string jobId
         {
             get
@@ -28,28 +28,28 @@ namespace Blog.Core.Module.Job
         /// 执行计划
         /// </summary>
         [DataMember]
-        [Attr("runtime", "执行计划", AttrType.Varchar, 100)]
+        [Attr("runtime", "执行计划", DataType.Varchar, 100)]
         public string runTime { get; set; }
 
         /// <summary>
         /// 上次运行时间
         /// </summary>
         [DataMember]
-        [Attr("lastruntime", "上次运行时间", AttrType.Timestamp, 27)]
+        [Attr("lastruntime", "上次运行时间", DataType.Timestamp, 27)]
         public DateTime? lastRunTime { get; set; }
 
         /// <summary>
         /// 下次运行时间
         /// </summary>
         [DataMember]
-        [Attr("nextruntime", "下次运行时间", AttrType.Timestamp, 27)]
+        [Attr("nextruntime", "下次运行时间", DataType.Timestamp, 27)]
         public DateTime? nextRunTime { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
         [DataMember]
-        [Attr("description", "描述", AttrType.Varchar, 400)]
+        [Attr("description", "描述", DataType.Varchar, 400)]
         public string description { get; set; }
     }
 }

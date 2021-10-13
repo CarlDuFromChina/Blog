@@ -19,7 +19,7 @@ namespace Sixpence.EntityFramework.Entity
         /// <param name="type">字段类型</param>
         /// <param name="length">字段长度</param>
         /// <param name="isRequire">是否必填</param>
-        public AttrAttribute(string name, string logicalName, AttrType type, int length, bool isRequire = false)
+        public AttrAttribute(string name, string logicalName, DataType type, int length, bool isRequire = false)
         {
             this.Attr = new Column()
             {
@@ -31,7 +31,7 @@ namespace Sixpence.EntityFramework.Entity
             };
         }
 
-        public AttrAttribute(string name, string logicalName, AttrType type, bool isRequire = false)
+        public AttrAttribute(string name, string logicalName, DataType type, bool isRequire = false)
         {
             this.Attr = new Column()
             {

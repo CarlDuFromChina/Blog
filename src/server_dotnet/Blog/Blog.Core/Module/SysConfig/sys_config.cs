@@ -14,7 +14,7 @@ namespace Blog.Core.Module.SysConfig
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("sys_configid", "实体id", AttrType.Varchar, 100)]
+        [Attr("sys_configid", "实体id", DataType.Varchar, 100)]
         public string sys_configId
         {
             get
@@ -31,21 +31,21 @@ namespace Blog.Core.Module.SysConfig
         /// 编码
         /// </summary>
         [DataMember]
-        [Attr("code", "编码", AttrType.Varchar, 100)]
+        [Attr("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
         [DataMember]
-        [Attr("description", "描述", AttrType.Varchar, 100)]
+        [Attr("description", "描述", DataType.Varchar, 100)]
         public string description { get; set; }
 
         /// <summary>
         /// 值
         /// </summary>
         [DataMember]
-        [Attr("value", "描述", AttrType.Text)]
+        [Attr("value", "描述", DataType.Text)]
         public string value { get; set; }
     }
 }

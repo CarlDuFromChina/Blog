@@ -14,7 +14,7 @@ namespace Blog.Core.Module.SysMenu
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("sys_menuid", "实体id", AttrType.Varchar, 100)]
+        [Attr("sys_menuid", "实体id", DataType.Varchar, 100)]
         public string sys_menuId
         {
             get
@@ -31,47 +31,47 @@ namespace Blog.Core.Module.SysMenu
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Attr("parentid", "上级菜单id", AttrType.Varchar, 100)]
+        [Attr("parentid", "上级菜单id", DataType.Varchar, 100)]
         public string parentid { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Attr("parentidname", "上级菜单名", AttrType.Varchar, 100)]
+        [Attr("parentidname", "上级菜单名", DataType.Varchar, 100)]
         public string parentIdName { get; set; }
 
         /// <summary>
         /// 路由地址
         /// </summary>
         [DataMember]
-        [Attr("router", "路由地址", AttrType.Varchar, 200)]
+        [Attr("router", "路由地址", DataType.Varchar, 200)]
         public string router { get; set; }
 
         /// <summary>
         /// 菜单索引
         /// </summary>
         [DataMember]
-        [Attr("menu_index", "菜单索引", AttrType.Int4)]
+        [Attr("menu_index", "菜单索引", DataType.Int4)]
         public int? menu_Index { get; set; }
 
         /// <summary>
         /// 状态
         /// </summary>
         [DataMember]
-        [Attr("statecode", "状态", AttrType.Int4)]
+        [Attr("statecode", "状态", DataType.Int4)]
         public int? stateCode { get; set; }
 
 
         [DataMember]
-        [Attr("statecodename", "状态", AttrType.Varchar, 100)]
+        [Attr("statecodename", "状态", DataType.Varchar, 100)]
         public string stateCodeName { get; set; }
 
         /// <summary>
         /// 图标
         /// </summary>
         [DataMember]
-        [Attr("icon", "图标", AttrType.Varchar, 100)]
+        [Attr("icon", "图标", DataType.Varchar, 100)]
         public string icon { get; set; }
     }
 }

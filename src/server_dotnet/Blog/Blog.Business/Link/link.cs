@@ -14,7 +14,7 @@ namespace Blog.Business.Link
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("linkid", "链接id", AttrType.Varchar, 100, true)]
+        [Attr("linkid", "链接id", DataType.Varchar, 100, true)]
         public string linkId
         {
             get
@@ -31,21 +31,21 @@ namespace Blog.Business.Link
         /// 链接地址
         /// </summary>
         [DataMember]
-        [Attr("link_url", "链接地址", AttrType.Text)]
+        [Attr("link_url", "链接地址", DataType.Text)]
         public string link_url { get; set; }
 
         /// <summary>
         /// 链接类型
         /// </summary>
         [DataMember]
-        [Attr("link_type", "链接类型", AttrType.Varchar, 100)]
+        [Attr("link_type", "链接类型", DataType.Varchar, 100)]
         public string link_type { get; set; }
 
         /// <summary>
         /// 摘要
         /// </summary>
         [DataMember]
-        [Attr("brief", "摘要", AttrType.Varchar, 100)]
+        [Attr("brief", "摘要", DataType.Varchar, 100)]
         public string brief { get; set; }
     }
 }

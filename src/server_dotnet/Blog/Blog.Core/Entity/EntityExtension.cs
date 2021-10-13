@@ -91,7 +91,7 @@ namespace Sixpence.EntityFramework.Entity
                             code = item.GetEntityName(),
                             is_sys = item.IsSystemEntity()
                         };
-                        broker.Create(entity);
+                        broker.Create(entity, false);
                     }
                     #endregion
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Models;
+using Blog.Core.Profiles;
 
 namespace Blog.Core.Module.SysAttrs
 {
@@ -33,13 +34,13 @@ namespace Blog.Core.Module.SysAttrs
         {
             var columns = new List<Column>()
             {
-                { new Column() { Name = "name", LogicalName = "名称", Type = AttrType.Varchar, Length = 100, IsRequire = false } },
-                { new Column() { Name = "createdBy", LogicalName = "创建人", Type = AttrType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "createdByName", LogicalName = "创建人", Type = AttrType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name= "createdOn", LogicalName = "创建日期", Type = AttrType.Timestamp, IsRequire = true } },
-                { new Column() { Name = "modifiedBy", LogicalName = "修改人", Type = AttrType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "modifiedByName", LogicalName = "修改人", Type = AttrType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name = "modifiedOn", LogicalName = "修改日期", Type = AttrType.Timestamp, IsRequire = true } }
+                { new Column() { Name = "name", LogicalName = "名称", Type = DataType.Varchar, Length = 100, IsRequire = false } },
+                { new Column() { Name = "createdBy", LogicalName = "创建人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
+                { new Column() { Name = "createdByName", LogicalName = "创建人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
+                { new Column() { Name= "createdOn", LogicalName = "创建日期", Type = DataType.Timestamp, IsRequire = true } },
+                { new Column() { Name = "modifiedBy", LogicalName = "修改人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
+                { new Column() { Name = "modifiedByName", LogicalName = "修改人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
+                { new Column() { Name = "modifiedOn", LogicalName = "修改日期", Type = DataType.Timestamp, IsRequire = true } }
             };
             Broker.ExecuteTransaction(() =>
             {
@@ -77,7 +78,7 @@ WHERE entityid = @id AND code = @code;
         public override string CreateData(sys_attrs t)
         {
             var id = default(string);
-            var columns = new List<Column>() { { new Column() { Name = t?.code, LogicalName = t?.name, Type = t.attr_type.GetEnum<AttrType>(), Length = t.attr_length.Value, IsRequire = t.isrequire } } };
+            var columns = new List<Column>() { MapperHelper.Map<Column>(t) };
             var sql = Broker.DbClient.Driver.GetAddColumnSql(t.entityCode, columns);
 
             Broker.ExecuteTransaction(() =>

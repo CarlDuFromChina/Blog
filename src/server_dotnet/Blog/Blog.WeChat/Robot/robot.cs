@@ -13,7 +13,7 @@ namespace Blog.WeChat.Robot
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("robotid", "实体id", AttrType.Varchar, 100)]
+        [Attr("robotid", "实体id", DataType.Varchar, 100)]
         public string robotId
         {
             get
@@ -30,28 +30,28 @@ namespace Blog.WeChat.Robot
         /// 钩子地址
         /// </summary>
         [DataMember]
-        [Attr("hook", "钩子地址", AttrType.Varchar, 500)]
+        [Attr("hook", "钩子地址", DataType.Varchar, 500)]
         public string hook { get; set; }
 
         /// <summary>
         /// 说明
         /// </summary>
         [DataMember]
-        [Attr("description", "说明", AttrType.Varchar, 200)]
+        [Attr("description", "说明", DataType.Varchar, 200)]
         public string description { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
         [DataMember]
-        [Attr("robot_type", "类型", AttrType.Varchar, 100)]
+        [Attr("robot_type", "类型", DataType.Varchar, 100)]
         public string robot_type { get; set; }
 
         /// <summary>
         /// 类型名称
         /// </summary>
         [DataMember]
-        [Attr("robot_typename", "类型名称", AttrType.Varchar, 100)]
+        [Attr("robot_typename", "类型名称", DataType.Varchar, 100)]
         public string robot_typeName { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Blog.WeChat.WeChatNewsMaterial
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_news_materialid", "实体id", AttrType.Varchar, 100)]
+        [Attr("wechat_news_materialid", "实体id", DataType.Varchar, 100)]
         public string wechat_news_materialId
         {
             get
@@ -30,21 +30,21 @@ namespace Blog.WeChat.WeChatNewsMaterial
         /// 本地文件id
         /// </summary>
         [DataMember]
-        [Attr("fileid", "本地文件id", AttrType.Varchar, 100)]
+        [Attr("fileid", "本地文件id", DataType.Varchar, 100)]
         public string fileid { get; set; }
 
         /// <summary>
         /// 本地地址
         /// </summary>
         [DataMember]
-        [Attr("local_url", "本地地址", AttrType.Text)]
+        [Attr("local_url", "本地地址", DataType.Text)]
         public string local_url { get; set; }
 
         /// <summary>
         /// 图片url
         /// </summary>
         [DataMember]
-        [Attr("media_url", "图片url", AttrType.Text)]
+        [Attr("media_url", "图片url", DataType.Text)]
         public string media_url { get; set; }
     }
 }
