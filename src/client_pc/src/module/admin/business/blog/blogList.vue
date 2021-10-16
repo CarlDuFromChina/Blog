@@ -7,6 +7,7 @@
     :edit-component="editComponent"
     :headerClick="goEdit"
     :searchList="searchList"
+    :exportData="exportData"
   >
     <a-form-model :model="searchData" slot="more" layout="horizontal" v-bind="{ labelCol: { span: 4 }, wrapperCol: { span: 20 } }" label-align="left">
       <a-row :gutter="24" style="padding: 0 10px">
@@ -42,7 +43,7 @@ export default {
     return {
       controllerName: 'Blog',
       editComponent: blogEdit,
-      operations: ['new', 'delete', 'search', 'more'],
+      operations: ['new', 'delete', 'search', 'more', 'export'],
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'tags', label: '标签', type: 'tag' },
@@ -114,6 +115,19 @@ export default {
         name: 'blogEdit',
         params: { id: (item || {}).Id || '' }
       });
+    },
+    exportData() {
+      const selectionIds = this.$refs.list.selectionIds;
+      if (!selectionIds || selectionIds.length === 0) {
+        this.$message.warning('请选择一项，再进行导出');
+        return;
+      }
+      if (selectionIds.length > 1) {
+        this.$message.warning('最多导出一条记录');
+      }
+
+      const id = selectionIds[0];
+      sp.get(`api/blog/ExportMarkdown?id=${id}`);
     }
   }
 };

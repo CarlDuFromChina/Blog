@@ -91,5 +91,17 @@ namespace Blog.Business.Blog
             return new BlogService().GetActivity();
         }
 
+        /// <summary>
+        /// 导出Markdown
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ExportMarkdown(string id)
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+            var result = new BlogService().ExportMarkdown(id);
+            return File(result.bytes, result.ContentType, result.fileName);
+        }
     }
 }

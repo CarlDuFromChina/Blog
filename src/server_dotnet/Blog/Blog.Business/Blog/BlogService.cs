@@ -13,6 +13,7 @@ using Sixpence.EntityFramework.Broker;
 using Sixpence.Core;
 using Newtonsoft.Json;
 using Blog.Core.Config;
+using System.IO;
 
 namespace Blog.Business.Blog
 {
@@ -223,6 +224,27 @@ WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND create
 GROUP BY to_char(createdon, 'YYYY-MM-DD')
 ";
             return Broker.Query<BlogActivityModel>(sql);
+        }
+
+        /// <summary>
+        /// 导出Markdown
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public (string fileName, string ContentType, byte[] bytes) ExportMarkdown(string id)
+        {
+            var data = GetData(id);
+            var fileName = $"{data.title}.md";
+            var contentType = "application/octet-stream";
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (StreamWriter sw = new StreamWriter(ms))
+                {
+                    sw.Write(data.content);
+                    sw.Close();
+                }
+                return (fileName, contentType, ms.ToArray());
+            }
         }
     }
 }
