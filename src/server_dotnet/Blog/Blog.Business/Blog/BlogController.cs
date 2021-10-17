@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Sixpence.EntityFramework.Models;
+using Blog.Business.Blog.Sync;
 
 namespace Blog.Business.Blog
 {
@@ -74,11 +75,10 @@ namespace Blog.Business.Blog
             return new BlogService().Upvote(id);
         }
 
-        [HttpPost]
-        public void SyncToWeChat([FromBody]SyncToWeChatModel model)
+        [HttpGet]
+        public void SyncToWeChat(string id)
         {
-            var content = HttpUtility.UrlDecode(model.content, Encoding.UTF8);
-            new BlogService().SyncToWeChat(model.id, content);
+            new SyncBlog2WeChat().Execute(id);
         }
 
         /// <summary>

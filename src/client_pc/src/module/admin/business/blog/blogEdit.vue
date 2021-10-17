@@ -282,7 +282,7 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/Blog/SyncToWeChat`, { id: this.data.Id, content: encodeURIComponent(this.html) })
+          sp.get(`api/Blog/SyncToWeChat?id=${this.data.Id}`)
             .then(() => {
               this.$message.success('同步成功');
             })
