@@ -250,6 +250,7 @@ export default {
           if (this.tags) {
             this.data.tags = this.tags;
           }
+          this.data.html_content = this.html;
           sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
             .then(() => {
               this.$message.success('发布成功！');

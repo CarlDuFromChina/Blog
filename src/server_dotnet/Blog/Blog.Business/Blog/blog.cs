@@ -33,11 +33,18 @@ namespace Blog.Business.Blog
         public string blog_typeName { get; set; }
 
         /// <summary>
-        /// 内容
+        /// Markdown内容
         /// </summary>
         [DataMember]
         [Attr("content", "内容", DataType.Text)]
         public string content { get; set; }
+
+        /// <summary>
+        /// html内容
+        /// </summary>
+        [DataMember]
+        [Attr("html_content", "html内容", DataType.Text)]
+        public string html_content { get; set; }
 
         /// <summary>
         /// 标题
