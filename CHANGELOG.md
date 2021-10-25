@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## V 2.3.2
+
+1. `appsetting.json`新增`LocalUrls`（本机地址）配置
+
 ## V 2.3.1
 
 1. 修复了文件上传

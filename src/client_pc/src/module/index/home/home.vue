@@ -26,7 +26,7 @@
         <p>作者：Karl Du</p>
         <p>博客仓库地址：<a href="https://github.com/CarlDuFromChina/blog">blog</a></p>
         <p>我的邮箱：<a href="mailto:18556906294@163.com">18556906294@163.com</a></p>
-        <p>版本号：2.3.1</p>
+        <p>版本号：2.3.2</p>
         <p><a href="http://www.miitbeian.gov.cn">苏ICP备2020054977号</a></p>
       </div>
     </a-layout-sider>
