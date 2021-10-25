@@ -1,3 +1,4 @@
+using Blog.Core.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -20,7 +21,9 @@ namespace Blog.Business
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseUrls(SystemConfig.Config.LocalUrls)
+                        .UseStartup<Startup>();
                 });
     }
 }

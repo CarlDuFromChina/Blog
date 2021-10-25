@@ -24,5 +24,10 @@ namespace Blog.Core.Config
         /// 协议
         /// </summary>
         public string Protocol { get; set; }
+
+        /// <summary>
+        /// 本地运行地址
+        /// </summary>
+        public string LocalUrls { get; set; }
     }
 }
