@@ -20,6 +20,7 @@
           <a-list-item-meta :description="item.description">
             <span slot="title" style="font-size: 14px">
               <div>
+                <a-tag v-if="item.is_pop" color="blue">置顶</a-tag>
                 <a @click="readBlog(item)">{{ item.title }}</a>
               </div>
               <div class="meta-container">
@@ -90,7 +91,7 @@ export default {
     fetchData() {
       try {
         sp.get(
-          `api/blog/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
+          `api/blog/GetViewData?orderBy=&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
         ).then(resp => {
           this.total = resp.RecordCount;
           this.listData = this.listData.concat(resp.DataList);
@@ -120,10 +121,6 @@ export default {
 .blog-list {
   padding: 10px 20px 24px 20px;
   margin-right: 50px;
-}
-
-.ant-list-item-meta-content {
-  margin-top: -10px;
 }
 
 .ant-list-vertical .ant-list-item-meta {

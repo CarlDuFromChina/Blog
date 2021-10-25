@@ -72,6 +72,11 @@
               <a-switch v-model="data.disable_comment"></a-switch>
             </a-form-model-item>
           </a-col>
+          <a-col :span="6">
+            <a-form-model-item label="置顶">
+              <a-switch v-model="data.is_pop"></a-switch>
+            </a-form-model-item>
+          </a-col>
         </a-row>
         <a-row>
           <a-col>

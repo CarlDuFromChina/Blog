@@ -56,11 +56,13 @@ SELECT
 	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) comment_count,
 	blog.surfaceid,
 	blog.surface_url,
-	blog.brief
+	blog.brief,
+	blog.is_pop,
+	blog.is_popName
 FROM
 	blog
 WHERE 1=1 AND blog.is_show = 1";
-
+            var orderBy = "blog.is_pop DESC, blog.createdOn desc, blog.title, blog.blogid";
             return new List<EntityView>()
             {
                 new EntityView()
@@ -69,7 +71,7 @@ WHERE 1=1 AND blog.is_show = 1";
                     ViewId = "C94EDAAE-0C59-41E6-A373-D4816C2FD882",
                     CustomFilter = new List<string>(){ "title" },
                     Name = "全部博客",
-                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
+                    OrderBy = orderBy
                 },
                 new EntityView()
                 {
@@ -77,7 +79,7 @@ WHERE 1=1 AND blog.is_show = 1";
                     ViewId = "463BE7FE-5435-4841-A365-C9C946C0D655",
                     CustomFilter = new List<string>() { "title" },
                     Name = "展示的博客",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy = orderBy
                 },
                 new EntityView()
                 {
@@ -85,7 +87,7 @@ WHERE 1=1 AND blog.is_show = 1";
                     ViewId = "834F8083-47BC-42F3-A6B2-DE25BE755714",
                     CustomFilter = new List<string>() { "title" },
                     Name = "展示的系列",
-                    OrderBy = "blog.modifiedOn desc, blog.title, blog.blogid"
+                    OrderBy =orderBy
                 },
                 new EntityView()
                 {
@@ -93,7 +95,7 @@ WHERE 1=1 AND blog.is_show = 1";
                     ViewId = "ACCE50D6-81A5-4240-BD82-126A50764FAB",
                     CustomFilter = new List<string>() { "title" },
                     Name = "全部系列",
-                    OrderBy = "blog.createdOn desc, blog.title, blog.blogid"
+                    OrderBy = orderBy
                 }
             };
         }

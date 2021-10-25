@@ -171,15 +171,15 @@ namespace Blog.Business.Blog
         /// 是否置顶
         /// </summary>
         [DataMember]
-        [Attr("is_top", "是否置顶", DataType.Int4, true, 0)]
+        [Attr("is_pop", "是否置顶", DataType.Int4, true, 0)]
         public bool is_pop { get; set; }
 
         /// <summary>
         /// 是否置顶
         /// </summary>
         [DataMember]
-        [Attr("is_topname", "是否置顶", DataType.Varchar, true, "否")]
-        public bool is_popName { get; set; }
+        [Attr("is_popname", "是否置顶", DataType.Varchar, true, "否")]
+        public string is_popName { get; set; }
     }
 }
 
