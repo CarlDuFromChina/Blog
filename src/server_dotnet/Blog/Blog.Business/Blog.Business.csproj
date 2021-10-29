@@ -20,6 +20,7 @@
     <None Remove="version\2.2\2021072101-新增链接菜单.sql" />
     <None Remove="version\2.0\2021070903-初始化推荐信息类型选项集.sql" />
     <None Remove="version\2.2\2021082401-更新评论名称.sql" />
+    <None Remove="version\2.3.3\2021102901-新增评论控制参数.sql" />
     <None Remove="version\2.3\2021091501-删除点赞数字段.sql" />
   </ItemGroup>
 
@@ -37,6 +38,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.0\2021070903-初始化推荐信息类型选项集.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.3.3\2021102901-新增评论控制参数.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.3\2021091501-删除点赞数字段.sql">

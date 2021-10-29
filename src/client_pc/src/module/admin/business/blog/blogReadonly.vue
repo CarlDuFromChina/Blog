@@ -18,7 +18,7 @@
                   <a-icon type="like" :theme="isUp ? 'filled' : 'outlined'" @click="upvote"></a-icon>
                 </a-badge>
               </div>
-              <div class="toolbar-item">
+              <div class="toolbar-item" v-show="showComment">
                 <a-badge
                   :count="data.reading_times || 0"
                   :number-style="{
@@ -51,7 +51,14 @@
                 </div>
               </a-skeleton>
             </a-card>
-            <sp-comments id="comment" :object-id="Id" :data="data" :disabled="!!data.disable_comment" objectName="blog"></sp-comments>
+            <sp-comments
+              id="comment"
+              v-show="showComment"
+              :object-id="Id"
+              :data="data"
+              :disabled="!!data.disable_comment"
+              objectName="blog"
+            ></sp-comments>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
@@ -200,6 +207,9 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    showComment() {
+      return this.$store.getters.getShowComment;
     }
   },
   watch: {
