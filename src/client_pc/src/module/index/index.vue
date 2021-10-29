@@ -71,6 +71,9 @@ export default {
         }
       });
     }
+    sp.get('api/SysConfig/GetValue?code=enable_comment').then(resp => {
+      this.$store.commit('updateShowComment', resp);
+    });
   },
   mounted() {
     window.addEventListener('scroll', this.scrollToTop, true);

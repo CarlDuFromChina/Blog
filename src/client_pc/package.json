@@ -2,7 +2,12 @@
   "name": "client_pc",
   "version": "2.3.2",
   "description": "A Vue.js project",
-  "author": "carldu",
+  "author": "Karl Du",
+  "email": "18556906294@163.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CarlDuFromChina/blog"
+  },
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
