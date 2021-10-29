@@ -23,11 +23,11 @@
       <!-- 项目链接 -->
 
       <div class="more">
-        <p>作者：Karl Du</p>
-        <p>博客仓库地址：<a href="https://github.com/CarlDuFromChina/blog">blog</a></p>
-        <p>我的邮箱：<a href="mailto:18556906294@163.com">18556906294@163.com</a></p>
-        <p>版本号：2.3.2</p>
-        <p><a href="http://www.miitbeian.gov.cn">苏ICP备2020054977号</a></p>
+        <p>作者：{{ config.author }}</p>
+        <p>博客仓库地址：<a :href="config.repository.url">blog</a></p>
+        <p>我的邮箱：<a :href="`mailto:${config.email}`">{{ config.email }}</a></p>
+        <p>版本号：{{ config.version }}</p>
+        <p><a href="https://beian.miit.gov.cn">苏ICP备2020054977号</a></p>
       </div>
     </a-layout-sider>
   </a-layout>
@@ -39,6 +39,7 @@ import links from './links';
 import idea from './idea';
 import blogList from './blogList';
 import seriesList from './seriesList.vue';
+import config from 'appconfig';
 
 export default {
   name: 'home',
@@ -53,7 +54,8 @@ export default {
         allowLoad: () => {
           return this.pageSize * this.pageIndex < this.totalRecords;
         }
-      }
+      },
+      config
     };
   },
   methods: {
