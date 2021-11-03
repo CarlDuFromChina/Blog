@@ -120,9 +120,10 @@ WHERE hash_code = @code
 
             return Broker.ExecuteTransaction(() =>
             {
+                // 上传大图
                 var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
                 var thumbStream = ImageUtil.GetThumbnail(image.GetFilePath());
-                var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId);
+                var image2 = UploadFile(thumbStream, suffix, fileType, contentType, objectId, GetPreviewImageFileName(file.FileName));
                 return new List<FileInfoModel>()
                 {
                     MapperHelper.Map<FileInfoModel>(image),
@@ -144,6 +145,19 @@ WHERE hash_code = @code
             }
             var config = SystemConfig.Config;
             return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId={fileid}";
+        }
+
+        /// <summary>
+        /// 生成预览图文件名
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string GetPreviewImageFileName(string fileName)
+        {
+            AssertUtil.CheckIsNullOrEmpty<SpException>(fileName, "上传文件文件名不能为空", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
+            var fileNameArr = fileName.Split(".");
+            AssertUtil.CheckBoolean<SpException>(fileNameArr.Length != 2, "上传文件文件名格式错误", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
+            return $"{fileNameArr[0]}_small.{fileNameArr[1]}";
         }
     }
 }
