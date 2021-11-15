@@ -13,7 +13,7 @@ namespace Blog.Core.Module.Role
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("sys_roleid", "角色id", AttrType.Varchar, 100)]
+        [Attr("sys_roleid", "角色id", DataType.Varchar, 100)]
         public string sys_roleId
         {
             get
@@ -31,49 +31,49 @@ namespace Blog.Core.Module.Role
         /// 描述
         /// </summary>
         [DataMember]
-        [Attr("description", "描述", AttrType.Varchar, 200)]
+        [Attr("description", "描述", DataType.Varchar, 200)]
         public string description { get; set; }
 
         /// <summary>
         /// 是否基础角色
         /// </summary>
         [DataMember]
-        [Attr("is_basic", "是否基础角色", AttrType.Int4)]
+        [Attr("is_basic", "是否基础角色", DataType.Int4)]
         public bool is_basic { get; set; }
 
         /// <summary>
         /// 是否基础角色
         /// </summary>
         [DataMember]
-        [Attr("is_basicname", "是否基础角色", AttrType.Varchar, 100)]
+        [Attr("is_basicname", "是否基础角色", DataType.Varchar, 100)]
         public string is_basicName { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
         [DataMember]
-        [Attr("is_sys", "是否系统实体", AttrType.Int4)]
+        [Attr("is_sys", "是否系统实体", DataType.Int4)]
         public bool is_sys { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
         [DataMember]
-        [Attr("is_sysname", "是否系统实体", AttrType.Varchar, 100)]
+        [Attr("is_sysname", "是否系统实体", DataType.Varchar, 100)]
         public string is_sysName { get; set; }
 
         /// <summary>
         /// 继承角色
         /// </summary>
         [DataMember]
-        [Attr("parent_roleid", "继承角色", AttrType.Varchar, 100)]
+        [Attr("parent_roleid", "继承角色", DataType.Varchar, 100)]
         public string parent_roleid { get; set; }
 
         /// <summary>
         /// 继承角色
         /// </summary>
         [DataMember]
-        [Attr("parent_roleidname", "继承角色", AttrType.Varchar, 100)]
+        [Attr("parent_roleidname", "继承角色", DataType.Varchar, 100)]
         public string parent_roleidName { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Blog.Core.Auth
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("auth_userid", "实体id", AttrType.Varchar, 100)]
+        [Attr("auth_userid", "实体id", DataType.Varchar, 100)]
         public string auth_userId
         {
             get
@@ -27,60 +27,60 @@ namespace Blog.Core.Auth
         }
 
         [DataMember]
-        [Attr("code", "编码", AttrType.Varchar, 100)]
+        [Attr("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
 
         [DataMember]
-        [Attr("password", "密码", AttrType.Varchar, 100)]
+        [Attr("password", "密码", DataType.Varchar, 100)]
         public string password { get; set; }
 
         /// <summary>
         /// 角色权限id
         /// </summary>
         [DataMember]
-        [Attr("roleid", "角色权限id", AttrType.Varchar, 100)]
+        [Attr("roleid", "角色权限id", DataType.Varchar, 100)]
         public string roleid { get; set; }
 
         /// <summary>
         /// 角色权限名
         /// </summary>
         [DataMember]
-        [Attr("roleidname", "角色权限名", AttrType.Varchar, 100)]
+        [Attr("roleidname", "角色权限名", DataType.Varchar, 100)]
         public string roleidName { get; set; }
 
         /// <summary>
         /// 用户id
         /// </summary>
         [DataMember]
-        [Attr("user_infoid", "用户id", AttrType.Varchar, 100)]
+        [Attr("user_infoid", "用户id", DataType.Varchar, 100)]
         public string user_infoid { get; set; }
 
         /// <summary>
         /// 锁定
         /// </summary>
         [DataMember]
-        [Attr("is_lock", "锁定", AttrType.Int4)]
+        [Attr("is_lock", "锁定", DataType.Int4)]
         public bool is_lock { get; set; }
 
         /// <summary>
         /// 是否锁定
         /// </summary>
         [DataMember]
-        [Attr("is_lockname", "是否锁定", AttrType.Varchar, 100)]
+        [Attr("is_lockname", "是否锁定", DataType.Varchar, 100)]
         public string is_lockName { get; set; }
 
         /// <summary>
         /// 上次登录时间
         /// </summary>
         [DataMember]
-        [Attr("last_login_time", "上次登录时间", AttrType.Timestamp)]
+        [Attr("last_login_time", "上次登录时间", DataType.Timestamp)]
         public DateTime? last_login_time { get; set; }
 
         /// <summary>
         /// 尝试登录次数
         /// </summary>
         [DataMember]
-        [Attr("try_times", "尝试登录次数", AttrType.Int4)]
+        [Attr("try_times", "尝试登录次数", DataType.Int4)]
         public int? try_times { get; set; }
     }
 }

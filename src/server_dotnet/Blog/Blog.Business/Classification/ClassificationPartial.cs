@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Classification
+namespace Blog.Business.Classification
 {
     public partial class classification
     {

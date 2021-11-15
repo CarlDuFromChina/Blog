@@ -15,7 +15,7 @@ namespace Blog.RecommendInfo
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("recommend_infoid", "推荐信息id", AttrType.Varchar, 100)]
+        [Attr("recommend_infoid", "推荐信息id", DataType.Varchar, 100)]
         public string recommend_infoId
         {
             get
@@ -32,28 +32,28 @@ namespace Blog.RecommendInfo
         /// 链接地址
         /// </summary>
         [DataMember]
-        [Attr("url", "链接地址", AttrType.Varchar, 400)]
+        [Attr("url", "链接地址", DataType.Varchar, 400)]
         public string url { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
         [DataMember]
-        [Attr("recommend_type", "推荐类型", AttrType.Varchar, 100)]
+        [Attr("recommend_type", "推荐类型", DataType.Varchar, 100)]
         public string recommend_type { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
         [DataMember]
-        [Attr("recommend_typename", "推荐类型", AttrType.Varchar, 100)]
+        [Attr("recommend_typename", "推荐类型", DataType.Varchar, 100)]
         public string recommend_typeName { get; set; }
 
         /// <summary>
         /// 阅读次数
         /// </summary>
         [DataMember]
-        [Attr("reading_times", "阅读次数", AttrType.Int4)]
+        [Attr("reading_times", "阅读次数", DataType.Int4)]
         public int? reading_times { get; set; }
 
     }

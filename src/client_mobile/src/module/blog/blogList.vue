@@ -54,7 +54,7 @@ export default {
       this.total = 0;
     },
     getDownloadUrl(item) {
-      return `${sp.getServerUrl()}${item.surface_url}`;
+      return sp.getDownloadUrl(item.surface_url);
     },
     goReadonly(id) {
       console.log(id);

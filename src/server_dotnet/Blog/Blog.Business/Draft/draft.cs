@@ -15,7 +15,7 @@ namespace Blog.Draft
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("draftid", "草稿id", AttrType.Varchar, 100)]
+        [Attr("draftid", "草稿id", DataType.Varchar, 100)]
         public string draftId
         {
             get
@@ -32,21 +32,21 @@ namespace Blog.Draft
         /// 博客id
         /// </summary>
         [DataMember]
-        [Attr("blogid", "博客id", AttrType.Varchar, 100)]
+        [Attr("blogid", "博客id", DataType.Varchar, 100)]
         public string blogId { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "内容", AttrType.Text)]
+        [Attr("content", "内容", DataType.Text)]
         public string content { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
         [DataMember]
-        [Attr("title", "标题", AttrType.Varchar, 100)]
+        [Attr("title", "标题", DataType.Varchar, 100)]
         public string title { get; set; }
     }
 }

@@ -40,6 +40,17 @@
         </a-row>
         <a-row>
           <a-col>
+            <a-form-model-item label="文章类型" prop="article_type">
+              <sp-select
+                v-model="data.article_type"
+                :options="selectDataList.article_type"
+                @change="item => (data.article_typeName = item.name)"
+              ></sp-select>
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col>
             <a-form-model-item label="摘要">
               <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :autosize="{ minRows: 2, maxRows: 4 }" allow-clear />
             </a-form-model-item>
@@ -59,6 +70,11 @@
           <a-col :span="6">
             <a-form-model-item label="禁止评论">
               <a-switch v-model="data.disable_comment"></a-switch>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="6">
+            <a-form-model-item label="置顶">
+              <a-switch v-model="data.is_pop"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>
@@ -116,6 +132,7 @@ export default {
       configs: {},
       editVisible: false,
       controllerName: 'blog',
+      selectParamNameList: ['article_type'],
       selectEntityNameList: ['classification'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
@@ -127,7 +144,8 @@ export default {
       token: this.$store.getters.getToken,
       rules: {
         title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }]
+        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
+        article_type: [{ required: true, message: '请选择文章类型', trigger: 'blur' }]
       }
     };
   },
@@ -137,6 +155,26 @@ export default {
       return {
         Authorization: 'Bearer ' + this.token
       };
+    }
+  },
+  watch: {
+    'data.blog_type': {
+      handler(newVal, oldVal) {
+        if (this.selectDataList.classification) {
+          let item = this.selectDataList.classification.find(item => item.Value === oldVal);
+          if (item) {
+            const index = this.tags.indexOf(item.Name);
+            if (index !== -1) {
+              this.tags.splice(index, 1);
+            }
+          }
+
+          item = this.selectDataList.classification.find(item => item.Value === newVal);
+          if (item && new Set(this.tags.concat(item.Name)).size === this.tags.concat(item.Name).length) {
+            this.tags.push(item.Name);
+          }
+        }
+      }
     }
   },
   methods: {
@@ -217,6 +255,7 @@ export default {
           if (this.tags) {
             this.data.tags = this.tags;
           }
+          this.data.html_content = this.html;
           sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
             .then(() => {
               this.$message.success('发布成功！');
@@ -248,7 +287,7 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/Blog/SyncToWeChat`, { id: this.data.Id, content: encodeURIComponent(this.html) })
+          sp.get(`api/Blog/SyncToWeChat?id=${this.data.Id}`)
             .then(() => {
               this.$message.success('同步成功');
             })

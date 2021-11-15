@@ -11,7 +11,7 @@ namespace Blog.FriendBlog
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("friend_blogid", "友人博客id", AttrType.Varchar, 100)]
+        [Attr("friend_blogid", "友人博客id", DataType.Varchar, 100)]
         public string friend_blogId
         {
             get
@@ -29,7 +29,7 @@ namespace Blog.FriendBlog
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "内容", AttrType.Text)]
+        [Attr("content", "内容", DataType.Text)]
         public string content { get; set; }
 
 
@@ -37,7 +37,7 @@ namespace Blog.FriendBlog
         /// 图片地址
         /// </summary>
         [DataMember]
-        [Attr("first_picture", "图片地址", AttrType.Varchar, 500)]
+        [Attr("first_picture", "图片地址", DataType.Varchar, 500)]
         public string first_picture { get; set; }
 
 
@@ -45,14 +45,14 @@ namespace Blog.FriendBlog
         /// 作者
         /// </summary>
         [DataMember]
-        [Attr("author", "作者", AttrType.Varchar, 100)]
+        [Attr("author", "作者", DataType.Varchar, 100)]
         public string author { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
         [DataMember]
-        [Attr("description", "描述", AttrType.Varchar, 400)]
+        [Attr("description", "描述", DataType.Varchar, 400)]
         public string description { get; set; }
     }
 }

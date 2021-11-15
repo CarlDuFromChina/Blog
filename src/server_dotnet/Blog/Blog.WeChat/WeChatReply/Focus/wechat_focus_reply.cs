@@ -15,7 +15,7 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_focus_replyid", "实体id", AttrType.Varchar, 100)]
+        [Attr("wechat_focus_replyid", "实体id", DataType.Varchar, 100)]
         public string wechat_focus_replyId
         {
             get
@@ -32,21 +32,21 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "内容", AttrType.Text)]
+        [Attr("content", "内容", DataType.Text)]
         public string content { get; set; }
 
         /// <summary>
         /// 公众号
         /// </summary>
         [DataMember]
-        [Attr("wechat", "公众号", AttrType.Varchar, 100)]
+        [Attr("wechat", "公众号", DataType.Varchar, 100)]
         public string wechat { get; set; }
 
         /// <summary>
         /// 启用
         /// </summary>
         [DataMember]
-        [Attr("checked", "启用", AttrType.Int4)]
+        [Attr("checked", "启用", DataType.Int4)]
         public int? @checked { get; set; }
     }
 }

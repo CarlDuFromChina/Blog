@@ -12,7 +12,7 @@ namespace Blog.Core.Module.Gallery
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("galleryid", "实体id", AttrType.Varchar, 100)]
+        [Attr("galleryid", "实体id", DataType.Varchar, 100)]
         public string galleryId
         {
             get
@@ -30,35 +30,35 @@ namespace Blog.Core.Module.Gallery
         /// 标签
         /// </summary>
         [DataMember]
-        [Attr("tags", "实体id", AttrType.Varchar, 100)]
+        [Attr("tags", "实体id", DataType.Varchar, 100)]
         public string tags { get; set; }
 
         /// <summary>
         /// 预览图
         /// </summary>
         [DataMember]
-        [Attr("preview_url", "预览图", AttrType.Varchar, 200)]
+        [Attr("preview_url", "预览图", DataType.Varchar, 200)]
         public string preview_url { get; set; }
 
         /// <summary>
         /// 大图
         /// </summary>
         [DataMember]
-        [Attr("image_url", "大图", AttrType.Varchar, 200)]
+        [Attr("image_url", "大图", DataType.Varchar, 200)]
         public string image_url { get; set; }
 
         /// <summary>
         /// 预览图片id
         /// </summary>
         [DataMember]
-        [Attr("previewid", "预览图片id", AttrType.Varchar, 100)]
+        [Attr("previewid", "预览图片id", DataType.Varchar, 100)]
         public string previewid { get; set; }
 
         /// <summary>
         /// 大图id
         /// </summary>
         [DataMember]
-        [Attr("imageid", "大图id", AttrType.Varchar, 100)]
+        [Attr("imageid", "大图id", DataType.Varchar, 100)]
         public string imageid { get; set; }
     }
 }

@@ -129,6 +129,10 @@ export default {
     useHeaderClick: {
       type: Boolean,
       default: true
+    },
+    // 导出
+    exportData: {
+      type: Function
     }
   },
   data() {
@@ -137,6 +141,7 @@ export default {
       normalOperations: [
         { name: 'new', icon: 'plus', operate: this.createData },
         { name: 'delete', icon: 'delete', operate: this.deleteData },
+        { name: 'export', icon: 'export', operate: this.exportData },
         { name: 'search' },
         { name: 'more' }
       ],

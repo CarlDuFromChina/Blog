@@ -19,21 +19,7 @@ namespace Blog.Core.Module.SysRole
         {
             var roles = ServiceContainer.ResolveAll<IRole>();
             var broker = PersistBrokerFactory.GetPersistBroker();
-            var privileges = new List<sys_role_privilege>();
-
-            roles.Each(item =>
-            {
-                item.GetMissingPrivilege()
-                    .Each(item =>
-                    {
-                            if (!item.Value.IsEmpty())
-                            {
-                                privileges.AddRange(item.Value);
-                            }
-                        });
-            });
-
-            broker.ExecuteTransaction(() => broker.BulkCreate(privileges));
+            new SysRolePrivilegeService(broker).CreateRoleMissingPrivilege();
 
             // 权限读取到缓存
             roles.Each(item => MemoryCacheUtil.Set(item.GetRoleKey, new RolePrivilegeModel() { Role = item.GetSysRole(), Privileges = item.GetRolePrivilege() }, 3600 * 12));
