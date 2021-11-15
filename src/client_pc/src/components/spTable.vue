@@ -29,7 +29,7 @@
       @current-change="currentPage"
       :current-page="pageIndex"
       :page-count="pageSize"
-      :pager-count="pagerCount"
+      :pager-count="pageCount"
       :total="total"
     >
     </el-pagination>

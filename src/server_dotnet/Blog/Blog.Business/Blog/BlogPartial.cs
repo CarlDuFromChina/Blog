@@ -9,14 +9,17 @@ namespace Blog.Business.Blog
 {
     public partial class blog
     {
-        [DataMember]
-        public int message { get; set; }
-
         /// <summary>
         /// 点赞数
         /// </summary>
         [DataMember]
         public int upvote_times { get; set; }
+
+        /// <summary>
+        /// 评论数
+        /// </summary>
+        [DataMember]
+        public int comment_count { get; set; }
     }
 
     public class BlogActivityModel

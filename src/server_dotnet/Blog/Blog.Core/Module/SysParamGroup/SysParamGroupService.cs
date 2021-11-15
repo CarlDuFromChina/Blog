@@ -7,6 +7,8 @@ using System.Web;
 using Sixpence.EntityFramework.SelectOption;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.Core;
+using System.IO;
+using Blog.Core.Module.SysParams;
 
 namespace Blog.Core.Module.SysParamGroup
 {
@@ -96,6 +98,80 @@ DELETE FROM sys_param WHERE sys_paramgroupid IN (in@ids)
                 Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", ids } });
                 base.DeleteData(ids);
             });
+        }
+
+        public (string fileName, string ContentType, byte[] bytes) Export(string id)
+        {
+            var data = GetData(id);
+            var paramList = Broker.RetrieveMultiple<sys_param>("SELECT * FROM sys_param WHERE sys_paramgroupid = @id", new Dictionary<string, object>() { { "@id", id } });
+
+            var content = $@"INSERT INTO sys_paramgroup (
+    sys_paramgroupid,
+    name,
+    code,
+    createdby,
+    createdbyname,
+    createdon,
+    modifiedby,
+    modifiedbyname,
+    modifiedon
+)
+SELECT
+    '{data.Id}',
+    '{data.name}',
+    '{data.code}',
+    '111111111-11111-1111-1111-111111111111',
+    '系统',
+    (SELECT NOW()),
+    '111111111-11111-1111-1111-111111111111',
+    '系统',
+    (SELECT NOW())
+WHERE NOT EXISTS (
+    SELECT sys_paramgroupid FROM sys_paramgroup WHERE sys_paramgroupid = '{data.Id}'
+);
+";
+            paramList.Each(param =>
+            {
+                content += $@"
+INSERT INTO sys_param (
+    sys_paramid,
+    name,
+    code,
+    sys_paramgroupid,
+    sys_paramgroupidname,
+    createdby,
+    createdbyname,
+    createdon,
+    modifiedby,
+    modifiedbyname,
+    modifiedon
+)
+SELECT
+    '{param.Id}',
+    '{param.name}',
+    '{param.code}',
+    '{data.Id}',
+    '{data.name}',
+    '111111111-11111-1111-1111-111111111111',
+    '系统',
+    (SELECT NOW()),
+    '111111111-11111-1111-1111-111111111111',
+    '系统',
+    (SELECT NOW())
+WHERE NOT EXISTS (
+    SELECT sys_paramid FROM sys_param WHERE sys_paramid = '{param.Id}'
+);";
+            });
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (StreamWriter writer = new StreamWriter(ms))
+                {
+                    writer.WriteLine(content);
+                    writer.Close();
+                }
+                return ($"{data.code}.sql", "application/octet-stream", ms.ToArray());
+            }
         }
     }
 }

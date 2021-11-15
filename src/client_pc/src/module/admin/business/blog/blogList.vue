@@ -7,6 +7,7 @@
     :edit-component="editComponent"
     :headerClick="goEdit"
     :searchList="searchList"
+    :exportData="exportData"
   >
     <a-form-model :model="searchData" slot="more" layout="horizontal" v-bind="{ labelCol: { span: 4 }, wrapperCol: { span: 20 } }" label-align="left">
       <a-row :gutter="24" style="padding: 0 10px">
@@ -16,7 +17,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="10">
-          <a-form-model-item label="博客分类">
+          <a-form-model-item label="博客分类" v-if="!classification">
             <a-select mode="multiple" style="width: 100%" placeholder="Please select" v-model="searchData.type">
               <a-select-option v-for="item in blogType" :key="item.Value">
                 {{ item.Name }}
@@ -42,10 +43,11 @@ export default {
     return {
       controllerName: 'Blog',
       editComponent: blogEdit,
-      operations: ['new', 'delete', 'search', 'more'],
+      operations: ['new', 'delete', 'search', 'more', 'export'],
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'tags', label: '标签', type: 'tag' },
+        { prop: 'article_typeName', label: '文章类型' },
         { prop: 'is_seriesName', label: '是否系列' },
         { prop: 'is_showName', label: '是否展示' },
         { prop: 'createdByName', label: '创建人' },
@@ -56,7 +58,8 @@ export default {
       searchData: {
         type: [],
         date: []
-      }
+      },
+      classification: ''
     };
   },
   computed: {
@@ -73,17 +76,24 @@ export default {
       if (!sp.isNull(type) && type.length > 0) {
         searchList.push({ Name: 'blog_type', Value: type, Type: 5 });
       }
+      if (!sp.isNullOrEmpty(this.classification)) {
+        searchList.push({ Name: 'blog_type', Value: this.classification, Type: 0 });
+      }
       return searchList;
     }
   },
   created() {
-    // 获取博客类型选项集
-    sp.get('api/Classification/GetDataList').then(resp => {
-      this.blogType = resp.map(item => ({
-        Name: item.name,
-        Value: item.code
-      }));
-    });
+    if (this.$route.params.classification) {
+      this.classification = this.$route.params.classification;
+    } else {
+      // 获取博客类型选项集
+      sp.get('api/Classification/GetDataList').then(resp => {
+        this.blogType = resp.map(item => ({
+          Name: item.name,
+          Value: item.code
+        }));
+      });
+    }
   },
   methods: {
     search() {
@@ -102,8 +112,22 @@ export default {
     },
     goEdit(item) {
       this.$router.push({
-        path: `blogEdit/${(item || {}).Id || ''}`
+        name: 'blogEdit',
+        params: { id: (item || {}).Id || '' }
       });
+    },
+    exportData() {
+      const selectionIds = this.$refs.list.selectionIds;
+      if (!selectionIds || selectionIds.length === 0) {
+        this.$message.warning('请选择一项，再进行导出');
+        return;
+      }
+      if (selectionIds.length > 1) {
+        this.$message.warning('最多导出一条记录');
+      }
+
+      const id = selectionIds[0];
+      sp.get(`api/blog/ExportMarkdown?id=${id}`);
     }
   }
 };

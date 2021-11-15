@@ -56,7 +56,7 @@ namespace Blog.Core.Auth.Privilege
         {
             var sql = @"
 SELECT * FROM sys_role_privilege
-WHERE sys_entityid = @id";
+WHERE objectid = @id";
             return Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", entityid } });
         }
 
@@ -67,6 +67,29 @@ WHERE sys_entityid = @id";
         public void BulkSave(List<sys_role_privilege> dataList)
         {
             Broker.BulkCreateOrUpdate(dataList);
+        }
+
+        /// <summary>
+        /// 自动生成权限
+        /// </summary>
+        public void CreateRoleMissingPrivilege()
+        {
+            var roles = ServiceContainer.ResolveAll<IRole>();
+            var privileges = new List<sys_role_privilege>();
+
+            roles.Each(item =>
+            {
+                item.GetMissingPrivilege(Broker)
+                    .Each(item =>
+                    {
+                        if (!item.Value.IsEmpty())
+                        {
+                            privileges.AddRange(item.Value);
+                        }
+                    });
+            });
+
+            Broker.ExecuteTransaction(() => Broker.BulkCreate(privileges));
         }
     }
 }

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <a-input-search placeholder="输入博客名快速搜索" class="search" size="large" enter-button @search="onSearch" />
     <sp-card class="blog-list">
       <a-list item-layout="vertical" size="large" :data-source="listData">
         <a-list-item slot="renderItem" :key="item.Id" slot-scope="item">
@@ -15,12 +14,13 @@
             </span>
             <span :key="'message'" v-show="showComment">
               <a-icon type="message" style="margin-right: 8px" />
-              {{ item.message || 0 }}
+              {{ item.comment_count || 0 }}
             </span>
           </template>
           <a-list-item-meta :description="item.description">
             <span slot="title" style="font-size: 14px">
               <div>
+                <a-tag v-if="item.is_pop" color="blue">置顶</a-tag>
                 <a @click="readBlog(item)">{{ item.title }}</a>
               </div>
               <div class="meta-container">
@@ -62,7 +62,6 @@ export default {
     };
   },
   async created() {
-    this.fetchData();
     this.$bus.$on('load-more', () => {
       if (this.isLoadedAll) {
         return;
@@ -86,7 +85,7 @@ export default {
       return sp.getDownloadUrl(url);
     },
     onSearch(value) {
-      this.searchValue = value;
+      this.searchValue = value || '';
       this.listData = [];
       this.goFirst();
       this.fetchData();
@@ -97,7 +96,7 @@ export default {
     fetchData() {
       try {
         sp.get(
-          `api/blog/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
+          `api/blog/GetViewData?orderBy=&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
         ).then(resp => {
           this.total = resp.RecordCount;
           this.listData = this.listData.concat(resp.DataList);
@@ -127,10 +126,6 @@ export default {
 .blog-list {
   padding: 10px 20px 24px 20px;
   margin-right: 50px;
-}
-
-.ant-list-item-meta-content {
-  margin-top: -10px;
 }
 
 .ant-list-vertical .ant-list-item-meta {

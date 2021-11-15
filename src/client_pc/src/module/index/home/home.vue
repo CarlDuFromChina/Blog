@@ -2,7 +2,7 @@
   <a-layout>
     <!-- 博客 -->
     <a-layout-sider width="70%" theme="light">
-      <blog-list></blog-list>
+      <blog-list ref="blogList"></blog-list>
     </a-layout-sider>
     <!-- 博客 -->
     <a-layout-sider width="30%" style="overflow:hidden" theme="light">
@@ -55,8 +55,20 @@ export default {
           return this.pageSize * this.pageIndex < this.totalRecords;
         }
       },
-      config
+      config,
+      searchValue: ''
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.searchValue = to.query.search;
+      vm.$refs.blogList.onSearch(vm.searchValue);
+    });
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.searchValue = to.query.search;
+    this.$refs.blogList.onSearch(this.searchValue);
+    next();
   },
   methods: {
     loadMore() {

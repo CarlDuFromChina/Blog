@@ -19,6 +19,8 @@ namespace Blog.Core.Module.SysEntity
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
+                    // 创建权限
+                    new SysRolePrivilegeService(broker).CreateRoleMissingPrivilege();
                     // 重新注册权限并清除缓存
                     UserPrivilegesCache.Clear(broker);
                     break;

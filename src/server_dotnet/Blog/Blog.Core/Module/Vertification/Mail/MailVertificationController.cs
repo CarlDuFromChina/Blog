@@ -21,5 +21,17 @@ namespace Blog.Core.Module.Vertification.Mail
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             return new MailVertificationService().ActivateUser(id);
         }
+
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public string ResetPassword(string id)
+        {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+            return new MailVertificationService().ResetPassword(id);
+        }
     }
 }

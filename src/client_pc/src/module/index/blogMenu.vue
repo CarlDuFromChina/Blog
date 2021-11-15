@@ -1,8 +1,8 @@
 <template>
-  <sp-menu :menus="menus" @menu-change="menuChange">
+  <sp-menu ref="menu" :menus="menus" @menu-change="menuChange">
     <template slot="menus">
       <sp-menu-item style="float:right;" v-show="!isLoggedIn" disableHover>
-        <a-button icon="login" type="primary" @click="login">登录</a-button>
+        <a-button icon="login" type="primary" @click="login" style="vertical-align: middle">登录</a-button>
       </sp-menu-item>
       <sp-menu-item style="float:right;" v-show="isLoggedIn" disableHover>
         <a-dropdown>
@@ -18,6 +18,18 @@
         <a-badge :count="messageCount">
           <sp-icon name="sp-blog-notice" size="24"></sp-icon>
         </a-badge>
+      </sp-menu-item>
+      <sp-menu-item style="float:right;">
+        <a-input-search
+          ref="searchInput"
+          @focus="searchFocus"
+          @blur="searchBlur"
+          v-model="searchValue"
+          placeholder="输入博客名快速搜索"
+          class="search"
+          enter-button
+          @search="onSearch"
+        />
       </sp-menu-item>
     </template>
   </sp-menu>
@@ -44,7 +56,8 @@ export default {
         }
       ],
       showAdmin: false,
-      messageCount: 0
+      messageCount: 0,
+      searchValue: ''
     };
   },
   created() {
@@ -55,6 +68,10 @@ export default {
       sp.get('api/System/GetShowAdmin').then(resp => {
         this.showAdmin = resp;
       });
+    }
+    if (this.$route.query.search) {
+      this.searchValue = this.$route.query.search;
+      this.onSearch(this.searchValue);
     }
   },
   computed: {
@@ -88,9 +105,24 @@ export default {
     },
     goMessageIndex() {
       this.$router.push({ name: 'messageRemind' });
+    },
+    onSearch(value) {
+      this.$router.push({ name: 'home', query: { search: value } }, () => this.$refs.menu.setCurrentMenu());
+    },
+    searchFocus() {
+      this.$refs.searchInput.$el.style.width = '300px';
+    },
+    searchBlur() {
+      this.$refs.searchInput.$el.style.width = '200px';
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+.search {
+  width: 200px;
+  vertical-align: middle;
+  transition: width 0.3s;
+}
+</style>

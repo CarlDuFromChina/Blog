@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sixpence.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -77,6 +78,19 @@ namespace Sixpence.EntityFramework.Broker
         public static IEnumerable<T> Query<T>(this IPersistBroker broker, string sql, IDictionary<string, object> paramList = null)
         {
             return broker.DbClient.Query<T>(sql, paramList);
+        }
+
+        /// <summary>
+        /// 查询数量
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="broker"></param>
+        /// <param name="sql"></param>
+        /// <param name="paramList"></param>
+        /// <returns></returns>
+        public static int QueryCount(this IPersistBroker broker, string sql, IDictionary<string, object> paramList = null)
+        {
+            return ConvertUtil.ConToInt(broker.ExecuteScalar(sql, paramList));
         }
 
         /// <summary>

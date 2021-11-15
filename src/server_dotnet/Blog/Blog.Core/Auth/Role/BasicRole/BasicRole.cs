@@ -89,13 +89,13 @@ WHERE sys_roleidName = @name
         /// 获取缺失权限
         /// </summary>
         /// <returns></returns>
-        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege();
+        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege(IPersistBroker broker);
 
         /// <summary>
         /// 获取缺失实体权限
         /// </summary>
         /// <returns></returns>
-        protected IEnumerable<sys_entity> GetMissingEntityPrivileges()
+        protected IEnumerable<sys_entity> GetMissingEntityPrivileges(IPersistBroker broker)
         {
             var role = GetSysRole();
             var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
@@ -106,14 +106,14 @@ WHERE sys_entityid NOT IN (
 	WHERE object_type = 'sys_entity' AND sys_roleid = @id
 )
 ";
-            return Broker.RetrieveMultiple<sys_entity>(sql, paramList);
+            return broker.RetrieveMultiple<sys_entity>(sql, paramList);
         }
 
         /// <summary>
         /// 获取缺失菜单权限
         /// </summary>
         /// <returns></returns>
-        protected IEnumerable<sys_menu> GetMissingMenuPrivileges()
+        protected IEnumerable<sys_menu> GetMissingMenuPrivileges(IPersistBroker broker)
         {
             var role = GetSysRole();
             var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
@@ -124,7 +124,8 @@ WHERE sys_menuid NOT IN (
 	WHERE object_type = 'sys_menu' AND sys_roleid = @id
 )
 ";
-            return Broker.RetrieveMultiple<sys_menu>(sql, paramList);
+            var dataList = broker.RetrieveMultiple<sys_menu>(sql, paramList);
+            return dataList;
         }
 
         /// <summary>

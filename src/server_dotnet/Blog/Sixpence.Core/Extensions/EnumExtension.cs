@@ -70,21 +70,20 @@ namespace Sixpence.Core
         /// 根据描述找到枚举
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="description"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static T GetEnum<T>(this string description)
+        public static T GetEnum<T>(this string value)
         {
             Type type = typeof(T);
             var fields = type.GetFields();
             foreach (var item in fields)
             {
-                var curDesc = item.GetCustomAttribute<DescriptionAttribute>();
-                if (curDesc != null && curDesc.Description == description)
+                if (item.Name.ToLower() == value.ToLower())
                 {
                     return (T)item.GetValue(null);
                 }
             }
-            throw new ArgumentException(string.Format("{0} 未能找到对应的枚举.", description), "Description");
+            throw new ArgumentException(string.Format("{0} 未能找到对应的枚举.", value));
         }
     }
 

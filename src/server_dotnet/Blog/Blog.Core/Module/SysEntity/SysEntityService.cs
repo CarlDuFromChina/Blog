@@ -11,6 +11,7 @@ using System.Security.Policy;
 using System.Web;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Models;
+using Blog.Core.Profiles;
 
 namespace Blog.Core.Module.SysEntity
 {
@@ -112,41 +113,26 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        public FileInfo Export(string entityId)
+        public (string fileName, string ContentType, byte[] bytes) Export(string entityId)
         {
             var attrs = GetEntityAttrs(entityId);
             var entity = GetData(entityId);
             
-            var filePath = $"{FolderType.Temp.GetPath()}\\{entity.code}.cs";
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write); ;
-            StreamWriter writer = new StreamWriter(fs);
-
             var attributes = "";
             var sysEntityAttrList = typeof(SimpleEntity).GetProperties().Select(item => item.Name).ToList();
             foreach (var item in attrs)
             {
+                var column = MapperHelper.Map<Column>(item);
+
                 // 实体id和实体name不需要产生
                 if (item.code != entity.code + "id" && !sysEntityAttrList.Contains(item.code))
                 {
                     var attribute = $@"
         /// <summary>
-        /// {item.name}
+        /// {column.LogicalName}
         /// </summary>
-        private {item.attr_type.ToCSharpType()} _{item.code};
-        [DataMember, Attr(""{item.code}"", ""{item.name}"", AttrType.{item.attr_type.ToAttrString()}, {item.attr_length})]
-        public {item.attr_type.ToCSharpType()} {item.code}
-        {{
-            get
-            {{
-                return this._{item.code};
-            }}
-            set
-            {{
-                this._{item.code} = value;
-                SetAttributeValue(""{item.code}"", value);
-            }}
-        }}
-
+        [DataMember, Attr(""{column.Name}"", ""{column.LogicalName}"", AttrType.{column.Type}, {column.Length})]
+        public {column.Type.ToCSharpType()} {column.Name} {{ get; set; }}
 ";
                     attributes += attribute;
                 }
@@ -165,7 +151,8 @@ namespace SixpenceStudio.Core.SysEntity
         /// <summary>
         /// 实体id
         /// </summary>
-        [DataMember, Attr(""{entity.code}id"", ""实体id"", AttrType.Varchar, 100)]
+        [DataMember]
+        [Attr(""{entity.code}id"", ""实体id"", DataType.Varchar, 100)]
         public string {entity.code}Id
         {{
             get
@@ -182,10 +169,16 @@ namespace SixpenceStudio.Core.SysEntity
     }}
 }}
 ";
-            writer.WriteLine(content);
-            writer.Close();
 
-            return new FileInfo(filePath);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (StreamWriter writer = new StreamWriter(ms))
+                {
+                    writer.WriteLine(content);
+                    writer.Close();
+                }
+                return ($"{entity.code}.sql", "application/octet-stream", ms.ToArray());
+            }
         }
     }
 }

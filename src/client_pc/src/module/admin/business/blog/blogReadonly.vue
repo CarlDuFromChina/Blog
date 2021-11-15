@@ -10,17 +10,17 @@
                 <a-badge
                   :count="data.upvote_times || 0"
                   :number-style="{
-                    backgroundColor: '#fff',
-                    color: '#999',
+                    backgroundColor: isUp ? '#349dfe' : '#fff',
+                    color: isUp ? '#fff' : '#999',
                     boxShadow: '0 0 0 1px #d9d9d9 inset'
                   }"
                 >
-                  <a-icon type="like" :theme="isUp ? 'filled' : 'outlined'" @click="upvote"></a-icon>
+                  <a-icon type="like" :theme="isUp ? 'twoTone' : 'outlined'" @click="upvote"></a-icon>
                 </a-badge>
               </div>
               <div class="toolbar-item" v-show="showComment">
                 <a-badge
-                  :count="data.reading_times || 0"
+                  :count="data.comment_count || 0"
                   :number-style="{
                     backgroundColor: '#fff',
                     color: '#999',
@@ -390,12 +390,6 @@ export default {
     }
   }
 }
-.anchor-fix {
-  display: block;
-  height: 20px; /*same height as header*/
-  margin-top: -20px; /*same height as header*/
-  visibility: hidden;
-}
 
 /deep/ .block {
   .content-item {
@@ -474,5 +468,13 @@ export default {
       color: #b2bac2;
     }
   }
+}
+</style>
+
+<style lang="less">
+.anchor-fix {
+  display: block;
+  height: 0; /*same height as header*/
+  visibility: hidden;
 }
 </style>

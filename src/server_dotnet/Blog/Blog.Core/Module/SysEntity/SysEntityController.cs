@@ -28,10 +28,12 @@ namespace Blog.Core.Module.SysEntity
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
-        public void Export(string entityId)
+        [HttpGet]
+        public IActionResult Export(string entityId)
         {
-            throw new NotImplementedException();
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+            var result = new SysEntityService().Export(entityId);
+            return File(result.bytes, result.ContentType, result.fileName);
         }
     }
 }

@@ -123,6 +123,16 @@ namespace Blog.Core.Module.DataService
         }
 
         /// <summary>
+        /// 忘记密码
+        /// </summary>
+        /// <param name="code"></param>
+        [HttpGet]
+        public void ForgetPassword(string code)
+        {
+            new SystemService().ForgetPassword(code);
+        }
+
+        /// <summary>
         /// 是否展示后台
         /// </summary>
         /// <returns></returns>

@@ -176,7 +176,7 @@ WHERE {entity.EntityName}Id = @id;
                 var sql = @"
 UPDATE {0} SET {1} WHERE {2} = @id;
 ";
-                var paramList = new Dictionary<string, object>();
+                var paramList = new Dictionary<string, object>() { { "@id", entity.Id } };
 
                 #region 处理属性
                 var attributes = new List<string>();
@@ -189,10 +189,6 @@ UPDATE {0} SET {1} WHERE {2} = @id;
                         paramList.Add($"@param{count}", keyValue.value);
                         attributes.Add($"{ item.Key} = {keyValue.name}");
                         count++;
-                    }
-                    else
-                    {
-                        paramList.Add("@id", item.Value);
                     }
                 }
                 #endregion

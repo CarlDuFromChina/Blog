@@ -5,7 +5,7 @@ export default [
     component: () => import('./blogEdit')
   },
   {
-    path: '/admin/blogs',
+    path: '/admin/blogs/:classification?',
     name: 'blogList',
     component: () => import('./blogList'),
     meta: { title: '文章管理' }

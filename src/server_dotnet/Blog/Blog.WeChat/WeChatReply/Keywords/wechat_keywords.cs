@@ -13,7 +13,7 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_keywordsid", "实体id", AttrType.Varchar, 100)]
+        [Attr("wechat_keywordsid", "实体id", DataType.Varchar, 100)]
         public string wechat_keywordsId
         {
             get
@@ -31,7 +31,7 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// 回复内容
         /// </summary>
         [DataMember]
-        [Attr("reply_content", "回复内容", AttrType.Text)]
+        [Attr("reply_content", "回复内容", DataType.Text)]
         public string reply_content { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Blog.idea
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("ideaid", "想法id", AttrType.Varchar, 100)]
+        [Attr("ideaid", "想法id", DataType.Varchar, 100)]
         public string ideaId
         {
             get
@@ -32,7 +32,7 @@ namespace Blog.idea
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "想法id", AttrType.Text)]
+        [Attr("content", "想法id", DataType.Text)]
         public string content { get; set; }
     }
 }

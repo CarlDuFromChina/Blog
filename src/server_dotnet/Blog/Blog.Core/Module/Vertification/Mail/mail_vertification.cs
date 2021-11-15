@@ -14,7 +14,7 @@ namespace Blog.Core.Module.Vertification.Mail
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("mail_vertificationid", "邮箱验证id", AttrType.Varchar, 100)]
+        [Attr("mail_vertificationid", "邮箱验证id", DataType.Varchar, 100)]
         public string mail_vertificationId
         {
             get
@@ -28,33 +28,46 @@ namespace Blog.Core.Module.Vertification.Mail
         }
 
         [DataMember]
-        [Attr("mail_address", "邮箱", AttrType.Varchar, 200)]
+        [Attr("mail_address", "邮箱", DataType.Varchar, 200)]
         public string mail_address { get; set; }
 
         /// <summary>
         /// 登录请求信息
         /// </summary>
         [DataMember]
-        [Attr("login_request", "登录请求信息", AttrType.JToken)]
+        [Attr("login_request", "登录请求信息", DataType.Jsonb)]
         public JToken login_request { get; set; }
 
         /// <summary>
         /// 过期时间
         /// </summary>
-        [DataMember, Attr("expire_time", "过期时间", AttrType.Timestamp, 6, true)]
+        [DataMember, Attr("expire_time", "过期时间", DataType.Timestamp, 6, true)]
         public DateTime? expire_time { get; set; }
 
         /// <summary>
         /// 消息内容
         /// </summary>
-        [DataMember, Attr("content", "消息内容", AttrType.Text)]
+        [DataMember, Attr("content", "消息内容", DataType.Text)]
         public string content { get; set; }
 
         /// <summary>
         /// 是否激活
         /// </summary>
         [DataMember]
-        [Attr("is_active", "是否激活", AttrType.Int4)]
+        [Attr("is_active", "是否激活", DataType.Int4)]
         public bool is_active { get; set; }
+
+        /// <summary>
+        /// 激活类型
+        /// </summary>
+        [DataMember]
+        [Attr("mail_type", "激活类型", DataType.Varchar, 100)]
+        public string mail_type { get; set; }
+    }
+
+    public enum MailType
+    {
+        Activation,
+        ResetPassword
     }
 }

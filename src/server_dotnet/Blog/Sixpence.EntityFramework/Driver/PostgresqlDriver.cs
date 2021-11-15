@@ -66,7 +66,11 @@ CREATE TABLE {name}
             var tempSql = $@"ALTER TABLE {tableName}";
             foreach (var item in columns)
             {
-                var itemSql = $"{tempSql} ADD COLUMN IF NOT EXISTS {item.Name} {item.Type.GetDescription()}{(item.Length != null ? $"({item.Length})" : "")} {(item.IsRequire == true ? " NOT NULL" : "")};\r\n";
+                var require = item.IsRequire == true ? " NOT NULL" : "";
+                var length = item.Length != null ? $"({item.Length})" : "";
+                var type = item.Type.ToString().ToLower();
+                var defaultValue = item.DefaultValue == null ? "" : item.DefaultValue is string ? $"DEFAULT '{item.DefaultValue}'" : $"DEFAULT {item.DefaultValue}";
+                var itemSql = $"{tempSql} ADD COLUMN IF NOT EXISTS {item.Name} {type}{length} {require} {defaultValue};\r\n";
                 sql.Append(itemSql);
             }
             return sql.ToString();

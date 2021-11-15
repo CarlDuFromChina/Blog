@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Classification
+namespace Blog.Business.Classification
 {
     public class ClassificationService : EntityService<classification>
     {
