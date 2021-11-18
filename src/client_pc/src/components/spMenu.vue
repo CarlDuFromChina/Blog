@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      currentIndex: 0
+      currentIndex: -1
     };
   },
   mounted() {
@@ -64,7 +64,7 @@ export default {
     menuChange(item, index) {
       this.currentIndex = index;
       this.$emit('menu-change');
-      this.$router.push({ path: item.route });
+      this.$router.push({ name: item.route });
     }
   }
 };
