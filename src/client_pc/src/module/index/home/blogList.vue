@@ -17,6 +17,7 @@
               {{ item.comment_count || 0 }}
             </span>
           </template>
+          <img :src="getSurface(item.surface_url)" slot="extra" class="blog_pic" />
           <a-list-item-meta :description="item.description">
             <span slot="title" style="font-size: 14px">
               <div>
@@ -32,7 +33,6 @@
               </div>
               <div class="meta-brief">{{ item.brief }}</div>
             </span>
-            <img :src="getSurface(item.surface_url)" slot="avatar" style="width: 150px; height: 100px" />
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -94,7 +94,11 @@ export default {
       }
     },
     getSurface(url) {
-      return sp.getDownloadUrl(url);
+      var downloadUrl = sp.getDownloadUrl(url);
+      if (sp.isNullOrEmpty(downloadUrl)) {
+        return require('../../../assets/images/pic_err.png');
+      }
+      return downloadUrl;
     },
     onSearch(value) {
       this.searchValue = value || '';
@@ -192,5 +196,11 @@ export default {
   text-overflow: ellipsis;
   font-size: 13px;
   line-height: 22px;
+}
+
+.blog_pic {
+  width: 120px;
+  height: 80px;
+  border-radius: 2px;
 }
 </style>
