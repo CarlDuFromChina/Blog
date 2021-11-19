@@ -17,6 +17,7 @@
               {{ item.comment_count || 0 }}
             </span>
           </template>
+          <img :src="getSurface(item.surface_url)" slot="extra" class="blog_pic" />
           <a-list-item-meta :description="item.description">
             <span slot="title" style="font-size: 14px">
               <div>
@@ -26,13 +27,12 @@
               <div class="meta-container">
                 <span class="meta-container-author">{{ item.createdByName }}</span>
                 <span class="meta-container-date">{{ formtDate(item.createdOn) }}</span>
-                <a-tag v-for="(tag, index) in JSON.parse(item.tags)" :key="index" :color="colors[index % colors.length]">
-                  {{ tag }}
+                <a-tag v-show="item.article_typeName" :color="getColor(item)">
+                  {{ item.article_typeName }}
                 </a-tag>
               </div>
               <div class="meta-brief">{{ item.brief }}</div>
             </span>
-            <img :src="getSurface(item.surface_url)" slot="avatar" style="width: 150px; height: 100px" />
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -81,8 +81,24 @@ export default {
     }
   },
   methods: {
+    getColor(item) {
+      switch (item.article_typeName) {
+        case '原创':
+          return this.colors[0];
+        case '转载':
+          return this.colors[1];
+        case '翻译':
+          return this.colors[2];
+        default:
+          return '';
+      }
+    },
     getSurface(url) {
-      return sp.getDownloadUrl(url);
+      var downloadUrl = sp.getDownloadUrl(url);
+      if (sp.isNullOrEmpty(downloadUrl)) {
+        return require('../../../assets/images/pic_err.png');
+      }
+      return downloadUrl;
     },
     onSearch(value) {
       this.searchValue = value || '';
@@ -180,5 +196,11 @@ export default {
   text-overflow: ellipsis;
   font-size: 13px;
   line-height: 22px;
+}
+
+.blog_pic {
+  width: 120px;
+  height: 80px;
+  border-radius: 2px;
 }
 </style>
