@@ -1,16 +1,18 @@
 <template>
   <a-layout class="layout-home">
     <a-layout-sider breakpoint="lg" collapsed-width="0">
-      <a-menu theme="dark" mode="inline" :open-keys="openKeys" @openChange="onOpenChange">
-        <a-sub-menu v-for="(item, index) in menus" :key="index">
-          <span slot="title">
-            <a-icon :type="item.icon" /><span>{{ item.title }}</span>
-          </span>
-          <a-menu-item v-for="item2 in item.subMenu[0].menus" :key="`/admin/${item2.router}`" @click="handleClick">
-            {{ item2.title }}
-          </a-menu-item>
-        </a-sub-menu>
-      </a-menu>
+      <div class="sider">
+        <a-menu theme="dark" mode="inline" :open-keys="openKeys" @openChange="onOpenChange">
+          <a-sub-menu v-for="(item, index) in menus" :key="index">
+            <span slot="title">
+              <a-icon :type="item.icon" /><span>{{ item.title }}</span>
+            </span>
+            <a-menu-item v-for="item2 in item.subMenu[0].menus" :key="`/admin/${item2.router}`" @click="handleClick">
+              {{ item2.title }}
+            </a-menu-item>
+          </a-sub-menu>
+        </a-menu>
+      </div>
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: '0 20px 0 0', textAlign: 'right' }">
@@ -152,5 +154,27 @@ html {
 <style lang="less" scoped>
 .layout-home {
   height: 100%;
+  overflow: hidden;
+}
+
+.sider {
+  overflow: hidden auto;
+  height: 100%;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: hsla(0, 0%, 100%, 0.15);
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 5px rgba(37, 37, 37, 0.05);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: hsla(0, 0%, 100%, 0.2);
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 5px hsla(0, 0%, 100%, 0.05);
+  }
 }
 </style>
