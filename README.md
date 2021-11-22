@@ -4,6 +4,10 @@
 
 预览网站，请访问 🌍[此网站](http://www.karldu.cn/)获取最新信息。
 
+## Document
+
+要查看文档，请点击[此处](https://karl-du.gitbook.io/sixpence-blog/)
+
 ## Features
 
 + 博客
