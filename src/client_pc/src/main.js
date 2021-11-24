@@ -26,15 +26,18 @@ Vue.prototype.$moment = moment;
 Vue.prototype.$echarts = echarts;
 
 // 如果是移动端则跳转到移动端应用
-if (window.device.mobile()) {
-  window.location.href = `${window.location.origin}/debug/#/`;
-}
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
+sp.originGet('./static/config.json').then(resp => {
+  var config = resp.data;
+  if (window.device.mobile()) {
+    window.location.href = config.mobile_url;
+  } else {
+    /* eslint-disable no-new */
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      components: { App },
+      template: '<App/>'
+    });
+  }
 });

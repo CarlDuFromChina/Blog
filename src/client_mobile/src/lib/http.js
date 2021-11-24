@@ -2,7 +2,17 @@ import axios from 'axios';
 import { common, http, uuid } from 'web-core';
 import spExtension from './sp';
 
-window.sp = Object.assign({}, common, http, spExtension);
+var originHttp = {
+  originGet: (url, config) => {
+    var instance = axios.create({
+      timeout: 5000,
+      baseURL: window.origin
+    });
+    return instance.get(url, config);
+  }
+};
+
+window.sp = Object.assign({}, common, http, originHttp, spExtension);
 window.uuid = Object.assign({}, uuid);
 
 axios.defaults.timeout = 20000;

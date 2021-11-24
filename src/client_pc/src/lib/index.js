@@ -4,7 +4,17 @@ import axios from 'axios';
 import './jigsaw';
 import spExtension from './sp';
 
-window.sp = Object.assign({}, common, http, spExtension);
+var originHttp = {
+  originGet: (url, config) => {
+    var instance = axios.create({
+      timeout: 5000,
+      baseURL: window.origin
+    });
+    return instance.get(url, config);
+  }
+};
+
+window.sp = Object.assign({}, common, http, originHttp, spExtension);
 window.uuid = Object.assign({}, uuid);
 const serverUrl = localStorage.getItem('server_url');
 if (process.env.NODE_ENV === 'development') {
