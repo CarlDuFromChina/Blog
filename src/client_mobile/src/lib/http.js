@@ -15,9 +15,20 @@ var originHttp = {
 window.sp = Object.assign({}, common, http, originHttp, spExtension);
 window.uuid = Object.assign({}, uuid);
 
+// 开发环境修改后端服务地址
+const serverUrl = localStorage.getItem('server_url');
+if (process.env.NODE_ENV === 'development') {
+  if (!sp.isNullOrEmpty(serverUrl)) {
+    axios.defaults.baseURL = serverUrl;
+    console.info('服务器地址修改为：' + serverUrl);
+  } else {
+    axios.defaults.baseURL = 'http://localhost:5000';
+    console.warn('你可以通过localStorage添加server_url属性指定请求地址');
+  }
+}
+
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = sp.getServerUrl();
 axios.interceptors.response.use(
   response => {
     // 处理excel文件

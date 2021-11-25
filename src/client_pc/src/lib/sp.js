@@ -1,7 +1,8 @@
 import store from '../store';
+import axios from 'axios';
 
 function getServerUrl() {
-  let url = store.getters.getServerUrl;
+  let url = axios.defaults.baseURL || window.origin;
   return url.charAt(url.length - 1) === '/' ? url : url + '/';
 }
 

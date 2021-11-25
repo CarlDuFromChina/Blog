@@ -16,19 +16,21 @@ var originHttp = {
 
 window.sp = Object.assign({}, common, http, originHttp, spExtension);
 window.uuid = Object.assign({}, uuid);
+
+// 开发环境修改后端服务地址
 const serverUrl = localStorage.getItem('server_url');
 if (process.env.NODE_ENV === 'development') {
   if (!sp.isNullOrEmpty(serverUrl)) {
-    store.commit('updateServerUrl', serverUrl);
+    axios.defaults.baseURL = serverUrl;
     console.info('服务器地址修改为：' + serverUrl);
   } else {
-    console.info('你可以通过localStorage添加server_url属性指定请求地址');
+    axios.defaults.baseURL = 'http://localhost:5000';
+    console.warn('你可以通过localStorage添加server_url属性指定请求地址');
   }
 }
 
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = sp.getServerUrl();
 axios.interceptors.request.use(async config => {
   await checkToken();
   config.headers.Authorization = `Bearer ${store.getters.getToken}`;
