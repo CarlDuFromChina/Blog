@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import vueWaterfallEasy from 'vue-waterfall-easy2';
+import vueWaterfallEasy from '@sixpence/vue-waterfall-easy';
 
 export default {
   name: 'materialList',

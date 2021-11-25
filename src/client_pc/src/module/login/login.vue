@@ -64,7 +64,7 @@
 
 <script>
 import { saveAuth, clearAuth } from '../../lib/login.js';
-import { encrypt } from 'web-core';
+import { encrypt } from '@sixpence/web-core';
 
 export default {
   name: 'login',

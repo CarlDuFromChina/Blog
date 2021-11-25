@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import recommendInfoEdit from './RecommendInfoEdit';
+import recommendInfoEdit from './recommendInfoEdit';
 
 export default {
   name: 'RecommendInfoList',

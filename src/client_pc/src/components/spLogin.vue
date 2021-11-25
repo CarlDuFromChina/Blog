@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { encrypt } from 'web-core';
+import { encrypt } from '@sixpence/web-core';
 import { saveAuth } from '../lib/login';
 // const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
 

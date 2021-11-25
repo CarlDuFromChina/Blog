@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { common, http, uuid } from 'web-core';
+import { common, http, uuid } from '@sixpence/web-core';
 import spExtension from './sp';
 
 var originHttp = {
