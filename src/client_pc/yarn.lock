@@ -4646,7 +4646,7 @@ math-expression-evaluator@^1.2.14:
   resolved "https://registry.nlark.com/math-expression-evaluator/download/math-expression-evaluator-1.3.8.tgz?cache=0&sync_timestamp=1625265914556&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmath-expression-evaluator%2Fdownload%2Fmath-expression-evaluator-1.3.8.tgz#320da3b2bc1512f4f50fc3020b2b1cd5c8e9d577"
   integrity sha1-Mg2jsrwVEvT1D8MCCysc1cjp1Xc=
 
-mavon-editor@^2.9.1:
+mavon-editor@^2.10.0:
   version "2.10.0"
   resolved "https://registry.npmmirror.com/mavon-editor/download/mavon-editor-2.10.0.tgz#20c2c053c35eb0bda421cd4c58525982ceb7caee"
   integrity sha512-3d7zDTSsmxDEukG7DxhKxxHz4j7QmpeE2JK6sAWVBoTJL12FGGqZpjyiai2sftB2jWSFJZjGprvbc0/B8e7WjA==
