@@ -1,12 +1,28 @@
 <template>
   <div id="myApp" style="height:100%">
-    <router-view />
+    <a-config-provider :getPopupContainer="getPopupContainer" :locale="locale">
+      <router-view />
+    </a-config-provider>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      locale: window.antd.locales.zh_CN
+    };
+  },
+  methods: {
+    getPopupContainer(el, dialogContext) {
+      if (dialogContext) {
+        return dialogContext.getDialogWrap();
+      } else {
+        return document.body;
+      }
+    }
+  }
 };
 </script>
 
