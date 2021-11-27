@@ -23,6 +23,7 @@
     <None Remove="version\2.3.3\2021102901-新增评论控制参数.sql" />
     <None Remove="version\2.3\2021091501-删除点赞数字段.sql" />
     <None Remove="version\2.4\2021100901-新增博客管理菜单.sql" />
+    <None Remove="version\2.5\2021112701-删除友人博客实体.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.3\2021091501-删除点赞数字段.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.5\2021112701-删除友人博客实体.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.4\2021100901-新增博客管理菜单.sql">
