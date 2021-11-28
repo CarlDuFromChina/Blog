@@ -9,6 +9,7 @@ services:
       - "8002:80"
     volumes:
       - /docker_data/blog/pc/nginx.conf:/etc/nginx/nginx.conf
+      - /docker_data/blog/pc/config.json:/usr/share/nginx/html/static/config.json
     networks:
       - blog-network
 
@@ -21,6 +22,7 @@ services:
       - "8003:80"
     volumes:
       - /docker_data/blog/mobile/nginx.conf:/etc/nginx/nginx.conf
+      - /docker_data/blog/mobile/config.json:/usr/share/nginx/html/static/config.json
     networks:
       - blog-network
 
