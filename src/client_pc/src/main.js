@@ -28,6 +28,7 @@ Vue.prototype.$echarts = echarts;
 // 如果是移动端则跳转到移动端应用
 sp.originGet('./static/config.json').then(resp => {
   var config = resp.data;
+  Vue.prototype.$config = config;
   if (window.device.mobile()) {
     window.location.href = config.mobile_url;
   } else {

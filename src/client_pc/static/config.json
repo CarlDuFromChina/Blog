@@ -1,3 +1,8 @@
 {
-  "mobile_url": "http://m.karldu.cn"
+  "mobile_url": "http://m.karldu.cn",
+  "website": {
+    "author": "",
+    "email": "",
+    "record_no": ""
+  }
 }

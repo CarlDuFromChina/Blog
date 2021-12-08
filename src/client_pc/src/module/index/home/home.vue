@@ -23,11 +23,11 @@
       <!-- 项目链接 -->
 
       <div class="more">
-        <p>作者：{{ config.author }}</p>
+        <p>作者：{{ website.author }}</p>
         <p>博客仓库地址：<a :href="config.repository.url">blog</a></p>
-        <p>我的邮箱：<a :href="`mailto:${config.email}`">{{ config.email }}</a></p>
+        <p>我的邮箱：<a :href="`mailto:${website.email}`">{{ website.email }}</a></p>
         <p>版本号：{{ config.version }}</p>
-        <p><a href="https://beian.miit.gov.cn">苏ICP备2020054977号</a></p>
+        <p><a href="https://beian.miit.gov.cn">{{ website.record_no }}</a></p>
       </div>
     </a-layout-sider>
   </a-layout>
@@ -56,7 +56,8 @@ export default {
         }
       },
       config,
-      searchValue: ''
+      searchValue: '',
+      website: this.$config.website
     };
   },
   beforeRouteEnter(to, from, next) {
