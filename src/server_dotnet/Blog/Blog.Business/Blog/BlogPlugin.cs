@@ -1,4 +1,5 @@
 ﻿using Blog.Draft;
+using Sixpence.Core.Utils;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ WHERE sys_fileid = @id
                     };
                     context.Broker.Execute(sql, paramList);
                     new DraftService(context.Broker).DeleteDataByBlogId(id); // 删除草稿
+                    MemoryCacheUtil.RemoveCacheItem(id);
                     break;
                 default:
                     break;

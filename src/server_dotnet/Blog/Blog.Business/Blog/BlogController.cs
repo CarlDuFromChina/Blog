@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Sixpence.EntityFramework.Models;
 using Blog.Business.Blog.Sync;
+using Sixpence.Core.Utils;
 
 namespace Blog.Business.Blog
 {
@@ -62,7 +63,7 @@ namespace Blog.Business.Blog
         [HttpGet, AllowAnonymous]
         public override blog GetData(string id)
         {
-            return base.GetData(id);
+            return MemoryCacheUtil.GetOrAddCacheItem(id, () => base.GetData(id), DateTime.Now.AddHours(2));
         }
 
         /// <summary>
