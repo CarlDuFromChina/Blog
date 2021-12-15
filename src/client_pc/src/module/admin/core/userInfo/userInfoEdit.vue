@@ -44,7 +44,7 @@
           </a-col>
         </a-row>
         <a-row :gutter="24">
-          <a-col :span="12">
+          <a-col :span="6">
             <a-form-model-item label="头像">
               <a-upload
                 ref="file"
@@ -56,6 +56,23 @@
                 :before-upload="beforeUpload"
               >
                 <div v-if="fileList && fileList.length === 0">
+                  <a-icon type="plus" />
+                </div>
+              </a-upload>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="6">
+            <a-form-model-item label="生活照">
+              <a-upload
+                ref="file"
+                list-type="picture-card"
+                :file-list="lifePhotos"
+                @preview="handlePreview"
+                @change="handleLifePhotoChange"
+                :remove="handleLifePhotoRemove"
+                :before-upload="beforeLifePhotoUpload"
+              >
+                <div v-if="lifePhotos && lifePhotos.length === 0">
                   <a-icon type="plus" />
                 </div>
               </a-upload>
@@ -135,9 +152,11 @@ export default {
     return {
       controllerName: 'UserInfo',
       avatarChange: false,
+      lifePhotoChange: false,
       baseUrl: sp.getServerUrl(),
       token: '',
       fileList: [],
+      lifePhotos: [],
       roles: [],
       rules: {
         name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
@@ -176,10 +195,26 @@ export default {
         this.avatarChange = true;
       }
     },
+    handleLifePhotoChange(file) {
+      if (file) {
+        this.lifePhotoChange = true;
+      }
+    },
     async loadComplete() {
       if (!sp.isNullOrEmpty(this.data.avatar)) {
         const image = await sp.get(`api/SysFile/GetData?id=${this.data.avatar}`);
         this.fileList = [
+          {
+            uid: '-1',
+            name: image.name,
+            status: 'done',
+            url: sp.getDownloadUrl(image.sys_fileId, false)
+          }
+        ];
+      }
+      if (!sp.isNullOrEmpty(this.data.life_photo)) {
+        const image = await sp.get(`api/SysFile/GetData?id=${this.data.life_photo}`);
+        this.lifePhotos = [
           {
             uid: '-1',
             name: image.name,
@@ -193,22 +228,41 @@ export default {
       this.fileList = [...this.fileList, file];
       return false;
     },
+    beforeLifePhotoUpload(file) {
+      this.lifePhotos = [...this.lifePhotos, file];
+      return false;
+    },
     preSave() {
-      if (!this.avatarChange) {
-        return Promise.resolve(true);
+      if (this.avatarChange) {
+        // 保存后上传头像
+        let url = '/api/SysFile/UploadImage?fileType=avatar';
+        // 关联实体id
+        if (!sp.isNullOrEmpty(this.Id)) {
+          url += `&objectId=${this.Id}`;
+        }
+        const formData = new FormData();
+        formData.append('file', this.fileList[0]);
+        return sp.post(url, formData, this.headers).then(resp => {
+          this.data.avatar = resp.id;
+          return true;
+        });
       }
-      // 保存后上传头像
-      let url = '/api/SysFile/UploadImage?fileType=avatar';
-      // 关联实体id
-      if (!sp.isNullOrEmpty(this.Id)) {
-        url += `&objectId=${this.Id}`;
+      if (this.lifePhotoChange) {
+        // 保存后上传头像
+        let url = '/api/SysFile/UploadImage?fileType=life_photo';
+        // 关联实体id
+        if (!sp.isNullOrEmpty(this.Id)) {
+          url += `&objectId=${this.Id}`;
+        }
+        const formData = new FormData();
+        formData.append('file', this.lifePhotos[0]);
+        return sp.post(url, formData, this.headers).then(resp => {
+          debugger;
+          this.data.life_photo = resp.id;
+          return true;
+        });
       }
-      const formData = new FormData();
-      formData.append('file', this.fileList[0]);
-      return sp.post(url, formData, this.headers).then(resp => {
-        this.data.avatar = resp.id;
-        return true;
-      });
+      return Promise.resolve(true);
     },
     postSave() {
       location.reload();
@@ -217,6 +271,11 @@ export default {
       this.data.avatar = null;
       this.fileList = [];
       this.avatarChange = false;
+    },
+    handleLifePhotoRemove() {
+      this.data.life_photo = null;
+      this.lifePhotos = [];
+      this.lifePhotoChange = false;
     },
     editPassword() {
       this.$refs.pwd.editVisible = true;

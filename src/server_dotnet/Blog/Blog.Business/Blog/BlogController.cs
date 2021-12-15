@@ -12,6 +12,7 @@ using System.Web;
 using Sixpence.EntityFramework.Models;
 using Blog.Business.Blog.Sync;
 using Sixpence.Core.Utils;
+using Blog.Core.Auth.UserInfo;
 
 namespace Blog.Business.Blog
 {
@@ -103,6 +104,16 @@ namespace Blog.Business.Blog
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
             var result = new BlogService().ExportMarkdown(id);
             return File(result.bytes, result.ContentType, result.fileName);
+        }
+
+        /// <summary>
+        /// 获取主页用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public user_info GetIndexUser()
+        {
+            return new BlogService().GetIndexUser();
         }
     }
 }

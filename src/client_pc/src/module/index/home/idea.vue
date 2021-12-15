@@ -42,12 +42,12 @@ export default {
           } else {
             this.dataList = resp;
           }
+          setTimeout(() => {
+            this.loading = false;
+          }, 200);
         })
         .catch(error => {
           this.$message.error(error);
-        })
-        .finally(() => {
-          this.loading = false;
         });
     }
   }

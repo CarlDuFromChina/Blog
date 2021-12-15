@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sp-card class="blog-list">
+    <sp-card class="blog-list" :loading="firstLoading">
       <a-list item-layout="vertical" size="large" :data-source="listData">
         <a-list-item slot="renderItem" :key="item.Id" slot-scope="item">
           <template slot="actions">
@@ -54,6 +54,7 @@ export default {
       baseUrl: sp.getServerUrl(),
       listData: [],
       loading: false,
+      firstLoading: true,
       isLoadedAll: false,
       searchValue: '',
       viewId: '463BE7FE-5435-4841-A365-C9C946C0D655',
@@ -118,6 +119,11 @@ export default {
           this.listData = this.listData.concat(resp.DataList);
           this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
           this.pageIndex++;
+          setTimeout(() => {
+            if (this.firstLoading) {
+              this.firstLoading = false;
+            }
+          }, 200);
         });
       } finally {
         this.loading = false;

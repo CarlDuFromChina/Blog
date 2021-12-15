@@ -6,6 +6,10 @@
     </a-layout-sider>
     <!-- 博客 -->
     <a-layout-sider width="30%" style="overflow:hidden" theme="light">
+      <!-- 关于我 -->
+      <me style="margin-bottom:20px;"></me>
+      <!-- 关于我 -->
+
       <!-- 精品文章 -->
       <series-list style="margin-bottom:20px;"></series-list>
       <!-- 精品文章 -->
@@ -40,10 +44,11 @@ import idea from './idea';
 import blogList from './blogList';
 import seriesList from './seriesList.vue';
 import config from 'appconfig';
+import me from './me.vue';
 
 export default {
   name: 'home',
-  components: { recommandList, links, idea, blogList, seriesList },
+  components: { recommandList, links, idea, blogList, seriesList, me },
   data() {
     return {
       loading: 'false',

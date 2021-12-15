@@ -1,5 +1,5 @@
 <template>
-  <sp-card title="有趣的项目" :empty="!items || items.length == 0">
+  <sp-card title="有趣的项目" :empty="!items || items.length == 0" :loading="loading">
     <a class="item" v-for="(item, index) in items" :key="index" @click="openLink(item.link_url)">
       <div class="item-start">
         <sp-icon :name="getIcon(item.link_type)" :size="15" style="padding-right:10px"></sp-icon>
@@ -19,11 +19,17 @@ export default {
   name: 'links',
   data() {
     return {
-      items: []
+      items: [],
+      loading: true
     };
   },
   created() {
-    sp.get('api/Link/GetDataList').then(resp => (this.items = resp));
+    sp.get('api/Link/GetDataList').then(resp => {
+      this.items = resp;
+      setTimeout(() => {
+        this.loading = false;
+      }, 200);
+    });
   },
   methods: {
     getIcon(type) {

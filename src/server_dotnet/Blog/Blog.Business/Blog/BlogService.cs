@@ -14,6 +14,8 @@ using Sixpence.Core;
 using Newtonsoft.Json;
 using Blog.Core.Config;
 using System.IO;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Module.SysConfig;
 
 namespace Blog.Business.Blog
 {
@@ -200,6 +202,20 @@ GROUP BY to_char(createdon, 'YYYY-MM-DD')
                 }
                 return (fileName, contentType, ms.ToArray());
             }
+        }
+
+        /// <summary>
+        /// 获取首页用户
+        /// </summary>
+        /// <returns></returns>
+        public user_info GetIndexUser()
+        {
+            var config = Broker.Retrieve<sys_config>("SELECT * FROM sys_config WHERE code = @code", new Dictionary<string, object>() { { "@code", "index_user" } });
+            if (!string.IsNullOrEmpty(config.value))
+            {
+                return new UserInfoService(Broker).GetDataByCode(config.value);
+            }
+            return null;
         }
     }
 }

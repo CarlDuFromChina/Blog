@@ -86,6 +86,13 @@ namespace Blog.Core.Auth.UserInfo
         public string avatar { get; set; }
 
         /// <summary>
+        /// 生活照
+        /// </summary>
+        [DataMember]
+        [Attr("life_photo", "生活照", DataType.Text)]
+        public string life_photo { get; set; }
+
+        /// <summary>
         /// 角色权限id
         /// </summary>
         [DataMember]

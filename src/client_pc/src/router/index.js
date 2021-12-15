@@ -20,7 +20,7 @@ const router = new VueRouter({
 
 NProgress.configure({ showSpinner: false });
 
-const DEFAULT_TITLE = `Karl's Blog`;
+const DEFAULT_TITLE = `Sixpence Blog`;
 
 router.beforeEach((to, from, next) => {
   NProgress.start();
