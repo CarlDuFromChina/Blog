@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.EntityFramework.Broker;
+using Blog.Core.Module.SysMenu;
 
 namespace Blog.Core.Auth.Privilege
 {
@@ -35,13 +36,29 @@ namespace Blog.Core.Auth.Privilege
         public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
             var role = Broker.Retrieve<sys_role>(roleid);
-            var privileges = ServiceContainer.ResolveAll<IRole>().FirstOrDefault(item => item.Role.GetDescription() == role.name).GetRolePrivilege();
+            var privileges = new List<sys_role_privilege>();
+
+            if (role.is_basic)
+            {
+                privileges = ServiceContainer.ResolveAll<IRole>().FirstOrDefault(item => item.Role.GetDescription() == role.name).GetRolePrivilege().ToList();
+            }
+            else
+            {
+                var sql = @"
+SELECT * FROM sys_role_privilege
+WHERE sys_roleid = @id
+";
+                privileges = Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", roleid } }).ToList();
+            }
+
             switch (roleType)
             {
+                case RoleType.All:
+                    return privileges;
                 case RoleType.Entity:
-                    return privileges.Where(item => item.object_type == nameof(Module.SysEntity.sys_entity));
+                    return privileges.Where(item => item.object_type == nameof(sys_entity));
                 case RoleType.Menu:
-                    return privileges.Where(item => item.object_type == nameof(Module.SysMenu.sys_menu));
+                    return privileges.Where(item => item.object_type == nameof(sys_menu));
                 default:
                     return new List<sys_role_privilege>();
             }

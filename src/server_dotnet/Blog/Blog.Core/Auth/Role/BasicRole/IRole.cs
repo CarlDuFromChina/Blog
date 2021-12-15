@@ -51,6 +51,7 @@ namespace Blog.Core.Auth.Role.BasicRole
 
     public enum RoleType
     {
+        All,
         Entity,
         Menu
     }

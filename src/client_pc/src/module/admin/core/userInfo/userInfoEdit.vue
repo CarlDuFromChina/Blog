@@ -153,7 +153,7 @@ export default {
   },
   async created() {
     this.token = this.$store.getters.getToken;
-    sp.get('api/SysRole/GetBasicRole').then(resp => {
+    sp.get('api/SysRole/GetRoles').then(resp => {
       this.roles = resp;
     });
   },

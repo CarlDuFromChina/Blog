@@ -47,21 +47,7 @@ namespace Blog.Core.Module.Role
         [DataMember]
         [Attr("is_basicname", "是否基础角色", DataType.Varchar, 100)]
         public string is_basicName { get; set; }
-
-        /// <summary>
-        /// 是否系统实体
-        /// </summary>
-        [DataMember]
-        [Attr("is_sys", "是否系统实体", DataType.Int4)]
-        public bool is_sys { get; set; }
-
-        /// <summary>
-        /// 是否系统实体
-        /// </summary>
-        [DataMember]
-        [Attr("is_sysname", "是否系统实体", DataType.Varchar, 100)]
-        public string is_sysName { get; set; }
-
+        
         /// <summary>
         /// 继承角色
         /// </summary>

@@ -17,5 +17,11 @@ namespace Blog.Core.Module.Role
         {
             return new SysRoleService().GetBasicRole();
         }
+
+        [HttpGet]
+        public IEnumerable<SelectOption> GetRoles()
+        {
+            return new SysRoleService().GetRoles();
+        }
     }
 }

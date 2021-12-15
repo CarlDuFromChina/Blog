@@ -36,6 +36,15 @@ namespace Blog.Core.Auth.Privilege
         /// <summary>
         /// 清除用户权限信息缓存
         /// </summary>
+        /// <param name="id"></param>
+        public static void Clear(string id)
+        {
+            UserPrivliege.TryRemove(UserPrivilegesPrefix + id, out var privileges);
+        }
+
+        /// <summary>
+        /// 清除用户权限信息缓存
+        /// </summary>
         public static void Clear(IPersistBroker broker)
         {
             UserPrivliege.Clear();

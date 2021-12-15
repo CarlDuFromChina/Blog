@@ -29,18 +29,24 @@ namespace Blog.Core.Module.Role
 
         public IEnumerable<SelectOption> GetBasicRole()
         {
-            var sql = @"
-select sys_roleid as Value, name as Name  from sys_role
-where is_basic = 1 
-";
-            var dataList = Broker.Query<SelectOption>(sql);
+            var roles = _context.GetAllEntity();
             var currentRoleId = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId())?.roleid;
-            if (string.IsNullOrEmpty(currentRoleId))
-            {
-                return new List<SelectOption>();
-            }
+            var role = roles.FirstOrDefault(item => item.sys_roleId == currentRoleId);
 
-            return dataList.Where(item => UserIdentityUtil.IsOwner(currentRoleId, item.Value));
+            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic ? role.Id : role.parent_roleid, item.is_basic ? item.Id : item.parent_roleid))
+                .Where(item => item.is_basic)
+                .Select(item => new SelectOption(item.name, item.Id));
+        }
+
+
+        public IEnumerable<SelectOption> GetRoles()
+        {
+            var roles = _context.GetAllEntity();
+            var currentRoleId = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId())?.roleid;
+            var role = roles.FirstOrDefault(item => item.sys_roleId == currentRoleId);
+
+            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic ? role.Id : role.parent_roleid, item.is_basic ? item.Id : item.parent_roleid))
+                .Select(item => new SelectOption(item.name, item.Id));
         }
 
         public sys_role GetGuest() => Broker.Retrieve<sys_role>("222222222-22222-2222-2222-222222222222");
