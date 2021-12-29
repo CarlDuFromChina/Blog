@@ -66,11 +66,13 @@
 import { saveAuth, clearAuth } from '../../lib/login.js';
 import { encrypt } from '@sixpence/web-core';
 
+var header = process.env.VUE_APP_TITLE;
+
 export default {
   name: 'login',
   data() {
     return {
-      header: 'Sixpence Blog',
+      header,
       data: {
         code: '',
         password: ''

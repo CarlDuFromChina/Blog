@@ -20,16 +20,10 @@ const router = new VueRouter({
 
 NProgress.configure({ showSpinner: false });
 
-const DEFAULT_TITLE = `Sixpence Blog`;
-
 router.beforeEach((to, from, next) => {
   NProgress.start();
   if (to.meta.title) {
     document.title = to.meta.title;
-  } else {
-    if (document.title !== DEFAULT_TITLE) {
-      document.title = DEFAULT_TITLE;
-    }
   }
   if (to.matched.some(m => m.meta.auth)) {
     if (store.getters.isLoggedIn) {
