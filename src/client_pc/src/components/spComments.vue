@@ -109,7 +109,7 @@ export default {
           object_name: this.objectName,
           object_title: this.data.title
         };
-        sp.post('api/Comments/CreateData', comment).then(resp => {
+        sp.post('api/Comments/CreateData', comment).then(() => {
           this.getDataList();
           this.$message.success('留言成功');
         });

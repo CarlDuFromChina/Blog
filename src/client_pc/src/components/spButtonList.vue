@@ -17,8 +17,6 @@
 </template>
 
 <script>
-import spHeader from './spHeader';
-
 export default {
   name: 'spButtonList',
   props: {
@@ -34,7 +32,6 @@ export default {
       moreLabel: '展开筛选'
     };
   },
-  components: { spHeader },
   methods: {
     showMore() {
       this.more = !this.more;

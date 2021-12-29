@@ -74,7 +74,7 @@ export default {
     handleSelect(item) {
       this.selected = item;
     },
-    onChange(value) {
+    onChange() {
       if (this.source === 2) {
         this.dataList = [];
         this.total = 0;
@@ -145,7 +145,7 @@ export default {
         });
       });
     },
-    async handleOk(e) {
+    async handleOk() {
       if (!this.selected) {
         this.$message.error('请选择一个图片');
         return;

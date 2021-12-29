@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from '../App.vue';
 import VueRouter from 'vue-router';
-import routes from '../module';
+import routes from '../views';
 import store from '../store';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';

@@ -1,8 +1,6 @@
-const requireAll = (requireContext) =>
-  requireContext.keys().map(requireContext);
-const req = require.context(
-  '!svg-sprite-loader?{"symbolId":"sp-blog-[name]"}!./svgs',
-  false,
-  /.svg$/
-);
+// requires and returns all modules that match
+const requireAll = requireContext => requireContext.keys().map(requireContext);
+
+// import all svg
+const req = require.context('./svg', true, /\.svg$/);
 requireAll(req);

@@ -291,7 +291,7 @@ export default {
     },
     setKey(table) {
       if (table && table.length > 0) {
-        table.forEach((item, index) => {
+        table.forEach((item) => {
           item.key = (item || {}).Id || uuid.generate();
           if (item.children && item.children.length > 0) {
             this.setKey(item.children);

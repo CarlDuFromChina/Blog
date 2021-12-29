@@ -87,7 +87,7 @@ namespace Blog.Business.Blog
         /// 获取创作记录日历
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IEnumerable<BlogActivityModel> GetActivity()
         {
             return new BlogService().GetActivity();
@@ -110,7 +110,7 @@ namespace Blog.Business.Blog
         /// 获取主页用户
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public user_info GetIndexUser()
         {
             return new BlogService().GetIndexUser();

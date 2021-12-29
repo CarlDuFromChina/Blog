@@ -3,7 +3,7 @@ WORKDIR /app
 COPY ./ /app/
 RUN npm config set registry https://registry.npm.taobao.org \
     && npm install \
-    && npm run build
+    && npm run prod
 
 FROM nginx:1.15.2-alpine
 
