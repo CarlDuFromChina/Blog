@@ -1,10 +1,11 @@
 ﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Job;
 using Quartz;
-using Sixpence.Core;
+using Sixpence.Common;
 using System.Collections.Generic;
 using System.Linq;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.Job
 {

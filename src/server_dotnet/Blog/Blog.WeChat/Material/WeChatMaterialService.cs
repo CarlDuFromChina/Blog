@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using Blog.Core;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Auth;
-using Sixpence.Core;
+using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.IoC;
 
 namespace Blog.WeChat.Material
 {

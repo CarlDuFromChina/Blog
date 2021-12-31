@@ -1,5 +1,5 @@
-﻿using Sixpence.Core;
-using Sixpence.Core.Utils;
+﻿using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     /// <summary>
     /// 文件帮助类

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     public static class CronUtil
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Core.Auth;
-using Sixpence.Core.Current;
+using Sixpence.Common.Current;
 using System;
 using System.Collections.Generic;
 using System.Text;

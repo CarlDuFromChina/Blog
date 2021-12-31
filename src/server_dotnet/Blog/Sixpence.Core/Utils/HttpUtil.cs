@@ -1,5 +1,5 @@
 ﻿using log4net;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     /// <summary>
     /// HTTP帮助类

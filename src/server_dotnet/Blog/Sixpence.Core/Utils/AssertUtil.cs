@@ -1,11 +1,11 @@
-﻿using Sixpence.Core.Logging;
+﻿using Sixpence.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     /// <summary>
     /// 断言

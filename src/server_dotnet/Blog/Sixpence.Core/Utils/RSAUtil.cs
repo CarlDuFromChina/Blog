@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     /// <summary>
     /// RSA帮助类（非对称加密）

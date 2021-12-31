@@ -1,5 +1,5 @@
 ﻿using Blog.Draft;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using System.Collections.Generic;

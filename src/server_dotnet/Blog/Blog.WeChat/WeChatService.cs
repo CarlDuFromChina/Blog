@@ -7,10 +7,10 @@ using System;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.Core;
-using Sixpence.Core.Logging;
-using Sixpence.Core;
+using Sixpence.Common.Logging;
+using Sixpence.Common;
 
 namespace Blog.WeChat
 {

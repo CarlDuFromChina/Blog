@@ -1,13 +1,12 @@
-﻿using Sixpence.Core;
+﻿using Sixpence.Common;
 using Sixpence.EntityFramework.Driver;
-using Sixpence.Core.Logging;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Logging;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using Sixpence.Core.Extensions;
 
 namespace Sixpence.EntityFramework.DbClient
 {

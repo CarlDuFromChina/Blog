@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 using Sixpence.EntityFramework.Broker;
 
 namespace Blog.WeChat.FocusUser

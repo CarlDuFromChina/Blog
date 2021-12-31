@@ -2,14 +2,15 @@
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.Gallery
 {

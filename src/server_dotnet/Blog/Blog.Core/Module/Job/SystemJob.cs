@@ -2,13 +2,13 @@
 using Blog.Core.Job;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Sixpence.Core;
+using Sixpence.Common;
 using Blog.Core.Utils;
 using Sixpence.EntityFramework.Broker;
 

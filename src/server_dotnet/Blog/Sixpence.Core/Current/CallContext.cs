@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Current
+namespace Sixpence.Common.Current
 {
     public static class CallContext<T>
     {

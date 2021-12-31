@@ -1,7 +1,7 @@
 ﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysEntity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

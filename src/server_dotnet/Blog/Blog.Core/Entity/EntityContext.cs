@@ -1,5 +1,5 @@
 ﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
+using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Models;
 using System;

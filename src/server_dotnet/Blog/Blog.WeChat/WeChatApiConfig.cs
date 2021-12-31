@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Sixpence.Core.Config;
+using Sixpence.Common.Config;
 using System;
 using System.Collections.Generic;
 using System.Text;

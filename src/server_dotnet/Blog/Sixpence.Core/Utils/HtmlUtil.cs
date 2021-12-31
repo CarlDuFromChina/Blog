@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     public static class HtmlUtil
     {

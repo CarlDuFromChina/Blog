@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     public static class ServiceContainer
     {

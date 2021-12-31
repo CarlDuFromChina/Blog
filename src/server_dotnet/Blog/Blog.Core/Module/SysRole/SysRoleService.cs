@@ -9,7 +9,7 @@ using Blog.Core.Auth.Role;
 using Blog.Core.Auth;
 using Sixpence.EntityFramework.SelectOption;
 using Sixpence.EntityFramework.Broker;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 
 namespace Blog.Core.Module.Role
 {

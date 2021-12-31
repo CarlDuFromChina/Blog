@@ -5,7 +5,7 @@ using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     public sealed class MemoryCacheUtil
     {

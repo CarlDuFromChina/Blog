@@ -1,4 +1,4 @@
-﻿using Sixpence.Core.Logging;
+﻿using Sixpence.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;

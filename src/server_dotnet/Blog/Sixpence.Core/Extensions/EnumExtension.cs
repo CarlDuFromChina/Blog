@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     public static class EnumExtension
     {

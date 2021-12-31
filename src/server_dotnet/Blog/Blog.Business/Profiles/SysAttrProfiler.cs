@@ -3,7 +3,7 @@ using Blog.Core;
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.SysAttrs;
 using Blog.Core.Profiles;
-using Sixpence.Core;
+using Sixpence.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using Blog.Core;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
+using Sixpence.Common;
 using System.Collections.Generic;
 using System.Linq;
 using Sixpence.EntityFramework.Broker;

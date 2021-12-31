@@ -2,8 +2,8 @@
 using Blog.WeChat;
 using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;

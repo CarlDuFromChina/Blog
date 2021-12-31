@@ -1,4 +1,4 @@
-﻿using Sixpence.Core;
+﻿using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
 using System;
 using System.Collections.Generic;

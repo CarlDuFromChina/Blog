@@ -6,9 +6,10 @@ using System.Linq;
 using System.Web;
 using Sixpence.EntityFramework.SelectOption;
 using Sixpence.EntityFramework.Broker;
-using Sixpence.Core;
+using Sixpence.Common;
 using System.IO;
 using Blog.Core.Module.SysParams;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.SysParamGroup
 {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Sixpence.EntityFramework.Models;
 using Blog.Business.Blog.Sync;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.Core.Auth.UserInfo;
 
 namespace Blog.Business.Blog

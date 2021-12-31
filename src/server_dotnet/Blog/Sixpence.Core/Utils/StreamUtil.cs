@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     /// <summary>
     /// 流帮助类

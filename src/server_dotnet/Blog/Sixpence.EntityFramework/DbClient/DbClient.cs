@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Npgsql;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 using Sixpence.EntityFramework.Driver;
 using System;
 using System.Collections.Generic;

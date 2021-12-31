@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sixpence.Core.Current
+namespace Sixpence.Common.Current
 {
     public class CurrentUserModel
     {

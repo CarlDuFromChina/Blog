@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 using Sixpence.EntityFramework.Models;
 using System;
 using System.Collections.Generic;

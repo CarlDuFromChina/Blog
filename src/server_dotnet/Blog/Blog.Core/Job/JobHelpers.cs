@@ -1,13 +1,14 @@
 ﻿using Blog.Core.Auth;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Job
 {

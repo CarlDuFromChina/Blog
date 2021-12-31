@@ -3,13 +3,14 @@ using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.Role.BasicRole;
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Sixpence.Core;
+using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.SysRole
 {

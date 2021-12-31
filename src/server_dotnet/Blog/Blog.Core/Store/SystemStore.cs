@@ -1,6 +1,6 @@
-﻿using Sixpence.Core.Logging;
+﻿using Sixpence.Common.Logging;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

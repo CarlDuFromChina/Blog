@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
+using Sixpence.Common.Utils;
 using Sixpence.Core.Utils;
 using System;
 using System.Collections.Generic;

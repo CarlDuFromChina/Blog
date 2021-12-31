@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Config;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +9,7 @@ using Sixpence.EntityFramework.Broker;
 using Microsoft.AspNetCore.Http;
 using Blog.Core.Module.DataService;
 using Blog.Core.Profiles;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Store.SysFile
 {

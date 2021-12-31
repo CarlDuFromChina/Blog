@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace Sixpence.Core.Extensions
+namespace Sixpence.Common.Extensions
 {
     public static class DataRowExtension
     {

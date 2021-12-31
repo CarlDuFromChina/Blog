@@ -2,7 +2,7 @@
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.MessageRemind;
 using Newtonsoft.Json;
-using Sixpence.Core;
+using Sixpence.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

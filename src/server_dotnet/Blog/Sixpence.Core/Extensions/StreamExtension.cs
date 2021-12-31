@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     /// <summary>
     /// 流扩展

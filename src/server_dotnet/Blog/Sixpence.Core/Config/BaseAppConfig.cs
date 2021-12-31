@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Config
+namespace Sixpence.Common.Config
 {
     /// <summary>
     /// 配置基类（appsetting）

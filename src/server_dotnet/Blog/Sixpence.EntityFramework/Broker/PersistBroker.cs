@@ -1,5 +1,5 @@
-﻿using Sixpence.Core;
-using Sixpence.Core.Extensions;
+﻿using Sixpence.Common;
+using Sixpence.Common.IoC;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.DbClient;
 using Sixpence.EntityFramework.Driver;

@@ -2,7 +2,7 @@
 using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.Core.WebApi;
 using Jdenticon.AspNetCore;
 using Microsoft.AspNetCore.Authorization;

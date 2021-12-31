@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Http
+namespace Sixpence.Common.Http
 {
     public static class HttpClientExtension
     {

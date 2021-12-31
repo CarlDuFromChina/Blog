@@ -1,6 +1,6 @@
 ﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System.Collections.Generic;
 using Sixpence.EntityFramework.Broker;
 

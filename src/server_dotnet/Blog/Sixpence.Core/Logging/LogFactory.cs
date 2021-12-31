@@ -5,7 +5,7 @@ using log4net.Core;
 using log4net.Filter;
 using log4net.Layout;
 using log4net.Repository;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Logging
+namespace Sixpence.Common.Logging
 {
     /// <summary>
     /// 日志工厂类

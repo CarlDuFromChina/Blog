@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 
-namespace Sixpence.Core.Http
+namespace Sixpence.Common.Http
 {
 	public class FileContent : MultipartFormDataContent
 	{

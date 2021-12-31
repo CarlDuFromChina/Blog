@@ -1,6 +1,6 @@
 ﻿using Sixpence.EntityFramework.Entity;
 using Blog.Core.Utils;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;

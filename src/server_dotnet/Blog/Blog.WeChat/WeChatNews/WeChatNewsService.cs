@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Auth;
 using Sixpence.EntityFramework.Broker;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.WeChat.Material;
-using Sixpence.Core;
+using Sixpence.Common;
 using Blog.WeChat.WeChatNewsMaterial;
 
 namespace Blog.WeChat.WeChatNews

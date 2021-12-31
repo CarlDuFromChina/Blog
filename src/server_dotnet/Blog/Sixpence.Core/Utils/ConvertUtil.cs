@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sixpence.Core.Utils
+namespace Sixpence.Common.Utils
 {
     public class ConvertUtil
     {

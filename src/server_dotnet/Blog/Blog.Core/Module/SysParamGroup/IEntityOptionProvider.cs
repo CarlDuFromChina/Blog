@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 using Sixpence.EntityFramework.SelectOption;
 
 namespace Blog.Core.Module.SysParamGroup

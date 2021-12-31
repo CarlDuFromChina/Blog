@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
+using Sixpence.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

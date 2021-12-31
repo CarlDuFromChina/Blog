@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     public class ServiceRegisterAttribute : Attribute
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Business", "Blog.Business\Blog.Business.csproj", "{BDB115D2-6E6F-4B95-916A-4CAD83E5EFFA}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Test", "Blog.Test\Blog.Test.csproj", "{AE26548F-E95D-4A86-9F8B-0A28C8F65365}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.Core", "Sixpence.Core\Sixpence.Core.csproj", "{01AE204F-7C5A-48ED-8582-4A15B90DE073}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.EntityFramework", "Sixpence.EntityFramework\Sixpence.EntityFramework.csproj", "{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}"
 EndProject
@@ -39,10 +37,6 @@ Global
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01AE204F-7C5A-48ED-8582-4A15B90DE073}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,7 +46,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{01AE204F-7C5A-48ED-8582-4A15B90DE073} = {FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}
 		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1} = {FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

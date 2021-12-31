@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     public static class LongExtension
     {

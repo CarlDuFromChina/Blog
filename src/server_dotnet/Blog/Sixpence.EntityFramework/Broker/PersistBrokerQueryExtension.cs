@@ -1,4 +1,4 @@
-﻿using Sixpence.Core.Utils;
+﻿using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;

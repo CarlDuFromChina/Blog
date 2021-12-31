@@ -7,7 +7,7 @@ using Blog.Core.Module.Role;
 using Blog.Core.Module.Vertification.Mail;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Jdenticon.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
-using Sixpence.Core;
+using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
 using Blog.Core.Profiles;
-using Sixpence.Core.Current;
+using Sixpence.Common.Current;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.DataService
 {

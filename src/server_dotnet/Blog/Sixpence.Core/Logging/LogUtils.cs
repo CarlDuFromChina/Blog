@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core.Logging
+namespace Sixpence.Common.Logging
 {
     /// <summary>
     /// 日志帮助类（log信息将会输出到 all.log 里）

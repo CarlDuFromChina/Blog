@@ -2,7 +2,7 @@
 using Blog.Core.Auth.UserInfo;
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Module.Role;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Text;
 using Sixpence.EntityFramework.Broker;
 using Blog.Core.Config;
 using Blog.Core.Module.DataService;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 
 namespace Blog.Core.Module.Vertification.Mail
 {

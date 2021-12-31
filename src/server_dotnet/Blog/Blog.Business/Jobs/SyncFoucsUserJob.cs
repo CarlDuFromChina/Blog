@@ -18,8 +18,8 @@ using Blog.Core.Job;
 using Blog.WeChat.FocusUser;
 using Sixpence.EntityFramework.Entity;
 using Blog.Core.Auth;
-using Sixpence.Core.Utils;
-using Sixpence.Core;
+using Sixpence.Common.Utils;
+using Sixpence.Common;
 using Sixpence.EntityFramework.Broker;
 
 namespace Blog.Jobs

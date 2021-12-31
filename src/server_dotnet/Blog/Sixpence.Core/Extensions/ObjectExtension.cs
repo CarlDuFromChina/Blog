@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sixpence.Core.Extensions
+namespace Sixpence.Common.Extensions
 {
     public static class ObjectExtension
     {

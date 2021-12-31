@@ -1,5 +1,5 @@
-﻿using Sixpence.Core;
-using Sixpence.Core.Utils;
+﻿using Sixpence.Common;
+using Sixpence.Common.Utils;
 using Sixpence.EntityFramework.Entity;
 using System;
 using System.Collections.Generic;

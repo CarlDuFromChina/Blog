@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Builder;
 using Quartz;
 using System;
@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.Core;
+using Sixpence.Common;
 using Sixpence.EntityFramework.SelectOption;
+using Sixpence.Common.IoC;
+using Sixpence.Core.Utils;
 
 namespace Blog.Core.Job
 {

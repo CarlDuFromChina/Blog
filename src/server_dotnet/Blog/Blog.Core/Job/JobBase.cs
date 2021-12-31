@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth;
 using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 using log4net;
 using Quartz;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Sixpence.EntityFramework.Broker;
-using Sixpence.Core.Current;
+using Sixpence.Common.Current;
 
 namespace Blog.Core.Job
 {

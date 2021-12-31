@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Module.SysEntity;
 using Blog.Core.Profiles;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Models;
 using System;

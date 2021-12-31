@@ -7,10 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Npgsql" Version="5.0.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sixpence.Core\Sixpence.Core.csproj" />
+    <PackageReference Include="Sixpence.Common" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

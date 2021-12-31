@@ -1,8 +1,9 @@
 ﻿using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
+using Sixpence.Common.Utils;
 using Sixpence.EntityFramework.Broker;
 using Sixpence.EntityFramework.Entity;
 using System;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sixpence.Core
+namespace Sixpence.Common
 {
     /// <summary>
     /// 字符串扩展类
