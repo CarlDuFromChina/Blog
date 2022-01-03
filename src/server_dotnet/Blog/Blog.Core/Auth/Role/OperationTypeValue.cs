@@ -1,5 +1,5 @@
-﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.EntityFramework.SelectOption;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.SelectOption;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

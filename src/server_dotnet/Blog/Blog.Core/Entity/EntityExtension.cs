@@ -10,16 +10,16 @@ using Sixpence.Common;
 using Sixpence.Common.IoC;
 using Sixpence.Common.Logging;
 using Sixpence.Common.Utils;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Sixpence.EntityFramework.Entity
+namespace Sixpence.ORM.Entity
 {
     public static class EntityExtension
     {

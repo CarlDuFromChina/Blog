@@ -1,11 +1,11 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Module.SysEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Sixpence.EntityFramework.SelectOption;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.SelectOption;
+using Sixpence.ORM.Broker;
 using Sixpence.Common;
 using System.IO;
 using Blog.Core.Module.SysParams;

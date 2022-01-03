@@ -72,7 +72,6 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Jdenticon.AspNetCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.16" />
@@ -84,6 +83,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Quartz" Version="3.3.2" />
+    <PackageReference Include="Sixpence.ORM" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
@@ -94,10 +94,6 @@
   <ItemGroup>
     <Folder Include="Module\SysConfig\" />
     <Folder Include="version\2.3\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sixpence.EntityFramework\Sixpence.EntityFramework.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

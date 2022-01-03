@@ -2,13 +2,13 @@
 using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Module.SysEntity;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sixpence.EntityFramework.Entity
+namespace Sixpence.ORM.Entity
 {
     /// <summary>
     /// 实体服务类

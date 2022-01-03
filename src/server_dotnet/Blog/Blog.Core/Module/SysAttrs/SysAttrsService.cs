@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Module.SysEntity;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
@@ -6,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Models;
 using Blog.Core.Profiles;
 
 namespace Blog.Core.Module.SysAttrs

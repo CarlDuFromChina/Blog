@@ -16,11 +16,11 @@ using System.Threading.Tasks;
 using Quartz;
 using Blog.Core.Job;
 using Blog.WeChat.FocusUser;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Auth;
 using Sixpence.Common.Utils;
 using Sixpence.Common;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 
 namespace Blog.Jobs
 {

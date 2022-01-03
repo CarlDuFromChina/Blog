@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Blog.Core.WebApi;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using Blog.Core;
@@ -10,7 +10,7 @@ using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Auth;
 using Sixpence.Common;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
 
 namespace Blog.WeChat.Material

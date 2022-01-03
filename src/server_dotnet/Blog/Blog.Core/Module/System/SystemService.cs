@@ -2,7 +2,7 @@
 using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Config;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.Vertification.Mail;
 using Blog.Core.Store;
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Sixpence.Common;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Blog.Core.Profiles;
 using Sixpence.Common.Current;
 using Sixpence.Common.IoC;

@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Config;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 
 namespace Blog.Core.Auth.UserInfo
 {

@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["Blog.Business/Blog.Business.csproj", "Blog.Business/"]
 COPY ["Blog.Core/Blog.Core.csproj", "Blog.Core/"]
 COPY ["Sixpence.Common/Sixpence.Common.csproj", "Sixpence.Common/"]
-COPY ["Sixpence.EntityFramework/Sixpence.EntityFramework.csproj", "Sixpence.EntityFramework/"]
+COPY ["Sixpence.ORM/Sixpence.ORM.csproj", "Sixpence.ORM/"]
 COPY ["Blog.WeChat/Blog.WeChat.csproj", "Blog.WeChat/"]
 RUN dotnet restore "Blog.Business/Blog.Business.csproj"
 COPY . .

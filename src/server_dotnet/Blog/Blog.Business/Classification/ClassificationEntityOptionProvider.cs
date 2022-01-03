@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Blog.Core.Module.SysEntity;
 using Blog.Core.Module.SysParamGroup;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.SelectOption;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.SelectOption;
 
 namespace Blog.Business.Classification
 {

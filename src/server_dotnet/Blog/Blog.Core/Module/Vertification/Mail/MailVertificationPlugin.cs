@@ -1,10 +1,10 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Utils;
 using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 
 namespace Blog.Core.Module.Vertification.Mail
 {

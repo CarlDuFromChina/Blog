@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Core;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.SysAttrs;
 using Blog.Core.Profiles;
 using Sixpence.Common;
@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Models;
 
 namespace Blog.Business.Profiles
 {

@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

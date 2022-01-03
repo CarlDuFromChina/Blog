@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Auth;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Sixpence.Common.Utils;
 using Blog.WeChat.Material;
 using Sixpence.Common;

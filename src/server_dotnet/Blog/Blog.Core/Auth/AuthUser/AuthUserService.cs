@@ -1,8 +1,8 @@
 ﻿using Blog.Core.Config;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using System;
 using System.Collections.Generic;
 using System.Web;

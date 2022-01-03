@@ -2,7 +2,7 @@
 using Blog.Core.Module.Role;
 using Sixpence.Common;
 using Sixpence.Common.IoC;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using System;
 using System.Collections.Generic;
 using System.Linq;

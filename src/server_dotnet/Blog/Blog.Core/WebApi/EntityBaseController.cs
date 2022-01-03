@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Models;
 
 namespace Blog.Core.WebApi
 {

@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Job;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store.SysFile;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using Sixpence.Common;
 using Blog.Core.Utils;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 
 namespace Blog.Core.Module.Job
 {

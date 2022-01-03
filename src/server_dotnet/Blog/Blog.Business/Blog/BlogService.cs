@@ -1,6 +1,6 @@
 ﻿using Blog.Business.Upvote;
 using Blog.Core;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
 using Sixpence.Common.Utils;
@@ -9,7 +9,7 @@ using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Sixpence.Common;
 using Newtonsoft.Json;
 using Blog.Core.Config;

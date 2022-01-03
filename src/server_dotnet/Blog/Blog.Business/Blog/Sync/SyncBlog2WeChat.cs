@@ -4,7 +4,7 @@ using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,13 +1,13 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Sixpence.Common;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sixpence.EntityFramework.Entity
+namespace Sixpence.ORM.Entity
 {
     public class EntityContext<E> : EntityContextBase<E>
         where E : BaseEntity, new()

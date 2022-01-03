@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Sixpence.Common;
 using Sixpence.Common.IoC;
-using Sixpence.EntityFramework.SelectOption;
+using Sixpence.ORM.SelectOption;
 
 namespace Blog.Core.Module.SysParamGroup
 {

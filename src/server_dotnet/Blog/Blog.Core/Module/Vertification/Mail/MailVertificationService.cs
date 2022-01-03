@@ -1,13 +1,13 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Sixpence.Common.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Blog.Core.Config;
 using Blog.Core.Module.DataService;
 using Sixpence.Common.Logging;

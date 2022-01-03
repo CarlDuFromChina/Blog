@@ -11,10 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.WeChat", "Blog.WeChat\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Test", "Blog.Test\Blog.Test.csproj", "{AE26548F-E95D-4A86-9F8B-0A28C8F65365}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sixpence.EntityFramework", "Sixpence.EntityFramework\Sixpence.EntityFramework.csproj", "{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,16 +33,9 @@ Global
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE26548F-E95D-4A86-9F8B-0A28C8F65365}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5729A15C-4B10-4AB6-A6D3-7F0DDFDC12A1} = {FA40B244-8C79-4D5E-9F43-DB90A0DACDAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10ECDEFA-B6B3-4C39-A34C-A3C57888E23A}

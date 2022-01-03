@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Job;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.Broker;
 
 namespace Blog.WeChat.RobotMessageTask
 {

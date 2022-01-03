@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using System.Web;
 
 namespace Blog.Core.Store

@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

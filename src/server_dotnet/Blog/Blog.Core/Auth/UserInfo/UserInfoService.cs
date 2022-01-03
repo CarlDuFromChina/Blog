@@ -1,8 +1,8 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
 using System.Collections.Generic;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 
 namespace Blog.Core.Auth.UserInfo
 {

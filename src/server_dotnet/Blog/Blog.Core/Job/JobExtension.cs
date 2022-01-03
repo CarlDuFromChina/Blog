@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Auth;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Builder;
 using Quartz;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.Common;
-using Sixpence.EntityFramework.SelectOption;
+using Sixpence.ORM.SelectOption;
 using Sixpence.Common.IoC;
 using Sixpence.Core.Utils;
 

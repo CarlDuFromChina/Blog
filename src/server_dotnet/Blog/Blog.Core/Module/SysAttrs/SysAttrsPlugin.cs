@@ -2,8 +2,8 @@
 using Blog.Core.Profiles;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Broker;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

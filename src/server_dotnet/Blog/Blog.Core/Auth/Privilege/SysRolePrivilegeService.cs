@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth.Role.BasicRole;
 using Blog.Core.Auth.UserInfo;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysEntity;
 using Sixpence.Common;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Blog.Core.Module.SysMenu;
 using Sixpence.Common.IoC;
 

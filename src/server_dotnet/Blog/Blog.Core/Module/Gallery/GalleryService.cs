@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Config;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
 using Sixpence.Common;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
 
 namespace Blog.Core.Module.Gallery

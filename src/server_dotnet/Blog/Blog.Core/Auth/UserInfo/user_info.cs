@@ -1,5 +1,5 @@
-﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.EntityFramework.Models;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.Models;
 using System;
 using System.Runtime.Serialization;
 

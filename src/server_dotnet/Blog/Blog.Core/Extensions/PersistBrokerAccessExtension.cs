@@ -2,14 +2,14 @@
 using Blog.Core.Module.SysEntity;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 
-namespace Sixpence.EntityFramework.Broker
+namespace Sixpence.ORM.Broker
 {
     /// <summary>
     /// PersistBroker 权限扩展
