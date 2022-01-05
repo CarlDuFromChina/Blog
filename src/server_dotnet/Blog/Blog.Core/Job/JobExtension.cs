@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Sixpence.Common;
 using Sixpence.ORM.SelectOption;
 using Sixpence.Common.IoC;
-using Sixpence.Core.Utils;
 
 namespace Blog.Core.Job
 {

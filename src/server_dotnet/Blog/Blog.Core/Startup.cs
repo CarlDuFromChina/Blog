@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using Sixpence.Common;
 using Sixpence.ORM;
 using Sixpence.ORM.Entity;
 using System;
@@ -67,7 +68,7 @@ namespace Blog.Core
             services.AddHttpContextAccessor();
 
             // 添加依赖注入服务
-            services.AddServices(options =>
+            services.AddServiceContainer(options =>
             {
                 options.Assembly.Add("Blog.*.dll");
             });
