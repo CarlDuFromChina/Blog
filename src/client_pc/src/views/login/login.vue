@@ -260,7 +260,7 @@ export default {
   width: 100%;
   height: 100%;
   background-size: 100% 100%;
-  background: #f0f2f5 url(../../../src/assets/icons/svg/background.svg) no-repeat 50%;
+  background: #f0f2f5 no-repeat 50%;
 }
 .login {
   width: 400px;
