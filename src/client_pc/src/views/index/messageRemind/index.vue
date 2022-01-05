@@ -1,5 +1,5 @@
 <template>
-  <sp-card class="message">
+  <sp-card class="message" :loading="false">
     <a-tabs default-active-key="1" :animated="false" @change="clearCount">
       <a-tab-pane key="1">
         <a-badge slot="tab" :dot="upvote > 0"><a-icon type="like" />点赞提醒</a-badge>

@@ -47,7 +47,7 @@ export default {
       searchValue: ''
     };
   },
-  async created() {
+  created() {
     if (this.view === 'comment') {
       this.viewId = '9E778EBC-9961-4CF7-B352-36DF30F33735';
     } else if (this.view === 'upvote') {
@@ -71,22 +71,21 @@ export default {
   },
   methods: {
     fetchData() {
-      try {
-        sp.get(
-          `api/MessageRemind/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
-        ).then(resp => {
-          this.total = resp.RecordCount;
-          resp.DataList.forEach(item => {
-            item.avatar = sp.getAvatar(item.createdBy);
-            item.data = JSON.parse(item.content);
-          });
-          this.listData = this.listData.concat(resp.DataList);
-          this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
-          this.pageIndex++;
+      sp.get(
+        `api/MessageRemind/GetViewData?orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
+      ).then(resp => {
+        this.total = resp.RecordCount;
+        resp.DataList.forEach(item => {
+          item.avatar = sp.getAvatar(item.createdBy);
+          item.data = JSON.parse(item.content);
         });
-      } finally {
+        this.listData = this.listData.concat(resp.DataList);
+        this.isLoadedAll = this.pageSize * this.pageIndex >= this.total;
+        this.pageIndex++;
+      })
+      .finally(() => {
         this.loading = false;
-      }
+      })
     },
     openLink(item) {
       window.open(`#/blog/${item.data.objectId}`, '_blank');

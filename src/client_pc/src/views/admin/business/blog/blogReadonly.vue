@@ -94,6 +94,7 @@
               <a class="item" v-for="(item, index) in recommandList" :key="index" @click="read(item)">
                 <div class="item-start">{{ item.name }}</div>
               </a>
+              <a-empty style="padding: 1.5rem" v-if="!recommandList || recommandList.length === 0" />
             </a-card>
             <div id="content" class="block catalog">
               <div style="font-size: 16px">目录</div>
