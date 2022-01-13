@@ -4,8 +4,8 @@ using Blog.Core.Store.SysFile;
 using Sixpence.Common;
 using Sixpence.Common.IoC;
 using Sixpence.Common.Utils;
-using Sixpence.ORM.Broker;
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +16,9 @@ namespace Blog.WeChat.WeChatNewsMaterial
     public class WeChatNewsMaterialService : EntityService<wechat_news_material>
     {
         #region 构造函数
-        public WeChatNewsMaterialService()
-        {
-            _context = new EntityContext<wechat_news_material>();
-        }
+        public WeChatNewsMaterialService() : base() { }
 
-        public WeChatNewsMaterialService(IPersistBroker broker)
-        {
-            _context = new EntityContext<wechat_news_material>(broker);
-        }
+        public WeChatNewsMaterialService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -34,14 +28,14 @@ namespace Blog.WeChat.WeChatNewsMaterial
         /// <returns></returns>
         public string CreateData(string fileid)
         {
-            var file = Broker.Retrieve<sys_file>(fileid);
-            var data = Broker.Retrieve<wechat_news_material>("SELECT * FROM wechat_news_material WHERE fileid = @id", new Dictionary<string, object>() { { "@id", fileid } });
+            var file = Manager.QueryFirst<sys_file>(fileid);
+            var data = Manager.QueryFirst<wechat_news_material>("SELECT * FROM wechat_news_material WHERE fileid = @id", new Dictionary<string, object>() { { "@id", fileid } });
             if (data == null)
             {
                 var stream = ServiceContainer.Resolve<IStoreStrategy>(StoreConfig.Config.Type).GetStream(fileid);
                 data = new wechat_news_material()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    id = Guid.NewGuid().ToString(),
                     fileid = fileid
                 };
                 data.media_url = WeChatApi.UploadImg(stream, file.name, file.content_type)?.url;
@@ -103,7 +97,7 @@ namespace Blog.WeChat.WeChatNewsMaterial
                 {
                     var identity = item.Split("/")[4];
                     var sql = "SELECT * FROM wechat_news_material WHERE media_url like concat('%', @url, '%')";
-                    var data = Broker.Retrieve<wechat_news_material>(sql, new Dictionary<string, object>() { { "@url", identity } });
+                    var data = Manager.QueryFirst<wechat_news_material>(sql, new Dictionary<string, object>() { { "@url", identity } });
                     if (data != null)
                     {
                         dic.TryAdd(item, data.local_url);

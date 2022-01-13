@@ -1,5 +1,6 @@
-﻿using Sixpence.ORM.Broker;
+﻿
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,9 @@ namespace Blog.ReadingNote
     public class ReadingNoteService : EntityService<reading_note>
     {
         #region 构造函数
-        public ReadingNoteService()
-        {
-            this._context = new EntityContext<reading_note>();
-        }
+        public ReadingNoteService() : base() { }
 
-        public ReadingNoteService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<reading_note>(broker);
-        }
+        public ReadingNoteService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()

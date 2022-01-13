@@ -1,16 +1,10 @@
-﻿using Blog.Core.Auth;
-using Blog.Core.Auth.Privilege;
+﻿using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.Role.BasicRole;
-using Sixpence.ORM.Entity;
-using Blog.Core.Module.Role;
-using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Sixpence.Common;
-using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
+using Sixpence.Common.Utils;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.SysRole
 {
@@ -19,8 +13,8 @@ namespace Blog.Core.Module.SysRole
         public static IApplicationBuilder UseSysRole(this IApplicationBuilder app)
         {
             var roles = ServiceContainer.ResolveAll<IRole>();
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            new SysRolePrivilegeService(broker).CreateRoleMissingPrivilege();
+            var manager = EntityManagerFactory.GetManager();
+            new SysRolePrivilegeService(manager).CreateRoleMissingPrivilege();
 
             // 权限读取到缓存
             roles.Each(item => MemoryCacheUtil.Set(item.GetRoleKey, new RolePrivilegeModel() { Role = item.GetSysRole(), Privileges = item.GetRolePrivilege() }, 3600 * 12));

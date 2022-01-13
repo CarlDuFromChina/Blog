@@ -16,22 +16,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.WeChatReply.Keywords
 {
     public class WeChatKeywordsService : EntityService<wechat_keywords>
     {
         #region 构造函数
-        public WeChatKeywordsService()
-        {
-            this._context = new EntityContext<wechat_keywords>();
-        }
+        public WeChatKeywordsService() : base() { }
 
-        public WeChatKeywordsService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<wechat_keywords>(broker);
-        }
+        public WeChatKeywordsService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -45,7 +39,7 @@ namespace Blog.WeChat.WeChatReply.Keywords
 SELECT * FROM wechat_keywords
 WHERE name LIKE CONCAT('%', @name, '%')
 ";
-            return Broker.RetrieveMultiple<wechat_keywords>(sql, new Dictionary<string, object>() { { "@name", requestMesage } });
+            return Manager.Query<wechat_keywords>(sql, new Dictionary<string, object>() { { "@name", requestMesage } });
         }
 
         /// <summary>

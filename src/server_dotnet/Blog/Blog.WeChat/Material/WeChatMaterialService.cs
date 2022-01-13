@@ -10,23 +10,17 @@ using Blog.Core.Config;
 using Blog.Core.Store;
 using Blog.Core.Auth;
 using Sixpence.Common;
-using Sixpence.ORM.Broker;
+
 using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.Material
 {
     public class WeChatMaterialService : EntityService<wechat_material>
     {
         #region 构造函数
-        public WeChatMaterialService()
-        {
-            _context = new EntityContext<wechat_material>();
-        }
-
-        public WeChatMaterialService(IPersistBroker broker)
-        {
-            _context = new EntityContext<wechat_material>(broker);
-        }
+        public WeChatMaterialService() : base() { }
+        public WeChatMaterialService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -79,7 +73,7 @@ namespace Blog.WeChat.Material
             AssertUtil.CheckBoolean<SpException>(file == null, $"根据fileid：{fileId}未找到记录", "36B5F5C9-ED65-4CAC-BE60-712278056EA9");
 
             // 检查素材库是否已经上传
-            var data = Broker.Retrieve<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.sys_fileId } });
+            var data = Manager.QueryFirst<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.id } });
             if (data != null)
             {
                 return new WeChatSuccessUploadResponse()
@@ -98,7 +92,7 @@ namespace Blog.WeChat.Material
             // 创建素材记录
             var material = new wechat_material()
             {
-                wechat_materialId = Guid.NewGuid().ToString(),
+                id = Guid.NewGuid().ToString(),
                 media_id = media.media_id,
                 url = media.url,
                 sys_fileid = fileId,

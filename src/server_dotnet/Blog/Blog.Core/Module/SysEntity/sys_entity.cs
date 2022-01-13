@@ -15,35 +15,26 @@ namespace Blog.Core.Module.SysEntity
         /// <summary>
         /// 实体id
         /// </summary>
-        [DataMember, Attr("sys_entityid", "实体id", DataType.Varchar, 100, true)]
-        public string sys_entityId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [DataMember]
+        [PrimaryColumn]
+        public string id { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
-        [DataMember, Attr("code", "编码", DataType.Varchar, 100, true)]
+        [DataMember, Column("code", "编码", DataType.Varchar, 100, true)]
         public string code { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Attr("is_sys", "是否系统实体", DataType.Int4, true)]
+        [DataMember, Column("is_sys", "是否系统实体", DataType.Int4, true)]
         public bool is_sys { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Attr("is_sysname", "是否系统实体", DataType.Varchar, 100, true)]
+        [DataMember, Column("is_sysname", "是否系统实体", DataType.Varchar, 100, true)]
         public string is_sysName { get; set; }
     }
 }

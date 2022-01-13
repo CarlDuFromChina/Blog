@@ -1,6 +1,6 @@
 ﻿using Sixpence.Common;
 using Sixpence.Common.IoC;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Blog.Business.Blog.Sync
         /// <summary>
         /// 数据库持久化
         /// </summary>
-        IPersistBroker Broker { get; set; }
+        IEntityManager Manager { get; set; }
 
         /// <summary>
         /// 执行同步

@@ -1,5 +1,5 @@
-﻿using Sixpence.ORM.Broker;
-using Sixpence.ORM.Entity;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +11,9 @@ namespace Blog.WeChat.Robot
     public class RobotService : EntityService<robot>
     {
         #region 构造函数
-        public RobotService()
-        {
-            _context = new EntityContext<robot>();
-        }
+        public RobotService() : base() { }
 
-        public RobotService(IPersistBroker broker)
-        {
-            _context = new EntityContext<robot>(Broker);
-        }
+        public RobotService(IEntityManager manager) : base(manager) { }
         #endregion
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Job;
 using Sixpence.ORM.Entity;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.RobotMessageTask
 {
@@ -19,8 +19,8 @@ namespace Blog.WeChat.RobotMessageTask
         public override void Executing(IJobExecutionContext context)
         {
             var entity = context.JobDetail.JobDataMap.Get("Entity") as robot_message_task;
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            var robot = broker.Retrieve<robot>(entity.robotid);
+            var Manager = EntityManagerFactory.GetManager();
+            var robot = Manager.QueryFirst<robot>(entity.robotid);
             try
             {
                 var client = RobotClientFacotry.GetClient(robot.robot_type, robot.hook);
@@ -32,7 +32,7 @@ namespace Blog.WeChat.RobotMessageTask
                 Logger.Error($"机器人[{robot.name}]的消息[{entity.name}]发送失败", e);
                 entity.job_state = "3";
                 entity.job_stateName = "错误";
-                broker.Update(entity);
+                Manager.Update(entity);
             }
         }
     }

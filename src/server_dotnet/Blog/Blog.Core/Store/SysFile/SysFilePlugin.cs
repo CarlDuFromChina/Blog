@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+
 using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Store.SysFile
 {
-    public class SysFilePlugin : IPersistBrokerPlugin
+    public class SysFilePlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var entity = context.Entity;
             switch (context.Action)
@@ -42,9 +43,9 @@ WHERE
                         var paramList = new Dictionary<string, object>()
                         {
                             { "@hash_code", entity.GetAttributeValue<string>("hash_code") },
-                            { "@id", entity.GetAttributeValue<string>("sys_fileid") }
+                            { "@id", entity.GetAttributeValue<string>("id") }
                         };
-                        var dataList = context.Broker.RetrieveMultiple<sys_file>(sql, paramList);
+                        var dataList = context.EntityManager.Query<sys_file>(sql, paramList);
                         if (dataList.IsEmpty())
                         {
                             ServiceContainer.Resolve<IStoreStrategy>(StoreConfig.Config.Type).Delete(new List<string>() { entity.GetAttributeValue<string>("real_name") });

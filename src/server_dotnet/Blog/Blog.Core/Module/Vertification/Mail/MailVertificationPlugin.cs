@@ -4,13 +4,13 @@ using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Vertification.Mail
 {
-    public class MailVertificationPlugin : IPersistBrokerPlugin
+    public class MailVertificationPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var entity = context.Entity;
             switch (context.Action)

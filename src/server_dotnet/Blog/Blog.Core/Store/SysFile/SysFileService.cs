@@ -5,26 +5,21 @@ using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Sixpence.ORM.Broker;
 using Microsoft.AspNetCore.Http;
 using Blog.Core.Module.DataService;
 using Blog.Core.Profiles;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
+using System.Linq;
 
 namespace Blog.Core.Store.SysFile
 {
     public class SysFileService : EntityService<sys_file>
     {
         #region 构造函数
-        public SysFileService()
-        {
-            this._context = new EntityContext<sys_file>();
-        }
+        public SysFileService() : base() {}
 
-        public SysFileService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<sys_file>(broker);
-        }
+        public SysFileService(IEntityManager manager) : base(manager) {}
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -76,7 +71,7 @@ FROM
 SELECT * FROM sys_file
 WHERE hash_code = @code
 ";
-            return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Manager.Query<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } }).ToList();
         }
 
         public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId, string fileName = "")
@@ -92,7 +87,7 @@ WHERE hash_code = @code
 
             var sysFile = new sys_file()
             {
-                sys_fileId = id,
+                id = id,
                 name = fileName,
                 real_name = newFileName,
                 hash_code = hash_code,
@@ -119,7 +114,7 @@ WHERE hash_code = @code
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
 
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 // 上传大图
                 var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);

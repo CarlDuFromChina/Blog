@@ -2,10 +2,11 @@
 using Sixpence.ORM.Entity;
 using Sixpence.Common;
 using Sixpence.Common.Utils;
-using Sixpence.ORM.Broker;
 using System;
 using System.Collections.Generic;
 using System.Web;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth
 {
@@ -14,12 +15,12 @@ namespace Blog.Core.Auth
         #region 构造函数
         public AuthUserService()
         {
-            _context = new EntityContext<auth_user>();
+            Repository = new Repository<auth_user>();
         }
 
-        public AuthUserService(IPersistBroker broker)
+        public AuthUserService(IEntityManager manger)
         {
-            _context = new EntityContext<auth_user>(broker);
+            Repository = new Repository<auth_user>(manger);
         }
         #endregion
 
@@ -35,12 +36,12 @@ namespace Blog.Core.Auth
 SELECT * FROM auth_user WHERE code = @code AND password = @password;
 ";
             var paramList = new Dictionary<string, object>() { { "@code", code }, { "@password", pwd } };
-            var authUser = Broker.Retrieve<auth_user>(sql, paramList);
+            var authUser = Manager.QueryFirst<auth_user>(sql, paramList);
             return authUser;
         }
         public auth_user GetDataByCode(string code)
         {
-            var data = Broker.Retrieve<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", code } });
+            var data = Manager.QueryFirst<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", code } });
             return data;
         }
 
@@ -50,11 +51,11 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         /// <param name="id"></param>
         public void LockUser(string id)
         {
-            Broker.ExecuteTransaction(() =>
+            Manager.ExecuteTransaction(() =>
             {
                 var userId = UserIdentityUtil.GetCurrentUserId();
                 AssertUtil.CheckBoolean<SpException>(userId == id, "请勿锁定自己", "4B1DD6F4-977B-43B4-BA48-C02668A661B3");
-                var data = Broker.Retrieve<auth_user>("select * from auth_user where user_infoid = @id", new Dictionary<string, object>() { { "@id", id } });
+                var data = Manager.QueryFirst<auth_user>("select * from auth_user where user_infoid = @id", new Dictionary<string, object>() { { "@id", id } });
                 data.is_lock = true;
                 UpdateData(data);
             });
@@ -66,9 +67,9 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         /// <param name="id"></param>
         public void UnlockUser(string id)
         {
-            Broker.ExecuteTransaction(() =>
+            Manager.ExecuteTransaction(() =>
             {
-                var data = Broker.Retrieve<auth_user>("select * from auth_user where user_infoid = @id", new Dictionary<string, object>() { { "@id", id } });
+                var data = Manager.QueryFirst<auth_user>("select * from auth_user where user_infoid = @id", new Dictionary<string, object>() { { "@id", id } });
                 data.is_lock = false;
                 UpdateData(data);
             });

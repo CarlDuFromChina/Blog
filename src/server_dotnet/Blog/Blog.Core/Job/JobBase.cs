@@ -7,8 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
 using Sixpence.Common.Current;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Job
 {
@@ -62,11 +62,11 @@ namespace Blog.Core.Job
 
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var broker = PersistBrokerFactory.GetPersistBroker();
+                var manager = EntityManagerFactory.GetManager();
                 UserIdentityUtil.SetCurrentUser(user);
                 try
                 {
-                    broker.ExecuteTransaction(() =>
+                    manager.ExecuteTransaction(() =>
                     {
                           Executing(context);
                     // 更新下次执行时间
@@ -78,7 +78,7 @@ namespace Blog.Core.Job
                         };
                           paramList.Add("@nextTime", nextTime.UtcDateTime);
                           nextTimeSql = ", nextruntime = @nextTime";
-                          broker.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
+                          manager.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
                       });
                 }
                 catch (Exception e)

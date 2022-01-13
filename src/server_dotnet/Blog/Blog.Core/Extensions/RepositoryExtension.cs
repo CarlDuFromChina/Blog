@@ -1,28 +1,26 @@
-﻿using Sixpence.ORM.Entity;
-using Sixpence.Common;
-using Sixpence.ORM.Broker;
+﻿using Sixpence.Common;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using Sixpence.ORM.Models;
+using Sixpence.ORM.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Sixpence.ORM.Entity
+namespace Blog.Core.Extensions
 {
-    public class EntityContext<E> : EntityContextBase<E>
-        where E : BaseEntity, new()
+    public static class RepositoryExtension
     {
-        public EntityContext() { }
-        public EntityContext(IPersistBroker broker) : base(broker) { }
-
         /// <summary>
         ///  获取所有实体记录
         /// </summary>
         /// <returns></returns>
-        public virtual IList<E> GetAllEntity()
+        public static IEnumerable<E> GetAllEntity<E>(this IRepository<E> repository)
+            where E : BaseEntity, new()
         {
             var sql = $"SELECT *  FROM {new E().EntityName}";
-            var data = Broker.RetrieveMultiple<E>(sql);
+            var data = repository.Manager.Query<E>(sql);
             return data;
         }
 
@@ -37,17 +35,18 @@ namespace Sixpence.ORM.Entity
         /// <param name="recordCount"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public virtual IList<E> GetDataList(EntityView view, IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, out int recordCount, string searchValue = "")
+        public static IEnumerable<E> GetDataList<E>(this IRepository<E> repository, EntityView view, IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, out int recordCount, string searchValue = "")
+            where E : BaseEntity, new()
         {
             var sql = view.Sql;
             var paramList = new Dictionary<string, object>();
 
-            GetSql(ref sql, searchList, ref paramList, orderBy, view, searchValue);
+            GetSql<E>(ref sql, searchList, ref paramList, orderBy, view, searchValue);
 
             var recordCountSql = $"SELECT COUNT(1) FROM ({sql}) AS table1";
-            recordCount = Convert.ToInt32(Broker.ExecuteScalar(recordCountSql, paramList));
-            Broker.DbClient.Driver.AddLimit(ref sql, pageIndex, pageSize);
-            var data = Broker.FilteredRetrieveMultiple<E>(sql, paramList);
+            recordCount = repository.Manager.QueryCount(recordCountSql, paramList);
+            repository.Manager.Driver.AddLimit(ref sql, pageIndex, pageSize);
+            var data = repository.Manager.FilteredQuery<E>(sql, paramList);
             return data;
         }
 
@@ -58,14 +57,15 @@ namespace Sixpence.ORM.Entity
         /// <param name="searchList">搜索条件</param>
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
-        public virtual IList<E> GetDataList(EntityView view, IList<SearchCondition> searchList, string orderBy, string searchValue = "")
+        public static IEnumerable<E> GetDataList<E>(this IRepository<E> repository, EntityView view, IList<SearchCondition> searchList, string orderBy, string searchValue = "")
+            where E : BaseEntity, new()
         {
             var sql = view.Sql;
             var paramList = new Dictionary<string, object>();
 
-            GetSql(ref sql, searchList, ref paramList, orderBy, view, searchValue);
+            GetSql<E>(ref sql, searchList, ref paramList, orderBy, view, searchValue);
 
-            var data = Broker.FilteredRetrieveMultiple<E>(sql, paramList);
+            var data = repository.Manager.FilteredQuery<E>(sql, paramList);
             return data;
         }
 
@@ -75,13 +75,14 @@ namespace Sixpence.ORM.Entity
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual string FilteredCreate(E entity)
+        public static string FilteredCreate<E>(this IRepository<E> repository, E entity)
+            where E : BaseEntity, new()
         {
-            if (string.IsNullOrEmpty(entity.Id))
+            if (string.IsNullOrEmpty(entity.PrimaryKey.Value))
             {
                 return "";
             }
-            var id = Broker.FilteredCreate(entity);
+            var id = repository.Manager.FilteredCreate(entity);
             return id;
         }
 
@@ -91,17 +92,18 @@ namespace Sixpence.ORM.Entity
         /// <typeparam name="E"></typeparam>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual string FilteredCreateOrUpdateData(E entity)
+        public static string FilteredCreateOrUpdateData<E>(this IRepository<E> repository, E entity)
+            where E : BaseEntity, new()
         {
-            var id = entity.Id;
-            var isExist = SingleQuery(id) != null;
+            var id = entity.PrimaryKey.Value;
+            var isExist = repository.Manager.QueryFirst<E>(id) != null;
             if (isExist)
             {
-                Update(entity);
+                repository.Update(entity);
             }
             else
             {
-                id = Create(entity);
+                id = repository.Create(entity);
             }
             return id;
         }
@@ -111,14 +113,15 @@ namespace Sixpence.ORM.Entity
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ids"></param>
-        public virtual void FilteredDelete(IEnumerable<string> ids)
+        public static void FilteredDelete<E>(this IRepository<E> repository, IEnumerable<string> ids)
+            where E : BaseEntity, new()
         {
-            Broker.ExecuteTransaction(() =>
+            repository.Manager.ExecuteTransaction(() =>
             {
                 ids.Each(id =>
                 {
-                    var data = Broker.FilteredRetrieve<E>(id);
-                    Broker.FilteredDelete(new E().EntityName, id);
+                    var data = repository.Manager.FilteredQueryFirst<E>(id);
+                    repository.Manager.FilteredDelete(new E().EntityName, id);
                 });
             });
         }
@@ -127,12 +130,12 @@ namespace Sixpence.ORM.Entity
         /// <summary>
         /// 获取实体记录
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id"></param>
+        /// <param name="ids"></param>
         /// <returns></returns>
-        public virtual IEnumerable<E> FilteredQuery(string id)
+        public static IEnumerable<E> FilteredQuery<E>(this IRepository<E> repository)
+            where E : BaseEntity, new()
         {
-            return Broker.FilteredRetrieveMultiple<E>(id);
+            return repository.Manager.FilteredQuery<E>($"select * from {new E().EntityName}");
         }
 
         /// <summary>
@@ -140,9 +143,10 @@ namespace Sixpence.ORM.Entity
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual E FilteredSingleQuery(string id)
+        public static E FilteredQueryFirst<E>(this IRepository<E> repository, string id)
+            where E : BaseEntity, new()
         {
-            return Broker.FilteredRetrieve<E>(id);
+            return repository.Manager.FilteredQueryFirst<E>(id);
         }
 
         /// <summary>
@@ -150,14 +154,15 @@ namespace Sixpence.ORM.Entity
         /// </summary>
         /// <typeparam name="E"></typeparam>
         /// <param name="entity"></param>
-        public virtual void FilteredUpdate(E entity)
+        public static void FilteredUpdate<E>(this IRepository<E> repository, E entity)
+            where E : BaseEntity, new()
         {
-            if (string.IsNullOrEmpty(entity?.Id))
+            if (string.IsNullOrEmpty(entity?.PrimaryKey.Value))
             {
                 return;
             }
 
-            Broker.FiltededUpdate(entity);
+            repository.Manager.FiltededUpdate(entity);
         }
         #endregion
 
@@ -170,7 +175,8 @@ namespace Sixpence.ORM.Entity
         /// <param name="paramList"></param>
         /// <param name="orderBy"></param>
         /// <param name="view"></param>
-        private void GetSql(ref string sql, IList<SearchCondition> searchList, ref Dictionary<string, object> paramList, string orderBy, EntityView view, string searchValue)
+        private static void GetSql<E>(ref string sql, IList<SearchCondition> searchList, ref Dictionary<string, object> paramList, string orderBy, EntityView view, string searchValue)
+            where E : BaseEntity, new()
         {
             var entityName = new E().EntityName;
             var count = 0;

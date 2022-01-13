@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Module.SysMenu;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace Blog.Business.Classification
 {
-    public class ClassificationPlugin : IPersistBrokerPlugin
+    public class ClassificationPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var data = context.Entity as classification;
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
                 case EntityAction.PostUpdate:
-                    CreateOrUpdateMenu(context.Broker, data);
+                    CreateOrUpdateMenu(context.EntityManager, data);
                     break;
                 case EntityAction.PostDelete:
                     {
-                        var menu = context.Broker.Retrieve<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{context.Entity.GetAttributeValue<string>("code")}"} });
+                        var menu = context.EntityManager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{context.Entity.GetAttributeValue<string>("code")}"} });
                         if (menu != null)
                         {
-                            context.Broker.Delete(menu);
+                            context.EntityManager.Delete(menu);
                         }
                     }
                     break;
@@ -32,20 +32,20 @@ namespace Blog.Business.Classification
             }
         }
 
-        private void CreateOrUpdateMenu(IPersistBroker broker, classification data)
+        private void CreateOrUpdateMenu(IEntityManager manager, classification data)
         {
-            var menu = broker.Retrieve<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{data.code}" } });
+            var menu = manager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{data.code}" } });
             if (menu != null)
             {
                 menu.menu_Index = data.index;
                 menu.name = data.name;
-                broker.Update(menu);
+                manager.Update(menu);
             }
             else
             {
                 menu = new sys_menu()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    id = Guid.NewGuid().ToString(),
                     name = data.name,
                     parentid = "8201EFED-76E2-4CD1-A522-4803D52D4D92",
                     parentIdName = "博客管理",
@@ -54,7 +54,7 @@ namespace Blog.Business.Classification
                     stateCode = 1,
                     stateCodeName = "启用"
                 };
-                broker.Create(menu);
+                manager.Create(menu);
             }
         }
     }

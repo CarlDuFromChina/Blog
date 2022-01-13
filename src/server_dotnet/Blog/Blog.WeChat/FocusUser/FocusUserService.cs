@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using Sixpence.Common.Logging;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.FocusUser
 {
     public class FocusUserService
     {
-        IPersistBroker broker;
+        IEntityManager manager;
         ILog logger;
 
         public FocusUserService()
         {
-            broker = PersistBrokerFactory.GetPersistBroker();
+            manager = EntityManagerFactory.GetManager();
             logger = LogFactory.GetLogger("wechat");
         }
 

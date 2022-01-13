@@ -1,5 +1,5 @@
-﻿using Sixpence.ORM.Broker;
-using Sixpence.ORM.Entity;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +11,9 @@ namespace Blog.Business.Classification
     public class ClassificationService : EntityService<classification>
     {
         #region 构造函数
-        public ClassificationService()
-        {
-            this._context = new EntityContext<classification>();
-        }
+        public ClassificationService() : base() { }
 
-        public ClassificationService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<classification>(broker);
-        }
+        public ClassificationService(IEntityManager manager) : base(manager) { }
         #endregion
     }
 }

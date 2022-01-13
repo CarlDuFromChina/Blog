@@ -2,7 +2,8 @@
 using Sixpence.Common;
 using Sixpence.Common.Utils;
 using System.Collections.Generic;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth.UserInfo
 {
@@ -11,12 +12,12 @@ namespace Blog.Core.Auth.UserInfo
         #region 构造函数
         public UserInfoService()
         {
-            this._context = new EntityContext<user_info>();
+            Repository = new Repository<user_info>();
         }
 
-        public UserInfoService(IPersistBroker broker)
+        public UserInfoService(IEntityManager manager)
         {
-            this._context = new EntityContext<user_info>(broker);
+            Repository = new Repository<user_info>(manager);
         }
         #endregion
 
@@ -51,7 +52,7 @@ LEFT JOIN (
 
         public user_info GetData()
         {
-            return Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            return Repository.Query(UserIdentityUtil.GetCurrentUserId());
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ LEFT JOIN (
             var sql = @"
 SELECT * FROM user_info
 WHERE code = @code";
-            return Broker.Retrieve<user_info>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Repository.Manager.QueryFirst<user_info>(sql, new Dictionary<string, object>() { { "@code", code } });
         }
 
         /// <summary>
@@ -73,9 +74,9 @@ WHERE code = @code";
         /// <returns></returns>
         public bool InfoFilled()
         {
-            var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            var user = Repository.Query(UserIdentityUtil.GetCurrentUserId());
             AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
-            if (user.Id == UserIdentityUtil.ADMIN_ID)
+            if (user.id == UserIdentityUtil.ADMIN_ID)
             {
                 return false;
             }

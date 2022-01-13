@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Comments
 {
-    public class CommentsPlugin : IPersistBrokerPlugin
+    public class CommentsPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
-            var broker = context.Broker;
+            var manager = context.EntityManager;
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
@@ -22,7 +22,7 @@ namespace Blog.Comments
                         var data = context.Entity as comments;
                         var messageRemind = new message_remind()
                         {
-                            Id = Guid.NewGuid().ToString(),
+                            id = Guid.NewGuid().ToString(),
                             name = $"{data.name}消息提醒",
                             is_read = false,
                             is_readName = "否",
@@ -39,7 +39,7 @@ namespace Blog.Comments
                             messageRemind.receiverId = data.replyid;
                             messageRemind.receiverIdName = data.replyidName;
                         }
-                        broker.Create(messageRemind);
+                        manager.Create(messageRemind);
                     }
                     break;
                 default:

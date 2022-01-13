@@ -38,7 +38,7 @@ namespace Blog.Core.WebApi
         public virtual IList<E> GetDataList(string searchList = "", string orderBy = "",string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new S().GetDataList(_searchList, orderBy, viewId, searchValue);
+            return new S().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
         }
 
         /// <summary>

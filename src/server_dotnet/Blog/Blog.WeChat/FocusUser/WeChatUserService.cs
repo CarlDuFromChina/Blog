@@ -1,6 +1,6 @@
 ﻿using Blog.Core.WebApi;
-using Sixpence.ORM.Broker;
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +12,9 @@ namespace Blog.WeChat.FocusUser
     public class WeChatUserService : EntityService<wechat_user>
     {
         #region 构造函数
-        public WeChatUserService()
-        {
-            _context = new EntityContext<wechat_user>();
-        }
+        public WeChatUserService() : base() { }
        
-        public WeChatUserService(IPersistBroker broker)
-        {
-            _context = new EntityContext<wechat_user>(broker);
-        }
+        public WeChatUserService(IEntityManager manager) : base(manager) { }
         #endregion
     }
 }

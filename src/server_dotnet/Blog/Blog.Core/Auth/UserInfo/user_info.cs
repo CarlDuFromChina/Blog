@@ -16,102 +16,92 @@ namespace Blog.Core.Auth.UserInfo
         /// 用户id
         /// </summary>
         [DataMember]
-        [Attr("user_infoid", "用户id", DataType.Varchar, 100)]
-        public string user_infoId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn()]
+        public string id { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Attr("code", "编码", DataType.Varchar, 100)]
+        [Column("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
 
         /// <summary>
         /// 性别
         /// </summary>
         [DataMember]
-        [Attr("gender", "性别", DataType.Int4)]
+        [Column("gender", "性别", DataType.Int4)]
         public int? gender { get; set; }
 
         /// <summary>
         /// 性别
         /// </summary>
         [DataMember]
-        [Attr("gendername", "性别", DataType.Varchar, 100)]
+        [Column("gendername", "性别", DataType.Varchar, 100)]
         public string genderName { get; set; }
 
         /// <summary>
         /// 真实姓名
         /// </summary>
         [DataMember]
-        [Attr("realname", "真实姓名", DataType.Varchar, 100)]
+        [Column("realname", "真实姓名", DataType.Varchar, 100)]
         public string realname { get; set; }
 
         /// <summary>
         /// 邮箱
         /// </summary>
         [DataMember]
-        [Attr("mailbox", "邮箱", DataType.Varchar, 400)]
+        [Column("mailbox", "邮箱", DataType.Varchar, 400)]
         public string mailbox { get; set; }
 
         /// <summary>
         /// 个人介绍
         /// </summary>
         [DataMember]
-        [Attr("introduction", "个人介绍", DataType.Text)]
+        [Column("introduction", "个人介绍", DataType.Text)]
         public string introduction { get; set; }
 
         /// <summary>
         /// 手机号码
         /// </summary>
         [DataMember]
-        [Attr("cellphone", "手机号码", DataType.Varchar, 100)]
+        [Column("cellphone", "手机号码", DataType.Varchar, 100)]
         public string cellphone { get; set; }
 
         /// <summary>
         /// 头像
         /// </summary>
         [DataMember]
-        [Attr("avatar", "头像", DataType.Varchar, 40)]
+        [Column("avatar", "头像", DataType.Varchar, 40)]
         public string avatar { get; set; }
 
         /// <summary>
         /// 生活照
         /// </summary>
         [DataMember]
-        [Attr("life_photo", "生活照", DataType.Text)]
+        [Column("life_photo", "生活照", DataType.Text)]
         public string life_photo { get; set; }
 
         /// <summary>
         /// 角色权限id
         /// </summary>
         [DataMember]
-        [Attr("roleid", "角色权限id", DataType.Varchar, 100)]
+        [Column("roleid", "角色权限id", DataType.Varchar, 100)]
         public string roleid { get; set; }
 
         /// <summary>
         /// 角色权限名
         /// </summary>
         [DataMember]
-        [Attr("roleidname", "角色权限名", DataType.Varchar, 100)]
+        [Column("roleidname", "角色权限名", DataType.Varchar, 100)]
         public string roleidName { get; set; }
 
         [DataMember]
-        [Attr("statecode", "状态", DataType.Int4)]
+        [Column("statecode", "状态", DataType.Int4)]
         public int? stateCode { get; set; }
 
         [DataMember]
-        [Attr("statecodename", "状态名", DataType.Varchar, 100)]
+        [Column("statecodename", "状态名", DataType.Varchar, 100)]
         public string stateCodeName { get; set; }
     }
 }

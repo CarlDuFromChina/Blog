@@ -1,14 +1,14 @@
-﻿using Sixpence.ORM.Broker;
-using Sixpence.ORM.Entity;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Blog.Core.Auth.Privilege
 {
-    public class SysRolePrivilegePlugin : IPersistBrokerPlugin
+    public class SysRolePrivilegePlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             if (context.EntityName != nameof(sys_role_privilege)) return;
 
@@ -17,7 +17,7 @@ namespace Blog.Core.Auth.Privilege
                 case EntityAction.PostCreate:
                 case EntityAction.PostDelete:
                 case EntityAction.PostUpdate:
-                    UserPrivilegesCache.Clear(context.Broker);
+                    UserPrivilegesCache.Clear(context.EntityManager);
                     break;
                 default:
                     break;

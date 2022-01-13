@@ -7,22 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.ORM.Models;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.MessageRemind
 {
     public class MessageRemindService : EntityService<message_remind>
     {
         #region 构造函数
-        public MessageRemindService()
-        {
-            _context = new EntityContext<message_remind>();
-        }
+        public MessageRemindService() : base() { }
 
-        public MessageRemindService(IPersistBroker broker)
-        {
-            _context = new EntityContext<message_remind>(broker);
-        }
+        public MessageRemindService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -66,7 +61,7 @@ UPDATE message_remind
 SET	is_read = 1, is_readname = '是'
 WHERE message_remindid IN (in@ids)
 ";
-            Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } });
+            Manager.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } });
         }
 
         public override DataModel<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
@@ -77,12 +72,12 @@ WHERE message_remindid IN (in@ids)
             }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
             var model = base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
-            var ids = model.DataList.Where(item => !item.is_read).Select(item => item.Id);
+            var ids = model.DataList.Where(item => !item.is_read).Select(item => item.id);
             ReadMessage(ids);
             return model;
         }
 
-        public override IList<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
+        public override IEnumerable<message_remind> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
             if (searchList.IsEmpty())
             {
@@ -90,7 +85,7 @@ WHERE message_remindid IN (in@ids)
             }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
             var model = base.GetDataList(searchList, orderBy, viewId, searchValue);
-            var ids = model.Where(item => !item.is_read).Select(item => item.Id);
+            var ids = model.Where(item => !item.is_read).Select(item => item.id);
             ReadMessage(ids);
             return model;
         }
@@ -107,10 +102,10 @@ WHERE message_remindid IN (in@ids)
 SELECT COUNT(1)
 FROM message_remind
 WHERE receiverid = @id AND is_read = 0";
-            var total = Broker.ExecuteScalar(sql, paramList);
-            var upvote = Broker.ExecuteScalar($"{sql} AND message_type = 'upvote'", paramList);
-            var comment = Broker.ExecuteScalar($"{sql} AND message_type IN ('comment', 'reply')", paramList);
-            var system = Broker.ExecuteScalar($"{sql} AND message_type = 'system'", paramList);
+            var total = Manager.ExecuteScalar(sql, paramList);
+            var upvote = Manager.ExecuteScalar($"{sql} AND message_type = 'upvote'", paramList);
+            var comment = Manager.ExecuteScalar($"{sql} AND message_type IN ('comment', 'reply')", paramList);
+            var system = Manager.ExecuteScalar($"{sql} AND message_type = 'system'", paramList);
             return new
             {
                 total = Convert.ToInt32(total),

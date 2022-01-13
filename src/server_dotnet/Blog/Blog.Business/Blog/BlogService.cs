@@ -9,13 +9,14 @@ using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
-using Sixpence.ORM.Broker;
+
 using Sixpence.Common;
 using Newtonsoft.Json;
 using Blog.Core.Config;
 using System.IO;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Module.SysConfig;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Business.Blog
 {
@@ -25,15 +26,9 @@ namespace Blog.Business.Blog
         public const string BLOG_CONTENT_NAME = "blog_content";
 
         #region 构造函数
-        public BlogService()
-        {
-            _context = new EntityContext<blog>();
-        }
+        public BlogService() : base() { }
 
-        public BlogService(IPersistBroker broker)
-        {
-            _context = new EntityContext<blog>(broker);
-        }
+        public BlogService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -109,13 +104,13 @@ WHERE 1=1 AND blog.is_show = 1";
         /// <returns></returns>
         public override blog GetData(string id)
         {
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 var data = base.GetData(id);
                 var paramList = new Dictionary<string, object>() { { "@id", id } };
-                data.upvote_times = Broker.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
-                data.comment_count = Broker.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
-                Broker.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id", paramList);
+                data.upvote_times = Manager.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
+                data.comment_count = Manager.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
+                Manager.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id", paramList);
                 return data;
             });
         }
@@ -134,7 +129,7 @@ FROM
 WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
-            return Broker.DbClient.Query<string>(sql, param: null);
+            return Manager.DbClient.Query<string>(sql);
         }
 
         /// <summary>
@@ -143,25 +138,25 @@ WHERE
         /// <param name="blogId"></param>
         public bool Upvote(string blogId)
         {
-            var data = Broker.Retrieve<upvote>("SELECT * FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", blogId } });
+            var data = Manager.QueryFirst<upvote>("SELECT * FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", blogId } });
             if (data != null)
             {
-                Broker.Delete(data);
+                Manager.Delete(data);
                 return false;
             }
             else
             {
-                var blog = Broker.Retrieve<blog>(blogId);
+                var blog = Manager.QueryFirst<blog>(blogId);
                 data = new upvote()
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    objectId = blog.Id,
+                    id = Guid.NewGuid().ToString(),
+                    objectId = blog.id,
                     objectIdName = blog.title,
-                    object_ownerid = blog.createdBy,
-                    object_owneridName = blog.createdByName,
+                    object_ownerid = blog.created_by,
+                    object_owneridName = blog.created_by_name,
                     object_type = "blog"
                 };
-                Broker.Create(data);
+                Manager.Create(data);
                 return true;
             }
         }
@@ -180,7 +175,7 @@ FROM blog
 WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND createdon < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
 GROUP BY to_char(createdon, 'YYYY-MM-DD')
 ";
-            return Broker.Query<BlogActivityModel>(sql);
+            return Manager.Query<BlogActivityModel>(sql);
         }
 
         /// <summary>
@@ -210,10 +205,10 @@ GROUP BY to_char(createdon, 'YYYY-MM-DD')
         /// <returns></returns>
         public user_info GetIndexUser()
         {
-            var config = Broker.Retrieve<sys_config>("SELECT * FROM sys_config WHERE code = @code", new Dictionary<string, object>() { { "@code", "index_user" } });
+            var config = Manager.QueryFirst<sys_config>("SELECT * FROM sys_config WHERE code = @code", new Dictionary<string, object>() { { "@code", "index_user" } });
             if (!string.IsNullOrEmpty(config.value))
             {
-                return new UserInfoService(Broker).GetDataByCode(config.value);
+                return new UserInfoService(Manager).GetDataByCode(config.value);
             }
             return null;
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Core.Auth;
 using Sixpence.ORM.Models;
+using System.Linq;
 
 namespace Blog.Comments
 {
@@ -21,7 +22,7 @@ namespace Blog.Comments
         public virtual IList<comments> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new CommentsService().GetDataList(_searchList, orderBy, viewId, searchValue);
+            return new CommentsService().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
         }
     }
 }

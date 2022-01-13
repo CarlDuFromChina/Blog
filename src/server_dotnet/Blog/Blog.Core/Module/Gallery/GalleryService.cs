@@ -9,23 +9,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Gallery
 {
     public class GalleryService : EntityService<gallery>
     {
         #region 构造函数
-        public GalleryService()
-        {
-            _context = new EntityContext<gallery>();
-        }
+        public GalleryService() : base() { }
 
-        public GalleryService(IPersistBroker broker)
-        {
-            _context = new EntityContext<gallery>(Broker);
-        }
+        public GalleryService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -55,7 +50,7 @@ namespace Blog.Core.Module.Gallery
 
             var data = new sys_file()
             {
-                sys_fileId = id,
+                id = id,
                 name = fileName,
                 real_name = fileName,
                 hash_code = hash_code,
@@ -63,20 +58,20 @@ namespace Blog.Core.Module.Gallery
                 content_type = contentType,
                 objectId = objectid
             };
-            return Broker.Create(data);
+            return Manager.Create(data);
         }
 
         public List<string> UploadImage(Pixabay.ImageModel image)
         {
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 var data = new gallery()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    id = Guid.NewGuid().ToString(),
                     tags = image.tags
                 };
-                data.previewid = DownloadImage(image.previewURL, data.Id);
-                data.imageid = DownloadImage(image.largeImageURL, data.Id);
+                data.previewid = DownloadImage(image.previewURL, data.id);
+                data.imageid = DownloadImage(image.largeImageURL, data.id);
                 data.preview_url = SysFileService.GetDownloadUrl(data.previewid);
                 data.image_url = SysFileService.GetDownloadUrl(data.imageid);
                 base.CreateData(data);

@@ -14,33 +14,23 @@ namespace Blog.Core.Module.SysParams
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("sys_paramid", "实体id", DataType.Varchar, 100)]
-        public string sys_paramId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Attr("code", "编码", DataType.Varchar, 100)]
+        [Column("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
 
         [DataMember]
-        [Attr("sys_paramgroupid", "选项集id", DataType.Varchar, 100)]
+        [Column("sys_paramgroupid", "选项集id", DataType.Varchar, 100)]
         public string sys_paramGroupId { get; set; }
 
 
         [DataMember]
-        [Attr("sys_paramgroupidname", "选项集名", DataType.Varchar, 100)]
+        [Column("sys_paramgroupidname", "选项集名", DataType.Varchar, 100)]
         public string sys_paramGroupIdName { get; set; }
     }
 }

@@ -6,27 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Blog.Core.Extensions;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.RobotMessageTask
 {
     public class RobotMessageTaskService : EntityService<robot_message_task>
     {
         #region 构造函数
-        public RobotMessageTaskService()
-        {
-            _context = new EntityContext<robot_message_task>();
-        }
+        public RobotMessageTaskService() : base() { }
 
-        public RobotMessageTaskService(IPersistBroker broker)
-        {
-            _context = new EntityContext<robot_message_task>(broker);
-        }
+        public RobotMessageTaskService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public new IEnumerable<robot_message_task> GetAllData()
         {
-            return _context.GetAllEntity();
+            return Repository.GetAllEntity();
         }
 
         public void RunOnce(string id)

@@ -89,7 +89,7 @@ namespace Blog.Core
         {
             app.UseStaticHttpContext();
 
-            app.UseEntityWatcher();
+            app.UseEntityGenerate();
 
             app.UseJob();
 

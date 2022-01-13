@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.RobotMessageTask
 {
-    public class RobotMessageTaskPlugin : IPersistBrokerPlugin
+    public class RobotMessageTaskPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             if (context.EntityName != "robot_message_task")
             {

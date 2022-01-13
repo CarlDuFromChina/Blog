@@ -10,13 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth.Role.BasicRole
 {
     public abstract class BasicRole : IRole
     {
-        public IPersistBroker Broker = PersistBrokerFactory.GetPersistBroker();
+        public IEntityManager Manager = EntityManagerFactory.GetManager();
         protected const string ROLE_PREFIX = "BasicRole";
         protected const string PRIVILEGE_PREFIX = "RolePrivilege";
 
@@ -42,16 +42,16 @@ namespace Blog.Core.Auth.Role.BasicRole
             var key = $"{ROLE_PREFIX}_{RoleName}";
             return MemoryCacheUtil.GetOrAddCacheItem(key, () =>
             {
-                var role = Broker.Retrieve<sys_role>("select * from sys_role where name = @name", new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
+                var role = Manager.QueryFirst<sys_role>("select * from sys_role where name = @name", new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
                 if (role == null)
                 {
                     role = new sys_role()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        id = Guid.NewGuid().ToString(),
                         name = Role.GetDescription(),
                         is_basic = true
                     };
-                    Broker.Create(role);
+                    Manager.Create(role);
                 }
                 return role;
             }, DateTime.Now.AddHours(12));
@@ -71,7 +71,7 @@ namespace Blog.Core.Auth.Role.BasicRole
 SELECT * FROM sys_role_privilege
 WHERE sys_roleidName = @name
 ";
-                var dataList = Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
+                var dataList = Manager.Query<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
                 return dataList;
             }, DateTime.Now.AddHours(12));
         }
@@ -89,16 +89,16 @@ WHERE sys_roleidName = @name
         /// 获取缺失权限
         /// </summary>
         /// <returns></returns>
-        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege(IPersistBroker broker);
+        public abstract IDictionary<string, IEnumerable<sys_role_privilege>> GetMissingPrivilege(IEntityManager manager);
 
         /// <summary>
         /// 获取缺失实体权限
         /// </summary>
         /// <returns></returns>
-        protected IEnumerable<sys_entity> GetMissingEntityPrivileges(IPersistBroker broker)
+        protected IEnumerable<sys_entity> GetMissingEntityPrivileges(IEntityManager manager)
         {
             var role = GetSysRole();
-            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var paramList = new Dictionary<string, object>() { { "@id", role.id } };
             var sql = @"
 SELECT * FROM sys_entity
 WHERE sys_entityid NOT IN (
@@ -106,17 +106,17 @@ WHERE sys_entityid NOT IN (
 	WHERE object_type = 'sys_entity' AND sys_roleid = @id
 )
 ";
-            return broker.RetrieveMultiple<sys_entity>(sql, paramList);
+            return manager.Query<sys_entity>(sql, paramList);
         }
 
         /// <summary>
         /// 获取缺失菜单权限
         /// </summary>
         /// <returns></returns>
-        protected IEnumerable<sys_menu> GetMissingMenuPrivileges(IPersistBroker broker)
+        protected IEnumerable<sys_menu> GetMissingMenuPrivileges(IEntityManager manager)
         {
             var role = GetSysRole();
-            var paramList = new Dictionary<string, object>() { { "@id", role.Id } };
+            var paramList = new Dictionary<string, object>() { { "@id", role.id } };
             var sql = @"
 SELECT * FROM sys_menu
 WHERE sys_menuid NOT IN (
@@ -124,7 +124,7 @@ WHERE sys_menuid NOT IN (
 	WHERE object_type = 'sys_menu' AND sys_roleid = @id
 )
 ";
-            var dataList = broker.RetrieveMultiple<sys_menu>(sql, paramList);
+            var dataList = manager.Query<sys_menu>(sql, paramList);
             return dataList;
         }
 
@@ -140,18 +140,18 @@ WHERE sys_menuid NOT IN (
             var user = UserIdentityUtil.GetSystem();
             var privilege = new sys_role_privilege()
             {
-                Id = Guid.NewGuid().ToString(),
-                objectid = entity.Id,
+                id = Guid.NewGuid().ToString(),
+                objectid = entity.PrimaryKey.Value,
                 objectidName = entity.name,
                 object_type = entity.EntityName,
-                sys_roleid = role.Id,
+                sys_roleid = role.id,
                 sys_roleidName = role.name,
-                createdBy = user.Id,
-                createdByName = user.Name,
-                createdOn = DateTime.Now,
-                modifiedBy = user.Id,
-                modifiedByName = user.Name,
-                modifiedOn = DateTime.Now,
+                created_by = user.Id,
+                created_by_name = user.Name,
+                created_at = DateTime.Now,
+                updated_by = user.Id,
+                updated_by_name = user.Name,
+                updated_at = DateTime.Now,
                 privilege = value
             };
             return privilege;

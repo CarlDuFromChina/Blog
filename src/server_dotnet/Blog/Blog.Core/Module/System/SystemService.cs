@@ -17,26 +17,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Sixpence.Common;
-using Sixpence.ORM.Broker;
+
 using Blog.Core.Profiles;
 using Sixpence.Common.Current;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.DataService
 {
     public class SystemService
     {
-        private IPersistBroker Broker;
+        private IEntityManager Manager;
 
         #region 构造函数
         public SystemService()
         {
-            Broker = PersistBrokerFactory.GetPersistBroker();
+            Manager = EntityManagerFactory.GetManager();
         }
 
-        public SystemService(IPersistBroker broker)
+        public SystemService(IEntityManager manager)
         {
-            Broker = broker;
+            Manager = manager;
         }
         #endregion
 
@@ -70,8 +71,8 @@ namespace Blog.Core.Module.DataService
             {
                 return null;
             }
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            var user = broker.Retrieve<user_info>(id);
+            var Manager = EntityManagerFactory.GetManager();
+            var user = Manager.QueryFirst<user_info>(id);
             if (!string.IsNullOrEmpty(user?.avatar))
             {
                 var config = StoreConfig.Config;
@@ -93,7 +94,7 @@ namespace Blog.Core.Module.DataService
 
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
 
-            var authUser = Broker.Retrieve<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
+            var authUser = Manager.QueryFirst<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
 
             if (authUser == null)
             {
@@ -130,7 +131,7 @@ namespace Blog.Core.Module.DataService
                     message = $"用户已被锁定，请联系管理员";
                 }
 
-                Broker.Update(authUser);
+                Manager.Update(authUser);
                 return new LoginResponse() { result = false, message = message };
             }
 
@@ -139,14 +140,14 @@ namespace Blog.Core.Module.DataService
                 authUser.try_times = 0;
             }
             authUser.last_login_time = DateTime.Now;
-            Broker.Update(authUser);
+            Manager.Update(authUser);
 
             // 返回登录结果、用户信息、用户验证票据信息
             var oUser = new LoginResponse
             {
                 result = true,
                 userName = code,
-                token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.Id }),
+                token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.id }),
                 userId = authUser.user_infoid,
                 message = "登录成功"
             };
@@ -163,12 +164,12 @@ namespace Blog.Core.Module.DataService
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
             AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
 
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 if (!model.code.Contains("@"))
                     return new LoginResponse(false, "注册失败，请使用邮箱作为账号");
 
-                var vertification = new MailVertificationService(Broker).GetDataByMailAdress(model.code);
+                var vertification = new MailVertificationService(Manager).GetDataByMailAdress(model.code);
                 if (vertification != null)
                     return new LoginResponse(false, "激活邮件已发送，请前往邮件激活账号，请勿重复注册", LoginMesageLevel.Warning);
 
@@ -176,7 +177,7 @@ namespace Blog.Core.Module.DataService
                 model.password = RSAUtil.Decrypt(model.password, model.publicKey);
                 var data = new mail_vertification()
                 {
-                    Id = id,
+                    id = id,
                     name = "账号激活邮件",
                     content = $@"你好,<br/><br/>
 请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
@@ -187,7 +188,7 @@ namespace Blog.Core.Module.DataService
                     mail_address = model.code,
                     mail_type = MailType.Activation.ToString()
                 };
-                Broker.Create(data);
+                Manager.Create(data);
 
           // 返回登录结果、用户信息、用户验证票据信息
           return new LoginResponse()
@@ -226,7 +227,7 @@ WHERE user_infoid = @id;
 ";
             var user = UserIdentityUtil.GetCurrentUser();
             var paramList = new Dictionary<string, object>() { { "@id", user.Id }, { "@password", password } };
-            Broker.Execute(sql, paramList);
+            Manager.Execute(sql, paramList);
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ SET password = @password
 WHERE user_infoid = @id;
 ";
             var paramList = new Dictionary<string, object>() { { "@id", id }, { "@password", SystemConfig.Config.DefaultPassword } };
-            Broker.Execute(sql, paramList);
+            Manager.Execute(sql, paramList);
         }
 
         /// <summary>
@@ -250,13 +251,13 @@ WHERE user_infoid = @id;
         /// <param name="code"></param>
         public void ForgetPassword(string code)
         {
-            var user = Broker.Retrieve<user_info>("SELECT * FROM user_info WHERE code = @mail OR mailbox = @mail", new Dictionary<string, object>() { { "@mail", code } });
+            var user = Manager.QueryFirst<user_info>("SELECT * FROM user_info WHERE code = @mail OR mailbox = @mail", new Dictionary<string, object>() { { "@mail", code } });
             AssertUtil.CheckNull<SpException>(user, "用户不存在", "5E507D9C-47BC-4586-880D-D9E42D02FEA4");
             UserIdentityUtil.SetCurrentUser(MapperHelper.Map<CurrentUserModel>(user));
             var id = Guid.NewGuid().ToString();
             var sms = new mail_vertification()
             {
-                Id = id,
+                id = id,
                 name = "重置密码",
                 content = $@"你好,<br/><br/>
 请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ResetPassword?id={id}"">链接</a>重置密码
@@ -266,7 +267,7 @@ WHERE user_infoid = @id;
                 mail_address = user.mailbox,
                 mail_type = MailType.ResetPassword.ToString()
             };
-            Broker.Create(sms);
+            Manager.Create(sms);
         }
 
         /// <summary>
@@ -279,7 +280,7 @@ WHERE user_infoid = @id;
             if (string.IsNullOrEmpty(userId))
                 return false;
 
-            var user = Broker.Retrieve<user_info>(userId);
+            var user = Manager.QueryFirst<user_info>(userId);
             if (user == null)
                 return false;
 

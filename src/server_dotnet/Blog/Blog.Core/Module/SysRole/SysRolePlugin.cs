@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Role
 {
-    public class SysRolePlugin : IPersistBrokerPlugin
+    public class SysRolePlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             if (context.EntityName != "sys_role") return;
 
@@ -30,38 +30,38 @@ namespace Blog.Core.Module.Role
                 case EntityAction.PostCreate:
                     {
                         // 重新创建权限
-                        var privileges = new SysRolePrivilegeService(context.Broker).GetUserPrivileges(obj.parent_roleid, RoleType.All).ToList();
+                        var privileges = new SysRolePrivilegeService(context.EntityManager).GetUserPrivileges(obj.parent_roleid, RoleType.All).ToList();
                         privileges.Each(item =>
                         {
-                            item.Id = Guid.NewGuid().ToString();
-                            item.sys_roleid = obj.Id;
+                            item.id = Guid.NewGuid().ToString();
+                            item.sys_roleid = obj.id;
                             item.sys_roleidName = obj.name;
-                            item.createdOn = new DateTime();
-                            item.modifiedOn = new DateTime();
+                            item.created_at = new DateTime();
+                            item.updated_at = new DateTime();
                         });
-                        context.Broker.BulkCreate(privileges);
+                        context.EntityManager.BulkCreate(privileges);
                         // 权限缓存清空
-                        UserPrivilegesCache.Clear(context.Broker);
+                        UserPrivilegesCache.Clear(context.EntityManager);
                     }
                     break;
                 case EntityAction.PostUpdate:
                     {
                         // 删除所有权限
-                        var privileges = new SysRolePrivilegeService(context.Broker).GetUserPrivileges(obj.Id, RoleType.All).ToList();
-                        privileges.Each(item => context.Broker.Delete(item));
+                        var privileges = new SysRolePrivilegeService(context.EntityManager).GetUserPrivileges(obj.id, RoleType.All).ToList();
+                        privileges.Each(item => context.EntityManager.Delete(item));
                         // 重新创建权限
-                        privileges = new SysRolePrivilegeService(context.Broker).GetUserPrivileges(obj.parent_roleid, RoleType.All).ToList();
+                        privileges = new SysRolePrivilegeService(context.EntityManager).GetUserPrivileges(obj.parent_roleid, RoleType.All).ToList();
                         privileges.Each(item =>
                         {
-                            item.Id = Guid.NewGuid().ToString();
-                            item.sys_roleid = obj.Id;
+                            item.id = Guid.NewGuid().ToString();
+                            item.sys_roleid = obj.id;
                             item.sys_roleidName = obj.name;
-                            item.createdOn = new DateTime();
-                            item.modifiedOn = new DateTime();
+                            item.created_at = new DateTime();
+                            item.updated_at = new DateTime();
                         });
-                        context.Broker.BulkCreate(privileges);
+                        context.EntityManager.BulkCreate(privileges);
                         // 权限缓存清空
-                        UserPrivilegesCache.Clear(context.Broker);
+                        UserPrivilegesCache.Clear(context.EntityManager);
                     }
                     break;
                 default:

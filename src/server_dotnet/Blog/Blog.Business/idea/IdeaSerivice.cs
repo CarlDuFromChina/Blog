@@ -1,5 +1,6 @@
-﻿using Sixpence.ORM.Broker;
+﻿
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,9 @@ namespace Blog.idea
     public class IdeaSerivice : EntityService<idea>
     {
         #region 构造函数
-        public IdeaSerivice()
-        {
-            _context = new EntityContext<idea>();
-        }
+        public IdeaSerivice() : base() { }
 
-        public IdeaSerivice(IPersistBroker broker)
-        {
-            _context = new EntityContext<idea>(broker);
-        }
+        public IdeaSerivice(IEntityManager manager) : base(manager) { }
         #endregion
 
     }

@@ -7,27 +7,19 @@ Description：素材Plugin
 ********************************************************/
 #endregion
 
-using Blog.Core;
 using Blog.Core.Config;
-using Sixpence.ORM.Entity;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
-using Sixpence.Common.Utils;
-using Blog.Core.WebApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sixpence.Common;
-using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
+using Sixpence.Common.Utils;
+using Sixpence.ORM.EntityManager;
+using System;
 
 namespace Blog.WeChat.Material
 {
-    public class WeChatMaterialPlugin : IPersistBrokerPlugin
+    public class WeChatMaterialPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var entity = context.Entity as wechat_material;
             switch (context.Action)
@@ -45,22 +37,22 @@ namespace Blog.WeChat.Material
                         ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, entity.name, out var filePath);
                         var sysImage = new sys_file()
                         {
-                            sys_fileId = id,
+                            id = id,
                             name = entity.name,
                             real_name = entity.name,
                             hash_code = hash_code,
                             file_type = "wechat_material",
                             content_type = contentType,
-                            objectId = entity.Id
+                            objectId = entity.id
                         };
-                        new SysFileService(context.Broker).CreateData(sysImage);
+                        new SysFileService(context.EntityManager).CreateData(sysImage);
                         entity.sys_fileid = id;
                         entity.local_url = SysFileService.GetDownloadUrl(id);
                     }
                     break;
                 case EntityAction.PreDelete:
                     WeChatApi.DeleteMaterial(entity.GetAttributeValue<string>("media_id"));
-                    context.Broker.Delete("sys_file", entity.GetAttributeValue<string>("sys_fileid"));
+                    context.EntityManager.Delete("sys_file", entity.GetAttributeValue<string>("sys_fileid"));
                     break;
                 default:
                     break;

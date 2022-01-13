@@ -1,6 +1,6 @@
 ﻿using Blog.Core.Auth.Privilege;
-using Sixpence.ORM.Broker;
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace Blog.Core.Module.SysEntity
 {
-    public class SysEntityPlugin : IPersistBrokerPlugin
+    public class SysEntityPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             if (context.EntityName != "sys_entity") return;
 
-            var broker = context.Broker;
+            var manager = context.EntityManager;
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
                     // 创建权限
-                    new SysRolePrivilegeService(broker).CreateRoleMissingPrivilege();
+                    new SysRolePrivilegeService(manager).CreateRoleMissingPrivilege();
                     // 重新注册权限并清除缓存
-                    UserPrivilegesCache.Clear(broker);
+                    UserPrivilegesCache.Clear(manager);
                     break;
                 case EntityAction.PostDelete:
-                    var privileges = new SysRolePrivilegeService(broker).GetPrivileges(context.Entity.Id).ToArray();
-                    broker.Delete(privileges);
-                    UserPrivilegesCache.Clear(broker);
+                    var privileges = new SysRolePrivilegeService(manager).GetPrivileges(context.Entity.PrimaryKey.Value).ToArray();
+                    manager.Delete(privileges);
+                    UserPrivilegesCache.Clear(manager);
                     break;
                 default:
                     break;

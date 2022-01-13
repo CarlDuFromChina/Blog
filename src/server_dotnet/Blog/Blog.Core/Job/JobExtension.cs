@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.Common;
-using Sixpence.ORM.SelectOption;
+
 using Sixpence.Common.IoC;
 
 namespace Blog.Core.Job

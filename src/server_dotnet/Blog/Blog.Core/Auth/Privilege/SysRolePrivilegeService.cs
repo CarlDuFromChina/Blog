@@ -9,9 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.ORM.Broker;
 using Blog.Core.Module.SysMenu;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth.Privilege
 {
@@ -20,12 +21,12 @@ namespace Blog.Core.Auth.Privilege
         #region 构造函数
         public SysRolePrivilegeService()
         {
-            _context = new EntityContext<sys_role_privilege>();
+            Repository = new Repository<sys_role_privilege>();
         }
 
-        public SysRolePrivilegeService(IPersistBroker broker)
+        public SysRolePrivilegeService(IEntityManager manger)
         {
-            _context = new EntityContext<sys_role_privilege>(broker);
+            Repository = new Repository<sys_role_privilege>(manger);
         }
         #endregion
 
@@ -36,7 +37,7 @@ namespace Blog.Core.Auth.Privilege
         /// <returns></returns>
         public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
-            var role = Broker.Retrieve<sys_role>(roleid);
+            var role = Manager.QueryFirst<sys_role>(roleid);
             var privileges = new List<sys_role_privilege>();
 
             if (role.is_basic)
@@ -49,7 +50,7 @@ namespace Blog.Core.Auth.Privilege
 SELECT * FROM sys_role_privilege
 WHERE sys_roleid = @id
 ";
-                privileges = Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", roleid } }).ToList();
+                privileges = Manager.Query<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", roleid } }).ToList();
             }
 
             switch (roleType)
@@ -75,7 +76,7 @@ WHERE sys_roleid = @id
             var sql = @"
 SELECT * FROM sys_role_privilege
 WHERE objectid = @id";
-            return Broker.RetrieveMultiple<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", entityid } });
+            return Manager.Query<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@id", entityid } });
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ WHERE objectid = @id";
         /// <param name="dataList"></param>
         public void BulkSave(List<sys_role_privilege> dataList)
         {
-            Broker.BulkCreateOrUpdate(dataList);
+            Manager.BulkCreateOrUpdate(dataList);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ WHERE objectid = @id";
 
             roles.Each(item =>
             {
-                item.GetMissingPrivilege(Broker)
+                item.GetMissingPrivilege(Manager)
                     .Each(item =>
                     {
                         if (!item.Value.IsEmpty())
@@ -107,7 +108,7 @@ WHERE objectid = @id";
                     });
             });
 
-            Broker.ExecuteTransaction(() => Broker.BulkCreate(privileges));
+            Manager.ExecuteTransaction(() => Manager.BulkCreate(privileges));
         }
     }
 }

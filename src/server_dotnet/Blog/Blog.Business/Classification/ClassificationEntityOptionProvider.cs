@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blog.Core.Module.SysEntity;
 using Blog.Core.Module.SysParamGroup;
-using Sixpence.ORM.Broker;
-using Sixpence.ORM.SelectOption;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Business.Classification
 {
@@ -11,8 +10,8 @@ namespace Blog.Business.Classification
     {
         public IEnumerable<SelectOption> GetOptions()
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            return broker.Query<SelectOption>($"select code AS Value, name AS Name from classification");
+            var manager = EntityManagerFactory.GetManager();
+            return manager.Query<SelectOption>($"select code AS Value, name AS Name from classification");
         }
     }
 }

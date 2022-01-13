@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using Sixpence.Common;
 using Blog.Core.Utils;
-using Sixpence.ORM.Broker;
 
 namespace Blog.Core.Module.Job
 {

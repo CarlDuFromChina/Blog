@@ -4,8 +4,9 @@ using Quartz;
 using Sixpence.Common;
 using System.Collections.Generic;
 using System.Linq;
-using Sixpence.ORM.Broker;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Job
 {
@@ -14,12 +15,12 @@ namespace Blog.Core.Module.Job
         #region 构造函数
         public JobService()
         {
-            _context = new EntityContext<job>();
+            Repository = new Repository<job>();
         }
 
-        public JobService(IPersistBroker broker)
+        public JobService(IEntityManager manager)
         {
-            _context = new EntityContext<job>(broker);
+            Repository = new Repository<job>(manager);
         }
         #endregion
 
@@ -30,8 +31,8 @@ namespace Blog.Core.Module.Job
         public void DeleteJob(List<string> jobNameList)
         {
             var sql = @"SELECT * FROM job WHERE name NOT IN (in@names)";
-            var dataList = Broker.RetrieveMultiple<job>(sql, new Dictionary<string, object>() { { "in@names", string.Join(",", jobNameList) } });
-            base.DeleteData(dataList.Select(item => item.Id).ToList());
+            var dataList = Manager.Query<job>(sql, new Dictionary<string, object>() { { "in@names", string.Join(",", jobNameList) } });
+            base.DeleteData(dataList.Select(item => item.id).ToList());
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Blog.Core.Module.Job
 SELECT * FROM job
 ORDER BY name
 ";
-            var dataList = Broker.RetrieveMultiple<job>(sql);
+            var dataList = Manager.Query<job>(sql).ToList();
             return dataList;
         }
 
