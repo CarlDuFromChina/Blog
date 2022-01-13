@@ -34,7 +34,7 @@ FROM
                 {
                     Sql = sql,
                     CustomFilter = customFilter,
-                    OrderBy = "name, createdon",
+                    OrderBy = "name, created_at",
                     ViewId = "457CA7F7-BE57-4934-9434-3234EAF68E14",
                     Name = "所有的选项集"
                 }
@@ -103,12 +103,12 @@ DELETE FROM sys_param WHERE sys_paramgroupid IN (in@ids)
     sys_paramgroupid,
     name,
     code,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '{data.id}',
@@ -133,12 +133,12 @@ INSERT INTO sys_param (
     code,
     sys_paramgroupid,
     sys_paramgroupidname,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '{param.id}',

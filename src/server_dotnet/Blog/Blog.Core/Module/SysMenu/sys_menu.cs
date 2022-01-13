@@ -18,6 +18,13 @@ namespace Blog.Core.Module.SysMenu
         public string id { get; set; }
 
         /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
+        /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]

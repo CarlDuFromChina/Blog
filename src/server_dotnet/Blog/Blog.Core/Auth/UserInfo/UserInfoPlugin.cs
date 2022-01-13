@@ -44,11 +44,11 @@ namespace Blog.Core.Auth.UserInfo
         {
             var authInfo = new auth_user()
             {
-                id = entity.GetAttributeValue<string>("user_infoId"),
+                id = entity.GetAttributeValue<string>("id"),
                 name = entity.GetAttributeValue<string>("name"),
                 code = entity.GetAttributeValue<string>("code"),
                 password = SystemConfig.Config.DefaultPassword,
-                user_infoid = entity.GetAttributeValue<string>("user_infoId"),
+                user_infoid = entity.GetAttributeValue<string>("id"),
                 roleid = entity.GetAttributeValue<string>("roleid"),
                 roleidName = entity.GetAttributeValue<string>("roleidName"),
                 is_lock = false,
@@ -68,7 +68,7 @@ namespace Blog.Core.Auth.UserInfo
 SELECT * FROM auth_user
 WHERE user_infoid = @id
 ";
-            var authInfo = manager.QueryFirst<auth_user>(sql, new Dictionary<string, object>() { { "@id", entity["user_infoId"]?.ToString() } });
+            var authInfo = manager.QueryFirst<auth_user>(sql, new Dictionary<string, object>() { { "@id", entity["id"]?.ToString() } });
             AssertUtil.CheckNull<SpException>(authInfo, "用户Id不能为空", "C37CCF94-6B27-4BF4-AF29-DBEDC9E53E5D");
             authInfo.name = entity["name"]?.ToString();
             authInfo.roleid = entity["roleid"]?.ToString();
@@ -98,7 +98,7 @@ WHERE user_infoid = @id
             var sql = @"
 DELETE FROM auth_user WHERE user_infoid = @id
 ";
-            manager.Execute(sql, new Dictionary<string, object>() { { "@id", entity["user_infoId"]?.ToString() } });
+            manager.Execute(sql, new Dictionary<string, object>() { { "@id", entity["id"]?.ToString() } });
         }
 
     }

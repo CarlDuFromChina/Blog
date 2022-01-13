@@ -142,7 +142,7 @@ namespace Blog.Core.Extensions
         /// </summary>
         /// <param name="broker"></param>
         /// <returns></returns>
-        public static string GetFilteredSql(this IEntityManager manager, string ownerName = "createdBy")
+        public static string GetFilteredSql(this IEntityManager manager, string ownerName = "created_by")
         {
             AssertUtil.CheckIsNullOrEmpty<SpException>(UserIdentityUtil.GetCurrentUserId(), "无法获取当前用户", "11F1C19C-D69E-4A46-BAB6-BAE84E32F7B2");
             return " AND {0}." + ownerName + $" = '{UserIdentityUtil.GetCurrentUserId()}'";

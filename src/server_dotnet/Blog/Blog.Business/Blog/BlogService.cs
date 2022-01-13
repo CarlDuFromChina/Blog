@@ -35,17 +35,17 @@ namespace Blog.Business.Blog
         {
             var sql = $@"
 SELECT
-	blog.blogid,
+	blog.id,
 	blog.title,
 	blog.blog_type,
 	blog.blog_typeName,
 	blog.article_typeName,
-	blog.createdBy,
-	blog.createdbyname,
-	blog.modifiedBy,
-	blog.modifiedbyname,
-	blog.createdOn,
-	blog.modifiedOn,
+	blog.created_by,
+	blog.created_by_name,
+	blog.updated_by,
+	blog.updated_by_name,
+	blog.created_at,
+	blog.updated_at,
 	blog.is_series,
 	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
@@ -59,7 +59,7 @@ SELECT
 FROM
 	blog
 WHERE 1=1 AND blog.is_show = 1";
-            var orderBy = "blog.is_pop DESC, blog.createdOn desc, blog.title, blog.blogid";
+            var orderBy = "blog.is_pop DESC, blog.created_at desc, blog.title, blog.id";
             return new List<EntityView>()
             {
                 new EntityView()
@@ -110,7 +110,7 @@ WHERE 1=1 AND blog.is_show = 1";
                 var paramList = new Dictionary<string, object>() { { "@id", id } };
                 data.upvote_times = Manager.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
                 data.comment_count = Manager.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
-                Manager.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id", paramList);
+                Manager.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE id = @id", paramList);
                 return data;
             });
         }
@@ -169,11 +169,11 @@ WHERE
         {
             var sql = @"
 SELECT
-	to_char(createdon, 'YYYY-MM-DD') AS created_date,
+	to_char(created_at, 'YYYY-MM-DD') AS created_date,
 	count(1) AS count
 FROM blog
-WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND createdon < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
-GROUP BY to_char(createdon, 'YYYY-MM-DD')
+WHERE created_at > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND created_at < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
+GROUP BY to_char(created_at, 'YYYY-MM-DD')
 ";
             return Manager.Query<BlogActivityModel>(sql);
         }

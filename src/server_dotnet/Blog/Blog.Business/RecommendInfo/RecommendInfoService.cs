@@ -31,7 +31,7 @@ FROM
 WHERE
 	recommend_type = @type 
 ORDER BY
-	createdon DESC 
+	created_at DESC 
 ";
             Manager.DbClient.Driver.AddLimit(ref sql, null, 5);
             var paramList = new Dictionary<string, object>() { { "@type", type } };

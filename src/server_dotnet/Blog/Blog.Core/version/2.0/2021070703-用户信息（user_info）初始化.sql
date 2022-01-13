@@ -1,5 +1,5 @@
 ﻿INSERT INTO "public"."user_info" (
-	"user_infoid",
+	"id",
 	"code",
 	"gender",
 	"gendername",
@@ -13,12 +13,12 @@
 	"statecode",
 	"statecodename",
 	"name",
-	"createdby",
-	"createdbyname",
-	"createdon",
-	"modifiedby",
-	"modifiedbyname",
-	"modifiedon" 
+	"created_by",
+	"created_by_name",
+	"created_at",
+	"updated_by",
+	"updated_by_name",
+	"updated_at" 
 )
 SELECT
 	'00000000-0000-0000-0000-000000000000',
@@ -42,5 +42,5 @@ SELECT
 	'系统',
 	'2021-09-05 20:06:21.578554' 
 WHERE NOT EXISTS (
-	SELECT user_infoid FROM user_info WHERE user_infoid =  '00000000-0000-0000-0000-000000000000'
+	SELECT id FROM user_info WHERE id =  '00000000-0000-0000-0000-000000000000'
 );

@@ -43,7 +43,7 @@ LEFT JOIN (
                 {
                     Sql = sql,
                     CustomFilter = customFilter,
-                    OrderBy = "name, createdon",
+                    OrderBy = "name, created_at",
                     ViewId = "59F908EB-A353-4205-ABE4-FA9DB27DD434",
                     Name = "所有的用户信息"
                 }
@@ -52,7 +52,7 @@ LEFT JOIN (
 
         public user_info GetData()
         {
-            return Repository.Query(UserIdentityUtil.GetCurrentUserId());
+            return Repository.FindOne(UserIdentityUtil.GetCurrentUserId());
         }
 
         /// <summary>
@@ -62,10 +62,7 @@ LEFT JOIN (
         /// <returns></returns>
         public user_info GetDataByCode(string code)
         {
-            var sql = @"
-SELECT * FROM user_info
-WHERE code = @code";
-            return Repository.Manager.QueryFirst<user_info>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Repository.FindOne(new Dictionary<string, object>() { { "code", code } });
         }
 
         /// <summary>
@@ -74,7 +71,7 @@ WHERE code = @code";
         /// <returns></returns>
         public bool InfoFilled()
         {
-            var user = Repository.Query(UserIdentityUtil.GetCurrentUserId());
+            var user = Repository.FindOne(UserIdentityUtil.GetCurrentUserId());
             AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
             if (user.id == UserIdentityUtil.ADMIN_ID)
             {

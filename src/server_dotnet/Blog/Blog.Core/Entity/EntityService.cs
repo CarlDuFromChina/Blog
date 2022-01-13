@@ -54,7 +54,7 @@ namespace Sixpence.ORM.Entity
                 {
                     Sql = sql,
                     CustomFilter = new List<string>() { "name" }, // name 是每个实体必须要添加字段
-                    OrderBy = "createdon DESC",
+                    OrderBy = "created_at DESC",
                     ViewId = ""
                 }
             };

@@ -31,7 +31,7 @@ namespace Blog.Core.Module.MessageRemind
                     Sql = @"
 SELECT * FROM message_remind
 WHERE message_type IN ('comment', 'reply')",
-                    OrderBy = "createdon DESC"
+                    OrderBy = "created_at DESC"
                 },
                 new EntityView()
                 {
@@ -40,7 +40,7 @@ WHERE message_type IN ('comment', 'reply')",
                     Sql = @"
 SELECT * FROM message_remind
 WHERE message_type = 'upvote'",
-                    OrderBy = "createdon DESC"
+                    OrderBy = "created_at DESC"
                 },
                 new EntityView()
                 {
@@ -49,7 +49,7 @@ WHERE message_type = 'upvote'",
                     Sql = @"
 SELECT * FROM message_remind
 WHERE message_type = 'system'",
-                    OrderBy = "createdon DESC"
+                    OrderBy = "created_at DESC"
                 },
             };
         }

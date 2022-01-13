@@ -16,6 +16,13 @@ namespace Blog.Core.Module.MessageRemind
         public string id { get; set; }
 
         /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
+        /// <summary>
         /// 接收人id
         /// </summary>
         [DataMember]

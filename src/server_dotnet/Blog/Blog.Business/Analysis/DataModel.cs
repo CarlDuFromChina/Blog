@@ -8,8 +8,8 @@ namespace Blog.Analysis
 {
     public class TimelineModel
     {
-        public DateTime? createdon { get; set; }
+        public DateTime? created_at { get; set; }
         public string title { get; set; }
-        public string createdByName { get; set; }
+        public string created_by_name { get; set; }
     }
 }

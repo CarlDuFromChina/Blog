@@ -20,6 +20,13 @@ namespace Blog.Core.Module.SysEntity
         public string id { get; set; }
 
         /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
+        /// <summary>
         /// 编码
         /// </summary>
         [DataMember, Column("code", "编码", DataType.Varchar, 100, true)]
@@ -34,7 +41,7 @@ namespace Blog.Core.Module.SysEntity
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Column("is_sysname", "是否系统实体", DataType.Varchar, 100, true)]
+        [DataMember, Column("is_sysname", "是否系统实体", DataType.Varchar, 100, false)]
         public string is_sysName { get; set; }
     }
 }

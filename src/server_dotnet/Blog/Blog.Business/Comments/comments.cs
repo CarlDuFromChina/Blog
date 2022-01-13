@@ -21,6 +21,13 @@ namespace Blog.Comments
         public string comment { get; set; }
 
         /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
+        /// <summary>
         /// 评论类型
         /// </summary>
         [DataMember]

@@ -17,6 +17,13 @@ namespace Blog.Core.Module.Vertification.Mail
         [PrimaryColumn]
         public string id { get; set; }
 
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
         [DataMember]
         [Column("mail_address", "邮箱", DataType.Varchar, 200)]
         public string mail_address { get; set; }

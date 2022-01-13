@@ -1,13 +1,13 @@
 INSERT INTO sys_paramgroup (
-    sys_paramgroupid,
+    id,
     name,
     code,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     'E7D80743-081D-4B51-BFFF-149FFFF8E652',
@@ -20,19 +20,19 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_paramgroupid FROM sys_paramgroup WHERE sys_paramgroupid = 'E7D80743-081D-4B51-BFFF-149FFFF8E652'
+    SELECT id FROM sys_paramgroup WHERE id = 'E7D80743-081D-4B51-BFFF-149FFFF8E652'
 );
 
 INSERT INTO sys_paramgroup (
-    sys_paramgroupid,
+    id,
     name,
     code,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     'E944E20B-A463-4FE3-B2E6-ADE32C0709F3',
@@ -45,19 +45,19 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_paramgroupid FROM sys_paramgroup WHERE sys_paramgroupid = 'E944E20B-A463-4FE3-B2E6-ADE32C0709F3'
+    SELECT id FROM sys_paramgroup WHERE id = 'E944E20B-A463-4FE3-B2E6-ADE32C0709F3'
 );
 
 INSERT INTO sys_paramgroup (
-    sys_paramgroupid,
+    id,
     name,
     code,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     'CE9753B3-E86F-4DF9-A63D-8B46AD8A187C',
@@ -70,5 +70,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_paramgroupid FROM sys_paramgroup WHERE sys_paramgroupid = 'CE9753B3-E86F-4DF9-A63D-8B46AD8A187C'
+    SELECT id FROM sys_paramgroup WHERE id = 'CE9753B3-E86F-4DF9-A63D-8B46AD8A187C'
 );

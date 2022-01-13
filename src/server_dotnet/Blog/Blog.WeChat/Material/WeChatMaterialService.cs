@@ -32,7 +32,7 @@ namespace Blog.WeChat.Material
                 {
                     Sql = sql,
                     CustomFilter = new List<string>() { "name" },
-                    OrderBy = "createdon, name",
+                    OrderBy = "created_at, name",
                     ViewId = ""
                 }
             };

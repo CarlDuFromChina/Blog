@@ -36,12 +36,12 @@ SELECT
 	NAME,
 	file_type,
 	content_type,
-	createdon,
-	createdbyname
+	created_at,
+	created_by_name
 FROM
 	sys_file
 ",
-                    OrderBy = "createdon desc",
+                    OrderBy = "created_at desc",
                     CustomFilter = new List<string>(){ "name" }
                 },
                 new EntityView()
@@ -53,8 +53,8 @@ SELECT
 	sys_fileid,
 	NAME,
 	file_type,
-	createdon,
-	createdbyname,
+	created_at,
+	created_by_name,
 	concat('{GetDownloadUrl("")}', sys_fileid) AS downloadUrl
 FROM
 	sys_file

@@ -101,7 +101,7 @@ WHERE sys_roleidName = @name
             var paramList = new Dictionary<string, object>() { { "@id", role.id } };
             var sql = @"
 SELECT * FROM sys_entity
-WHERE sys_entityid NOT IN (
+WHERE id NOT IN (
 	SELECT objectid FROM sys_role_privilege
 	WHERE object_type = 'sys_entity' AND sys_roleid = @id
 )
@@ -119,7 +119,7 @@ WHERE sys_entityid NOT IN (
             var paramList = new Dictionary<string, object>() { { "@id", role.id } };
             var sql = @"
 SELECT * FROM sys_menu
-WHERE sys_menuid NOT IN (
+WHERE id NOT IN (
 	SELECT objectid FROM sys_role_privilege
 	WHERE object_type = 'sys_menu' AND sys_roleid = @id
 )
@@ -142,7 +142,7 @@ WHERE sys_menuid NOT IN (
             {
                 id = Guid.NewGuid().ToString(),
                 objectid = entity.PrimaryKey.Value,
-                objectidName = entity.name,
+                objectidName = entity.GetAttributeValue<string>("name"),
                 object_type = entity.EntityName,
                 sys_roleid = role.id,
                 sys_roleidName = role.name,

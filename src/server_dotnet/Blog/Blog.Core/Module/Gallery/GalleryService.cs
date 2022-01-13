@@ -32,7 +32,7 @@ namespace Blog.Core.Module.Gallery
                     Sql = "select * from gallery where 1 = 1",
                     CustomFilter = new List<string>(){ "tags" },
                     Name = "本地图库",
-                    OrderBy = "createdon desc"
+                    OrderBy = "created_at desc"
                 }
             };
         }

@@ -5,7 +5,6 @@ using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Web;
-using Sixpence.ORM.Repository;
 using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth
@@ -13,15 +12,9 @@ namespace Blog.Core.Auth
     public class AuthUserService : EntityService<auth_user>
     {
         #region 构造函数
-        public AuthUserService()
-        {
-            Repository = new Repository<auth_user>();
-        }
+        public AuthUserService() : base() { }
 
-        public AuthUserService(IEntityManager manger)
-        {
-            Repository = new Repository<auth_user>(manger);
-        }
+        public AuthUserService(IEntityManager manger) : base(manger) { }
         #endregion
 
         /// <summary>

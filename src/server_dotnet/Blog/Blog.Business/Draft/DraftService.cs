@@ -58,7 +58,7 @@ WHERE blogid = @blogid
 
         public override string CreateOrUpdateData(draft t)
         {
-            var data = Repository.Query(t.id);
+            var data = Repository.FindOne(t.id);
             if (data != null)
             {
                 t.created_by = data.created_by;

@@ -22,7 +22,7 @@ namespace Blog.Business.Upvote
         {
             var sql = @"
 SELECT * FROM upvote
-WHERE objectid = @objectid AND createdby = @ownerid";
+WHERE objectid = @objectid AND created_by = @ownerid";
             var data = Manager.QueryFirst<upvote>(sql, new Dictionary<string, object>() { { "@objectid", objectid }, { "@ownerid", UserIdentityUtil.GetCurrentUserId() } });
             return data != null;
         }

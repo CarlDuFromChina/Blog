@@ -16,7 +16,13 @@ namespace Blog.Core.Auth.Privilege
         [PrimaryColumn]
         public string id { get; set; }
 
-        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
         /// <summary>
         /// 角色id
         /// </summary>

@@ -26,7 +26,7 @@ namespace Blog.ReadingNote
                     ViewId = "B7E8A50C-47E9-4A4F-879B-55D7BC7FFDB6",
                     Sql = "select * from reading_note",
                     CustomFilter = new List<string>(){ "name" },
-                    OrderBy = "createdon",
+                    OrderBy = "created_at",
                     Name = "全部阅读笔记"
                 },
                 new EntityView()
@@ -42,18 +42,18 @@ SELECT
 	surface_url,
 	big_surfaceid,
 	big_surface_url,
-	createdby,
-	createdbyname,
-	createdon,
-	modifiedby modifiedbyname,
-	modifiedon 
+	created_by,
+	created_by_name,
+	created_at,
+	updated_by updated_by_name,
+	updated_at 
 FROM
 	reading_note 
 WHERE
 	is_show = 0
 ",
                     CustomFilter = new List<string>(){ "name" },
-                    OrderBy = "createdon",
+                    OrderBy = "created_at",
                     Name = "展示的阅读笔记"
                 }
             };

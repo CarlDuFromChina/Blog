@@ -29,12 +29,12 @@ namespace Blog.Core.Module.SysAttrs
             var columns = new List<Column>()
             {
                 { new Column() { Name = "name", LogicalName = "名称", Type = DataType.Varchar, Length = 100, IsRequire = false } },
-                { new Column() { Name = "createdBy", LogicalName = "创建人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "createdByName", LogicalName = "创建人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name= "createdOn", LogicalName = "创建日期", Type = DataType.Timestamp, IsRequire = true } },
-                { new Column() { Name = "modifiedBy", LogicalName = "修改人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "modifiedByName", LogicalName = "修改人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name = "modifiedOn", LogicalName = "修改日期", Type = DataType.Timestamp, IsRequire = true } }
+                { new Column() { Name = "created_by", LogicalName = "创建人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
+                { new Column() { Name = "created_by_name", LogicalName = "创建人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
+                { new Column() { Name= "created_at", LogicalName = "创建日期", Type = DataType.Timestamp, IsRequire = true } },
+                { new Column() { Name = "updated_by", LogicalName = "修改人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
+                { new Column() { Name = "updated_by_name", LogicalName = "修改人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
+                { new Column() { Name = "updated_at", LogicalName = "修改日期", Type = DataType.Timestamp, IsRequire = true } }
             };
             Manager.ExecuteTransaction(() =>
             {
