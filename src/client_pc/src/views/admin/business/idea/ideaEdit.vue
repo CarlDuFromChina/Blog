@@ -24,7 +24,7 @@ export default {
     uploadImgParams() {
       return {
         fileType: 'idea',
-        objectId: this.data.Id
+        objectId: this.data.id
       };
     }
   },

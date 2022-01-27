@@ -73,8 +73,8 @@ export default {
       this.getEntities();
     },
     async getEntities() {
-      this.entityList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.Id}&roleType=0`);
-      this.menuList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.Id}&roleType=1`);
+      this.entityList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.id}&roleType=0`);
+      this.menuList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.id}&roleType=1`);
     }
   }
 };

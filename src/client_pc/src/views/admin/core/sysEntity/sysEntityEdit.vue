@@ -90,7 +90,7 @@ export default {
   computed: {
     parentObj() {
       return {
-        id: this.Id,
+        id: this.id,
         name: this.data.name,
         entityCode: this.data.code
       };
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     exportData() {
-      sp.get(`api/SysEntity/Export?entityid=${this.Id}`);
+      sp.get(`api/SysEntity/Export?entityid=${this.id}`);
     },
     handleClose() {
       this.editVisible = false;
@@ -118,7 +118,7 @@ export default {
       this.loadAttrs();
     },
     loadAttrs() {
-      sp.get(`api/SysEntity/GetEntityAttrs?id=${this.Id}`).then(resp => {
+      sp.get(`api/SysEntity/GetEntityAttrs?id=${this.id}`).then(resp => {
         this.attrs = resp;
       });
     }

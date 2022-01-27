@@ -15,7 +15,7 @@ export default {
         { prop: 'name', label: '名称' },
         { prop: 'description', label: '描述', width: 400 },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
+        { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent: roleEdit
     };

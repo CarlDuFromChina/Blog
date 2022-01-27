@@ -3,7 +3,7 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
-      <a-button icon="sync" type="primary" @click="sync2Wechat()" :disabled="!Id">同步到微信</a-button>
+      <a-button icon="sync" type="primary" @click="sync2Wechat()" :disabled="!id">同步到微信</a-button>
       <a-popover v-if="showAutoSave">
         <template slot="content">
           <p>{{ saveStatus.text }}</p>
@@ -221,7 +221,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.Id || this.draft.blogId || '');
+      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.id || this.draft.blogId || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -244,7 +244,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.editVisible = false;
-          this.data.Id = sp.isNullOrEmpty(this.data.Id) ? this.draft.blogId : this.data.Id;
+          this.data.id = sp.isNullOrEmpty(this.data.id) ? this.draft.blogId : this.data.id;
           if (sp.isNullOrEmpty(this.data.brief)) {
             this.data.brief = htmlToText(this.html, { baseElement: 'p', limits: { ellipsis: '...', maxInputLength: 200 } });
           }
@@ -273,7 +273,7 @@ export default {
       this.tags = val;
     },
     sync2Wechat() {
-      if (sp.isNullOrEmpty(this.Id)) {
+      if (sp.isNullOrEmpty(this.id)) {
         this.$message.error('请先保存博客，再同步到微信图文素材');
         return;
       }
@@ -283,7 +283,7 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/Blog/SyncToWeChat?id=${this.data.Id}`)
+          sp.get(`api/Blog/SyncToWeChat?id=${this.data.id}`)
             .then(() => {
               this.$message.success('同步成功');
             })

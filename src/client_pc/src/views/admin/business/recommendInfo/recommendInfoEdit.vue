@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       controllerName: 'RecommendInfo',
-      Id: '',
+      id: '',
       data: {},
       recommentType: [],
       fileList: [],
@@ -52,7 +52,7 @@ export default {
         const headers = {
           Authorization: 'Bearer ' + window.localStorage.getItem('Token')
         };
-        const url = '/api/SysFile/UploadImage?fileType=book_surface&objectId=' + this.Id;
+        const url = '/api/SysFile/UploadImage?fileType=book_surface&objectId=' + this.id;
         const formData = new FormData();
         formData.append('file', this.fileList[0]);
         sp.post(url, formData, headers);

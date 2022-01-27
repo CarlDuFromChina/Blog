@@ -17,8 +17,8 @@
     <p slot="content" style="background: #f7f8fa">
       {{ data.comment }}
     </p>
-    <a-tooltip slot="datetime" :title="data.createdOn | moment('YYYY-MM-DD HH:mm:ss')">
-      <span>{{ formtDate(data.createdOn) }}</span>
+    <a-tooltip slot="datetime" :title="data.created_at | moment('YYYY-MM-DD HH:mm:ss')">
+      <span>{{ formtDate(data.created_at) }}</span>
     </a-tooltip>
     <template slot="actions">
       <!-- <span key="comment-basic-like" @click="like">
@@ -77,7 +77,7 @@ export default {
         return;
       }
       const comment = {
-        Id: uuid.generate(),
+        id: uuid.generate(),
         name: '回复',
         comment: this.value,
         objectid: this.data.objectId,
@@ -85,7 +85,7 @@ export default {
         comment_type: 'reply',
         replyid: this.data.createdBy,
         replyidName: this.data.createdByName,
-        parentid: this.data.parentid || this.data.Id
+        parentid: this.data.parentid || this.data.id
       };
       sp.post('api/Comments/CreateData', comment).then(() => {
         this.$message.success('留言成功');

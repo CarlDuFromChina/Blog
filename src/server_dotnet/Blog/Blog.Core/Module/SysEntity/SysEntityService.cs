@@ -145,18 +145,8 @@ namespace SixpenceStudio.Core.SysEntity
         /// 实体id
         /// </summary>
         [DataMember]
-        [Column(""{entity.code}id"", ""实体id"", DataType.Varchar, 100)]
-        public string {entity.code}Id
-        {{
-            get
-            {{
-                return this.Id;
-            }}
-            set
-            {{
-                this.Id = value;
-            }}
-        }}
+        [Column(""{entity.PrimaryKey.Name}"", ""实体id"", DataType.Varchar, 100)]
+        public string {entity.PrimaryKey.Name} {{ get; set; }}
 
         {attributes}
     }}

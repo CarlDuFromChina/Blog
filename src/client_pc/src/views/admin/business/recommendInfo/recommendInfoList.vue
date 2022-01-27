@@ -15,7 +15,7 @@ export default {
         { prop: 'name', label: '名称' },
         { prop: 'recommend_typeName', label: '类型' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
+        { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       operations: ['new', 'delete', 'search']
     };

@@ -38,9 +38,9 @@ export default {
           const { id, name } = this.parentId();
           this.data.sys_paramGroupid = id;
           this.data.sys_paramGroupidName = name;
-          const operateName = sp.isNullOrEmpty(this.Id) ? 'CreateData' : 'UpdateData';
-          if (sp.isNullOrEmpty(this.Id)) {
-            this.data.Id = uuid.generate();
+          const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
+          if (sp.isNullOrEmpty(this.id)) {
+            this.data.id = uuid.generate();
           }
           sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
             if (this.postSave && typeof this.postSave === 'function') {

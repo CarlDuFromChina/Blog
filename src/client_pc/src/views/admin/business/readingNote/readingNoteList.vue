@@ -22,7 +22,7 @@ export default {
         { prop: 'book_title', label: '标题' },
         { prop: 'isShowName', label: '是否展示' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
+        { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }
       ]
     };
@@ -30,13 +30,13 @@ export default {
   methods: {
     goEdit(item) {
       this.$router.push({
-        path: `readingNote/edit/${(item || {}).Id || ''}`
+        path: `readingNote/edit/${(item || {}).id || ''}`
       });
     },
     goReadonly(item) {
       const { href } = this.$router.resolve({
         name: 'readingNoteReadonly',
-        params: { id: item.Id }
+        params: { id: item.id }
       });
       window.open(href, '_blank');
     }

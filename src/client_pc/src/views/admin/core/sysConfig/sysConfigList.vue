@@ -16,9 +16,9 @@ export default {
         { prop: 'code', label: '编码' },
         { prop: 'value', label: '值' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
+        { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'modifiedByName', label: '最后修改人' },
-        { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' }
+        { prop: 'updated_at', label: '最后修改日期', type: 'datetime' }
       ],
       editComponent: sysConfigEdit
     };

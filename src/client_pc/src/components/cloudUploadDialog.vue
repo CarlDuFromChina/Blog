@@ -91,7 +91,7 @@ export default {
       url += `&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`;
       return sp.get(url).then(resp => {
         this.dataList = resp.DataList.map(item => ({
-          id: item.Id,
+          id: item.id,
           previewURL: sp.getDownloadUrl(item.preview_url),
           preview_url: item.preview_url,
           previewid: item.previewid,

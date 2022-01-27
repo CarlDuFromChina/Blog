@@ -46,7 +46,7 @@ export default {
   computed: {
     relatedAttrs() {
       return {
-        id: this.Id,
+        id: this.id,
         name: this.data.name
       };
     }

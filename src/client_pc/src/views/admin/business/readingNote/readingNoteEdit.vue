@@ -98,7 +98,7 @@ export default {
     uploadImgParams() {
       return {
         fileType: 'reading_note',
-        objectId: this.data.Id
+        objectId: this.data.id
       };
     }
   },

@@ -21,7 +21,7 @@
     >
       <a-list-item slot="renderItem" slot-scope="item">
         <sp-comment :data="item" @replied="getDataList" @login="showLogin">
-          <sp-comment v-for="item2 in item.Comments" :key="item2.Id" :data="item2" @replied="getDataList" @login="showLogin"></sp-comment>
+          <sp-comment v-for="item2 in item.Comments" :key="item2.id" :data="item2" @replied="getDataList" @login="showLogin"></sp-comment>
         </sp-comment>
       </a-list-item>
     </a-list>
@@ -84,7 +84,7 @@ export default {
     },
     getDataList() {
       const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
-      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {
+      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=created_at desc`).then(resp => {
         this.comments = resp;
       });
     },
@@ -99,7 +99,7 @@ export default {
       setTimeout(() => {
         this.submitting = false;
         const comment = {
-          Id: uuid.generate(),
+          id: uuid.generate(),
           name: '评论',
           comment: this.value,
           comment_type: 'comment',

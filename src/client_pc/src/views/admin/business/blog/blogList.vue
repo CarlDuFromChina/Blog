@@ -51,7 +51,7 @@ export default {
         { prop: 'is_seriesName', label: '是否系列' },
         { prop: 'is_showName', label: '是否展示' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' },
+        { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
         { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }
       ],
       blogType: [],
@@ -68,7 +68,7 @@ export default {
       const { type, date } = this.searchData;
       if (date && date.length === 2) {
         searchList.push({
-          Name: 'createdOn',
+          Name: 'created_at',
           Value: [new Date(this.$moment(date[0]).format('YYYY-MM-DD')), new Date(this.$moment(date[1]).format('YYYY-MM-DD'))],
           Type: 4
         });
@@ -106,14 +106,14 @@ export default {
     goReadonly(item) {
       const { href } = this.$router.resolve({
         name: 'blogReadonly',
-        params: { id: item.Id }
+        params: { id: item.id }
       });
       window.open(href, '_blank');
     },
     goEdit(item) {
       this.$router.push({
         name: 'blogEdit',
-        params: { id: (item || {}).Id || '' }
+        params: { id: (item || {}).id || '' }
       });
     },
     exportData() {

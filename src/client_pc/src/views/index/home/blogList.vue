@@ -2,7 +2,7 @@
   <div>
     <sp-card class="blog-list" :loading="firstLoading">
       <a-list item-layout="vertical" size="large" :data-source="listData">
-        <a-list-item slot="renderItem" :key="item.Id" slot-scope="item">
+        <a-list-item slot="renderItem" :key="item.id" slot-scope="item">
           <template slot="actions">
             <span :key="'eye'">
               <a-icon type="eye" style="margin-right: 8px" />
@@ -26,7 +26,7 @@
               </div>
               <div class="meta-container">
                 <span class="meta-container-author">{{ item.createdByName }}</span>
-                <span class="meta-container-date">{{ formtDate(item.createdOn) }}</span>
+                <span class="meta-container-date">{{ formtDate(item.created_at) }}</span>
                 <a-tag v-show="item.article_typeName" :color="getColor(item)">
                   {{ item.article_typeName }}
                 </a-tag>
@@ -132,7 +132,7 @@ export default {
     readBlog(item) {
       const { href } = this.$router.resolve({
         name: 'blogReadonly',
-        params: { id: item.Id }
+        params: { id: item.id }
       });
       window.open(href, '_blank');
     }

@@ -10,7 +10,7 @@
       </a-col>
       <a-col :span="12">
         <a-form-model-item label="创建时间">
-          <a-input v-model="data.createdOn" disabled></a-input>
+          <a-input v-model="data.created_at" disabled></a-input>
         </a-form-model-item>
       </a-col>
     </a-row>

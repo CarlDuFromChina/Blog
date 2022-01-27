@@ -31,7 +31,7 @@ export default {
       }
       this.loading = true;
       try {
-        let url = 'api/blog/GetViewData?orderBy=createdon desc';
+        let url = 'api/blog/GetViewData?orderBy=created_at desc';
         url += '&pageSize=5';
         url += '&pageIndex=1';
         url += '&searchList=';
@@ -52,7 +52,7 @@ export default {
     read(item) {
       const { href } = this.$router.resolve({
         name: 'blogReadonly',
-        params: { id: item.Id }
+        params: { id: item.id }
       });
       window.open(href, '_blank');
     }

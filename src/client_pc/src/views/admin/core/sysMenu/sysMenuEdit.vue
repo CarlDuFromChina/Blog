@@ -21,7 +21,7 @@
       <a-col :span="12">
         <a-form-model-item label="上级菜单">
           <a-select v-model="data.parentid" placeholder="请选择上级菜单" @change="handleParentIdChange">
-            <a-select-option v-for="(item, index) in selectData" :key="index" :value="item.Id">{{ item.name }}</a-select-option>
+            <a-select-option v-for="(item, index) in selectData" :key="index" :value="item.id">{{ item.name }}</a-select-option>
           </a-select>
         </a-form-model-item>
       </a-col>
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       controllerName: 'sysmenu',
-      Id: '',
+      id: '',
       dialogVisible: false,
       data: {},
       selectData: []
@@ -64,8 +64,8 @@ export default {
   },
   created() {
     if (this.relatedAttr && this.relatedAttr.id) {
-      this.Id = this.relatedAttr.id;
-      sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`).then(resp => {
+      this.id = this.relatedAttr.id;
+      sp.get(`api/${this.controllerName}/GetData?id=${this.id}`).then(resp => {
         this.data = resp;
       });
     }
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     handleParentIdChange(val) {
-      const obj = this.selectData.find(item => item.Id === val);
+      const obj = this.selectData.find(item => item.id === val);
       if (!sp.isNull(obj)) {
         this.data.parentIdName = obj.name;
       }
@@ -87,9 +87,9 @@ export default {
       });
     },
     saveData() {
-      const operateName = sp.isNullOrEmpty(this.Id) ? 'CreateData' : 'UpdateData';
-      if (sp.isNullOrEmpty(this.Id)) {
-        this.data.Id = uuid.generate();
+      const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
+      if (sp.isNullOrEmpty(this.id)) {
+        this.data.id = uuid.generate();
       }
       sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
         this.$emit('close');

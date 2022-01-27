@@ -11,14 +11,14 @@
         <a-list-item-meta>
           <div slot="title">
             <div style="font-size: 14px">{{ item.createdByName }}</div>
-            <div style="font-size: 13px;">{{ item.createdOn }}</div>
+            <div style="font-size: 13px;">{{ item.created_at }}</div>
           </div>
           <a-avatar slot="avatar" :src="item.avatar" />
           <div slot="description" v-html="item.content"></div>
         </a-list-item-meta>
         <div style="padding-left: 20px">
-          <a-button type="primary" icon="edit" @click="edit(item.Id)"></a-button>
-          <a-button type="danger" icon="delete" @click="deleteData(item.Id)"></a-button>
+          <a-button type="primary" icon="edit" @click="edit(item.id)"></a-button>
+          <a-button type="danger" icon="delete" @click="deleteData(item.id)"></a-button>
         </div>
       </a-list-item>
     </a-list>
@@ -94,7 +94,7 @@ export default {
       });
     },
     fetchData(callback) {
-      sp.get(`api/idea/GetViewData?orderBy=createdOn desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
+      sp.get(`api/idea/GetViewData?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
         resp => {
           const dataList = resp.DataList.map(item => {
             item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.createdBy}`;

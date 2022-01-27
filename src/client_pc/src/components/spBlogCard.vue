@@ -1,7 +1,7 @@
 <template>
   <div :infinite-scroll-disabled="busy" class="card-list">
     <a-row v-if="data && data.length > 0">
-      <a-col :span="24" v-for="item in data" :key="item.Id">
+      <a-col :span="24" v-for="item in data" :key="item.id">
         <sp-card class="card-item">
           <div class="card-item-wrapper">
             <img alt="example" :src="imageName == 'surface_url' ? getDownloadUrl(item[imageName]) : item[imageName]" />
@@ -11,7 +11,7 @@
                 <sp-icon name="sp-blog-author" :size="15"></sp-icon><span>{{ item[authorName] }}</span>
               </div>
               <div>
-                <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.modifiedOn | moment('YYYY-MM-DD HH:MM') }}</span>
+                <sp-icon name="sp-blog-time" :size="15"></sp-icon><span>{{ item.updated_at | moment('YYYY-MM-DD HH:MM') }}</span>
               </div>
               <div class="description">{{ item.description }}</div>
               <div><a-button class="readme" type="primary" size="small" ghost @click="goReadonly(item)">阅读全文</a-button></div>
@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     isNewBlog(item) {
-      return this.$moment().diff(this.$moment(item.createdOn), 'day') < 5;
+      return this.$moment().diff(this.$moment(item.created_at), 'day') < 5;
     },
     loadData() {
       if (this.loading) {

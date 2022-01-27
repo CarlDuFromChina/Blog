@@ -39,10 +39,10 @@ export default {
       return sp.get(`api/${this.controllerName}/GetData`).then(resp => (this.data = resp || {}));
     },
     saveData() {
-      const operationName = sp.isNullOrEmpty(this.data.Id) ? 'CreateData' : 'UpdateData';
+      const operationName = sp.isNullOrEmpty(this.data.id) ? 'CreateData' : 'UpdateData';
       const url = `api/${this.controllerName}/${operationName}`;
       if (operationName === 'CreateData') {
-        this.data.Id = uuid.generate();
+        this.data.id = uuid.generate();
       }
       this.data.content = this.$refs.editor.editor.txt.text();
       sp.post(url, this.data)

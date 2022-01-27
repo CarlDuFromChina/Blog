@@ -40,7 +40,7 @@
                     <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
-                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.createdOn | moment('YYYY-MM-DD HH:mm') }}</div>
+                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.created_at | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
@@ -54,7 +54,7 @@
             <sp-comments
               id="comment"
               v-show="showComment"
-              :object-id="Id"
+              :object-id="id"
               :data="data"
               :disabled="!!data.disable_comment"
               objectName="blog"
@@ -178,7 +178,7 @@ export default {
   components: { blogMenu },
   data() {
     return {
-      Id: this.$route.params.id,
+      id: this.$route.params.id,
       controllerName: 'blog',
       data: {},
       recommandList: [],
@@ -198,7 +198,7 @@ export default {
     }
     this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
     if (this.isLoggedIn) {
-      this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.Id}`);
+      this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.id}`);
     }
     this.loadRecommand();
   },
@@ -264,7 +264,7 @@ export default {
       });
     },
     read(item) {
-      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.Id}`);
+      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.id}`);
       item.reading_times = (item.reading_times || 0) + 1;
       window.open(item.url);
     },
@@ -290,7 +290,7 @@ export default {
     async loadData() {
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`);
+        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
       } finally {
         setTimeout(() => {
           this.loading = false;
@@ -304,7 +304,7 @@ export default {
       if (!this.$store.getters.isLoggedIn) {
         this.$router.push({ name: 'login' });
       }
-      sp.get(`/api/Blog/Upvote?id=${this.Id}`).then(resp => {
+      sp.get(`/api/Blog/Upvote?id=${this.id}`).then(resp => {
         if (resp) {
           this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) + 1);
         } else {

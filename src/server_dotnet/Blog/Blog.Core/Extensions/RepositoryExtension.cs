@@ -216,7 +216,7 @@ namespace Blog.Core.Extensions
             else
             {
                 orderBy.Replace("ORDER BY", "", StringComparison.OrdinalIgnoreCase);
-                orderBy = $" ORDER BY {orderBy},{new E().EntityName}id";
+                orderBy = $" ORDER BY {orderBy},{new E().PrimaryKey.Name}";
             }
 
             sql += orderBy;

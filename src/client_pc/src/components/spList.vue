@@ -155,7 +155,7 @@ export default {
       selectionIds: [],
       rowSelection: {
         onChange: (selectedRowKeys, selectedRows) => {
-          this.selectionIds = selectedRows.map(item => item.Id);
+          this.selectionIds = selectedRows.map(item => item.id);
         }
       },
       pagination: {
@@ -244,7 +244,7 @@ export default {
         return;
       }
       this.relatedAttr = {
-        id: row.Id
+        id: row.id
       };
       this.editVisible = true;
     },
@@ -292,7 +292,7 @@ export default {
     setKey(table) {
       if (table && table.length > 0) {
         table.forEach((item) => {
-          item.key = (item || {}).Id || uuid.generate();
+          item.key = (item || {}).id || uuid.generate();
           if (item.children && item.children.length > 0) {
             this.setKey(item.children);
           }

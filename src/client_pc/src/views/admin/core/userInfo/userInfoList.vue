@@ -28,7 +28,7 @@ export default {
         { prop: 'mailbox', label: '邮箱' },
         { prop: 'cellphone', label: '手机号码' },
         { prop: 'is_lockName', label: '是否锁定' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
+        { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent: userInfoEdit
     };

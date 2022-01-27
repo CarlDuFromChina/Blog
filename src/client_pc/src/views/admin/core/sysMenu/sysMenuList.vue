@@ -23,9 +23,9 @@ export default {
         { prop: 'router', label: '路由' },
         { prop: 'menu_Index', label: '索引' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' },
+        { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'modifiedByName', label: '最后修改人' },
-        { prop: 'modifiedOn', label: '最后修改日期', type: 'datetime' },
+        { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
         { prop: 'stateCodeName', label: '状态' }
       ],
       editComponent: sysMenuEdit

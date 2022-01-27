@@ -71,7 +71,7 @@ WHERE sys_paramgroup.code = @code
             var entity = Manager.QueryFirst<sys_entity>(@"select * from sys_entity se where code = @code", new Dictionary<string, object>() { { "@code", code } });
             if (entity != null)
             {
-                return Manager.Query<SelectOption>($"select {entity.code}id AS Value, name AS Name from {entity.code}");
+                return Manager.Query<SelectOption>($"select id AS Value, name AS Name from {entity.code}");
             }
             return new List<SelectOption>();
         }

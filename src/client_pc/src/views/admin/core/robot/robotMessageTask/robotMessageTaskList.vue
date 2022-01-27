@@ -47,7 +47,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/RunOnce?id=${row.Id}`).then(() => {
+          sp.get(`api/${this.controllerName}/RunOnce?id=${row.id}`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });
@@ -64,7 +64,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/PauseJob?id=${row.Id}`).then(() => {
+          sp.get(`api/${this.controllerName}/PauseJob?id=${row.id}`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });
@@ -81,7 +81,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/ResumeJob?id=${row.Id}`).then(() => {
+          sp.get(`api/${this.controllerName}/ResumeJob?id=${row.id}`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });

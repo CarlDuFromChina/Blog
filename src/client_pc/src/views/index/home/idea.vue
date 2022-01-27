@@ -2,7 +2,7 @@
   <sp-card title="想法" :loading="loading" :empty="!dataList || dataList.length == 0">
     <a-timeline>
       <a-timeline-item v-for="(item, index) in dataList" :key="index">
-        <span>{{ item.createdOn | moment('YYYY-MM-DD HH:mm') }}</span>
+        <span>{{ item.created_at | moment('YYYY-MM-DD HH:mm') }}</span>
         <span v-html="item.content"></span>
       </a-timeline-item>
     </a-timeline>
@@ -33,7 +33,7 @@ export default {
         return;
       }
       this.loading = true;
-      let url = `api/${this.controllerName}/GetViewData?searchList=&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
+      let url = `api/${this.controllerName}/GetViewData?searchList=&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       sp.get(url)
         .then(resp => {
           if (resp && resp.DataList) {

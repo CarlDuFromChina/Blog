@@ -19,7 +19,7 @@
         <p class="section-title">我的动态</p>
         <a-timeline>
           <a-timeline-item v-for="(item, index) in timeline" :key="index"
-            >{{ item.createdon | moment('YYYY-MM-DD') }}{{ ' 发表了：' + item.title }}</a-timeline-item
+            >{{ item.created_at | moment('YYYY-MM-DD') }}{{ ' 发表了：' + item.title }}</a-timeline-item
           >
         </a-timeline>
       </div>

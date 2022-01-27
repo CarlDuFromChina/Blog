@@ -26,7 +26,7 @@ export default {
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'type', label: '类型' },
-        { prop: 'createdOn', label: '创建时间', type: 'datetime' }
+        { prop: 'created_at', label: '创建时间', type: 'datetime' }
       ],
       materialList: [],
       searchData: {

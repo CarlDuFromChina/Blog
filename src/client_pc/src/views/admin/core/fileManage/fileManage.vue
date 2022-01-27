@@ -44,7 +44,7 @@ export default {
         { prop: 'file_type', label: '关联实体' },
         { prop: 'content_type', label: '文件类型' },
         { prop: 'createdByName', label: '创建人' },
-        { prop: 'createdOn', label: '创建日期', type: 'datetime' }
+        { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent,
       searchData: {

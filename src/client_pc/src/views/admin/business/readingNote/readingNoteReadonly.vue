@@ -11,7 +11,7 @@
               <div class="bodyWrapper-title">{{ data.name }}</div>
               <div id="content" v-show="!loading"></div>
             </a-card>
-            <sp-comment v-show="showComment" :object-id="Id" :disabled="!!data.disable_comment" objectName="reading_note"></sp-comment>
+            <sp-comment v-show="showComment" :object-id="id" :disabled="!!data.disable_comment" objectName="reading_note"></sp-comment>
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left:20px" theme="light">
             <a-card class="block">
@@ -55,7 +55,7 @@ export default {
   components: { blogMenu },
   data() {
     return {
-      Id: this.$route.params.id,
+      id: this.$route.params.id,
       controllerName: 'ReadingNote',
       data: {},
       loading: false,
@@ -81,7 +81,7 @@ export default {
     async loadData() {
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`);
+        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
       } finally {
         setTimeout(() => {
           this.loading = false;

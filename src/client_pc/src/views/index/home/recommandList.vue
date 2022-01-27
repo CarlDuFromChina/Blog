@@ -44,7 +44,7 @@ export default {
       }
     },
     read(item) {
-      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.Id}`);
+      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.id}`);
       item.reading_times = (item.reading_times || 0) + 1;
       window.open(item.url);
     }

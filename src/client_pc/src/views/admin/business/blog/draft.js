@@ -85,7 +85,7 @@ export default {
      * 获取草稿
      **/
     async getDraft() {
-      return sp.get(`api/Draft/GetDataByBlogId?id=${this.Id}`).then(resp => {
+      return sp.get(`api/Draft/GetDataByBlogId?id=${this.id}`).then(resp => {
         if (resp) {
           this.draft = resp;
           this.$confirm({
@@ -98,13 +98,13 @@ export default {
               this.data.blogId = blogId;
               this.data.content = content;
               this.data.title = title;
-              sp.post('api/Draft/DeleteData', [this.draft.Id])
+              sp.post('api/Draft/DeleteData', [this.draft.id])
                 .finally(() => {
                   this.$emit('open-watch');
                 });
             },
             onCancel: () => {
-              sp.post('api/Draft/DeleteData', [this.draft.Id]).then(() => {
+              sp.post('api/Draft/DeleteData', [this.draft.id]).then(() => {
                 this.$message.info('已删除草稿');
               })
                 .finally(() => {
@@ -114,7 +114,7 @@ export default {
           });
         } else {
           this.draft.draftId = uuid.generate();
-          this.draft.blogId = this.Id;
+          this.draft.blogId = this.id;
           this.$emit('open-watch');
         }
       });

@@ -237,8 +237,8 @@ export default {
         // 保存后上传头像
         let url = '/api/SysFile/UploadImage?fileType=avatar';
         // 关联实体id
-        if (!sp.isNullOrEmpty(this.Id)) {
-          url += `&objectId=${this.Id}`;
+        if (!sp.isNullOrEmpty(this.id)) {
+          url += `&objectId=${this.id}`;
         }
         const formData = new FormData();
         formData.append('file', this.fileList[0]);
@@ -251,8 +251,8 @@ export default {
         // 保存后上传头像
         let url = '/api/SysFile/UploadImage?fileType=life_photo';
         // 关联实体id
-        if (!sp.isNullOrEmpty(this.Id)) {
-          url += `&objectId=${this.Id}`;
+        if (!sp.isNullOrEmpty(this.id)) {
+          url += `&objectId=${this.id}`;
         }
         const formData = new FormData();
         formData.append('file', this.lifePhotos[0]);
