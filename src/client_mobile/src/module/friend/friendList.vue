@@ -3,7 +3,7 @@
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入博客名快速搜索"></mt-search>
       <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
-        <div v-for="row in list" :key="row.Id" class="card item" @click="goReadonly(row.Id)">
+        <div v-for="row in list" :key="row.id" class="card item" @click="goReadonly(row.id)">
           <div class="avatar">
             <img :src="row.first_picture" alt="" />
           </div>
@@ -11,7 +11,7 @@
             <div class="title">{{ row.name }}</div>
             <div class="info">
               <span><sp-icon name="sp-blog-people" style="padding-right: 8px"></sp-icon>{{ row.author }}</span>
-              <span style="float: right">{{ row.createdOn | moment('YYYY-MM-DD') }}</span>
+              <span style="float: right">{{ row.created_at | moment('YYYY-MM-DD') }}</span>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default {
     },
     fetch() {
       sp.get(
-        `${sp.getServerUrl()}api/FriendBlog/GetViewData?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+        `${sp.getServerUrl()}api/FriendBlog/GetViewData?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
           this.pageIndex
         }&searchList=&viewId=F7A9536A-81E9-494F-9DF0-4AF323F1D5BC`
       ).then(resp => {

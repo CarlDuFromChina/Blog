@@ -9,6 +9,7 @@ using Sixpence.Common;
 using Sixpence.Common.Logging;
 using Sixpence.Common.Utils;
 using Sixpence.ORM.EntityManager;
+using Sixpence.ORM.Extensions;
 using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;

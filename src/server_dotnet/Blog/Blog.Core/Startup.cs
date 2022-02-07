@@ -1,10 +1,8 @@
-using Blog.Core.Auth;
 using Blog.Core.Config;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
 using Blog.Core.Profiles;
 using Blog.Core.Setup;
-using log4net.Config;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,8 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using Sixpence.Common;
-using Sixpence.ORM;
-using Sixpence.ORM.Entity;
+using Sixpence.ORM.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -89,7 +86,11 @@ namespace Blog.Core
         {
             app.UseStaticHttpContext();
 
-            app.UseEntityGenerate();
+            app.UseORM(options =>
+            {
+                options.EntityClassNameCase = ClassNameCase.UnderScore;
+                options.AutoGenerate = true;
+            });
 
             app.UseJob();
 

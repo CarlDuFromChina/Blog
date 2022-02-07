@@ -20,7 +20,7 @@ namespace Blog.Business.Blog
                     var sql = @"
 UPDATE sys_file
 SET objectid = @objectid
-WHERE sys_fileid = @id
+WHERE id = @id
 ";
                     var paramList = new Dictionary<string, object>()
                     {
