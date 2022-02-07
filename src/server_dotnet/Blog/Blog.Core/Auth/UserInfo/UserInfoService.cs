@@ -25,16 +25,16 @@ namespace Blog.Core.Auth.UserInfo
         {
             var sql = @"
 SELECT
-    is_lockName,
+    is_lock_name,
 	user_info.*
 FROM
 	user_info
 LEFT JOIN (
     SELECT
         user_infoid,
-        is_lockName
+        is_lock_name
     FROM auth_user
-) au ON user_info.user_infoid = au.user_infoid
+) au ON user_info.id = au.user_infoid
 ";
             var customFilter = new List<string>() { "name" };
             return new List<EntityView>()

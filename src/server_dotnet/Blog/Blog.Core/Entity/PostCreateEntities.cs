@@ -69,7 +69,7 @@ namespace Sixpence.ORM.Entity
                                 name = attr.LogicalName,
                                 code = attr.Name,
                                 entityid = entity.id,
-                                entityidname = entity.name,
+                                entityid_name = entity.name,
                                 entityCode = entity.code,
                                 attr_type = attr.Type.ToString().ToLower(),
                                 attr_length = attr.Length,

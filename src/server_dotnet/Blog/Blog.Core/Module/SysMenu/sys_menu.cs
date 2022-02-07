@@ -35,8 +35,8 @@ namespace Blog.Core.Module.SysMenu
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Column("parentidname", "上级菜单名", DataType.Varchar, 100)]
-        public string parentIdName { get; set; }
+        [Column("parentid_name", "上级菜单名", DataType.Varchar, 100)]
+        public string parentId_name { get; set; }
 
         /// <summary>
         /// 路由地址
@@ -61,8 +61,8 @@ namespace Blog.Core.Module.SysMenu
 
 
         [DataMember]
-        [Column("statecodename", "状态", DataType.Varchar, 100)]
-        public string stateCodeName { get; set; }
+        [Column("statecode_name", "状态", DataType.Varchar, 100)]
+        public string stateCode_name { get; set; }
 
         /// <summary>
         /// 图标

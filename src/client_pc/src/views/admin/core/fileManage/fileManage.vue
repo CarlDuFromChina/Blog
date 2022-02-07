@@ -43,7 +43,7 @@ export default {
         { prop: 'name', label: '名称' },
         { prop: 'file_type', label: '关联实体' },
         { prop: 'content_type', label: '文件类型' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent,

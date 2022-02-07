@@ -79,7 +79,7 @@ export default {
       }
     },
     handleStateCodeChange() {
-      this.data.stateCodeName = this.data.stateCode === 1 ? '启用' : '禁用';
+      this.data.stateCode_name = this.data.stateCode === 1 ? '启用' : '禁用';
     },
     getSelectData() {
       sp.get(`api/${this.controllerName}/GetFirstMenu`).then(resp => {

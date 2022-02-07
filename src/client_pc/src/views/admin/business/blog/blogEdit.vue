@@ -33,7 +33,7 @@
               <sp-select
                 v-model="data.blog_type"
                 :options="selectDataList.classification"
-                @change="item => (data.blog_typeName = item.name)"
+                @change="item => (data.blog_type_name = item.name)"
               ></sp-select>
             </a-form-model-item>
           </a-col>
@@ -44,7 +44,7 @@
               <sp-select
                 v-model="data.article_type"
                 :options="selectDataList.article_type"
-                @change="item => (data.article_typeName = item.name)"
+                @change="item => (data.article_type_name = item.name)"
               ></sp-select>
             </a-form-model-item>
           </a-col>

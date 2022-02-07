@@ -44,7 +44,7 @@ export default {
     handleTypeChange(value) {
       const arrs = this.recommentType.filter(item => item.Value === value);
       if (arrs.length > 0) {
-        this.data.recommend_typeName = arrs[0].Name;
+        this.data.recommend_type_name = arrs[0].Name;
       }
     },
     postSave() {

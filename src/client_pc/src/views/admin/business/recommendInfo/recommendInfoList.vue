@@ -13,8 +13,8 @@ export default {
       editComponent: recommendInfoEdit,
       columns: [
         { prop: 'name', label: '名称' },
-        { prop: 'recommend_typeName', label: '类型' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'recommend_type_name', label: '类型' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       operations: ['new', 'delete', 'search']

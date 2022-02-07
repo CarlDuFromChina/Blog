@@ -48,7 +48,7 @@ SELECT
 	sys_param.code AS Value,
 	sys_param.name AS Name
 FROM sys_param
-INNER JOIN sys_paramgroup ON sys_param.sys_paramgroupid = sys_paramgroup.sys_paramgroupid
+INNER JOIN sys_paramgroup ON sys_param.sys_paramgroupid = sys_paramgroup.id
 WHERE sys_paramgroup.code = @code
 ";
             return Manager.Query<SelectOption>(sql, new Dictionary<string, object>() { { "@code", code } }).ToList();
@@ -121,7 +121,7 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_paramgroupid FROM sys_paramgroup WHERE sys_paramgroupid = '{data.id}'
+    SELECT id FROM sys_paramgroup WHERE id = '{data.id}'
 );
 ";
             paramList.Each(param =>
@@ -132,7 +132,7 @@ INSERT INTO sys_param (
     name,
     code,
     sys_paramgroupid,
-    sys_paramgroupidname,
+    sys_paramgroupid_name,
     created_by,
     created_by_name,
     created_at,

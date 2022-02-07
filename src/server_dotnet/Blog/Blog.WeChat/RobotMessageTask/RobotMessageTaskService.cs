@@ -33,28 +33,28 @@ namespace Blog.WeChat.RobotMessageTask
                 { "User", UserIdentityUtil.GetAdmin() }
             };
 
-            JobHelpers.RunOnceNow(data.name, data.robotidName, paramList);
-            var jobState = JobHelpers.GetJobStatus(data.name, data.robotidName).ToSelectOption();
+            JobHelpers.RunOnceNow(data.name, data.robotid_name, paramList);
+            var jobState = JobHelpers.GetJobStatus(data.name, data.robotid_name).ToSelectOption();
             data.job_state = jobState.Value.ToString();
-            data.job_stateName = jobState.Name;
+            data.job_state_name = jobState.Name;
             UpdateData(data);
         }
 
         public void PauseJob(string id)
         {
             var data = GetData(id);
-            JobHelpers.PauseJob(data.name, data.robotidName);
+            JobHelpers.PauseJob(data.name, data.robotid_name);
             data.job_state = "1";
-            data.job_stateName = "暂停";
+            data.job_state_name = "暂停";
             UpdateData(data);
         }
 
         public void ResumeJob(string id)
         {
             var data = GetData(id);
-            JobHelpers.ResumeJob(data.name, data.robotidName);
+            JobHelpers.ResumeJob(data.name, data.robotid_name);
             data.job_state = "0";
-            data.job_stateName = "正常";
+            data.job_state_name = "正常";
             UpdateData(data);
         }
     }

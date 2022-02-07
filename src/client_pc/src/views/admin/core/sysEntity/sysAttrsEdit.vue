@@ -88,7 +88,7 @@ export default {
   },
   created() {
     this.data.entityid = this.parent.id;
-    this.data.entityidname = this.parent.name;
+    this.data.entityid_name = this.parent.name;
     this.data.entityCode = this.parent.entityCode;
   },
   methods: {

@@ -4,13 +4,13 @@
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta v-if="view === 'upvote'">
           <span slot="title"
-            >{{ item.createdByName }} 赞了你的文章 <a href="www.baidu.com">{{ item.data.objectIdName }}</a></span
+            >{{ item.created_by_name }} 赞了你的文章 <a href="www.baidu.com">{{ item.data.object_id_name }}</a></span
           >
           <a-avatar slot="avatar" :src="item.avatar" />
         </a-list-item-meta>
         <a-list-item-meta v-else-if="view === 'comment'" :description="item.data.comment">
           <span slot="title"
-            >{{ item.createdByName }} 评论了你的文章
+            >{{ item.created_by_name }} 评论了你的文章
             <a :href="`#/blog/${item.data.objectId}`" target="_blank">《{{ item.data.object_title }}》</a></span
           >
           <a-avatar slot="avatar" :src="item.avatar" />
@@ -76,7 +76,7 @@ export default {
       ).then(resp => {
         this.total = resp.RecordCount;
         resp.DataList.forEach(item => {
-          item.avatar = sp.getAvatar(item.createdBy);
+          item.avatar = sp.getAvatar(item.created_by);
           item.data = JSON.parse(item.content);
         });
         this.listData = this.listData.concat(resp.DataList);

@@ -65,9 +65,9 @@ AND mail_type = @type";
                     name = model.code.Split("@")[0],
                     mailbox = model.code,
                     roleid = role.id,
-                    roleidName = role.name,
+                    roleid_name = role.name,
                     stateCode = 1,
-                    stateCodeName = "启用"
+                    stateCode_name = "启用"
                 };
                 Manager.Create(user, false);
                 var _authUser = new auth_user()
@@ -76,10 +76,9 @@ AND mail_type = @type";
                     name = user.name,
                     code = user.code,
                     roleid = user.roleid,
-                    roleidName = user.roleidName,
+                    roleid_name = user.roleid_name,
                     user_infoid = user.id,
                     is_lock = false,
-                    is_lockName = "否",
                     last_login_time = DateTime.Now,
                     password = model.password
                 };

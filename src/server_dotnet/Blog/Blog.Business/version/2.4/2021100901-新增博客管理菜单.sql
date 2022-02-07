@@ -4,7 +4,7 @@ INSERT INTO sys_menu (
     icon,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
     created_by,
     created_by_name,

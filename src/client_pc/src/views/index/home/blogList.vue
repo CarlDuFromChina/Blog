@@ -25,10 +25,10 @@
                 <a @click="readBlog(item)">{{ item.title }}</a>
               </div>
               <div class="meta-container">
-                <span class="meta-container-author">{{ item.createdByName }}</span>
+                <span class="meta-container-author">{{ item.created_by_name }}</span>
                 <span class="meta-container-date">{{ formtDate(item.created_at) }}</span>
-                <a-tag v-show="item.article_typeName" :color="getColor(item)">
-                  {{ item.article_typeName }}
+                <a-tag v-show="item.article_type_name" :color="getColor(item)">
+                  {{ item.article_type_name }}
                 </a-tag>
               </div>
               <div class="meta-brief">{{ item.brief }}</div>
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     getColor(item) {
-      switch (item.article_typeName) {
+      switch (item.article_type_name) {
         case '原创':
           return this.colors[0];
         case '转载':

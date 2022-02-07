@@ -44,8 +44,8 @@ namespace Blog.Core.Auth.UserInfo
         /// 性别
         /// </summary>
         [DataMember]
-        [Column("gendername", "性别", DataType.Varchar, 100)]
-        public string genderName { get; set; }
+        [Column("gender_name", "性别", DataType.Varchar, 100)]
+        public string gender_name { get; set; }
 
         /// <summary>
         /// 真实姓名
@@ -100,15 +100,15 @@ namespace Blog.Core.Auth.UserInfo
         /// 角色权限名
         /// </summary>
         [DataMember]
-        [Column("roleidname", "角色权限名", DataType.Varchar, 100)]
-        public string roleidName { get; set; }
+        [Column("roleid_name", "角色权限名", DataType.Varchar, 100)]
+        public string roleid_name { get; set; }
 
         [DataMember]
         [Column("statecode", "状态", DataType.Int4)]
         public int? stateCode { get; set; }
 
         [DataMember]
-        [Column("statecodename", "状态名", DataType.Varchar, 100)]
-        public string stateCodeName { get; set; }
+        [Column("stateCode_name", "状态名", DataType.Varchar, 100)]
+        public string stateCode_name { get; set; }
     }
 }

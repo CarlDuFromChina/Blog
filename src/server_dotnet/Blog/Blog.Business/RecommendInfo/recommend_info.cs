@@ -43,8 +43,8 @@ namespace Blog.RecommendInfo
         /// 推荐类型
         /// </summary>
         [DataMember]
-        [Column("recommend_typename", "推荐类型", DataType.Varchar, 100)]
-        public string recommend_typeName { get; set; }
+        [Column("recommend_type_name", "推荐类型", DataType.Varchar, 100)]
+        public string recommend_type_name { get; set; }
 
         /// <summary>
         /// 阅读次数

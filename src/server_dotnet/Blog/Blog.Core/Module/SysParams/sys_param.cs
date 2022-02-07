@@ -37,7 +37,7 @@ namespace Blog.Core.Module.SysParams
 
 
         [DataMember]
-        [Column("sys_paramgroupidname", "选项集名", DataType.Varchar, 100)]
-        public string sys_paramGroupIdName { get; set; }
+        [Column("sys_paramgroupid_name", "选项集名", DataType.Varchar, 100)]
+        public string sys_paramgroupid_name { get; set; }
     }
 }

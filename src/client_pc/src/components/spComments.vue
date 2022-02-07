@@ -103,8 +103,8 @@ export default {
           name: '评论',
           comment: this.value,
           comment_type: 'comment',
-          object_ownerid: this.data.createdBy,
-          object_owneridName: this.data.createdByName,
+          object_ownerid: this.data.created_by,
+          object_ownerid_name: this.data.created_by_name,
           objectid: this.objectId,
           object_name: this.objectName,
           object_title: this.data.title

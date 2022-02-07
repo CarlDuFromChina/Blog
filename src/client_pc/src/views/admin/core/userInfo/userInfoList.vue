@@ -23,11 +23,11 @@ export default {
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'code', label: '编码' },
-        { prop: 'genderName', label: '性别' },
+        { prop: 'gender_name', label: '性别' },
         { prop: 'realname', label: '真实姓名' },
         { prop: 'mailbox', label: '邮箱' },
         { prop: 'cellphone', label: '手机号码' },
-        { prop: 'is_lockName', label: '是否锁定' },
+        { prop: 'is_lock_name', label: '是否锁定' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent: userInfoEdit

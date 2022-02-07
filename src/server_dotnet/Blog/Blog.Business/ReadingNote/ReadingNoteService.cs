@@ -34,7 +34,7 @@ namespace Blog.ReadingNote
                     ViewId = "03860DF4-0E9E-4330-80BF-6A1E9AC797A6",
                     Sql = @"    
 SELECT
-	reading_noteid,
+	id,
 	name,
 	book_title,
 	content,

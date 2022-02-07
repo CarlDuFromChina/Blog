@@ -31,7 +31,7 @@ namespace Blog.WeChat.RobotMessageTask
             {
                 Logger.Error($"机器人[{robot.name}]的消息[{entity.name}]发送失败", e);
                 entity.job_state = "3";
-                entity.job_stateName = "错误";
+                entity.job_state_name = "错误";
                 Manager.Update(entity);
             }
         }

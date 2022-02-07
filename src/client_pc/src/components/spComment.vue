@@ -1,17 +1,17 @@
 <template>
-  <a-comment :avatar="getAvatar(data.createdBy)" style="padding: 10px">
+  <a-comment :avatar="getAvatar(data.created_by)" style="padding: 10px">
     <a slot="author">
       <template v-if="data.name === '名称'">
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
         <span>{{ data.name }}</span>
       </template>
       <template v-else-if="data.name === '回复'">
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
         <span>{{ data.name }}</span>
-        {{ data.replyidName }}
+        {{ data.replyid_name }}
       </template>
       <template v-else>
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
       </template>
     </a>
     <p slot="content" style="background: #f7f8fa">
@@ -83,8 +83,8 @@ export default {
         objectid: this.data.objectId,
         object_name: this.data.object_name,
         comment_type: 'reply',
-        replyid: this.data.createdBy,
-        replyidName: this.data.createdByName,
+        replyid: this.data.created_by,
+        replyid_name: this.data.created_by_name,
         parentid: this.data.parentid || this.data.id
       };
       sp.post('api/Comments/CreateData', comment).then(() => {

@@ -32,7 +32,7 @@ namespace Blog.Core.Store.SysFile
                     ViewId = "DD1D72FB-D7DE-49AC-B387-273375E6A7BA",
                     Sql = @"
 SELECT
-	sys_fileid,
+	id,
 	NAME,
 	file_type,
 	content_type,
@@ -50,7 +50,7 @@ FROM
                     ViewId = "3BCF6C07-2B49-4D69-9EB1-A3D5B721C976",
                     Sql = $@"
 SELECT
-	sys_fileid,
+	id,
 	NAME,
 	file_type,
 	created_at,

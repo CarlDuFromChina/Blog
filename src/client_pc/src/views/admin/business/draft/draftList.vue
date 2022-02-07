@@ -10,7 +10,7 @@ export default {
       controllerName: 'Draft',
       columns: [
         { prop: 'title', label: '标题' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       operations: ['delete', 'search']

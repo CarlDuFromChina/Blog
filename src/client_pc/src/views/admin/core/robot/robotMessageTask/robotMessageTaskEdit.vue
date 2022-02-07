@@ -15,7 +15,7 @@
     <a-row :gutter="24">
       <a-col :span="12">
         <a-form-model-item label="机器人">
-          <sp-select v-model="data.robotid" :options="selectDataList.robot" @change="item => (data.robotidName = item.name)"></sp-select>
+          <sp-select v-model="data.robotid" :options="selectDataList.robot" @change="item => (data.robotid_name = item.name)"></sp-select>
         </a-form-model-item>
       </a-col>
       <a-col :span="12">
@@ -23,7 +23,7 @@
           <sp-select
             v-model="data.message_type"
             :options="selectDataList.message_type"
-            @change="item => (data.message_typeName = item.name)"
+            @change="item => (data.message_type_name = item.name)"
           ></sp-select>
         </a-form-model-item>
       </a-col>

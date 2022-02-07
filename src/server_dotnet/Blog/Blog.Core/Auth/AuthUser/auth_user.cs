@@ -42,8 +42,8 @@ namespace Blog.Core.Auth
         /// 角色权限名
         /// </summary>
         [DataMember]
-        [Column("roleidname", "角色权限名", DataType.Varchar, 100)]
-        public string roleidName { get; set; }
+        [Column("roleid_name", "角色权限名", DataType.Varchar, 100)]
+        public string roleid_name { get; set; }
 
         /// <summary>
         /// 用户id
@@ -63,8 +63,8 @@ namespace Blog.Core.Auth
         /// 是否锁定
         /// </summary>
         [DataMember]
-        [Column("is_lockname", "是否锁定", DataType.Varchar, 100)]
-        public string is_lockName { get; set; }
+        [Column("is_lock_name", "是否锁定", DataType.Varchar, 100)]
+        public string is_lock_name { get; set; }
 
         /// <summary>
         /// 上次登录时间

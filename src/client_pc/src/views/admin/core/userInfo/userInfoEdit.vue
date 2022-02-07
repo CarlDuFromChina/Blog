@@ -96,7 +96,7 @@
         <a-row :gutter="24">
           <a-col :span="12">
             <a-form-model-item label="角色" prop="roleid">
-              <sp-select v-model="data.roleid" :options="roles" @change="item => (data.roleidName = item.name)"></sp-select>
+              <sp-select v-model="data.roleid" :options="roles" @change="item => (data.roleid_name = item.name)"></sp-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="12">
@@ -185,10 +185,10 @@ export default {
   },
   methods: {
     handleChangeGender() {
-      this.data.genderName = this.data.gender === 0 ? '男' : '女';
+      this.data.gender_name = this.data.gender === 0 ? '男' : '女';
     },
     handleStateCodeChange() {
-      this.data.stateCodeName = this.data.stateCode === 1 ? '启用' : '禁用';
+      this.data.stateCode_name = this.data.stateCode === 1 ? '启用' : '禁用';
     },
     handleAvatarChange(file) {
       if (file) {

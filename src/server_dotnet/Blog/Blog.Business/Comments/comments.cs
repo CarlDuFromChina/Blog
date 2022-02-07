@@ -66,8 +66,8 @@ namespace Blog.Comments
         /// 对象拥有者
         /// </summary>
         [DataMember]
-        [Column("object_owneridName", "对象拥有者", DataType.Varchar, 100)]
-        public string object_owneridName { get; set; }
+        [Column("object_ownerid_name", "对象拥有者", DataType.Varchar, 100)]
+        public string object_ownerid_name { get; set; }
 
         /// <summary>
         /// 父节点
@@ -87,7 +87,7 @@ namespace Blog.Comments
         /// 回复人
         /// </summary>
         [DataMember]
-        [Column("replyidName", "回复人", DataType.Varchar, 100)]
-        public string replyidName { get; set; }
+        [Column("replyid_name", "回复人", DataType.Varchar, 100)]
+        public string replyid_name { get; set; }
     }
 }

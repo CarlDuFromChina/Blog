@@ -42,8 +42,8 @@ namespace Blog.Core.Module.SysAttrs
         /// 实体名
         /// </summary>
         [DataMember]
-        [Column("entityidname", "实体名", DataType.Varchar, 100)]
-        public string entityidname { get; set; }
+        [Column("entityid_name", "实体名", DataType.Varchar, 100)]
+        public string entityid_name { get; set; }
 
         /// <summary>
         /// 字段类型

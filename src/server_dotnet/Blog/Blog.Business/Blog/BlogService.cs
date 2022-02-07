@@ -38,8 +38,8 @@ SELECT
 	blog.id,
 	blog.title,
 	blog.blog_type,
-	blog.blog_typeName,
-	blog.article_typeName,
+	blog.blog_type_name,
+	blog.article_type_name,
 	blog.created_by,
 	blog.created_by_name,
 	blog.updated_by,
@@ -55,7 +55,7 @@ SELECT
 	blog.surface_url,
 	blog.brief,
 	blog.is_pop,
-	blog.is_popName
+	blog.is_pop_name
 FROM
 	blog
 WHERE 1=1 AND blog.is_show = 1";
@@ -151,9 +151,9 @@ WHERE
                 {
                     id = Guid.NewGuid().ToString(),
                     objectId = blog.id,
-                    objectIdName = blog.title,
+                    objectid_name = blog.title,
                     object_ownerid = blog.created_by,
-                    object_owneridName = blog.created_by_name,
+                    object_ownerid_name = blog.created_by_name,
                     object_type = "blog"
                 };
                 Manager.Create(data);

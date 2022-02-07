@@ -53,7 +53,7 @@ WHERE entityid = @id AND code = @code;
                         code = item.Name,
                         name = item.LogicalName,
                         entityid = entity.id,
-                        entityidname = entity.name,
+                        entityid_name = entity.name,
                         attr_type = item.Type.ToString().ToLower(),
                         attr_length = item.Length,
                         isrequire = item.IsRequire == true,

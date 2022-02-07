@@ -1,11 +1,11 @@
 INSERT INTO sys_menu (
     id,
     parentid,
-    parentidname,
+    parentId_name,
     name,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
     created_by,
     created_by_name,

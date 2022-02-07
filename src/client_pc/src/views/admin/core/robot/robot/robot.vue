@@ -20,9 +20,9 @@ export default {
       columns: [
         { prop: 'name', label: '机器人名' },
         { prop: 'hook', label: '钩子地址' },
-        { prop: 'robot_typeName', label: '类型' },
+        { prop: 'robot_type_name', label: '类型' },
         { prop: 'description', label: '描述' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent: robotEdit

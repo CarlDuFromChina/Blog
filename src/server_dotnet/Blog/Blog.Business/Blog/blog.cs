@@ -25,8 +25,8 @@ namespace Blog.Business.Blog
         /// 类型
         /// </summary>
         [DataMember]
-        [Column("blog_typename", "博客类型", DataType.Varchar, 100)]
-        public string blog_typeName { get; set; }
+        [Column("blog_type_name", "博客类型", DataType.Varchar, 100)]
+        public string blog_type_name { get; set; }
 
         /// <summary>
         /// Markdown内容
@@ -75,8 +75,8 @@ namespace Blog.Business.Blog
         /// 是否是系列
         /// </summary>
         [DataMember]
-        [Column("is_seriesname", "是否是系列", DataType.Varchar, 100)]
-        public string is_seriesName { get; set; }
+        [Column("is_series_name", "是否是系列", DataType.Varchar, 100)]
+        public string is_series_name { get; set; }
 
         /// <summary>
         /// 标签
@@ -132,8 +132,8 @@ namespace Blog.Business.Blog
         /// 是否展示
         /// </summary>
         [DataMember]
-        [Column("is_showname", "是否展示", DataType.Varchar, 100)]
-        public string is_showName { get; set; }
+        [Column("is_show_name", "是否展示", DataType.Varchar, 100)]
+        public string is_show_name { get; set; }
 
         /// <summary>
         /// 摘要
@@ -160,8 +160,8 @@ namespace Blog.Business.Blog
         /// 文章类型
         /// </summary>
         [DataMember]
-        [Column("article_typename", "文章类型", DataType.Varchar, 100)]
-        public string article_typeName { get; set; }
+        [Column("article_type_name", "文章类型", DataType.Varchar, 100)]
+        public string article_type_name { get; set; }
 
         /// <summary>
         /// 是否置顶
@@ -174,8 +174,8 @@ namespace Blog.Business.Blog
         /// 是否置顶
         /// </summary>
         [DataMember]
-        [Column("is_popname", "是否置顶", DataType.Varchar, true, "否")]
-        public string is_popName { get; set; }
+        [Column("is_pop_name", "是否置顶", DataType.Varchar, true, "否")]
+        public string is_pop_name { get; set; }
     }
 }
 

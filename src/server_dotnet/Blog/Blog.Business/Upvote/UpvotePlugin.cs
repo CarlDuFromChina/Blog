@@ -26,9 +26,8 @@ namespace Blog.Business.Upvote
                             id = Guid.NewGuid().ToString(),
                             name = $"{data.name}消息提醒",
                             is_read = false,
-                            is_readName = "否",
                             receiverId = data.object_ownerid,
-                            receiverIdName = data.object_owneridName,
+                            receiverId_name = data.object_ownerid_name,
                             message_type = "upvote",
                             content = JsonConvert.SerializeObject(data)
                         };

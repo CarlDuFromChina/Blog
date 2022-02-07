@@ -37,7 +37,7 @@
               <a-skeleton :loading="loading">
                 <div class="block">
                   <div style="display: flex">
-                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.created_at | moment('YYYY-MM-DD HH:mm') }}</div>
@@ -68,7 +68,7 @@
               <div class="block-body">
                 <a-skeleton :loading="loading">
                   <a style="display: flex">
-                    <a-avatar :src="getAvatar(data.createdBy)" style="margin-right: 10px"></a-avatar>
+                    <a-avatar :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
@@ -196,7 +196,7 @@ export default {
     if (this.data.title) {
       document.title = this.data.title;
     }
-    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
+    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.created_by}`);
     if (this.isLoggedIn) {
       this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.id}`);
     }

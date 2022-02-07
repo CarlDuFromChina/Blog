@@ -47,8 +47,8 @@ namespace Blog.WeChat.RobotMessageTask
         /// 消息类型名称
         /// </summary>
         [DataMember]
-        [Column("message_typename", "消息类型名称", DataType.Varchar, 100)]
-        public string message_typeName { get; set; }
+        [Column("message_type_name", "消息类型名称", DataType.Varchar, 100)]
+        public string message_type_name { get; set; }
 
         /// <summary>
         /// 机器人
@@ -61,8 +61,8 @@ namespace Blog.WeChat.RobotMessageTask
         /// 机器人名称
         /// </summary>
         [DataMember]
-        [Column("robotidname", "机器人名称", DataType.Varchar, 100)]
-        public string robotidName { get; set; }
+        [Column("robotid_name", "机器人名称", DataType.Varchar, 100)]
+        public string robotid_name { get; set; }
 
         /// <summary>
         /// 任务状态
@@ -75,8 +75,8 @@ namespace Blog.WeChat.RobotMessageTask
         /// 任务状态名称
         /// </summary>
         [DataMember]
-        [Column("job_statename", "任务状态名称", DataType.Varchar, 100)]
-        public string job_stateName { get; set; }
+        [Column("job_state_name", "任务状态名称", DataType.Varchar, 100)]
+        public string job_state_name { get; set; }
     }
 }
 

@@ -35,7 +35,7 @@ namespace Blog.Core.Module.Role
                         {
                             item.id = Guid.NewGuid().ToString();
                             item.sys_roleid = obj.id;
-                            item.sys_roleidName = obj.name;
+                            item.sys_roleid_name = obj.name;
                             item.created_at = new DateTime();
                             item.updated_at = new DateTime();
                         });
@@ -55,7 +55,7 @@ namespace Blog.Core.Module.Role
                         {
                             item.id = Guid.NewGuid().ToString();
                             item.sys_roleid = obj.id;
-                            item.sys_roleidName = obj.name;
+                            item.sys_roleid_name = obj.name;
                             item.created_at = new DateTime();
                             item.updated_at = new DateTime();
                         });

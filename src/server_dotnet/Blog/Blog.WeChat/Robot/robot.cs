@@ -48,8 +48,8 @@ namespace Blog.WeChat.Robot
         /// 类型名称
         /// </summary>
         [DataMember]
-        [Column("robot_typename", "类型名称", DataType.Varchar, 100)]
-        public string robot_typeName { get; set; }
+        [Column("robot_type_name", "类型名称", DataType.Varchar, 100)]
+        public string robot_type_name { get; set; }
     }
 }
 

@@ -22,11 +22,11 @@ export default {
         { prop: 'name', label: '菜单名' },
         { prop: 'router', label: '路由' },
         { prop: 'menu_Index', label: '索引' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
-        { prop: 'modifiedByName', label: '最后修改人' },
+        { prop: 'modified_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
-        { prop: 'stateCodeName', label: '状态' }
+        { prop: 'stateCode_name', label: '状态' }
       ],
       editComponent: sysMenuEdit
     };

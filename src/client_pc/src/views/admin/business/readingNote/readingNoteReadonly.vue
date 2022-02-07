@@ -69,7 +69,7 @@ export default {
   async mounted() {
     await this.loadData();
     document.getElementById('content').innerHTML = this.data.content;
-    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.createdBy}`);
+    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.created_by}`);
     this.imageUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
   },
   computed: {

@@ -33,8 +33,8 @@ namespace Blog.Core.Module.MessageRemind
         /// 接收人名称
         /// </summary>
         [DataMember]
-        [Column("receiverIdName", "接收人", DataType.Varchar, 100)]
-        public string receiverIdName { get; set; }
+        [Column("receiverId_name", "接收人", DataType.Varchar, 100)]
+        public string receiverId_name { get; set; }
 
         /// <summary>
         /// 是否阅读
@@ -48,8 +48,8 @@ namespace Blog.Core.Module.MessageRemind
         /// 是否阅读
         /// </summary>
         [DataMember]
-        [Column("is_readname", "实体名", DataType.Varchar, 100)]
-        public string is_readName { get; set; }
+        [Column("is_read_name", "实体名", DataType.Varchar, 100)]
+        public string is_read_name { get; set; }
 
 
         /// <summary>

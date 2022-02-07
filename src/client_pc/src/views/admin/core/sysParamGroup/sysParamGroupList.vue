@@ -21,9 +21,9 @@ export default {
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'code', label: '编码' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
-        { prop: 'modifiedByName', label: '最后修改人' },
+        { prop: 'modified_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' }
       ],
       editComponent: sysParamGroupEdit

@@ -34,8 +34,8 @@ namespace Blog.Core.Auth.Privilege
         /// 角色名
         /// </summary>
         [DataMember]
-        [Column("sys_roleidname", "角色名", DataType.Varchar, 100)]
-        public string sys_roleidName { get; set; }
+        [Column("sys_roleid_name", "角色名", DataType.Varchar, 100)]
+        public string sys_roleid_name { get; set; }
 
         /// <summary>
         /// 权限值
@@ -55,8 +55,8 @@ namespace Blog.Core.Auth.Privilege
         /// 对象名
         /// </summary>
         [DataMember]
-        [Column("objectidname", "实体名", DataType.Varchar, 100)]
-        public string objectidName { get; set; }
+        [Column("objectid_name", "实体名", DataType.Varchar, 100)]
+        public string objectid_name { get; set; }
 
         /// <summary>
         /// 对象类型

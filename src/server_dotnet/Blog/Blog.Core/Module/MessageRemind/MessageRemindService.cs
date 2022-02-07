@@ -58,8 +58,8 @@ WHERE message_type = 'system'",
         {
             var sql = @"
 UPDATE message_remind
-SET	is_read = 1, is_readname = '是'
-WHERE message_remindid IN (in@ids)
+SET	is_read = 1, is_read_name = '是'
+WHERE id IN (in@ids)
 ";
             Manager.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } });
         }

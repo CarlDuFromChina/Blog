@@ -12,9 +12,9 @@ export default {
       controllerName: 'SysRolePrivilege',
       operations: ['new', 'delete', 'search'],
       columns: [
-        { prop: 'objectidName', label: '实体名' },
+        { prop: 'objectid_name', label: '实体名' },
         { prop: 'description', label: '描述' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' }
       ],
       editComponent: rolePrivilegeEdit

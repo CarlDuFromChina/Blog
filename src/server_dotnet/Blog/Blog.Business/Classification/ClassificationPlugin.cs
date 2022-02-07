@@ -48,11 +48,11 @@ namespace Blog.Business.Classification
                     id = Guid.NewGuid().ToString(),
                     name = data.name,
                     parentid = "8201EFED-76E2-4CD1-A522-4803D52D4D92",
-                    parentIdName = "博客管理",
+                    parentId_name = "博客管理",
                     router = $"blogs/{data.code}",
                     menu_Index = data.index,
                     stateCode = 1,
-                    stateCodeName = "启用"
+                    stateCode_name = "启用"
                 };
                 manager.Create(menu);
             }

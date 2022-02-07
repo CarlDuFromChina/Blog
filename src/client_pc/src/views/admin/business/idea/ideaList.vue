@@ -10,7 +10,7 @@
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta>
           <div slot="title">
-            <div style="font-size: 14px">{{ item.createdByName }}</div>
+            <div style="font-size: 14px">{{ item.created_by_name }}</div>
             <div style="font-size: 13px;">{{ item.created_at }}</div>
           </div>
           <a-avatar slot="avatar" :src="item.avatar" />
@@ -97,7 +97,7 @@ export default {
       sp.get(`api/idea/GetViewData?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
         resp => {
           const dataList = resp.DataList.map(item => {
-            item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.createdBy}`;
+            item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.created_by}`;
             return item;
           });
           this.total = resp.RecordCount;

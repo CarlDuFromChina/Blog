@@ -41,8 +41,8 @@ namespace Blog.Core.Module.Role
         /// 是否基础角色
         /// </summary>
         [DataMember]
-        [Column("is_basicname", "是否基础角色", DataType.Varchar, 100)]
-        public string is_basicName { get; set; }
+        [Column("is_basic_name", "是否基础角色", DataType.Varchar, 100)]
+        public string is_basic_name { get; set; }
         
         /// <summary>
         /// 继承角色
@@ -55,8 +55,8 @@ namespace Blog.Core.Module.Role
         /// 继承角色
         /// </summary>
         [DataMember]
-        [Column("parent_roleidname", "继承角色", DataType.Varchar, 100)]
-        public string parent_roleidName { get; set; }
+        [Column("parent_roleid_name", "继承角色", DataType.Varchar, 100)]
+        public string parent_roleid_name { get; set; }
     }
 }
 

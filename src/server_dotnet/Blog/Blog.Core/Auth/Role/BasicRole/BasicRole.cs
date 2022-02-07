@@ -69,7 +69,7 @@ namespace Blog.Core.Auth.Role.BasicRole
             {
                 var sql = @"
 SELECT * FROM sys_role_privilege
-WHERE sys_roleidName = @name
+WHERE sys_roleid_name = @name
 ";
                 var dataList = Manager.Query<sys_role_privilege>(sql, new Dictionary<string, object>() { { "@name", Role.GetDescription() } });
                 return dataList;
@@ -142,10 +142,10 @@ WHERE id NOT IN (
             {
                 id = Guid.NewGuid().ToString(),
                 objectid = entity.PrimaryKey.Value,
-                objectidName = entity.GetAttributeValue<string>("name"),
+                objectid_name = entity.GetAttributeValue<string>("name"),
                 object_type = entity.EntityName,
                 sys_roleid = role.id,
-                sys_roleidName = role.name,
+                sys_roleid_name = role.name,
                 created_by = user.Id,
                 created_by_name = user.Name,
                 created_at = DateTime.Now,

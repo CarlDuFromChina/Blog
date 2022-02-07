@@ -41,7 +41,7 @@ namespace Blog.Core.Module.SysEntity
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Column("is_sysname", "是否系统实体", DataType.Varchar, 100, false)]
-        public string is_sysName { get; set; }
+        [DataMember, Column("is_sys_name", "是否系统实体", DataType.Varchar, 100, false)]
+        public string is_sys_name { get; set; }
     }
 }

@@ -23,16 +23,16 @@ namespace Blog.WeChat.RobotMessageTask
             {
                 case EntityAction.PostCreate:
                 case EntityAction.PostUpdate:
-                    JobHelpers.RegisterJob(new RobotMessageTaskJob(obj.name, obj.robotidName, obj.runtime), obj, obj.job_state.ToTriggerState());
+                    JobHelpers.RegisterJob(new RobotMessageTaskJob(obj.name, obj.robotid_name, obj.runtime), obj, obj.job_state.ToTriggerState());
                     break;
                 case EntityAction.PreCreate:
                     var jobState = new RobotMessageTaskJob().DefaultTriggerState.ToSelectOption();
                     obj.job_state = jobState.Value.ToString();
-                    obj.job_stateName = jobState.Name;
+                    obj.job_state_name = jobState.Name;
                     break;
                 case EntityAction.PreUpdate:
                 case EntityAction.PostDelete:
-                    JobHelpers.DeleteJob(obj.name, obj.robotidName);
+                    JobHelpers.DeleteJob(obj.name, obj.robotid_name);
                     break;
                 default:
                     break;

@@ -15,7 +15,7 @@
     <a-row :gutter="24">
       <a-col :span="12">
         <a-form-model-item label="类型" prop="robot_type">
-          <sp-select v-model="data.robot_type" :options="selectDataList.robot_type" @change="item => (data.robot_typeName = item.name)"></sp-select>
+          <sp-select v-model="data.robot_type" :options="selectDataList.robot_type" @change="item => (data.robot_type_name = item.name)"></sp-select>
         </a-form-model-item>
       </a-col>
     </a-row>

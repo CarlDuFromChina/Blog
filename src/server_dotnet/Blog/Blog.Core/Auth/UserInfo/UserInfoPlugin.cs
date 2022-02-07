@@ -50,9 +50,8 @@ namespace Blog.Core.Auth.UserInfo
                 password = SystemConfig.Config.DefaultPassword,
                 user_infoid = entity.GetAttributeValue<string>("id"),
                 roleid = entity.GetAttributeValue<string>("roleid"),
-                roleidName = entity.GetAttributeValue<string>("roleidName"),
+                roleid_name = entity.GetAttributeValue<string>("roleid_name"),
                 is_lock = false,
-                is_lockName = "否"
             };
             new AuthUserService(manager).CreateData(authInfo);
         }
@@ -72,7 +71,7 @@ WHERE user_infoid = @id
             AssertUtil.CheckNull<SpException>(authInfo, "用户Id不能为空", "C37CCF94-6B27-4BF4-AF29-DBEDC9E53E5D");
             authInfo.name = entity["name"]?.ToString();
             authInfo.roleid = entity["roleid"]?.ToString();
-            authInfo.roleidName = entity["roleidName"]?.ToString();
+            authInfo.roleid_name = entity["roleid_name"]?.ToString();
             new AuthUserService(manager).UpdateData(authInfo);
         }
 
@@ -84,7 +83,7 @@ WHERE user_infoid = @id
         private void CheckUserInfo(BaseEntity entity, IEntityManager manager)
         {
             var allowUpdateRole = new SysRoleService(manager).AllowCreateOrUpdateRole(entity["roleid"].ToString());
-            AssertUtil.CheckBoolean<SpException>(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleidName"]}]", "2ABD2CBA-A7CB-4F61-841F-7CD4E6C1BD69");
+            AssertUtil.CheckBoolean<SpException>(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleid_name"]}]", "2ABD2CBA-A7CB-4F61-841F-7CD4E6C1BD69");
             AssertUtil.CheckBoolean<SpException>(entity.PrimaryKey.Value == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新", "");
         }
 

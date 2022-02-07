@@ -37,7 +37,7 @@ export default {
         if (valid) {
           const { id, name } = this.parentId();
           this.data.sys_paramGroupid = id;
-          this.data.sys_paramGroupidName = name;
+          this.data.sys_paramGroupid_name = name;
           const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
           if (sp.isNullOrEmpty(this.id)) {
             this.data.id = uuid.generate();

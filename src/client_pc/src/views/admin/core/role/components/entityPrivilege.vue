@@ -5,7 +5,7 @@
         <a-checkbox-group @change="value => onChange(value, item, index)" :default-value="values[index]" style="width: 100%">
           <a-row>
             <a-col :span="6">
-              {{ item.objectidName }}
+              {{ item.objectid_name }}
             </a-col>
             <a-col :span="6">
               <a-checkbox :value="1">

@@ -37,9 +37,9 @@ export default {
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'tags', label: '标签', type: 'tag' },
-        { prop: 'modifiedByName', label: '最后修改人' },
+        { prop: 'modified_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
-        { prop: 'createdByName', label: '创建人' },
+        { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }
       ],
