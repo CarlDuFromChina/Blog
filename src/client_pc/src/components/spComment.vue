@@ -49,7 +49,6 @@ export default {
       controllerName: 'Comments',
       showReply: false,
       value: '',
-      getAvatar: sp.getAvatar
     };
   },
   computed: {
@@ -58,6 +57,13 @@ export default {
     }
   },
   methods: {
+    getAvatar(id) {
+      if (sp.isNullOrEmpty(id)) {
+        var avatar = require('../assets/images/avatar.png');
+        return avatar;
+      }
+      return sp.getAvatar(id);
+    },
     formtDate(val) {
       return this.$moment(val).fromNow();
     },

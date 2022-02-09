@@ -18,8 +18,10 @@ function getDownloadUrl(value, isUrl = true) {
 }
 
 function getAvatar(id) {
+  id = id || getUserId();
   if (sp.isNullOrEmpty(id)) {
-    return `${getServerUrl()}api/System/GetAvatar?id=${getUserId()}`;
+    var avatar = require('../assets/images/avatar.png');
+    return avatar;
   }
   return `${getServerUrl()}api/System/GetAvatar?id=${id}`;
 }

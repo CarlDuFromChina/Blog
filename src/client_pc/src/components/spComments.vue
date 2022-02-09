@@ -123,11 +123,7 @@ export default {
       return this.$moment(val).fromNow();
     },
     getAvatar() {
-      const userId = sp.getUserId();
-      if (sp.isNullOrEmpty(userId)) {
-        return 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-      }
-      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
+      return sp.getAvatar();
     }
   }
 };
