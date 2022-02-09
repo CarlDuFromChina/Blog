@@ -42,7 +42,7 @@ namespace Blog.WeChat.WeChatNews
         /// 上传时间
         /// </summary>
         [DataMember]
-        [Column("update_time", "上传时间", DataType.Timestamp)]
+        [Column("update_time", "上传时间", DataType.Int4)]
         public long? update_time { get; set; }
 
         /// <summary>

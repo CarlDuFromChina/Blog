@@ -18,7 +18,7 @@ namespace Blog.Core.Store.SysFile
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column("name", "名称", DataType.Varchar, 500)]
         public string name { get; set; }
 
         /// <summary>
