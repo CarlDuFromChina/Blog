@@ -12,7 +12,7 @@ function getDownloadUrl(value, isUrl = true) {
   }
   const url = isUrl ? value : `/api/SysFile/Download?objectId=${value}`;
   if (url.charAt(0) === '/') {
-    return `${getServerUrl().trimEnd('/')}${url}`;
+    return `${getServerUrl().trimLast('/')}${url}`;
   }
   return `${getServerUrl()}${url}`;
 }

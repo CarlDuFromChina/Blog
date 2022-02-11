@@ -7,8 +7,8 @@
       <sp-menu-item style="float:right;" v-show="isLoggedIn" disableHover>
         <a-dropdown>
           <a-menu slot="overlay">
-            <a-menu-item key="2" @click="goBg" v-show="showAdmin"><a-icon type="appstore" />后台</a-menu-item>
-            <a-menu-item key="3" @click="openUserEdit"><a-icon type="setting" />设置</a-menu-item>
+            <a-menu-item key="3" @click="openUserEdit"><a-icon type="setting" />个人中心</a-menu-item>
+            <a-menu-item key="2" @click="goBg" v-show="showAdmin"><a-icon type="appstore" />后台管理</a-menu-item>
             <a-menu-item key="4" @click="logout"><a-icon type="logout" />退出</a-menu-item>
           </a-menu>
           <a-avatar :src="getAvatar()" shape="circle" style="cursor: pointer" />

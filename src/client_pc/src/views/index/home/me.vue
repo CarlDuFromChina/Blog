@@ -1,5 +1,5 @@
 <template>
-  <sp-card v-if="showUser" title="关于我" :loading="loading">
+  <sp-card v-if="showUser" :loading="loading">
     <div class="about">
       <img :src="lifePhoto" alt="" />
       <p>{{ name }}</p>

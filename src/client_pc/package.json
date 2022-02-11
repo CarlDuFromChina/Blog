@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@sixpence/vue-waterfall-easy": "^2.4.5",
-    "@sixpence/web-core": "^1.0.21",
+    "@sixpence/web-core": "^1.0.22",
     "ant-design-vue": "1.7.6",
     "core-js": "^3.6.5",
     "echarts": "5.0.2",

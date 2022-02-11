@@ -1017,10 +1017,10 @@
   resolved "https://registry.npmmirror.com/@sixpence/vue-waterfall-easy/download/@sixpence/vue-waterfall-easy-2.4.5.tgz#4e3aa78e8e073055133a44c82217c797dbf65115"
   integrity sha512-0Qu2mnSOKO97s/pylTSxAvwSnxDr/EPNk1qamcn4QjpEc5ZA8BOrEDLdlVldQRcyA0favcqUynucnLUGcMOh/g==
 
-"@sixpence/web-core@^1.0.21":
-  version "1.0.21"
-  resolved "https://registry.npmmirror.com/@sixpence/web-core/download/@sixpence/web-core-1.0.21.tgz#53ec25244a6eeb29c66fd14dbee3b2829b2bdbc3"
-  integrity sha512-angvS1AqS96fn3CyhKZz3aUAn4wao9HPrYwmLOr1FwbSYrukhGVuHip0W0KAAvki39cCYFAHclziqh5NbvF2aA==
+"@sixpence/web-core@^1.0.22":
+  version "1.0.22"
+  resolved "https://registry.yarnpkg.com/@sixpence/web-core/-/web-core-1.0.22.tgz#8ee07e1cbb03b8bb498b27dd3fd470f803b4ec07"
+  integrity sha512-F2Zs+A3bXBpXf6jNBEk4wmQg7opITiWH+OBQtxyxTbEdZUYEEuSHItK2lK1VfTRpaDF+BzWJfndk+sn8apMzLg==
   dependencies:
     axios "^0.21.1"
     crypto-js "^4.0.0"

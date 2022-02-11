@@ -74,8 +74,8 @@ export default {
           this.data = this.data.concat(
             resp.DataList.map(item => {
               return {
-                src: this.baseUrl.trimEnd('/') + item.local_url,
-                href: this.baseUrl.trimEnd('/') + item.local_url,
+                src: this.baseUrl.trimLast('/') + item.local_url,
+                href: this.baseUrl.trimLast('/') + item.local_url,
                 info: item.name
               };
             })
