@@ -39,7 +39,7 @@ FROM
 	sys_file 
 WHERE
 	hash_code = @hash_code 
-	AND sys_fileid <> @Id";
+	AND id <> @Id";
                         var paramList = new Dictionary<string, object>()
                         {
                             { "@hash_code", entity.GetAttributeValue<string>("hash_code") },

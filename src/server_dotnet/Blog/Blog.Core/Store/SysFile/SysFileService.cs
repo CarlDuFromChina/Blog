@@ -55,7 +55,7 @@ SELECT
 	file_type,
 	created_at,
 	created_by_name,
-	concat('{GetDownloadUrl("")}', sys_fileid) AS downloadUrl
+	concat('{GetDownloadUrl("")}', id) AS downloadUrl
 FROM
 	sys_file
 ",

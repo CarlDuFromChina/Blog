@@ -208,7 +208,7 @@ export default {
             uid: '-1',
             name: image.name,
             status: 'done',
-            url: sp.getDownloadUrl(image.sys_fileId, false)
+            url: sp.getDownloadUrl(image.id, false)
           }
         ];
       }
@@ -219,7 +219,7 @@ export default {
             uid: '-1',
             name: image.name,
             status: 'done',
-            url: sp.getDownloadUrl(image.sys_fileId, false)
+            url: sp.getDownloadUrl(image.id, false)
           }
         ];
       }
