@@ -36,16 +36,16 @@
             <a-card>
               <a-skeleton :loading="loading">
                 <div class="block">
+                  <div class="bodyWrapper-title">{{ data.title }}</div>
                   <div style="display: flex">
                     <a-avatar :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
-                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ data.created_at | moment('YYYY-MM-DD HH:mm') }}</div>
+                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">最后修改时间：{{ data.updated_at | moment('YYYY-MM-DD HH:mm') }}</div>
                     </div>
                   </div>
                 </div>
                 <img v-if="data.big_surface_url" :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
-                <div class="bodyWrapper-title">{{ data.title }}</div>
                 <div id="blog_content" class="bodyWrapper-content">
                   <article v-highlight v-html="formatterContent" class="markdown-body"></article>
                 </div>
@@ -62,27 +62,22 @@
           </a-layout-sider>
           <a-layout-sider width="30%" style="margin-left: 20px" theme="light">
             <a-card class="block">
-              <div class="block-title">
-                <span>关于作者</span>
-              </div>
               <div class="block-body">
                 <a-skeleton :loading="loading">
-                  <a style="display: flex">
-                    <a-avatar :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
+                  <a class="block-author">
+                    <a-avatar :size="42" :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
                       <div style="color: #72777b; font-size: 12px; padding-top: 5px">{{ user.introduction }}</div>
                     </div>
                   </a>
-                  <div id="block-content" style="padding-top: 20px">
-                    <sp-icon name="sp-blog-zan" :size="30" style="padding-right: 10px"></sp-icon>
-                    <span>获得点赞</span>
-                    <span>{{ data.upvote_times || 0 }}</span>
+                  <div id="block-content" style="padding-top: 10px">
+                    <sp-icon name="sp-blog-zan" :size="25" style="padding-right: 10px;"></sp-icon>
+                    <span>获得点赞 {{ data.upvote_times || 0 }}</span>
                   </div>
                   <div class="block-content">
-                    <sp-icon name="sp-blog-view" :size="30" style="padding-right: 10px"></sp-icon>
-                    <span>文章被阅读</span>
-                    <span>{{ data.reading_times || 0 }}</span>
+                    <sp-icon name="sp-blog-view" :size="25" style="padding-right: 10px;"></sp-icon>
+                    <span>文章被阅读 {{ data.reading_times || 0 }}</span>
                   </div>
                 </a-skeleton>
               </div>
@@ -337,6 +332,7 @@ export default {
         }
         .bodyWrapper-title {
           font-size: 2.5rem;
+          padding-bottom: 20px;
           text-align: left;
           font-weight: 600;
           color: #000000d9;
@@ -361,7 +357,7 @@ export default {
 }
 
 .block {
-  width: 300px;
+  width: 100%;
   margin-bottom: 20px;
   border-radius: 6px;
 
@@ -381,12 +377,20 @@ export default {
   }
   .block-body {
     padding: 10px 20px;
+    .block-author {
+      display: flex;
+      padding: 15px 0;
+      border-bottom: 2px solid hsla(0, 0%, 58.8%, 0.1);
+    }
     .block-content {
       padding-bottom: 5px;
       display: flex;
       align-items: center;
       > span {
         padding-right: 5px;
+      }
+      > .svg-icon {
+        display: flex;
       }
     }
   }
