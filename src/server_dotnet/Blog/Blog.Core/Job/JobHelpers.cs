@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sixpence.Common;
 using Sixpence.Common.IoC;
+using System.Collections.Specialized;
+using Sixpence.ORM.Driver;
 
 namespace Blog.Core.Job
 {
@@ -17,8 +19,57 @@ namespace Blog.Core.Job
     /// </summary>
     public static class JobHelpers
     {
-        static IScheduler sched = new StdSchedulerFactory().GetScheduler().Result;
-        static JobHelpers() { }
+        static IScheduler sched;
+
+        static JobHelpers()
+        {
+            var config = Sixpence.ORM.DBSourceConfig.Config;
+            var properties = new NameValueCollection()
+            {
+                { "quartz.scheduler.instanceName", "MyClusteredScheduler"},
+                { "quartz.scheduler.instanceId", "AUTO"},
+                { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
+                { "quartz.threadPool.type", "Quartz.Simpl.DefaultThreadPool, Quartz" },
+                { "quartz.threadPool.threadCount", "25" },
+                { "quartz.threadPool.threadPriority", "5" },
+                { "quartz.jobStore.driverDelegateType", GetDelegateType() },
+                { "quartz.jobStore.tablePrefix", "QRTZ_" },
+                { "quartz.jobStore.dataSource", "default" },
+                { "quartz.dataSource.default.connectionString", config.ConnectionString },
+                { "quartz.dataSource.default.provider", GetDbBDriver() },
+                { "quartz.jobStore.useProperties", "true" },
+                { "quartz.serializer.type", "json" }
+            };
+            sched = new StdSchedulerFactory(properties).GetScheduler().Result;
+        }
+
+        private static string GetDbBDriver()
+        {
+            var dbType = Sixpence.ORM.DBSourceConfig.Config.DriverType.GetEnum<DriverType>();
+            switch (dbType)
+            {
+                case DriverType.Postgresql:
+                    return "Npgsql";
+                case DriverType.Mysql:
+                    return "MySql";
+                default:
+                    return null;
+            }
+        }
+
+        private static string GetDelegateType()
+        {
+            var dbType = Sixpence.ORM.DBSourceConfig.Config.DriverType.GetEnum<DriverType>();
+            switch (dbType)
+            {
+                case DriverType.Postgresql:
+                    return "Quartz.Impl.AdoJobStore.PostgreSQLDelegate, Quartz";
+                case DriverType.Mysql:
+                    return "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz";
+                default:
+                    return null;
+            }
+        }
 
         /// <summary>
         /// 注册作业

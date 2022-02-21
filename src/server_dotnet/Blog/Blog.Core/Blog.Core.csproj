@@ -25,6 +25,7 @@
     <None Remove="version\2.3\2021091301-删除消息提醒表.sql" />
     <None Remove="version\2.4\2021101101-新增文章类型选项集.sql" />
     <None Remove="version\2.4\2021101201-初始化邮件类型字段.sql" />
+    <None Remove="version\2.5\2022021601-quartz.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +68,9 @@
     <Content Include="version\2.4\2021101201-初始化邮件类型字段.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="version\2.5\2022021601-quartz.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -92,6 +96,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql" Version="6.0.2" />
     <PackageReference Include="Quartz" Version="3.3.2" />
+    <PackageReference Include="Quartz.Serialization.Json" Version="3.3.2" />
     <PackageReference Include="Sixpence.Common" Version="1.0.1" />
     <PackageReference Include="Sixpence.ORM" Version="2.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
