@@ -24,6 +24,7 @@ namespace Blog.Core.Job
         static JobHelpers()
         {
             var config = Sixpence.ORM.DBSourceConfig.Config;
+            var driverType = config.DriverType.GetEnum<DriverType>();
             var properties = new NameValueCollection()
             {
                 { "quartz.scheduler.instanceName", "MyClusteredScheduler"},
@@ -33,44 +34,17 @@ namespace Blog.Core.Job
                 { "quartz.threadPool.threadPriority", "5" },
                 { "quartz.jobStore.misfireThreshold", "60000" },
                 { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
-                { "quartz.jobStore.driverDelegateType", GetDelegateType() },
+                { "quartz.jobStore.driverDelegateType", JobExtension.GetDelegateType(driverType) },
                 { "quartz.jobStore.tablePrefix", "QRTZ_" },
                 { "quartz.jobStore.dataSource", "myDS" },
                 { "quartz.jobStore.useProperties", "false" },
                 { "quartz.dataSource.myDS.connectionString", config.ConnectionString },
-                { "quartz.dataSource.myDS.provider", GetDbBDriver() },
+                { "quartz.dataSource.myDS.provider", JobExtension.GetDbBDriver(driverType) },
                 { "quartz.serializer.type", "json" }
             };
+
             var factory = new StdSchedulerFactory(properties);
             sched = factory.GetScheduler().Result;
-        }
-
-        private static string GetDbBDriver()
-        {
-            var dbType = Sixpence.ORM.DBSourceConfig.Config.DriverType.GetEnum<DriverType>();
-            switch (dbType)
-            {
-                case DriverType.Postgresql:
-                    return "Npgsql";
-                case DriverType.Mysql:
-                    return "MySql";
-                default:
-                    return null;
-            }
-        }
-
-        private static string GetDelegateType()
-        {
-            var dbType = Sixpence.ORM.DBSourceConfig.Config.DriverType.GetEnum<DriverType>();
-            switch (dbType)
-            {
-                case DriverType.Postgresql:
-                    return "Quartz.Impl.AdoJobStore.PostgreSQLDelegate, Quartz";
-                case DriverType.Mysql:
-                    return "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz";
-                default:
-                    return null;
-            }
         }
 
         /// <summary>

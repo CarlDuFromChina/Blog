@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Sixpence.Common;
 
 using Sixpence.Common.IoC;
+using Sixpence.ORM.Driver;
+using Sixpence.ORM;
 
 namespace Blog.Core.Job
 {
@@ -33,6 +35,32 @@ namespace Blog.Core.Job
                 case TriggerState.None:
                 default:
                     return new SelectOption() { Name = "不存在", Value = "-1" };
+            }
+        }
+
+        public static string GetDelegateType(DriverType dbType)
+        {
+            switch (dbType)
+            {
+                case DriverType.Postgresql:
+                    return "Quartz.Impl.AdoJobStore.PostgreSQLDelegate, Quartz";
+                case DriverType.Mysql:
+                    return "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz";
+                default:
+                    return null;
+            }
+        }
+
+        public static string GetDbBDriver(DriverType dbType)
+        {
+            switch (dbType)
+            {
+                case DriverType.Postgresql:
+                    return "Npgsql";
+                case DriverType.Mysql:
+                    return "MySql";
+                default:
+                    return null;
             }
         }
 
