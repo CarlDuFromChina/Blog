@@ -66,20 +66,8 @@ namespace Blog.Core.Job
                 UserIdentityUtil.SetCurrentUser(user);
                 try
                 {
-                    manager.ExecuteTransaction(() =>
-                    {
-                          Executing(context);
-                    // 更新下次执行时间
-                    var nextTime = JobHelpers.GetJobNextTime(Name);
-                          var nextTimeSql = "";
-                          var paramList = new Dictionary<string, object>() {
-                            { "@time", DateTime.Now },
-                            { "@name", Name }
-                        };
-                          paramList.Add("@nextTime", nextTime.UtcDateTime);
-                          nextTimeSql = ", nextruntime = @nextTime";
-                          manager.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
-                      });
+                    // Job 开启事务
+                    manager.ExecuteTransaction(() => Executing(context));
                 }
                 catch (Exception e)
                 {
