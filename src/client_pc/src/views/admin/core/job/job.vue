@@ -6,15 +6,24 @@
     :columns="columns"
     :use-pagination="false"
     :use-header-click="false"
-  ></sp-list>
+  >
+    <a-modal v-model="editVisible" title="记录" width="60%" okText="确认" cancelText="取消">
+      <job-history ref="history"></job-history>
+    </a-modal>
+  </sp-list>
 </template>
 
 <script>
+import jobHistory from "./jobHistory.vue";
+
 export default {
   name: 'job',
+  components: { jobHistory },
   data() {
     return {
       controllerName: 'job',
+      editVisible: false,
+      searchList: [],
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'status', label: '状态' },
@@ -29,7 +38,8 @@ export default {
           actions: [
             { name: '运行', size: 'small', method: this.start, type: 'primary' },
             { name: '暂停', size: 'small', method: this.pause, type: 'danger' },
-            { name: '继续', size: 'small', method: this.resume }
+            { name: '继续', size: 'small', method: this.resume },
+            { name: '查看', size: 'small', method: (row) => this.showDetail(row) }
           ]
         }
       ]
@@ -84,6 +94,14 @@ export default {
           this.$message.error(error);
           return Promise.reject;
         });
+    },
+    async showDetail(row) {
+      this.editVisible = true;
+      await this.$nextTick();
+      const historyRef = this.$refs.history;
+      historyRef.searchList = [{ Name: 'job_name', Value: row.name, Type: 0 }];
+      await this.$nextTick();
+      historyRef.loadData();
     }
   }
 };

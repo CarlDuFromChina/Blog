@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Sixpence.Common.Current;
 using Sixpence.ORM.EntityManager;
+using Blog.Core.Module.JobHisotry;
 
 namespace Blog.Core.Job
 {
@@ -64,15 +65,28 @@ namespace Blog.Core.Job
                 stopWatch.Start();
                 var manager = EntityManagerFactory.GetManager();
                 UserIdentityUtil.SetCurrentUser(user);
+                var history = new job_history()
+                {
+                    id = Guid.NewGuid().ToString(),
+                    job_name = this.Name,
+                    start_time = DateTime.Now,
+                    status = "成功"
+                };
                 try
                 {
-                    // Job 开启事务
-                    manager.ExecuteTransaction(() => Executing(context));
+                    Executing(context);
                 }
                 catch (Exception e)
                 {
+                    history.status = "失败";
+                    history.error_msg = e.Message;
                     Logger.Error($"作业：{Name}执行异常", e);
                     throw e;
+                }
+                finally
+                {
+                    history.end_time = DateTime.Now;
+                    manager.Create(history);
                 }
                 stopWatch.Stop();
                 Logger.Debug($"作业：{Name} 执行结束，耗时{stopWatch.ElapsedMilliseconds}ms");

@@ -68,6 +68,7 @@
       </slot>
     </a-modal>
     <!-- 编辑页 -->
+    <slot />
   </div>
 </template>
 
@@ -133,6 +134,11 @@ export default {
     // 导出
     exportData: {
       type: Function
+    },
+    // 自动加载
+    autoLoad: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -169,7 +175,7 @@ export default {
   },
   mounted() {
     // 标准表格则加载
-    if (!this.$slots.body) {
+    if (!this.$slots.body && this.autoLoad) {
       this.loadData();
     }
   },
