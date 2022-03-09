@@ -8,18 +8,18 @@ function resolve(dir) {
 var isProd = process.env.NODE_ENV === 'production';
 const cdn = {
   css: [
-    'https://cdn.bootcdn.net/ajax/libs/ant-design-vue/1.7.6/antd.min.css'
+    'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.css'
   ],
   js: [
-    'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/locale/zh-cn.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/marked/2.1.3/marked.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.min.js',
+    'https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js',
+    'https://cdn.jsdelivr.net/npm/moment@2.29.1/dist/locale/zh-cn.js',
+    'https://cdn.jsdelivr.net/npm/marked@2.1.3/marked.min.js',
+    'https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js',
     'https://cdn.jsdelivr.net/npm/wangeditor@4.7.8/dist/wangEditor.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.2/vue-router.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/vuex/3.6.2/vuex.min.js',
-    'https://cdn.bootcdn.net/ajax/libs/ant-design-vue/1.7.6/antd.min.js'
+    'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
+    'https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js',
+    'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
+    'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js',
   ],
   externals: {
     moment: 'moment',
