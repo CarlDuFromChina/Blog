@@ -3,7 +3,6 @@
     ref="list"
     :controller-name="controllerName"
     :columns="columns"
-    :use-pagination="false"
     :use-header-click="false"
     :customApi="customApi"
     :autoLoad="false"
