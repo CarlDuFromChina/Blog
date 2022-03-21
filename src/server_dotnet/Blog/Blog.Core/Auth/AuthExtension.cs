@@ -1,22 +1,19 @@
-﻿using Blog.Core.Auth.Role;
-using Blog.Core.Config;
+﻿using Blog.Core.Config;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Core
+namespace Blog.Core.Auth
 {
-    public static class AuthorizationSetup
+    internal static class AuthExtension
     {
-        public static void AddAuthorizationSetup(this IServiceCollection services)
+        public static void AddJwt(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 

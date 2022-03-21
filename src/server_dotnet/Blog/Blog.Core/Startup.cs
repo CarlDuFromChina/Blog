@@ -1,8 +1,7 @@
-using Blog.Core.Config;
+using Blog.Core.Auth;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
 using Blog.Core.Profiles;
-using Blog.Core.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Sixpence.Common;
 using Sixpence.ORM.Extensions;
@@ -23,8 +23,6 @@ namespace Blog.Core
 {
     public class Startup
     {
-        private readonly SwaggerConfig SwaggerConfig = SwaggerConfig.Config;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -71,11 +69,15 @@ namespace Blog.Core
             });
 
             // 添加Jwt认证服务
-            services.AddAuthorizationSetup();
+            services.AddJwt();
 
             // 添加Swagger
-            if (SwaggerConfig.Enable)
-                services.AddSwagger();
+#if DEBUG
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "接口文档", Version = "v1" });
+            });
+#endif
 
             // 添加AutoMapper
             services.AddAutoMapper(MapperHelper.MapType());
@@ -109,15 +111,14 @@ namespace Blog.Core
 
             app.UseAuthorization();
 
-            if (SwaggerConfig.Enable)
+#if DEBUG
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint($"{SwaggerConfig.Version}/swagger.json", SwaggerConfig.Title);
-                    c.RoutePrefix = SwaggerConfig.RoutePrefix;
-                });
-            }
+                c.SwaggerEndpoint($"v1/swagger.json", "接口文档");
+                c.RoutePrefix = "Swagger";
+            });
+#endif
 
             app.UseEndpoints(endpoints =>
             {
