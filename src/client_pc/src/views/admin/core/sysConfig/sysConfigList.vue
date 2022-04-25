@@ -14,7 +14,7 @@ export default {
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'code', label: '编码' },
-        { prop: 'value', label: '值' },
+        { prop: 'value', label: '值', ellipsis: true },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'modified_by_name', label: '最后修改人' },

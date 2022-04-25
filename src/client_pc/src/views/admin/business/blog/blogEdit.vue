@@ -3,7 +3,8 @@
     <div class="blog-header">
       <a-button icon="rollback" @click="goBack">返回</a-button>
       <a-button icon="check" type="primary" @click="editVisible = true">提交</a-button>
-      <a-button icon="sync" type="primary" @click="sync2Wechat()" :disabled="!id">同步到微信</a-button>
+      <a-button icon="sync" type="primary" @click="syncBlog('wechat')" :disabled="!id">同步到微信</a-button>
+      <a-button icon="sync" type="primary" @click="syncBlog('juejin')" :disabled="!id">同步到掘金</a-button>
       <a-popover v-if="showAutoSave">
         <template slot="content">
           <p>{{ saveStatus.text }}</p>
@@ -272,18 +273,18 @@ export default {
     changeTags(val) {
       this.tags = val;
     },
-    sync2Wechat() {
+    syncBlog(destination) {
       if (sp.isNullOrEmpty(this.id)) {
-        this.$message.error('请先保存博客，再同步到微信图文素材');
+        this.$message.error('请先保存博客，再进行同步');
         return;
       }
       this.$confirm({
-        title: '微信同步',
-        content: '是否同步到微信图文素材库?',
+        title: '博客同步',
+        content: '是否同步博客到第三方?',
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/Blog/SyncToWeChat?id=${this.data.id}`)
+          sp.get(`api/Blog/SyncBlog?id=${this.data.id}&destination=${destination}`)
             .then(() => {
               this.$message.success('同步成功');
             })

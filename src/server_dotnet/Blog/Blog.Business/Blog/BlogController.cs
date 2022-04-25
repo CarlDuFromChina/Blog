@@ -1,6 +1,4 @@
-﻿using Blog.Core.Auth;
-using Sixpence.ORM.Entity;
-using Blog.Core.WebApi;
+﻿using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Sixpence.ORM.Models;
-using Blog.Business.Blog.Sync;
 using Sixpence.Common.Utils;
 using Blog.Core.Auth.UserInfo;
 
@@ -77,10 +74,15 @@ namespace Blog.Business.Blog
             return new BlogService().Upvote(id);
         }
 
+        /// <summary>
+        /// 同步博客
+        /// </summary>
+        /// <param name="id">博客id</param>
+        /// <param name="destination">目标系统，例如：Juejin、WeChat</param>
         [HttpGet]
-        public void SyncToWeChat(string id)
+        public void SyncBlog(string id, string destination)
         {
-            new SyncBlog2WeChat().Execute(id);
+            new BlogService().SyncBlog(id, destination);
         }
 
         /// <summary>

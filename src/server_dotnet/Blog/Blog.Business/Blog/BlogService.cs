@@ -17,6 +17,8 @@ using System.IO;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Module.SysConfig;
 using Sixpence.ORM.EntityManager;
+using Sixpence.Common.IoC;
+using Blog.Business.Blog.Sync;
 
 namespace Blog.Business.Blog
 {
@@ -211,6 +213,16 @@ GROUP BY to_char(created_at, 'YYYY-MM-DD')
                 return new UserInfoService(Manager).GetDataByCode(config.value);
             }
             return null;
+        }
+
+        /// <summary>
+        /// 同步博客到第三方系统
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="destination"></param>
+        public void SyncBlog(string id, string destination)
+        {
+            ServiceContainer.Resolve<ISyncBlog>((name) => name.Contains(destination, StringComparison.OrdinalIgnoreCase))?.Execute(id);
         }
     }
 }

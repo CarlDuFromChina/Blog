@@ -186,7 +186,8 @@ export default {
         const column = {
           title: item.label,
           dataIndex: item.prop,
-          key: item.prop
+          key: item.prop,
+          ellipsis: item.ellipsis
         };
         if (item.width) {
           column.width = item.width;
