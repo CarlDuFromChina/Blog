@@ -131,7 +131,7 @@ export default {
     },
     readBlog(item) {
       const { href } = this.$router.resolve({
-        name: 'blogReadonly',
+        name: 'post',
         params: { id: item.id }
       });
       window.open(href, '_blank');

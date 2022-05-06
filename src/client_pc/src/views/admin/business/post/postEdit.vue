@@ -121,7 +121,7 @@ import draft from './draft';
 import { htmlToText } from 'html-to-text';
 
 export default {
-  name: 'blogEdit',
+  name: 'post-edit',
   mixins: [edit, draft, select],
   data() {
     return {
@@ -302,7 +302,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import 'blog.less';
+@import 'post.less';
 /deep/ .v-note-wrapper {
   z-index: 100;
 }

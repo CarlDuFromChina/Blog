@@ -19,7 +19,7 @@ export default {
   methods: {
     goEdit(item) {
       this.$router.push({
-        name: 'blogEdit',
+        name: 'postEdit',
         params: {
           draftId: item.blogId
         }

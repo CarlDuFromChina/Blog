@@ -26,6 +26,7 @@
     <None Remove="version\2.5\2021112701-删除友人博客实体.sql" />
     <None Remove="version\2.5\2021121501-新增首页用户系统参数 - 复制.sql" />
     <None Remove="version\2.5\2022042501-新增掘金Cookie系统参数.sql" />
+    <None Remove="version\2.5\2022050601-更新菜单博客路由.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.5\2021121501-新增首页用户系统参数 - 复制.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\2.5\2022050601-更新菜单博客路由.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="version\2.5\2022042501-新增掘金Cookie系统参数.sql">

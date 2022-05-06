@@ -5,9 +5,9 @@ import shortUrl from './shortUrl';
 
 export default [
   {
-    path: '/blog/:id',
-    name: 'blogReadonly',
-    component: () => import('./admin/business/blog/blogReadonly')
+    path: '/post/:id',
+    name: 'post',
+    component: () => import('./admin/business/post/postReadonly')
   },
   {
     path: '/readingNote/:id',

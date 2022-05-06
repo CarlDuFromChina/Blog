@@ -169,7 +169,7 @@ const tocObj = {
 };
 
 export default {
-  name: 'blogReadonly',
+  name: 'post',
   components: { blogMenu },
   data() {
     return {

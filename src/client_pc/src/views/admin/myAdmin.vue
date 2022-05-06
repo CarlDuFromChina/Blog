@@ -48,7 +48,7 @@ export default {
     },
     writeBlog() {
       this.$router.push({
-        name: 'blogEdit'
+        name: 'postEdit'
       });
     },
     writeIdea() {

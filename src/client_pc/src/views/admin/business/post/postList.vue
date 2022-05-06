@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import blogEdit from './blogEdit';
+import postEdit from './postEdit';
 
 export default {
   name: 'blog-list',
   data() {
     return {
       controllerName: 'Blog',
-      editComponent: blogEdit,
+      editComponent: postEdit,
       operations: ['new', 'delete', 'search', 'more', 'export'],
       columns: [
         { prop: 'title', label: '标题' },
@@ -105,14 +105,14 @@ export default {
     },
     goReadonly(item) {
       const { href } = this.$router.resolve({
-        name: 'blogReadonly',
+        name: 'post',
         params: { id: item.id }
       });
       window.open(href, '_blank');
     },
     goEdit(item) {
       this.$router.push({
-        name: 'blogEdit',
+        name: 'postEdit',
         params: { id: (item || {}).id || '' }
       });
     },
