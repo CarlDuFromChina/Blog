@@ -25,8 +25,10 @@
         <a-form-model-item>
           <a-button style="width: 100%" type="primary" @click="signIn" :loading="loading">登录</a-button>
         </a-form-model-item>
-        <a-form-model-item :style="{ textAlign: 'left' }">
-          <a-icon type="github" @click="githubLogin" :style="{ fontSize: '16px' }" />
+        <a-form-model-item :style="{ textAlign: 'center' }">
+          <span style="color: #999aaa">其他登录方式</span><br>
+          <a-icon type="github" @click="githubLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
+          <a-icon type="qq" @click="qqLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -105,11 +107,27 @@ export default {
       signupVisible: false,
       isLoginFailed: false,
       isPassCheck: false,
-      forgetVisible: false
+      forgetVisible: false,
+      github: {}
     };
   },
   created() {
     this.test();
+  },
+  mounted() {
+    var { code } = this.$route.query;
+    if (!sp.isNullOrEmpty(code)) {
+      sp.post(`/api/github/oauth?code=${code}`).then(resp => {
+        if (resp.result) {
+          saveAuth(this.$store, resp);
+          this.$router.push({ name: 'index' });
+          this.$message.success(resp.message);
+        } else {
+          this.$message.error(resp.message);
+        }
+      });
+    }
+    sp.get('/api/github/config').then(resp => this.github = resp);
   },
   methods: {
     generateCode() {
@@ -254,10 +272,12 @@ export default {
         this.signupLoading = false;
       }
     },
+    qqLogin() {
+      this.$message.info('敬请期待！');
+    },
     githubLogin() {
-      var clientId = '369e8edec754599afa75';
-      var url = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
-      window.opener.location.href = url;
+      var url = `https://github.com/login/oauth/authorize?client_id=${this.github.client_id}`;
+      window.location.href = url;
     }
   }
 };

@@ -9,6 +9,7 @@ import 'nprogress/nprogress.css';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [{
     // 顶层
     path: '/',

@@ -103,5 +103,5 @@ async function refreshToken() {
 function reLogin() {
   store.commit('clearAuth');
   store.commit('changeLogin', false); // 修改登录状态
-  location.href = '/#/login';
+  location.href = '/login';
 }

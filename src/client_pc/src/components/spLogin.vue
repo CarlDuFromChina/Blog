@@ -2,7 +2,7 @@
   <a-modal v-model="editVisible" title="登录" width="300px" :footer="false">
     <a-form-model ref="form" :model="data" :rules="rules">
       <a-form-model-item prop="code">
-        <a-input v-model="data.code" placeholder="邮箱"></a-input>
+        <a-input v-model="data.code" placeholder="邮箱，如果邮箱不存在即注册"></a-input>
       </a-form-model-item>
       <a-form-model-item prop="password">
         <a-input v-model="data.password" placeholder="密码" type="password" @keyup.enter.native="login"></a-input>
@@ -11,7 +11,11 @@
     <a-button type="primary" block @click="login">
       登录
     </a-button>
-    <a-alert style="margin-top: 8px" message="如果邮箱不存在即注册" type="info" banner closable />
+    <a-form-model-item :style="{ textAlign: 'center', paddingTop: '20px' }">
+      <span style="color: #999aaa">其他登录方式</span><br>
+      <a-icon type="github" @click="githubLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
+      <a-icon type="qq" @click="qqLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
+    </a-form-model-item>
   </a-modal>
 </template>
 
@@ -36,6 +40,15 @@ export default {
     };
   },
   methods: {
+    githubLogin() {
+      sp.get('/api/github/config').then(resp => {
+        var url = `https://github.com/login/oauth/authorize?client_id=${resp.client_id}`;
+        window.location.href = url;
+      })
+    },
+    qqLogin() {
+      this.$message.info('敬请期待！');
+    },
     login() {
       this.$refs.form.validate().then(async () => {
         try {
@@ -70,4 +83,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+/deep/ .ant-modal-body {
+  padding: 24px 24px 0 24px;
+}
+</style>

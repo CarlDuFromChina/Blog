@@ -11,7 +11,7 @@
         <a-list-item-meta v-else-if="view === 'comment'" :description="item.data.comment">
           <span slot="title"
             >{{ item.created_by_name }} 评论了你的文章
-            <a :href="`#/blog/${item.data.objectId}`" target="_blank">《{{ item.data.object_title }}》</a></span
+            <a :href="`/post/${item.data.objectId}`" target="_blank">《{{ item.data.object_title }}》</a></span
           >
           <a-avatar slot="avatar" :src="item.avatar" />
         </a-list-item-meta>
@@ -88,7 +88,7 @@ export default {
       })
     },
     openLink(item) {
-      window.open(`#/blog/${item.data.objectId}`, '_blank');
+      window.open(`/post/${item.data.objectId}`, '_blank');
     }
   }
 };

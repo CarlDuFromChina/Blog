@@ -1,10 +1,15 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
+using Blog.Core.Config;
 using Blog.Core.Module.Github.Model;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysConfig;
+using Blog.Core.Store;
+using Blog.Core.Store.SysFile;
 using log4net;
 using Newtonsoft.Json;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 using Sixpence.Common.Logging;
 using Sixpence.Common.Utils;
 using Sixpence.ORM.EntityManager;
@@ -33,8 +38,9 @@ namespace Blog.Core.Module.Github
 
         public GithubConfig GetConfig()
         {
-            var clientId = MemoryCacheUtil.GetOrAddCacheItem("github_oauth_client_id", () => new SysConfigService().GetValue("github_oauto_client_id").ToString());
-            var clientSecret = MemoryCacheUtil.GetOrAddCacheItem("github_oauth_client_secret", () => new SysConfigService(Manager).GetValue("ClientId").ToString());
+            var configService = new SysConfigService(Manager);
+            var clientId = configService.GetValue("github_oauth_client_id")?.ToString();
+            var clientSecret = configService.GetValue("github_oauth_client_secret")?.ToString();
             return new GithubConfig()
             {
                 client_id = clientId,
@@ -62,7 +68,14 @@ namespace Blog.Core.Module.Github
             Logger.Debug("GetAccessToken 请求入参：" + paramString);
             var response = HttpUtil.Post("https://github.com/login/oauth/access_token", paramString);
             Logger.Debug("GetAccessToken 返回参数：" + response);
-            var data = JsonConvert.DeserializeObject<GithubAccessToken>(response);
+            var data = new GithubAccessToken();
+            var arr = response.Split("&");
+            foreach (var item in arr)
+            {
+                var key = item.Split("=")[0];
+                var value = item.Split("=")[1];
+                data.GetType().GetProperty(key).SetValue(data, value);
+            }
             return data;
         }
 
@@ -73,12 +86,9 @@ namespace Blog.Core.Module.Github
         /// <returns></returns>
         public GithubUserInfo GetUserInfo(GithubAccessToken model)
         {
-            var headers = new Dictionary<string, string>
-            {
-                { "token_type",  model.token_type },
-                { "scope", model.scope },
-                { "access_token", model.access_token }
-            };
+            var token = $"{model.token_type} {model.access_token}";
+            Logger.Debug("GetUserInfo 请求头：" + token);
+            var headers = new Dictionary<string, string> { { "Authorization", token } };
             var response = HttpUtil.Get("https://api.github.com/user", headers);
             var data = JsonConvert.DeserializeObject<GithubUserInfo>(response);
             Logger.Debug("GetUserInfo 返回参数：" + response);
@@ -93,7 +103,7 @@ namespace Blog.Core.Module.Github
         {
             var githubToken = GetAccessToken(code);
             var githubUser = GetUserInfo(githubToken);
-            var authUser = Manager.QueryFirst<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", githubUser.id } });
+            var authUser = Manager.QueryFirst<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", githubUser.id.ToString() } });
             
             if (authUser != null)
             {
@@ -110,13 +120,17 @@ namespace Blog.Core.Module.Github
             return Manager.ExecuteTransaction(() =>
             {
                 var role = new SysRoleService(Manager).GetGuest();
+                var id = Guid.NewGuid().ToString();
+                var avatarId = DownloadImage(githubUser.avatar_url, id);
                 var user = new user_info()
                 {
-                    id = Guid.NewGuid().ToString(),
+                    id = id,
                     code = githubUser.id.ToString(),
                     password = null,
                     name = githubUser.name,
                     mailbox = githubUser.email,
+                    introduction = githubUser.bio,
+                    avatar = avatarId,
                     roleid = role.id,
                     roleid_name = role.name,
                     stateCode = 1,
@@ -146,6 +160,30 @@ namespace Blog.Core.Module.Github
                     message = "登录成功"
                 };
             });
+        }
+
+        private string DownloadImage(string url, string objectid)
+        {
+            var result = HttpUtil.DownloadImage(url, out var contentType);
+            var stream = StreamUtil.BytesToStream(result);
+            var hash_code = SHAUtil.GetFileSHA1(stream);
+
+            var config = StoreConfig.Config;
+            var id = Guid.NewGuid().ToString();
+            var fileName = $"{id}.jpg";
+            ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, fileName, out var filePath);
+
+            var data = new sys_file()
+            {
+                id = id,
+                name = fileName,
+                real_name = fileName,
+                hash_code = hash_code,
+                file_type = "avatar",
+                content_type = contentType,
+                objectId = objectid
+            };
+            return Manager.Create(data);
         }
     }
 }
