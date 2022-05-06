@@ -3,7 +3,9 @@ using Blog.Core.Auth.UserInfo;
 using Blog.Core.Module.Github.Model;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysConfig;
+using log4net;
 using Newtonsoft.Json;
+using Sixpence.Common.Logging;
 using Sixpence.Common.Utils;
 using Sixpence.ORM.EntityManager;
 using System;
@@ -14,7 +16,8 @@ namespace Blog.Core.Module.Github
 {
     public class GithubService
     {
-        private IEntityManager Manager;
+        protected IEntityManager Manager;
+        protected ILog Logger => LogFactory.GetLogger("github");
 
         #region 构造函数
         public GithubService()
@@ -55,8 +58,10 @@ namespace Blog.Core.Module.Github
                 client_secret = clientSecret,
                 code = code
             };
-
-            var response = HttpUtil.Post("https://github.com/login/oauth/access_token", JsonConvert.SerializeObject(param));
+            var paramString = JsonConvert.SerializeObject(param);
+            Logger.Debug("GetAccessToken 请求入参：" + paramString);
+            var response = HttpUtil.Post("https://github.com/login/oauth/access_token", paramString);
+            Logger.Debug("GetAccessToken 返回参数：" + response);
             var data = JsonConvert.DeserializeObject<GithubAccessToken>(response);
             return data;
         }
@@ -74,9 +79,9 @@ namespace Blog.Core.Module.Github
                 { "scope", model.scope },
                 { "access_token", model.access_token }
             };
-
             var response = HttpUtil.Get("https://api.github.com/user", headers);
             var data = JsonConvert.DeserializeObject<GithubUserInfo>(response);
+            Logger.Debug("GetUserInfo 返回参数：" + response);
             return data;
         }
 
