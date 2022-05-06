@@ -25,6 +25,9 @@
         <a-form-model-item>
           <a-button style="width: 100%" type="primary" @click="signIn" :loading="loading">登录</a-button>
         </a-form-model-item>
+        <a-form-model-item :style="{ textAlign: 'left' }">
+          <a-icon type="github" @click="githubLogin" :style="{ fontSize: '16px' }" />
+        </a-form-model-item>
       </a-form-model>
     </div>
     <a-modal v-model="visible" :destroyOnClose="true" title="验证" :footer="false">
@@ -250,6 +253,11 @@ export default {
       } finally {
         this.signupLoading = false;
       }
+    },
+    githubLogin() {
+      var clientId = '369e8edec754599afa75';
+      var url = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+      window.opener.location.href = url;
     }
   }
 };
