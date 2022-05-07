@@ -27,8 +27,9 @@
         </a-form-model-item>
         <a-form-model-item :style="{ textAlign: 'center' }">
           <span style="color: #999aaa">其他登录方式</span><br>
-          <a-icon type="github" @click="githubLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
-          <a-icon type="qq" @click="qqLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
+          <sp-icon name="sp-blog-github" :size="20" @click="thidPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+          <sp-icon name="sp-blog-gitee" :size="20" @click="thidPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+          <sp-icon name="sp-blog-qq" :size="20" @click="thidPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -68,7 +69,7 @@
 </template>
 
 <script>
-import { saveAuth, clearAuth } from '../../lib/login.js';
+import { saveAuth, clearAuth, thidPartyLogin } from '../../lib/login.js';
 import { encrypt } from '@sixpence/web-core';
 
 var header = process.env.VUE_APP_TITLE;
@@ -108,26 +109,11 @@ export default {
       isLoginFailed: false,
       isPassCheck: false,
       forgetVisible: false,
-      github: {}
+      thidPartyLogin: thidPartyLogin
     };
   },
   created() {
     this.test();
-  },
-  mounted() {
-    var { code } = this.$route.query;
-    if (!sp.isNullOrEmpty(code)) {
-      sp.post(`/api/github/oauth?code=${code}`).then(resp => {
-        if (resp.result) {
-          saveAuth(this.$store, resp);
-          this.$router.push({ name: 'index' });
-          this.$message.success(resp.message);
-        } else {
-          this.$message.error(resp.message);
-        }
-      });
-    }
-    sp.get('/api/github/config').then(resp => this.github = resp);
   },
   methods: {
     generateCode() {
@@ -271,13 +257,6 @@ export default {
       } finally {
         this.signupLoading = false;
       }
-    },
-    qqLogin() {
-      this.$message.info('敬请期待！');
-    },
-    githubLogin() {
-      var url = `https://github.com/login/oauth/authorize?client_id=${this.github.client_id}`;
-      window.location.href = url;
     }
   }
 };

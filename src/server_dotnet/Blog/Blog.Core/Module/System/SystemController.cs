@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Blog.Core.Module.System.Models;
 
 namespace Blog.Core.Module.DataService
 {
@@ -74,8 +75,17 @@ namespace Blog.Core.Module.DataService
         [HttpPost, AllowAnonymous]
         public LoginResponse Login(LoginRequest model)
         {
-            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             return new SystemService().Login(model);
+        }
+
+        /// <summary>
+        /// 登录参数
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public LoginConfig LoginConfig()
+        {
+            return new SystemService().GetLoginConfig();
         }
 
         /// <summary>

@@ -1,15 +1,10 @@
-﻿using Blog.Core;
-using Blog.Core.Auth;
+﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Config;
-using Sixpence.ORM.Entity;
-using Blog.Core.Module.Role;
 using Blog.Core.Module.Vertification.Mail;
 using Blog.Core.Store;
-using Blog.Core.Store.SysFile;
 using Sixpence.Common.Utils;
 using Jdenticon.AspNetCore;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -17,11 +12,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Sixpence.Common;
-
 using Blog.Core.Profiles;
 using Sixpence.Common.Current;
 using Sixpence.Common.IoC;
 using Sixpence.ORM.EntityManager;
+using Blog.Core.Module.System;
+using Blog.Core.Module.System.Models;
+using Blog.Core.Auth.Github;
+using Blog.Core.Auth.Gitee;
 
 namespace Blog.Core.Module.DataService
 {
@@ -88,11 +86,19 @@ namespace Blog.Core.Module.DataService
         /// <returns></returns>
         public LoginResponse Login(LoginRequest model)
         {
+            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
+
+            // 联合第三方登录
+            if (model.third_party_login != null)
+            {
+                return ServiceContainer
+                    .Resolve<IThirdPartyLoginStrategy>(name => name.Contains(model.third_party_login.type.ToString(), StringComparison.OrdinalIgnoreCase))
+                    .Login(model.third_party_login.param);
+            }
+
             var code = model.code;
             var pwd = model.password;
             var publicKey = model.publicKey;
-
-            UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
 
             var authUser = Manager.QueryFirst<auth_user>("SELECT * FROM auth_user WHERE lower(code) = lower(@code)", new Dictionary<string, object>() { { "@code", code } });
 
@@ -152,6 +158,21 @@ namespace Blog.Core.Module.DataService
                 message = "登录成功"
             };
             return oUser;
+        }
+
+        /// <summary>
+        /// 获取登录参数
+        /// </summary>
+        /// <returns></returns>
+        public LoginConfig GetLoginConfig()
+        {
+            var github = new GithubAuthService(Manager).GetConfig();
+            var gitee = new GiteeAuthService(Manager).GetConfig();
+            return new LoginConfig()
+            {
+                github = github,
+                gitee = gitee
+            };
         }
 
         /// <summary>

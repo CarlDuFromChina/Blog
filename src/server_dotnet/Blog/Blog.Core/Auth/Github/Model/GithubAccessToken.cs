@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.Module.Github.Model
+namespace Blog.Core.Auth.Github.Model
 {
     public class GithubAccessToken
     {

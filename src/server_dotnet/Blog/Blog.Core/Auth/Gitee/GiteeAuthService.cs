@@ -1,0 +1,103 @@
+﻿using Blog.Core.Auth.Gitee.Model;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Config;
+using Blog.Core.Module.SysConfig;
+using Blog.Core.Store;
+using Blog.Core.Store.SysFile;
+using log4net;
+using Newtonsoft.Json;
+using Sixpence.Common.IoC;
+using Sixpence.Common.Logging;
+using Sixpence.Common.Utils;
+using Sixpence.ORM.EntityManager;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Blog.Core.Auth.Gitee
+{
+    public class GiteeAuthService
+    {
+        protected IEntityManager Manager;
+        protected ILog Logger => LogFactory.GetLogger("gitee");
+
+        public GiteeAuthService()
+        {
+            Manager = EntityManagerFactory.GetManager();
+        }
+        public GiteeAuthService(IEntityManager manager)
+        {
+            Manager = manager;
+        }
+
+        public GiteeConfig GetConfig()
+        {
+            var configService = new SysConfigService(Manager);
+            var data = configService.GetValue("gitee_oauth")?.ToString();
+            return JsonConvert.DeserializeObject<GiteeConfig>(data);
+        }
+
+        public GiteeAccessTokenData GetAccessToken(string code)
+        {
+            var config = GetConfig();
+            var client_id = config.client_id;
+            var client_secret = config.client_secret;
+            Logger.Debug("GetAccessToken 请求入参：" + $"client_id：{client_id}，client_secret：{client_secret}");
+            var response = HttpUtil.Post($"https://gitee.com/oauth/token?grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}", null);
+            Logger.Debug("GetAccessToken 返回参数：" + response);
+            return JsonConvert.DeserializeObject<GiteeAccessToken>(response).data;
+        }
+
+        public GiteeUserInfo GetGiteeUserInfo(GiteeAccessTokenData model)
+        {
+            Logger.Debug("GetGiteeUserInfo 请求参数：" + model.access_token);
+            var response = HttpUtil.Get("https://gitee.com/api/v5/user?access_token=" + model.access_token);
+            var data = JsonConvert.DeserializeObject<GiteeUserInfo>(response);
+            Logger.Debug("GetGiteeUserInfo 返回参数：" + response);
+            return data;
+        }
+
+        /// <summary>
+        /// 绑定用户
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="code"></param>
+        public void BindUser(string userid, string code)
+        {
+            var user = Manager.QueryFirst<user_info>(userid);
+            user.gitee_id = code;
+            Manager.Update(user);
+        }
+
+        /// <summary>
+        /// 下载头像
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="objectid"></param>
+        /// <returns></returns>
+        public string DownloadImage(string url, string objectid)
+        {
+            var result = HttpUtil.DownloadImage(url, out var contentType);
+            var stream = StreamUtil.BytesToStream(result);
+            var hash_code = SHAUtil.GetFileSHA1(stream);
+
+            var config = StoreConfig.Config;
+            var id = Guid.NewGuid().ToString();
+            var fileName = $"{id}.png";
+            ServiceContainer.Resolve<IStoreStrategy>(config?.Type).Upload(stream, fileName, out var filePath);
+
+            var data = new sys_file()
+            {
+                id = id,
+                name = fileName,
+                real_name = fileName,
+                hash_code = hash_code,
+                file_type = "avatar",
+                content_type = contentType,
+                objectId = objectid
+            };
+
+            return Manager.Create(data);
+        }
+    }
+}

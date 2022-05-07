@@ -12,11 +12,11 @@ INSERT INTO sys_config (
     updated_at
 )
 SELECT
-    '2CA9AC24-8316-488E-9F5C-DC3A743BEC3F',
-    'Github OAuth',
-    'github_oauth',
+    '294EC534-6B6A-404B-900D-6B8CEEE46734',
+    'Gitee OAuth',
+    'gitee_oauth',
     '',
-    'Github OAuth',
+    'Gitee OAuth',
     '111111111-11111-1111-1111-111111111111',
     '系统',
     (SELECT NOW()),
@@ -24,5 +24,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT id FROM sys_config WHERE id = '2CA9AC24-8316-488E-9F5C-DC3A743BEC3F'
+    SELECT id FROM sys_config WHERE id = '294EC534-6B6A-404B-900D-6B8CEEE46734'
 );

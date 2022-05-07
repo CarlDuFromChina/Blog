@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.Module.Github.Model
+namespace Blog.Core.Auth.Github.Model
 {
-public class GithubUserInfo
+    public class GithubUserInfo
     {
         public string login { get; set; }
         public int id { get; set; }

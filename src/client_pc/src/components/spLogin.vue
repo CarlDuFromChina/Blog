@@ -13,15 +13,16 @@
     </a-button>
     <a-form-model-item :style="{ textAlign: 'center', paddingTop: '20px' }">
       <span style="color: #999aaa">其他登录方式</span><br>
-      <a-icon type="github" @click="githubLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
-      <a-icon type="qq" @click="qqLogin" :style="{ fontSize: '20px', paddingRight: '8px' }" />
+      <sp-icon name="sp-blog-github" :size="20" @click="thidPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-gitee" :size="20" @click="thidPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-qq" :size="20" @click="thidPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
     </a-form-model-item>
   </a-modal>
 </template>
 
 <script>
 import { encrypt } from '@sixpence/web-core';
-import { saveAuth } from '../lib/login';
+import { saveAuth, thidPartyLogin } from '../lib/login';
 // const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 export default {
@@ -29,6 +30,7 @@ export default {
   data() {
     return {
       editVisible: false,
+      thidPartyLogin: thidPartyLogin,
       data: {
         code: '',
         password: null
@@ -40,15 +42,6 @@ export default {
     };
   },
   methods: {
-    githubLogin() {
-      sp.get('/api/github/config').then(resp => {
-        var url = `https://github.com/login/oauth/authorize?client_id=${resp.client_id}`;
-        window.location.href = url;
-      })
-    },
-    qqLogin() {
-      this.$message.info('敬请期待！');
-    },
     login() {
       this.$refs.form.validate().then(async () => {
         try {

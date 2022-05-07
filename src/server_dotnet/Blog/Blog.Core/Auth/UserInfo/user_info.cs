@@ -96,6 +96,20 @@ namespace Blog.Core.Auth.UserInfo
         public string roleid { get; set; }
 
         /// <summary>
+        /// Github ID
+        /// </summary>
+        [DataMember]
+        [Column("github_id", "Github ID", DataType.Varchar, 100)]
+        public string github_id { get; set; }
+
+        /// <summary>
+        /// Gitee ID
+        /// </summary>
+        [DataMember]
+        [Column("gitee_id", "Gitee ID", DataType.Varchar, 100)]
+        public string gitee_id { get; set; }
+
+        /// <summary>
         /// 角色权限名
         /// </summary>
         [DataMember]

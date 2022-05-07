@@ -123,6 +123,36 @@
           </a-col>
         </a-row>
       </a-tab-pane>
+      <a-tab-pane key="3" tab="第三方登录">
+        <a-row>
+          <a-descriptions title="已绑定"></a-descriptions>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="4" v-show="showGithub">
+            <sp-icon name="sp-blog-github" :size="40"></sp-icon>
+          </a-col>
+          <a-col :span="4" v-show="showGitee">
+            <sp-icon name="sp-blog-gitee" :size="40"></sp-icon>
+          </a-col>
+          <a-col :span="4" v-show="showQQ">
+            <sp-icon name="sp-blog-qq" :size="40"></sp-icon>
+          </a-col>
+        </a-row>
+        <a-row :style="{ paddingTop: '30px' }">
+          <a-descriptions title="未绑定"></a-descriptions>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="4" v-show="!showGithub">
+            <sp-icon name="sp-blog-github" cursor="pointer" :size="40"></sp-icon>
+          </a-col>
+          <a-col :span="4" v-show="!showGitee">
+            <sp-icon name="sp-blog-gitee" cursor="pointer" :size="40"></sp-icon>
+          </a-col>
+          <a-col :span="4" v-show="!showQQ">
+            <sp-icon name="sp-blog-qq" cursor="pointer" :size="40"></sp-icon>
+          </a-col>
+        </a-row>
+      </a-tab-pane>
     </a-tabs>
     <edit-password ref="pwd"></edit-password>
     <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
@@ -181,6 +211,15 @@ export default {
       return {
         Authorization: 'Bearer ' + this.token
       };
+    },
+    showGithub() {
+      return !!this.data.github_id;
+    },
+    showGitee() {
+      return !!this.data.gitee_id;
+    },
+    showQQ() {
+      return !!this.data.qq_id;
     }
   },
   methods: {

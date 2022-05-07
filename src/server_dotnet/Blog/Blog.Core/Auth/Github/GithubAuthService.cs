@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Auth;
+using Blog.Core.Auth.Github.Model;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Config;
-using Blog.Core.Module.Github.Model;
 using Blog.Core.Module.Role;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store;
@@ -17,20 +17,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.Module.Github
+namespace Blog.Core.Auth.Github
 {
-    public class GithubService
+    public class GithubAuthService
     {
         protected IEntityManager Manager;
         protected ILog Logger => LogFactory.GetLogger("github");
 
         #region 构造函数
-        public GithubService()
+        public GithubAuthService()
         {
             Manager = EntityManagerFactory.GetManager();
         }
 
-        public GithubService(IEntityManager manager)
+        public GithubAuthService(IEntityManager manager)
         {
             Manager = manager;
         }
@@ -39,13 +39,8 @@ namespace Blog.Core.Module.Github
         public GithubConfig GetConfig()
         {
             var configService = new SysConfigService(Manager);
-            var clientId = configService.GetValue("github_oauth_client_id")?.ToString();
-            var clientSecret = configService.GetValue("github_oauth_client_secret")?.ToString();
-            return new GithubConfig()
-            {
-                client_id = clientId,
-                client_secret = clientSecret
-            };
+            var data = configService.GetValue("github_oauth")?.ToString();
+            return JsonConvert.DeserializeObject<GithubConfig>(data);
         }
 
         /// <summary>
@@ -96,73 +91,24 @@ namespace Blog.Core.Module.Github
         }
 
         /// <summary>
-        /// 登录或注册
+        /// 绑定用户
         /// </summary>
-        /// <param name="code">临时码，有效期十分钟</param>
-        public LoginResponse LoginOrSignUp(string code)
+        /// <param name="userid"></param>
+        /// <param name="code"></param>
+        public void BindUser(string userid, string code)
         {
-            var githubToken = GetAccessToken(code);
-            var githubUser = GetUserInfo(githubToken);
-            var authUser = Manager.QueryFirst<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", githubUser.id.ToString() } });
-            
-            if (authUser != null)
-            {
-                return new LoginResponse()
-                {
-                    result = true,
-                    userName = code,
-                    token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.id }),
-                    userId = authUser.user_infoid,
-                    message = "登录成功"
-                };
-            }
-
-            return Manager.ExecuteTransaction(() =>
-            {
-                var role = new SysRoleService(Manager).GetGuest();
-                var id = Guid.NewGuid().ToString();
-                var avatarId = DownloadImage(githubUser.avatar_url, id);
-                var user = new user_info()
-                {
-                    id = id,
-                    code = githubUser.id.ToString(),
-                    password = null,
-                    name = githubUser.name,
-                    mailbox = githubUser.email,
-                    introduction = githubUser.bio,
-                    avatar = avatarId,
-                    roleid = role.id,
-                    roleid_name = role.name,
-                    stateCode = 1,
-                    stateCode_name = "启用"
-                };
-                Manager.Create(user, false);
-                var _authUser = new auth_user()
-                {
-                    id = user.id,
-                    name = user.name,
-                    code = user.code,
-                    roleid = user.roleid,
-                    roleid_name = user.roleid_name,
-                    user_infoid = user.id,
-                    is_lock = false,
-                    last_login_time = DateTime.Now,
-                    password = null
-                };
-                Manager.Create(_authUser);
-
-                return new LoginResponse()
-                {
-                    result = true,
-                    userName = user.name,
-                    token = JwtHelper.CreateToken(new JwtTokenModel() { Code = _authUser.code, Name = _authUser.name, Role = _authUser.code, Uid = _authUser.id }),
-                    userId = _authUser.user_infoid,
-                    message = "登录成功"
-                };
-            });
+            var user = Manager.QueryFirst<user_info>(userid);
+            user.github_id = code;
+            Manager.Update(user);
         }
 
-        private string DownloadImage(string url, string objectid)
+        /// <summary>
+        /// 下载头像
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="objectid"></param>
+        /// <returns></returns>
+        public string DownloadImage(string url, string objectid)
         {
             var result = HttpUtil.DownloadImage(url, out var contentType);
             var stream = StreamUtil.BytesToStream(result);
