@@ -1,5 +1,4 @@
 ﻿using Blog.Core.Auth.Gitee.Model;
-using Blog.Core.Auth.UserInfo;
 using Blog.Core.Config;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store;
@@ -37,12 +36,16 @@ namespace Blog.Core.Auth.Gitee
             return JsonConvert.DeserializeObject<GiteeConfig>(data);
         }
 
-        public GiteeAccessToken GetAccessToken(string code)
+        public GiteeAccessToken GetAccessToken(string code, string userid = "")
         {
             var config = GetConfig();
             var client_id = config.client_id;
             var client_secret = config.client_secret;
             var redirect_uri = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/gitee-oauth";
+            if (!string.IsNullOrEmpty(userid))
+            {
+                redirect_uri += $"?id={userid}";
+            }
 
             Logger.Debug("GetAccessToken 请求入参：" + $"grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}");
             var response = HttpUtil.Post($"https://gitee.com/oauth/token?grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}", "");
@@ -57,18 +60,6 @@ namespace Blog.Core.Auth.Gitee
             var data = JsonConvert.DeserializeObject<GiteeUserInfo>(response);
             Logger.Debug("GetGiteeUserInfo 返回参数：" + response);
             return data;
-        }
-
-        /// <summary>
-        /// 绑定用户
-        /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="code"></param>
-        public void BindUser(string userid, string code)
-        {
-            var user = Manager.QueryFirst<user_info>(userid);
-            user.gitee_id = code;
-            Manager.Update(user);
         }
 
         /// <summary>

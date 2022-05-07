@@ -13,44 +13,37 @@ namespace Blog.Core.Auth.Github
 {
     public class GithubLogin : IThirdPartyLoginStrategy
     {
-        IEntityManager Manager;
-        GithubAuthService GithubService;
-        SysRoleService SysRoleService;
-        protected ILog Logger => LogFactory.GetLogger("github");
-
-        public GithubLogin()
-        {
-            Manager = EntityManagerFactory.GetManager();
-            GithubService = new GithubAuthService(Manager);
-            SysRoleService = new SysRoleService(Manager);
-        }
-
         public LoginResponse Login(object param)
         {
+            var manager = EntityManagerFactory.GetManager();
+            var githubService = new GithubAuthService(manager);
+            var sysRoleService = new SysRoleService(manager);
+            var logger = LogFactory.GetLogger("github");
+
             try
             {
                 var code = param as string;
-                var githubToken = GithubService.GetAccessToken(code);
-                var githubUser = GithubService.GetUserInfo(githubToken);
-                var authUser = Manager.QueryFirst<auth_user>("select * from auth_user where code = @code", new Dictionary<string, object>() { { "@code", githubUser.id.ToString() } });
+                var githubToken = githubService.GetAccessToken(code);
+                var githubUser = githubService.GetUserInfo(githubToken);
+                var user = manager.QueryFirst<user_info>("select * from user_info where github_id = @id", new Dictionary<string, object>() { { "@id", githubUser.id.ToString() } });
 
-                if (authUser != null)
+                if (user != null)
                 {
                     return new LoginResponse()
                     {
                         result = true,
                         userName = code,
-                        token = JwtHelper.CreateToken(new JwtTokenModel() { Code = authUser.code, Name = authUser.name, Role = authUser.code, Uid = authUser.id }),
-                        userId = authUser.user_infoid,
+                        token = JwtHelper.CreateToken(new JwtTokenModel() { Code = user.code, Name = user.name, Role = user.code, Uid = user.id }),
+                        userId = user.id,
                         message = "登录成功"
                     };
                 }
 
-                return Manager.ExecuteTransaction(() =>
+                return manager.ExecuteTransaction(() =>
                 {
-                    var role = SysRoleService.GetGuest();
+                    var role = sysRoleService.GetGuest();
                     var id = Guid.NewGuid().ToString();
-                    var avatarId = GithubService.DownloadImage(githubUser.avatar_url, id);
+                    var avatarId = githubService.DownloadImage(githubUser.avatar_url, id);
                     var user = new user_info()
                     {
                         id = id,
@@ -66,7 +59,7 @@ namespace Blog.Core.Auth.Github
                         stateCode = 1,
                         stateCode_name = "启用"
                     };
-                    Manager.Create(user, false);
+                    manager.Create(user, false);
                     var _authUser = new auth_user()
                     {
                         id = user.id,
@@ -79,7 +72,7 @@ namespace Blog.Core.Auth.Github
                         last_login_time = DateTime.Now,
                         password = null
                     };
-                    Manager.Create(_authUser);
+                    manager.Create(_authUser);
 
                     return new LoginResponse()
                     {
@@ -93,7 +86,7 @@ namespace Blog.Core.Auth.Github
             }
             catch (Exception ex)
             {
-                Logger.Error("Github 登录失败：" + ex.Message, ex);
+                logger.Error("Github 登录失败：" + ex.Message, ex);
                 return new LoginResponse() { result = false, message = "Github 登录失败" };
             }
         }

@@ -128,28 +128,41 @@
           <a-descriptions title="已绑定"></a-descriptions>
         </a-row>
         <a-row :gutter="24">
-          <a-col :span="4" v-show="showGithub">
-            <sp-icon name="sp-blog-github" :size="40"></sp-icon>
-          </a-col>
-          <a-col :span="4" v-show="showGitee">
-            <sp-icon name="sp-blog-gitee" :size="40"></sp-icon>
-          </a-col>
-          <a-col :span="4" v-show="showQQ">
-            <sp-icon name="sp-blog-qq" :size="40"></sp-icon>
+          <a-col :span="24">
+            <sp-icon name="sp-blog-github" :size="40" v-show="showGithub" :style="{ paddingRight: '16px' }"></sp-icon>
+            <sp-icon name="sp-blog-gitee" :size="40" v-show="showGitee" :style="{ paddingRight: '16px' }"></sp-icon>
+            <sp-icon name="sp-blog-qq" :size="40" v-show="showQQ" :style="{ paddingRight: '16px' }"></sp-icon>
           </a-col>
         </a-row>
         <a-row :style="{ paddingTop: '30px' }">
           <a-descriptions title="未绑定"></a-descriptions>
         </a-row>
         <a-row :gutter="24">
-          <a-col :span="4" v-show="!showGithub">
-            <sp-icon name="sp-blog-github" cursor="pointer" :size="40"></sp-icon>
-          </a-col>
-          <a-col :span="4" v-show="!showGitee">
-            <sp-icon name="sp-blog-gitee" cursor="pointer" :size="40"></sp-icon>
-          </a-col>
-          <a-col :span="4" v-show="!showQQ">
-            <sp-icon name="sp-blog-qq" cursor="pointer" :size="40"></sp-icon>
+          <a-col :span="24">
+            <sp-icon
+              name="sp-blog-github"
+              cursor="pointer"
+              :size="40"
+              @click="thirdPartyBind('github', data.id)"
+              v-show="!showGithub"
+              :style="{ paddingRight: '16px' }"
+            ></sp-icon>
+            <sp-icon
+              name="sp-blog-gitee"
+              cursor="pointer"
+              :size="40"
+              @click="thirdPartyBind('gitee', data.id)"
+              v-show="!showGitee"
+              :style="{ paddingRight: '16px' }"
+            ></sp-icon>
+            <sp-icon
+              name="sp-blog-qq"
+              cursor="pointer"
+              :size="40"
+              @click="thirdPartyBind('qq', data.id)"
+              v-show="!showQQ"
+              :style="{ paddingRight: '16px' }"
+            ></sp-icon>
           </a-col>
         </a-row>
       </a-tab-pane>
@@ -164,6 +177,7 @@
 <script>
 import { edit } from '@/mixins';
 import editPassword from '../editPasssword/editPassword.vue';
+import { thirdPartyBind } from '../../../../lib/login';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -181,6 +195,7 @@ export default {
   data() {
     return {
       controllerName: 'UserInfo',
+      thirdPartyBind: thirdPartyBind,
       avatarChange: false,
       lifePhotoChange: false,
       baseUrl: sp.getServerUrl(),

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.Module.System
+namespace Blog.Core.Auth
 {
     /// <summary>
     /// 第三方联合登录接口

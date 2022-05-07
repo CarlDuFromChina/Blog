@@ -1,8 +1,5 @@
-﻿using Blog.Core.Auth;
-using Blog.Core.Auth.Github.Model;
-using Blog.Core.Auth.UserInfo;
+﻿using Blog.Core.Auth.Github.Model;
 using Blog.Core.Config;
-using Blog.Core.Module.Role;
 using Blog.Core.Module.SysConfig;
 using Blog.Core.Store;
 using Blog.Core.Store.SysFile;
@@ -88,18 +85,6 @@ namespace Blog.Core.Auth.Github
             var data = JsonConvert.DeserializeObject<GithubUserInfo>(response);
             Logger.Debug("GetUserInfo 返回参数：" + response);
             return data;
-        }
-
-        /// <summary>
-        /// 绑定用户
-        /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="code"></param>
-        public void BindUser(string userid, string code)
-        {
-            var user = Manager.QueryFirst<user_info>(userid);
-            user.github_id = code;
-            Manager.Update(user);
         }
 
         /// <summary>

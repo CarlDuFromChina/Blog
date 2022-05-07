@@ -27,9 +27,9 @@
         </a-form-model-item>
         <a-form-model-item :style="{ textAlign: 'center' }">
           <span style="color: #999aaa">其他登录方式</span><br>
-          <sp-icon name="sp-blog-github" :size="20" @click="thidPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
-          <sp-icon name="sp-blog-gitee" :size="20" @click="thidPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
-          <sp-icon name="sp-blog-qq" :size="20" @click="thidPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+          <sp-icon name="sp-blog-github" :size="20" @click="thirdPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+          <sp-icon name="sp-blog-gitee" :size="20" @click="thirdPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+          <sp-icon name="sp-blog-qq" :size="20" @click="thirdPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { saveAuth, clearAuth, thidPartyLogin } from '../../lib/login.js';
+import { saveAuth, clearAuth, thirdPartyLogin } from '../../lib/login.js';
 import { encrypt } from '@sixpence/web-core';
 
 var header = process.env.VUE_APP_TITLE;
@@ -109,7 +109,7 @@ export default {
       isLoginFailed: false,
       isPassCheck: false,
       forgetVisible: false,
-      thidPartyLogin: thidPartyLogin
+      thirdPartyLogin: thirdPartyLogin
     };
   },
   created() {

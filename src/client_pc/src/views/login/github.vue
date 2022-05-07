@@ -2,17 +2,29 @@
   <div class="github-box">
     <sp-icon name="sp-blog-github" :size="100"></sp-icon>
     <a-spin size="large" style="padding-top: 20px" tip="登录验证中..." />
-  </div>  
+  </div>
 </template>
 
 <script>
-import { saveAuth } from "../../lib/login";
+import { saveAuth } from '../../lib/login';
 
 export default {
   name: 'github-login',
   mounted() {
     var { code } = this.$route.query;
+    var { id } = this.$route.params;
+
+    if (!sp.isNullOrEmpty(id)) {
+      this.bindUser(code, id);
+      return;
+    }
+
     if (!sp.isNullOrEmpty(code)) {
+      this.login(code);
+    }
+  },
+  methods: {
+    login(code) {
       var param = {
         third_party_login: {
           param: code,
@@ -31,9 +43,19 @@ export default {
           }, 2000);
         }
       });
+    },
+    bindUser(code, id) {
+      sp.post(`/api/AuthUser/BindThirdPartyAccount?type=0&userid=${id}&code=${code}`)
+        .then(() => {
+          this.$message.success('绑定成功！');
+          this.$router.push({ name: 'index' });
+        })
+        .catch(err => {
+          this.$message.error(err);
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

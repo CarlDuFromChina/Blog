@@ -13,16 +13,16 @@
     </a-button>
     <a-form-model-item :style="{ textAlign: 'center', paddingTop: '20px' }">
       <span style="color: #999aaa">其他登录方式</span><br>
-      <sp-icon name="sp-blog-github" :size="20" @click="thidPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
-      <sp-icon name="sp-blog-gitee" :size="20" @click="thidPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
-      <sp-icon name="sp-blog-qq" :size="20" @click="thidPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-github" :size="20" @click="thirdPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-gitee" :size="20" @click="thirdPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-qq" :size="20" @click="thirdPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
     </a-form-model-item>
   </a-modal>
 </template>
 
 <script>
 import { encrypt } from '@sixpence/web-core';
-import { saveAuth, thidPartyLogin } from '../lib/login';
+import { saveAuth, thirdPartyLogin } from '../lib/login';
 // const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 export default {
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       editVisible: false,
-      thidPartyLogin: thidPartyLogin,
+      thirdPartyLogin: thirdPartyLogin,
       data: {
         code: '',
         password: null

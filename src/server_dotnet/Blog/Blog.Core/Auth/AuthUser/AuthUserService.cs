@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using Sixpence.ORM.EntityManager;
+using Sixpence.Common.IoC;
 
 namespace Blog.Core.Auth
 {
@@ -66,6 +67,20 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
                 data.is_lock = false;
                 UpdateData(data);
             });
+        }
+
+        /// <summary>
+        /// 绑定用户
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="code"></param>
+        public void BindThirdPartyAccount(ThirdPartyLoginType type, string id, string code)
+        {
+            AssertUtil.CheckIsNullOrEmpty<SpException>(id, "用户id不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
+            AssertUtil.CheckIsNullOrEmpty<SpException>(code, "编码不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
+            AssertUtil.CheckNull<SpException>(type, "绑定类型不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
+            ServiceContainer.Resolve<IThirdPartyBindStrategy>(name => name.Contains(type.ToString(), StringComparison.OrdinalIgnoreCase)).Bind(code, id);
         }
     }
 }

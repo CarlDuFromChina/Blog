@@ -8,7 +8,7 @@ export default [
     component: () => import('./login')
   },
   {
-    path: '/github-oauth',
+    path: '/github-oauth/:id?',
     name: 'githubOAuth',
     meta: {
       title: 'Github OAuth'
@@ -16,7 +16,7 @@ export default [
     component: () => import('./github')
   },
   {
-    path: '/gitee-oauth',
+    path: '/gitee-oauth/:id?',
     name: 'giteeOAuth',
     meta: {
       title: 'Gitee OAuth'
