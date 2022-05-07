@@ -8,6 +8,6 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [persistedState({ storage: window.sessionStorage })],
+  plugins: [persistedState({ storage: window.localStorage })],
   modules: [auth, user, app]
 });
