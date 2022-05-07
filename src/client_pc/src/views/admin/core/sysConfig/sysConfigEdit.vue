@@ -13,14 +13,16 @@
       </a-col>
     </a-row>
     <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-model-item label="值" prop="value">
-          <a-input v-model="data.value"></a-input>
-        </a-form-model-item>
-      </a-col>
-      <a-col :span="12">
+      <a-col :span="24">
         <a-form-model-item label="描述">
           <a-input v-model="data.description"></a-input>
+        </a-form-model-item>
+      </a-col>
+    </a-row>
+    <a-row :gutter="24">
+      <a-col :span="24">
+        <a-form-model-item label="值" prop="value">
+          <a-textarea v-model="data.value" :rows="4"></a-textarea>
         </a-form-model-item>
       </a-col>
     </a-row>
