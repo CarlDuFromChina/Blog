@@ -9,6 +9,10 @@ export default [
     name: 'index',
     component: () => import('./index.vue'),
     redirect: '/index/home',
-    children: [].concat(home, friends, readingNote, messageRemind)
+    children: [{
+      path: '/index/categories',
+      name: 'categories',
+      component: () => import('./categories.vue')
+    }].concat(home, friends, readingNote, messageRemind)
   }
 ];

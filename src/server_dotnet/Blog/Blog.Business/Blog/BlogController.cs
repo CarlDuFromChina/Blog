@@ -10,6 +10,7 @@ using System.Web;
 using Sixpence.ORM.Models;
 using Sixpence.Common.Utils;
 using Blog.Core.Auth.UserInfo;
+using Blog.Business.Blog.Model;
 
 namespace Blog.Business.Blog
 {
@@ -51,6 +52,16 @@ namespace Blog.Business.Blog
         public override DataModel<blog> GetViewData(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
             return base.GetViewData(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+        }
+
+        /// <summary>
+        /// 获取博客分类数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public PostCategories categories()
+        {
+            return new BlogService().GetCategories();
         }
 
         /// <summary>

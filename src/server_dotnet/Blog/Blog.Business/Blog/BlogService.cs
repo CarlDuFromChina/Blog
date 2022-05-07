@@ -19,6 +19,8 @@ using Blog.Core.Module.SysConfig;
 using Sixpence.ORM.EntityManager;
 using Sixpence.Common.IoC;
 using Blog.Business.Blog.Sync;
+using Blog.Business.Blog.Model;
+using System.Linq;
 
 namespace Blog.Business.Blog
 {
@@ -115,6 +117,39 @@ WHERE 1=1 AND blog.is_show = 1";
                 Manager.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE id = @id", paramList);
                 return data;
             });
+        }
+
+        public PostCategories GetCategories()
+        {
+            var data = new PostCategories();
+
+            var sql = @"
+SELECT
+	blog.id,
+	blog.title,
+	blog.blog_type,
+	blog.blog_type_name
+FROM
+	blog
+WHERE 1=1 AND blog.is_show = 1";
+            var dataList = Manager.Query<blog>(sql).ToList();
+
+            var categories = dataList
+                .GroupBy(p => p.blog_type)
+                .Select(b => new Category() { category = b.First().blog_type, category_name = b.First().blog_type_name, data = new List<CategoryData>() })
+                .ToList();
+
+            dataList.Each(item =>
+            {
+                var category = categories.Where(d => d.category.Equals(item.blog_type)).FirstOrDefault();
+                category.data.Add(new CategoryData() { id = item.id, title = item.title });
+            });
+
+            return new PostCategories()
+            {
+                count = categories.Count(),
+                data = categories
+            };
         }
 
         /// <summary>

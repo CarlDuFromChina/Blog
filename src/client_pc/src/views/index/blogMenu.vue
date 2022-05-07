@@ -47,6 +47,10 @@ export default {
           route: 'home'
         },
         {
+          name: '分类',
+          route: 'categories'
+        },
+        {
           name: '友人帐',
           route: 'friends'
         },
