@@ -1,7 +1,9 @@
 <template>
   <div class="card">
     <a-skeleton :loading="loading" active>
-      <h3 v-if="title">{{ title }}</h3>
+      <slot name="title">
+        <h3 v-if="title">{{ title }}</h3>
+      </slot>
       <slot></slot>
       <a-empty v-if="empty" />
     </a-skeleton>
