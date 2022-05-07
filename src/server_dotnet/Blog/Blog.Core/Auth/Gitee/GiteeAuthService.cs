@@ -37,18 +37,20 @@ namespace Blog.Core.Auth.Gitee
             return JsonConvert.DeserializeObject<GiteeConfig>(data);
         }
 
-        public GiteeAccessTokenData GetAccessToken(string code)
+        public GiteeAccessToken GetAccessToken(string code)
         {
             var config = GetConfig();
             var client_id = config.client_id;
             var client_secret = config.client_secret;
-            Logger.Debug("GetAccessToken 请求入参：" + $"client_id：{client_id}，client_secret：{client_secret}");
-            var response = HttpUtil.Post($"https://gitee.com/oauth/token?grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}", null);
+            var redirect_uri = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/gitee-oauth";
+
+            Logger.Debug("GetAccessToken 请求入参：" + $"grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}");
+            var response = HttpUtil.Post($"https://gitee.com/oauth/token?grant_type=authorization_code&code={code}&client_id={client_id}&client_secret={client_secret}&redirect_uri={redirect_uri}", "");
             Logger.Debug("GetAccessToken 返回参数：" + response);
-            return JsonConvert.DeserializeObject<GiteeAccessToken>(response).data;
+            return JsonConvert.DeserializeObject<GiteeAccessToken>(response);
         }
 
-        public GiteeUserInfo GetGiteeUserInfo(GiteeAccessTokenData model)
+        public GiteeUserInfo GetGiteeUserInfo(GiteeAccessToken model)
         {
             Logger.Debug("GetGiteeUserInfo 请求参数：" + model.access_token);
             var response = HttpUtil.Get("https://gitee.com/api/v5/user?access_token=" + model.access_token);

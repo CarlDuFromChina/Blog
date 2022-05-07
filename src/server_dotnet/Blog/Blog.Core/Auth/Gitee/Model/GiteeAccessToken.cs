@@ -6,11 +6,6 @@ namespace Blog.Core.Auth.Gitee.Model
 {
     public class GiteeAccessToken
     {
-        public GiteeAccessTokenData data { get; set; }
-    }
-
-    public class GiteeAccessTokenData
-    {
         public string access_token { get; set; }
         public string token_type { get; set; }
         public int expires_in { get; set; }

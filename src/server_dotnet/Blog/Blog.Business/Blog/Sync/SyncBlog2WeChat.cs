@@ -24,7 +24,7 @@ namespace Blog.Business.Blog.Sync
             Manager.ExecuteTransaction(() =>
             {
                 blog data = Manager.QueryFirst<blog>(id);
-                var contentUrl = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/#/blog/{id}";
+                var contentUrl = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/post/{id}";
                 AssertUtil.CheckIsNullOrEmpty<SpException>(data.surfaceid, "请上传博客封面", "4365FB1F-2EE7-40CF-852C-F6CFA71E8DE2");
 
                 // 如果封面素材未上传则创建封面素材
