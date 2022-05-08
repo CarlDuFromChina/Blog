@@ -65,6 +65,7 @@ export default {
   font-size: 20px;
   line-height: 30px;
   font-weight: 500;
+  padding-left: 8px;
 }
 
 /deep/ .ant-list-item {
@@ -73,5 +74,17 @@ export default {
   > a {
     color: #86909c;
   }
+}
+
+/deep/ .ant-list {
+  padding: 0 24px;
+}
+
+/deep/ .ant-spin-container {
+  height: 140px;
+}
+
+/deep/ .ant-list-pagination {
+  margin-top: 0;
 }
 </style>
