@@ -2,7 +2,7 @@
   <div :infinite-scroll-disabled="busy" class="card-list">
     <a-row v-if="data && data.length > 0">
       <a-col :span="24" v-for="item in data" :key="item.id">
-        <sp-card class="card-item">
+        <sp-card class="card-item" :loading="loading">
           <div class="card-item-wrapper">
             <img alt="example" :src="imageName == 'surface_url' ? getDownloadUrl(item[imageName]) : item[imageName]" />
             <div class="content">
@@ -92,6 +92,7 @@ export default {
       if (this.pageSize * this.pageIndex >= this.total && !this.isFirstLoad) {
         this.$bus.$emit('loading-finish');
         this.$bus.$emit('loaded-all');
+        this.loading = false;
         return;
       }
 

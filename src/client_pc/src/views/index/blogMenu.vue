@@ -43,16 +43,12 @@ export default {
     return {
       menus: [
         {
-          name: '首页',
+          name: '主页',
           route: 'home'
         },
         {
           name: '分类',
           route: 'categories'
-        },
-        {
-          name: '友人帐',
-          route: 'friends'
         },
         {
           name: '读书笔记',

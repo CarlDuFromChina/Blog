@@ -1,6 +1,6 @@
 <template>
   <admin ref="admin">
-    <a-button class="button-back" icon="rollback" @click="goIndex">首页</a-button>
+    <a-button class="button-back" icon="rollback" @click="goIndex">主页</a-button>
     <a-button type="primary" icon="edit" @click="writeBlog" style="margin-right:20px;" v-show="blogPrivilege.create">写博客</a-button>
     <!-- 悬浮菜单 -->
     <div class="hover-menu">
