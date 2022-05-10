@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## V 2.5.0
+
+1. 移除友人帐
+2. 新增分类功能
+3. 主页新增关于我模块
+4. 支持第三方联合登录（Github、Gitee）
+5. 支持同步博客至掘金平台
+6. Swagger 启动条件修改为开发模式下，无法通过`appsetting.json`修改配置方式启动
+7. 新增作业执行记录查询
+8. Quartz 使用 ADO.NET 启动
+9. 后端引用 Sixpence.ORM 和 Sixpence.Common 包
+10. 前端 CDN 源调整为 JSDelivr
+11. 前端登录信息使用 LocalStorage 存储
+12. Mobile 和 PC 端自动跳转
+13. 支持 Docker 部署
+14. antd 组件使用中文显示
+15. mavon-editor 升级至 2.10.0
+16. vue-cli 升级至 3.x 版本
+17. 修复了一些已知问题
+
 ## V 2.4.1
 
 1. 优化页面
