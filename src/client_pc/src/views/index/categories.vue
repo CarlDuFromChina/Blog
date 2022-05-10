@@ -29,6 +29,7 @@ export default {
       data: [],
       pagination: {
         pageSize: 5,
+        size: 'small'
       },
       loading: true
     }
