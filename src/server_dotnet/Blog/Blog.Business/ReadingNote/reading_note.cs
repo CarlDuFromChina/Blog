@@ -88,8 +88,8 @@ namespace Blog.ReadingNote
         /// 摘要
         /// </summary>
         [DataMember]
-        [Column("brief", "摘要", DataType.Varchar, 100)]
-        public int? brief { get; set; }
+        [Column("brief", "摘要", DataType.Text)]
+        public string brief { get; set; }
     }
 }
 
