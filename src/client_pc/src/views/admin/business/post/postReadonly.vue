@@ -41,13 +41,15 @@
                     <a-avatar :src="getAvatar(data.created_by)" style="margin-right: 10px"></a-avatar>
                     <div>
                       <a>{{ user.name }}</a>
-                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">最后修改时间：{{ data.updated_at | moment('YYYY-MM-DD HH:mm') }}</div>
+                      <div style="color: #72777b; font-size: 12px; padding-top: 5px">
+                        最后修改时间：{{ data.updated_at | moment('YYYY-MM-DD HH:mm') }}
+                      </div>
                     </div>
                   </div>
                 </div>
                 <img v-if="data.big_surface_url" :src="getDownloadUrl(data.big_surface_url)" class="bodyWrapper-background" />
                 <div id="blog_content" class="bodyWrapper-content">
-                  <article v-highlight v-html="formatterContent" class="markdown-body"></article>
+                  <article v-highlight v-html="formatterContent" class="markdown-body" @click="handleImgClick($event)"></article>
                 </div>
               </a-skeleton>
             </a-card>
@@ -72,11 +74,11 @@
                     </div>
                   </a>
                   <div id="block-content" style="padding-top: 10px">
-                    <sp-icon name="sp-blog-zan" :size="25" style="padding-right: 10px;"></sp-icon>
+                    <sp-icon name="sp-blog-zan" :size="25" style="padding-right: 10px"></sp-icon>
                     <span>获得点赞 {{ data.upvote_times || 0 }}</span>
                   </div>
                   <div class="block-content">
-                    <sp-icon name="sp-blog-view" :size="25" style="padding-right: 10px;"></sp-icon>
+                    <sp-icon name="sp-blog-view" :size="25" style="padding-right: 10px"></sp-icon>
                     <span>文章被阅读 {{ data.reading_times || 0 }}</span>
                   </div>
                 </a-skeleton>
@@ -99,6 +101,17 @@
       </div>
     </div>
     <a-back-top :target="getBlogEl" :visibilityHeight="100" />
+    <a-modal
+      :visible="previewVisible"
+      :footer="null"
+      @cancel="() => (this.previewVisible = false)"
+      class="preview-dialog"
+      width="80%"
+      :centered="true"
+      :closable="false"
+    >
+      <img alt="example" style="width: 100%" :src="previewImage" :style="{ cursor: 'zoom-out' }" @click="() => (this.previewVisible = false)" />
+    </a-modal>
   </div>
 </template>
 
@@ -109,7 +122,7 @@ import blogMenu from '../../../index/blogMenu.vue';
 const marked = require('marked');
 
 const renderer = new marked.Renderer();
-renderer.heading = function(text, level) {
+renderer.heading = function (text, level) {
   const anchor = tocObj.add(text, level);
   return `<a id=${anchor} class="anchor-fix"></a><h${level}>${text}</h${level}>\n`;
 };
@@ -118,12 +131,12 @@ marked.setOptions({
   renderer: renderer
 });
 const tocObj = {
-  add: function(text, level) {
+  add: function (text, level) {
     var anchor = `toc${level}${++this.index}`;
     this.toc.push({ anchor: anchor, level: level, text: text });
     return anchor;
   },
-  toHTML: function() {
+  toHTML: function () {
     let levelStack = [];
     let result = '';
     const addStartUL = () => {
@@ -135,7 +148,7 @@ const tocObj = {
     const addLI = (anchor, text) => {
       result += '<li class="content-item" @click="goAnchor(\'' + anchor + '\')"><a href="javascript:void(0)">' + text + '</a></li>\n';
     };
-    this.toc.forEach(function(item) {
+    this.toc.forEach(function (item) {
       let levelIndex = levelStack.indexOf(item.level);
       // 没有找到相应level的ul标签，则将li放入新增的ul中
       if (levelIndex === -1) {
@@ -183,7 +196,9 @@ export default {
       height: null,
       isUp: false,
       getDownloadUrl: sp.getDownloadUrl,
-      getAvatar: sp.getAvatar
+      getAvatar: sp.getAvatar,
+      previewImage: '',
+      previewVisible: false
     };
   },
   async created() {
@@ -247,6 +262,13 @@ export default {
     }
   },
   methods: {
+    handleImgClick($event) {
+      var currentSrc = $event.target.currentSrc; // 拿到图片路径
+      if (currentSrc) {
+        this.previewImage = currentSrc;
+        this.previewVisible = true;
+      }
+    },
     getBlogEl() {
       return document.getElementById('blog');
     },
@@ -481,5 +503,23 @@ export default {
   display: block;
   height: 0; /*same height as header*/
   visibility: hidden;
+}
+
+.preview-dialog {
+  .ant-modal-body {
+    padding: 0;
+    text-align: center;
+  }
+
+  .ant-modal-content {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+  }
 }
 </style>
