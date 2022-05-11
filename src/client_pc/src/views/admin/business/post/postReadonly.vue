@@ -104,7 +104,7 @@
 
 <script>
 import Vue from 'vue';
-import 'mavon-editor/src/lib/css/markdown.css';
+import 'highlight.js/styles/atom-one-dark.css';
 import blogMenu from '../../../index/blogMenu.vue';
 const marked = require('marked');
 
