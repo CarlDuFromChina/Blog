@@ -5,6 +5,7 @@ import Antd from 'ant-design-vue';
 import router from './router';
 import store from './store';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 import * as echarts from 'echarts';
