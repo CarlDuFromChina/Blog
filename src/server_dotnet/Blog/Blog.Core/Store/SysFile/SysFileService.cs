@@ -148,7 +148,7 @@ WHERE hash_code = @code
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private string GetPreviewImageFileName(string fileName)
+        public string GetPreviewImageFileName(string fileName)
         {
             AssertUtil.CheckIsNullOrEmpty<SpException>(fileName, "上传文件文件名不能为空", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
             var fileNameArr = fileName.Split(".");

@@ -53,7 +53,7 @@
         <a-row>
           <a-col>
             <a-form-model-item label="摘要">
-              <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :autosize="{ minRows: 2, maxRows: 4 }" allow-clear />
+              <a-textarea v-model="data.brief" placeholder="请输入摘要，若为空则自动生成" :auto-size="{ minRows: 2, maxRows: 4 }" allow-clear />
             </a-form-model-item>
           </a-col>
         </a-row>

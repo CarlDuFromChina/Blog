@@ -17,17 +17,6 @@ namespace Blog.Business.Blog
                 case EntityAction.PostCreate:
                 case EntityAction.PostUpdate:
                     var id = context.Entity.PrimaryKey.Value;
-                    var sql = @"
-UPDATE sys_file
-SET objectid = @objectid
-WHERE id = @id
-";
-                    var paramList = new Dictionary<string, object>()
-                    {
-                        { "@id", entity.surfaceid },
-                        { "@objectid", id }
-                    };
-                    context.EntityManager.Execute(sql, paramList);
                     new DraftService(context.EntityManager).DeleteDataByBlogId(id); // 删除草稿
                     MemoryCacheUtil.RemoveCacheItem(id);
                     break;
