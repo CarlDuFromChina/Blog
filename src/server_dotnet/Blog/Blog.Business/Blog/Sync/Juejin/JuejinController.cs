@@ -10,13 +10,13 @@ namespace Blog.Business.Blog.Sync.Juejin
 {
     public class JuejinController : BaseApiController
     {
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public List<JuejinCategory> Categories()
         {
             return new JuejinService().QueryCategories();
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public List<JuejinTagInfo> Tags(string key_word)
         {
             return new JuejinService().QueryTags(key_word);

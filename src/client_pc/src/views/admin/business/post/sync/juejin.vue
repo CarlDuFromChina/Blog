@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="visible" title="掘金文章同步">
+  <a-modal v-model="visible" title="掘金文章同步" destroyOnClose>
     <a-form-model ref="form" :model="data" :rules="rules">
       <a-row>
         <a-col :span="12">
@@ -38,6 +38,9 @@ export default {
   },
   created() {
     sp.get('/api/juejin/categories').then(resp => {
+      if (!resp) {
+        return [];
+      }
       this.options = resp.map(item => {
         return {
           Name: item.category.category_name,

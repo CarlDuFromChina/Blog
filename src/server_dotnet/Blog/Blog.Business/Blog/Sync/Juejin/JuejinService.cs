@@ -18,8 +18,20 @@ namespace Blog.Business.Blog.Sync.Juejin
         public JuejinService()
         {
             var cookie = new SysConfigService().GetValue("juejin_cookie")?.ToString();
-            AssertUtil.CheckIsNullOrEmpty<SpException>(cookie, "博客同步到掘金需要先设置Cookie信息", "52669331-ED29-4E9B-8D2C-B5F671852BC1");
             headers = new Dictionary<string, string>() { { "cookie", cookie } };
+        }
+
+        /// <summary>
+        /// 获取API是否正常启用
+        /// </summary>
+        /// <returns></returns>
+        public bool GetJuejinStatus()
+        {
+            if (headers.TryGetValue("cookie", out var value))
+            {
+                return !string.IsNullOrEmpty(value);
+            }
+            return false;
         }
 
         /// <summary>
@@ -28,6 +40,8 @@ namespace Blog.Business.Blog.Sync.Juejin
         /// <returns></returns>
         public List<JuejinCategory> QueryCategories()
         {
+            if (!GetJuejinStatus()) return null;
+
             var param = new { };
             var response = HttpUtil.Post("https://api.juejin.cn/tag_api/v1/query_category_list?aid=2608&uuid=6980253040042001932", JsonConvert.SerializeObject(param), headers);
             var resp = JsonConvert.DeserializeObject<JuejinResponse<List<JuejinCategory>>>(response);
@@ -45,6 +59,8 @@ namespace Blog.Business.Blog.Sync.Juejin
         /// <returns></returns>
         public List<JuejinTagInfo> QueryTags(string keyWord = "")
         {
+            if (!GetJuejinStatus()) return null;
+
             var param = new
             {
                 cursor = "0",
@@ -69,6 +85,8 @@ namespace Blog.Business.Blog.Sync.Juejin
         /// <returns></returns>
         public JuejinDraftCreateResponseData CreateDraft(blog blog, JuejinSyncDto dto)
         {
+            if (!GetJuejinStatus()) return null;
+
             AssertUtil.CheckIsNullOrEmpty<SpException>(dto.category_id, "博客分类不能为空", "52669331-ED29-4E9B-8D2C-B5F671852BC1");
 
             var draft = new Draft()
@@ -111,6 +129,8 @@ namespace Blog.Business.Blog.Sync.Juejin
         /// <param name="id">草稿id</param>
         public void PublishDarft(string id)
         {
+            if (!GetJuejinStatus()) return;
+
             var param = new
             {
                 draft_id = id,
