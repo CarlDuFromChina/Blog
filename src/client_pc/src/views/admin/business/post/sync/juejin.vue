@@ -63,6 +63,9 @@ export default {
                 })
                 .catch(() => {
                   this.$message.error('同步异常');
+                })
+                .finally(() => {
+                  this.visible = false;
                 });
             },
             onCancel: () => {

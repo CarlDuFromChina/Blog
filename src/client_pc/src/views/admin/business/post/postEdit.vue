@@ -276,12 +276,34 @@ export default {
     changeTags(val) {
       this.tags = val;
     },
-    syncBlog() {
+    syncBlog(dest) {
       if (sp.isNullOrEmpty(this.id)) {
         this.$message.error('请先保存博客，再进行同步');
         return;
       }
-      this.$refs.juejin.visible = true;
+      if (dest === 'juejin') {
+        this.$refs.juejin.visible = true;
+      }
+      if (dest === 'wechat') {
+        this.$confirm({
+          title: '博客同步',
+          content: '是否同步博客到微信公众号?',
+          okText: '确定',
+          cancelText: '取消',
+          onOk: () => {
+            sp.post(`api/Blog/SyncBlog?id=${this.id}&destination=${dest}`)
+              .then(() => {
+                this.$message.success('同步成功');
+              })
+              .catch(() => {
+                this.$message.error('同步异常');
+              });
+          },
+          onCancel: () => {
+            this.$message.info('已取消');
+          }
+        });
+      }
     }
   }
 };
