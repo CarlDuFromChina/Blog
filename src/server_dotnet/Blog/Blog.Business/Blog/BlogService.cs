@@ -255,9 +255,10 @@ GROUP BY to_char(created_at, 'YYYY-MM-DD')
         /// </summary>
         /// <param name="id"></param>
         /// <param name="destination"></param>
-        public void SyncBlog(string id, string destination)
+        /// <param name="param"></param>
+        public void SyncBlog(string id, string destination, object param)
         {
-            ServiceContainer.Resolve<ISyncBlog>((name) => name.Contains(destination, StringComparison.OrdinalIgnoreCase))?.Execute(id);
+            ServiceContainer.Resolve<ISyncBlog>((name) => name.Contains(destination, StringComparison.OrdinalIgnoreCase))?.Execute(id, param);
         }
     }
 }

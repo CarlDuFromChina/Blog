@@ -90,10 +90,11 @@ namespace Blog.Business.Blog
         /// </summary>
         /// <param name="id">博客id</param>
         /// <param name="destination">目标系统，例如：Juejin、WeChat</param>
+        /// <param name="param">参数</param>
         [HttpGet]
-        public void SyncBlog(string id, string destination)
+        public void SyncBlog(string id, string destination, object param)
         {
-            new BlogService().SyncBlog(id, destination);
+            new BlogService().SyncBlog(id, destination, param);
         }
 
         /// <summary>

@@ -23,14 +23,4 @@
         public int post_article_count { get; set; }
         public int concern_user_count { get; set; }
     }
-
-    public class JuejinUserInteract
-    {
-        public int id { get; set; }
-        public int omitempty { get; set; }
-        public int user_id { get; set; }
-        public string is_digg { get; set; }
-        public string is_follow { get; set; }
-        public string is_collect { get; set; }
-    }
 }

@@ -16,7 +16,7 @@ namespace Blog.Business.Blog.Sync
     {
         public IEntityManager Manager { get; set; }
 
-        public void Execute(string id)
+        public void Execute(string id, object param)
         {
             if (Manager == null)
                 Manager = EntityManagerFactory.GetManager();
