@@ -91,8 +91,8 @@ namespace Blog.Business.Blog
         /// <param name="id">博客id</param>
         /// <param name="destination">目标系统，例如：Juejin、WeChat</param>
         /// <param name="param">参数</param>
-        [HttpGet]
-        public void SyncBlog(string id, string destination, object param)
+        [HttpPost]
+        public void SyncBlog(string id, string destination, [FromBody]object param)
         {
             new BlogService().SyncBlog(id, destination, param);
         }

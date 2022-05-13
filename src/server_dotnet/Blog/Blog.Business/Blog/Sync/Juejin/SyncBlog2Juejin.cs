@@ -18,7 +18,7 @@ namespace Blog.Business.Blog.Sync.Juejin
             var service = new JuejinService();
             var data = manager.QueryFirst<blog>(id);
 
-            var draft = service.CreateDraft(data, param as JuejinSyncDto);
+            var draft = service.CreateDraft(data, JsonConvert.DeserializeObject<JuejinSyncDto>(param?.ToString()));
             service.PublishDarft(draft.id);
         }
     }

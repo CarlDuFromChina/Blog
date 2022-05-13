@@ -112,17 +112,20 @@
       </span>
     </a-modal>
     <cloud-upload ref="cloudUpload" @selected="selected"></cloud-upload>
+    <jue-jin ref="juejin" :id="data.id"></jue-jin>
   </div>
 </template>
 
 <script>
 import { edit, select } from '@/mixins';
 import draft from './draft';
+import JueJin from './sync/juejin.vue';
 import { htmlToText } from 'html-to-text';
 
 export default {
   name: 'post-edit',
   mixins: [edit, draft, select],
+  components: { JueJin },
   data() {
     return {
       html: '',
@@ -273,29 +276,12 @@ export default {
     changeTags(val) {
       this.tags = val;
     },
-    syncBlog(destination) {
+    syncBlog() {
       if (sp.isNullOrEmpty(this.id)) {
         this.$message.error('请先保存博客，再进行同步');
         return;
       }
-      this.$confirm({
-        title: '博客同步',
-        content: '是否同步博客到第三方?',
-        okText: '确定',
-        cancelText: '取消',
-        onOk: () => {
-          sp.get(`api/Blog/SyncBlog?id=${this.data.id}&destination=${destination}`)
-            .then(() => {
-              this.$message.success('同步成功');
-            })
-            .catch(() => {
-              this.$message.error('同步异常');
-            });
-        },
-        onCancel: () => {
-          this.$message.info('已取消');
-        }
-      });
+      this.$refs.juejin.visible = true;
     }
   }
 };
