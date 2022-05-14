@@ -1,7 +1,3 @@
-import home from './home';
-import readingNote from './readingNote';
-import messageRemind from './messageRemind';
-
 export default [
   {
     path: '/index',
@@ -12,6 +8,21 @@ export default [
       path: '/index/categories',
       name: 'categories',
       component: () => import('./categories.vue')
-    }].concat(home, readingNote, messageRemind)
+    }].concat(
+      {
+        path: '/index/home',
+        name: 'home',
+        component: () => import('./home/home.vue')
+      },
+      {
+        path: '/index/reading',
+        name: 'reading',
+        component: () => import('./reading')
+      },
+      {
+        path: '/index/messageRemind',
+        name: 'messageRemind',
+        component: () => import('./messageRemind/index.vue')
+      })
   }
 ];

@@ -52,7 +52,7 @@ export default {
         },
         {
           name: '读书笔记',
-          route: 'readingNote'
+          route: 'reading'
         }
       ],
       showAdmin: false,
