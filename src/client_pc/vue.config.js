@@ -20,6 +20,7 @@ const cdn = {
     'https://cdn.jsdelivr.net/npm/vue-router@3.5.3/dist/vue-router.min.js',
     'https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js',
     'https://cdn.jsdelivr.net/npm/ant-design-vue@1.7.8/dist/antd.min.js',
+    'https://cdn.jsdelivr.net/npm/mavon-editor@2.10.4/dist/mavon-editor.min.js',
   ],
   externals: {
     moment: 'moment',
@@ -29,7 +30,8 @@ const cdn = {
     vue: 'Vue',
     'vue-router': 'VueRouter',
     'vuex':'Vuex',
-    'ant-design-vue': 'antd'
+    'ant-design-vue': 'antd',
+    'mavon-editor': 'MavonEditor',
   }
 };
 
