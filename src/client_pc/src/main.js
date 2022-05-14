@@ -8,7 +8,6 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import * as echarts from 'echarts';
 import 'ant-design-vue/dist/antd.css';
 import './lib';
 import './components';
@@ -27,7 +26,6 @@ Vue.prototype.$bus = new Vue();
 Vue.filter('moment', (data, formatStr) => (sp.isNullOrEmpty(data) ? '' : moment(data).format(formatStr)));
 moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
-Vue.prototype.$echarts = echarts;
 
 // 如果是移动端则跳转到移动端应用
 if (window.device.mobile()) {

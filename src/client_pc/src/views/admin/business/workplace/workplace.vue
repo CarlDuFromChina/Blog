@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import * as echarts from 'echarts';
+
 export default {
   name: 'workplace',
   data() {
@@ -69,12 +71,12 @@ export default {
     },
     getVirtulData(year, activityData) {
       year = year || '2017';
-      var date = +this.$echarts.number.parseDate(year + '-01-01');
-      var end = +this.$echarts.number.parseDate(year + '-12-31');
+      var date = +echarts.number.parseDate(year + '-01-01');
+      var end = +echarts.number.parseDate(year + '-12-31');
       var dayTime = 3600 * 24 * 1000;
       var data = [];
       for (var time = date; time <= end; time += dayTime) {
-        const key = this.$echarts.format.formatTime('yyyy-MM-dd', time);
+        const key = echarts.format.formatTime('yyyy-MM-dd', time);
         data.push([key, (activityData.find(e => e.created_date === key) || {}).count || 0]);
       }
       return data;
@@ -82,7 +84,7 @@ export default {
     async loadCalendar() {
       const el = document.getElementById('calendar');
       const activityData = await sp.get('api/Blog/GetActivity');
-      const myChart = this.$echarts.init(el);
+      const myChart = echarts.init(el);
       var option = {
         visualMap: {
           show: false,
