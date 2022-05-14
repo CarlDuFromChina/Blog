@@ -71,7 +71,7 @@ export default {
         }
       });
     }
-    sp.get('api/SysConfig/GetValue?code=enable_comment').then(resp => {
+    sp.get('api/SysConfig/EnableComment').then(resp => {
       this.$store.commit('updateShowComment', resp);
     });
   },

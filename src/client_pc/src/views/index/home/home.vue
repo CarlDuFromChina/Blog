@@ -46,12 +46,6 @@ import seriesList from './seriesList.vue';
 import me from './me.vue';
 import packageConfig from '../../../../package.json';
 
-var website = {
-  author: process.env.VUE_APP_AUTHOR,
-  email: process.env.VUE_APP_EMAIL,
-  record_no: process.env.VUE_APP_RECORD_NO
-}
-
 export default {
   name: 'home',
   components: { recommandList, links, idea, blogList, seriesList, me },
@@ -68,8 +62,26 @@ export default {
       },
       config: packageConfig,
       searchValue: '',
-      website: website
+      website: {
+        author: '',
+        email: '',
+        record_no: ''
+      }
     };
+  },
+  created() {
+    sp.get('api/sysconfig/websiteinfo').then(resp => {
+      if (!sp.isNullOrEmpty(resp)) {
+        try {
+          var { author, email, record_no } = resp;
+          this.website.author = author;
+          this.website.email = email;
+          this.website.record_no = record_no;
+        } catch {
+          this.$message.error('网站信息配置格式错误');          
+        }
+      }
+    })
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
