@@ -1,6 +1,4 @@
-﻿using Blog.Core.Auth;
-using Sixpence.EntityFramework.Entity;
-using Blog.Core.WebApi;
+﻿using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Sixpence.EntityFramework.Models;
-using Blog.Business.Blog.Sync;
+using Sixpence.ORM.Models;
+using Sixpence.Common.Utils;
+using Blog.Core.Auth.UserInfo;
+using Blog.Business.Blog.Model;
 
 namespace Blog.Business.Blog
 {
@@ -55,6 +55,16 @@ namespace Blog.Business.Blog
         }
 
         /// <summary>
+        /// 获取博客分类数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public PostCategories categories()
+        {
+            return new BlogService().GetCategories();
+        }
+
+        /// <summary>
         /// 获取博客
         /// </summary>
         /// <param name="id"></param>
@@ -62,7 +72,7 @@ namespace Blog.Business.Blog
         [HttpGet, AllowAnonymous]
         public override blog GetData(string id)
         {
-            return base.GetData(id);
+            return MemoryCacheUtil.GetOrAddCacheItem(id, () => base.GetData(id), DateTime.Now.AddHours(2));
         }
 
         /// <summary>
@@ -75,17 +85,23 @@ namespace Blog.Business.Blog
             return new BlogService().Upvote(id);
         }
 
-        [HttpGet]
-        public void SyncToWeChat(string id)
+        /// <summary>
+        /// 同步博客
+        /// </summary>
+        /// <param name="id">博客id</param>
+        /// <param name="destination">目标系统，例如：Juejin、WeChat</param>
+        /// <param name="param">参数</param>
+        [HttpPost]
+        public void SyncBlog(string id, string destination, [FromBody]object param)
         {
-            new SyncBlog2WeChat().Execute(id);
+            new BlogService().SyncBlog(id, destination, param);
         }
 
         /// <summary>
         /// 获取创作记录日历
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public IEnumerable<BlogActivityModel> GetActivity()
         {
             return new BlogService().GetActivity();
@@ -102,6 +118,16 @@ namespace Blog.Business.Blog
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
             var result = new BlogService().ExportMarkdown(id);
             return File(result.bytes, result.ContentType, result.fileName);
+        }
+
+        /// <summary>
+        /// 获取主页用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, AllowAnonymous]
+        public user_info GetIndexUser()
+        {
+            return new BlogService().GetIndexUser();
         }
     }
 }

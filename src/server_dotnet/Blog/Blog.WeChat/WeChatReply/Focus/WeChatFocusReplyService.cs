@@ -1,26 +1,19 @@
 ﻿using log4net;
 using Blog.Core.WebApi;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.WeChat.Message;
 using System;
 using System.Collections.Generic;
-using Sixpence.Core.Logging;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.Logging;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {
     public class WeChatFocusReplyService : EntityService<wechat_focus_reply>
     {
         #region 构造函数
-        public WeChatFocusReplyService()
-        {
-            this._context = new EntityContext<wechat_focus_reply>();
-        }
-
-        public WeChatFocusReplyService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<wechat_focus_reply>(broker);
-        }
+        public WeChatFocusReplyService() : base() { }
+        public WeChatFocusReplyService(IEntityManager manager) : base(manager) { }
         #endregion
 
         private ILog logger = LogFactory.GetLogger("wechat");
@@ -45,7 +38,7 @@ namespace Blog.WeChat.WeChatReply.Focus
             var sql = @"
 select * from wechat_focus_reply where wechat = @wechat
 ";
-            var data = Broker.Retrieve<wechat_focus_reply>(sql, new Dictionary<string, object>() { { "@wechat", config.Appid } });
+            var data = Manager.QueryFirst<wechat_focus_reply>(sql, new Dictionary<string, object>() { { "@wechat", config.Appid } });
             return data;
         }
 

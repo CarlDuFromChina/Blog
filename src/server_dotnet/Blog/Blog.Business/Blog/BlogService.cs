@@ -1,19 +1,26 @@
 ﻿using Blog.Business.Upvote;
 using Blog.Core;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
 using Blog.Core.Profiles;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Blog.WeChat;
 using Blog.WeChat.Material;
 using Blog.WeChat.WeChatNews;
 using System;
 using System.Collections.Generic;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.Core;
+
+using Sixpence.Common;
 using Newtonsoft.Json;
 using Blog.Core.Config;
 using System.IO;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Module.SysConfig;
+using Sixpence.ORM.EntityManager;
+using Sixpence.Common.IoC;
+using Blog.Business.Blog.Sync;
+using Blog.Business.Blog.Model;
+using System.Linq;
 
 namespace Blog.Business.Blog
 {
@@ -23,46 +30,40 @@ namespace Blog.Business.Blog
         public const string BLOG_CONTENT_NAME = "blog_content";
 
         #region 构造函数
-        public BlogService()
-        {
-            _context = new EntityContext<blog>();
-        }
+        public BlogService() : base() { }
 
-        public BlogService(IPersistBroker broker)
-        {
-            _context = new EntityContext<blog>(broker);
-        }
+        public BlogService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
         {
             var sql = $@"
 SELECT
-	blog.blogid,
+	blog.id,
 	blog.title,
 	blog.blog_type,
-	blog.blog_typeName,
-	blog.article_typeName,
-	blog.createdBy,
-	blog.createdbyname,
-	blog.modifiedBy,
-	blog.modifiedbyname,
-	blog.createdOn,
-	blog.modifiedOn,
+	blog.blog_type_name,
+	blog.article_type_name,
+	blog.created_by,
+	blog.created_by_name,
+	blog.updated_by,
+	blog.updated_by_name,
+	blog.created_at,
+	blog.updated_at,
 	blog.is_series,
 	blog.tags,
 	COALESCE(blog.reading_times, 0) reading_times,
-	COALESCE((SELECT COUNT(1) FROM upvote WHERE objectid = blog.blogid), 0) upvote_times,
-	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.blogid), 0) comment_count,
+	COALESCE((SELECT COUNT(1) FROM upvote WHERE objectid = blog.id), 0) upvote_times,
+	COALESCE((SELECT COUNT(1) FROM comments WHERE objectid = blog.id), 0) comment_count,
 	blog.surfaceid,
 	blog.surface_url,
 	blog.brief,
 	blog.is_pop,
-	blog.is_popName
+	blog.is_pop_name
 FROM
 	blog
 WHERE 1=1 AND blog.is_show = 1";
-            var orderBy = "blog.is_pop DESC, blog.createdOn desc, blog.title, blog.blogid";
+            var orderBy = "blog.is_pop DESC, blog.created_at desc, blog.title, blog.id";
             return new List<EntityView>()
             {
                 new EntityView()
@@ -107,15 +108,48 @@ WHERE 1=1 AND blog.is_show = 1";
         /// <returns></returns>
         public override blog GetData(string id)
         {
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 var data = base.GetData(id);
                 var paramList = new Dictionary<string, object>() { { "@id", id } };
-                data.upvote_times = Broker.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
-                data.comment_count = Broker.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
-                Broker.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE blogid = @id", paramList);
+                data.upvote_times = Manager.QueryCount("SELECT COUNT(1) FROM upvote WHERE objectid = @id", paramList);
+                data.comment_count = Manager.QueryCount("SELECT COUNT(1) FROM comments WHERE objectid = @id", paramList);
+                Manager.Execute("UPDATE blog SET reading_times = COALESCE(reading_times, 0) + 1 WHERE id = @id", paramList);
                 return data;
             });
+        }
+
+        public PostCategories GetCategories()
+        {
+            var data = new PostCategories();
+
+            var sql = @"
+SELECT
+	blog.id,
+	blog.title,
+	blog.blog_type,
+	blog.blog_type_name
+FROM
+	blog
+WHERE 1=1 AND blog.is_show = 1";
+            var dataList = Manager.Query<blog>(sql).ToList();
+
+            var categories = dataList
+                .GroupBy(p => p.blog_type)
+                .Select(b => new Category() { category = b.First().blog_type, category_name = b.First().blog_type_name, data = new List<CategoryData>() })
+                .ToList();
+
+            dataList.Each(item =>
+            {
+                var category = categories.Where(d => d.category.Equals(item.blog_type)).FirstOrDefault();
+                category.data.Add(new CategoryData() { id = item.id, title = item.title });
+            });
+
+            return new PostCategories()
+            {
+                count = categories.Count(),
+                data = categories
+            };
         }
 
         /// <summary>
@@ -132,7 +166,7 @@ FROM
 WHERE
 	parentid = '7EB12A4C-2698-4A8B-956D-B2467BE1D886'
 ";
-            return Broker.DbClient.Query<string>(sql, param: null);
+            return Manager.DbClient.Query<string>(sql);
         }
 
         /// <summary>
@@ -141,25 +175,25 @@ WHERE
         /// <param name="blogId"></param>
         public bool Upvote(string blogId)
         {
-            var data = Broker.Retrieve<upvote>("SELECT * FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", blogId } });
+            var data = Manager.QueryFirst<upvote>("SELECT * FROM upvote WHERE objectid = @id", new Dictionary<string, object>() { { "@id", blogId } });
             if (data != null)
             {
-                Broker.Delete(data);
+                Manager.Delete(data);
                 return false;
             }
             else
             {
-                var blog = Broker.Retrieve<blog>(blogId);
+                var blog = Manager.QueryFirst<blog>(blogId);
                 data = new upvote()
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    objectId = blog.Id,
-                    objectIdName = blog.title,
-                    object_ownerid = blog.createdBy,
-                    object_owneridName = blog.createdByName,
+                    id = Guid.NewGuid().ToString(),
+                    objectId = blog.id,
+                    objectid_name = blog.title,
+                    object_ownerid = blog.created_by,
+                    object_ownerid_name = blog.created_by_name,
                     object_type = "blog"
                 };
-                Broker.Create(data);
+                Manager.Create(data);
                 return true;
             }
         }
@@ -172,13 +206,13 @@ WHERE
         {
             var sql = @"
 SELECT
-	to_char(createdon, 'YYYY-MM-DD') AS created_date,
+	to_char(created_at, 'YYYY-MM-DD') AS created_date,
 	count(1) AS count
 FROM blog
-WHERE createdon > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND createdon < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
-GROUP BY to_char(createdon, 'YYYY-MM-DD')
+WHERE created_at > to_date(to_char(now(), 'YYYY-01-01'), 'YYYY-MM-DD') AND created_at < to_date(to_char(now(), 'YYYY-12-31'), 'YYYY-MM-DD')
+GROUP BY to_char(created_at, 'YYYY-MM-DD')
 ";
-            return Broker.Query<BlogActivityModel>(sql);
+            return Manager.Query<BlogActivityModel>(sql);
         }
 
         /// <summary>
@@ -200,6 +234,31 @@ GROUP BY to_char(createdon, 'YYYY-MM-DD')
                 }
                 return (fileName, contentType, ms.ToArray());
             }
+        }
+
+        /// <summary>
+        /// 获取首页用户
+        /// </summary>
+        /// <returns></returns>
+        public user_info GetIndexUser()
+        {
+            var config = Manager.QueryFirst<sys_config>("SELECT * FROM sys_config WHERE code = @code", new Dictionary<string, object>() { { "@code", "index_user" } });
+            if (!string.IsNullOrEmpty(config.value))
+            {
+                return new UserInfoService(Manager).GetDataByCode(config.value);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 同步博客到第三方系统
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="destination"></param>
+        /// <param name="param"></param>
+        public void SyncBlog(string id, string destination, object param)
+        {
+            ServiceContainer.Resolve<ISyncBlog>((name) => name.Contains(destination, StringComparison.OrdinalIgnoreCase))?.Execute(id, param);
         }
     }
 }

@@ -1,19 +1,19 @@
 ﻿INSERT INTO auth_user (
-    auth_userid,
+    id,
     code,
     name,
     is_lock,
-    is_lockname,
+    is_lock_name,
     roleid,
-    roleidname,
+    roleid_name,
     password,
     user_infoid,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '00000000-0000-0000-0000-000000000000',
@@ -32,25 +32,25 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT auth_userid FROM auth_user WHERE auth_userid = '00000000-0000-0000-0000-000000000000'
+    SELECT id FROM auth_user WHERE id = '00000000-0000-0000-0000-000000000000'
 );
 
 INSERT INTO auth_user (
-    auth_userid,
+    id,
     code,
     name,
     is_lock,
-    is_lockname,
+    is_lock_name,
     roleid,
-    roleidname,
+    roleid_name,
     password,
     user_infoid,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '111111111-11111-1111-1111-111111111111',
@@ -69,25 +69,25 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT auth_userid FROM auth_user WHERE auth_userid = '111111111-11111-1111-1111-111111111111'
+    SELECT id FROM auth_user WHERE id = '111111111-11111-1111-1111-111111111111'
 );
 
 INSERT INTO auth_user (
-    auth_userid,
+    id,
     code,
     name,
     is_lock,
-    is_lockname,
+    is_lock_name,
     roleid,
-    roleidname,
+    roleid_name,
     password,
     user_infoid,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '222222222-22222-2222-2222-222222222222',
@@ -106,5 +106,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT auth_userid FROM auth_user WHERE auth_userid = '222222222-22222-2222-2222-222222222222'
+    SELECT id FROM auth_user WHERE id = '222222222-22222-2222-2222-222222222222'
 );

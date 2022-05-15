@@ -1,19 +1,19 @@
 ﻿using Blog.Core;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.MessageRemind;
 using Newtonsoft.Json;
-using Sixpence.Core;
+using Sixpence.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Business.Upvote
 {
-    public class UpvotePlugin : IPersistBrokerPlugin
+    public class UpvotePlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var entity = context.Entity;
             switch (context.Action)
@@ -23,29 +23,28 @@ namespace Blog.Business.Upvote
                         var data = entity as upvote;
                         var message = new message_remind()
                         {
-                            Id = Guid.NewGuid().ToString(),
+                            id = Guid.NewGuid().ToString(),
                             name = $"{data.name}消息提醒",
                             is_read = false,
-                            is_readName = "否",
                             receiverId = data.object_ownerid,
-                            receiverIdName = data.object_owneridName,
+                            receiverId_name = data.object_ownerid_name,
                             message_type = "upvote",
                             content = JsonConvert.SerializeObject(data)
                         };
-                        context.Broker.Create(message);
+                        context.EntityManager.Create(message);
                     }
                     break;
                 case EntityAction.PreDelete:
                     {
-                        var data = context.Broker.Retrieve<upvote>(context.Entity.Id);
+                        var data = context.EntityManager.QueryFirst<upvote>(context.Entity.PrimaryKey.Value);
                         var sql = @"
 SELECT * FROM (
 	SELECT *, content::jsonb ->> 'objectId' AS objectid
 	FROM message_remind WHERE 1=1  AND message_type = 'upvote'
 ) t1
 WHERE t1.objectid = @id";
-                        var dataList = context.Broker.RetrieveMultiple<message_remind>(sql, new Dictionary<string, object>() { { "@id", data.objectId } });
-                        dataList.Each(item => context.Broker.Delete(item));
+                        var dataList = context.EntityManager.Query<message_remind>(sql, new Dictionary<string, object>() { { "@id", data.objectId } });
+                        dataList.Each(item => context.EntityManager.Delete(item));
                     }
                     break;
                 default:

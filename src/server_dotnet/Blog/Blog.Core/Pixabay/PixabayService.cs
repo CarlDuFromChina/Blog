@@ -1,7 +1,7 @@
 ﻿using log4net;
 using Newtonsoft.Json;
-using Sixpence.Core.Logging;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Logging;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;

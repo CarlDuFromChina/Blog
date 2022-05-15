@@ -1,24 +1,24 @@
 <template>
-  <a-comment :avatar="getAvatar(data.createdBy)" style="padding: 10px">
+  <a-comment :avatar="getAvatar(data.created_by)" style="padding: 10px">
     <a slot="author">
       <template v-if="data.name === '名称'">
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
         <span>{{ data.name }}</span>
       </template>
       <template v-else-if="data.name === '回复'">
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
         <span>{{ data.name }}</span>
-        {{ data.replyidName }}
+        {{ data.replyid_name }}
       </template>
       <template v-else>
-        {{ data.createdByName }}
+        {{ data.created_by_name }}
       </template>
     </a>
     <p slot="content" style="background: #f7f8fa">
       {{ data.comment }}
     </p>
-    <a-tooltip slot="datetime" :title="data.createdOn | moment('YYYY-MM-DD HH:mm:ss')">
-      <span>{{ formtDate(data.createdOn) }}</span>
+    <a-tooltip slot="datetime" :title="data.created_at | moment('YYYY-MM-DD HH:mm:ss')">
+      <span>{{ formtDate(data.created_at) }}</span>
     </a-tooltip>
     <template slot="actions">
       <!-- <span key="comment-basic-like" @click="like">
@@ -49,7 +49,6 @@ export default {
       controllerName: 'Comments',
       showReply: false,
       value: '',
-      getAvatar: sp.getAvatar
     };
   },
   computed: {
@@ -58,6 +57,13 @@ export default {
     }
   },
   methods: {
+    getAvatar(id) {
+      if (sp.isNullOrEmpty(id)) {
+        var avatar = require('../assets/images/avatar.png');
+        return avatar;
+      }
+      return sp.getAvatar(id);
+    },
     formtDate(val) {
       return this.$moment(val).fromNow();
     },
@@ -77,15 +83,15 @@ export default {
         return;
       }
       const comment = {
-        Id: uuid.generate(),
+        id: uuid.generate(),
         name: '回复',
         comment: this.value,
         objectid: this.data.objectId,
         object_name: this.data.object_name,
         comment_type: 'reply',
-        replyid: this.data.createdBy,
-        replyidName: this.data.createdByName,
-        parentid: this.data.parentid || this.data.Id
+        replyid: this.data.created_by,
+        replyid_name: this.data.created_by_name,
+        parentid: this.data.parentid || this.data.id
       };
       sp.post('api/Comments/CreateData', comment).then(() => {
         this.$message.success('留言成功');

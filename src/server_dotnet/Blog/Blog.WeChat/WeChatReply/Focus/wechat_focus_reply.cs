@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,38 +15,35 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_focus_replyid", "实体id", DataType.Varchar, 100)]
-        public string wechat_focus_replyId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "内容", DataType.Text)]
+        [Column("content", "内容", DataType.Text)]
         public string content { get; set; }
 
         /// <summary>
         /// 公众号
         /// </summary>
         [DataMember]
-        [Attr("wechat", "公众号", DataType.Varchar, 100)]
+        [Column("wechat", "公众号", DataType.Varchar, 100)]
         public string wechat { get; set; }
 
         /// <summary>
         /// 启用
         /// </summary>
         [DataMember]
-        [Attr("checked", "启用", DataType.Int4)]
+        [Column("checked", "启用", DataType.Int4)]
         public int? @checked { get; set; }
     }
 }

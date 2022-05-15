@@ -14,7 +14,7 @@ namespace Blog.Core.Module.SysMenu
             var privileges = UserPrivilegesCache.GetUserPrivileges(UserIdentityUtil.GetCurrentUserId()).Where(item => item.object_type == nameof(sys_menu));
             return sysMenus.Where(item =>
             {
-                var data = privileges.FirstOrDefault(e => e.objectid == item.sys_menuId);
+                var data = privileges.FirstOrDefault(e => e.objectid == item.id);
                 return data != null && data.privilege > 0;
             });
         }

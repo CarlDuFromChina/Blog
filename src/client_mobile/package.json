@@ -8,9 +8,11 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:docker": "docker build -t blog-html-mobile ."
   },
   "dependencies": {
+    "@sixpence/web-core": "^1.0.21",
     "axios": "^0.21.1",
     "highlight.js": "10.5.0",
     "less": "^3.10.3",
@@ -22,8 +24,7 @@
     "vue-moment": "^4.1.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2",
-    "vuex-persistedstate": "^4.0.0-beta.3",
-    "web-core": "1.0.20"
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

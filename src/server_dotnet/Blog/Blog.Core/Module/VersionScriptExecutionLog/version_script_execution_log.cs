@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -13,24 +13,21 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("version_script_execution_logid", "实体id", DataType.Varchar, 100)]
-        public string version_script_execution_logid
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 是否执行成功
         /// </summary>
         [DataMember]
-        [Attr("is_success", "是否执行成功", DataType.Int4)]
+        [Column("is_success", "是否执行成功", DataType.Int4)]
         public bool is_success { get; set; }
     }
 }

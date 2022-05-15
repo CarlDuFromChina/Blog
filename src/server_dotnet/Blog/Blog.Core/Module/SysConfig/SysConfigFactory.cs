@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Broker;
+﻿using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Blog.Core.Module.SysConfig
     /// </summary>
     public static class SysConfigFactory
     {
-        static IPersistBroker broker;
+        static IEntityManager manager;
         static SysConfigFactory()
         {
-            broker = PersistBrokerFactory.GetPersistBroker();
+            manager = EntityManagerFactory.GetManager();
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Blog.Core.Module.SysConfig
 select * from sys_config where code = @code;
 ";
             var t = new T();
-            var data = broker.Retrieve<sys_config>(sql, new Dictionary<string, object>() { { "@code", t.Code } });
+            var data = manager.QueryFirst<sys_config>(sql, new Dictionary<string, object>() { { "@code", t.Code } });
             // 数据库里不存在该配置，则创建一条配置记录
             if (data == null)
             {
@@ -38,7 +38,7 @@ select * from sys_config where code = @code;
                     code = t.Code,
                     value = t.DefaultValue?.ToString()
                 };
-                broker.Create(model);
+                manager.Create(model);
                 return t.DefaultValue;
             }
             return data.value;

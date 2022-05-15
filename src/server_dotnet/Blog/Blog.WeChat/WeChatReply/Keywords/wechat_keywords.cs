@@ -1,5 +1,5 @@
 
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -13,25 +13,21 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_keywordsid", "实体id", DataType.Varchar, 100)]
-        public string wechat_keywordsId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
 
-        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
+
         /// <summary>
         /// 回复内容
         /// </summary>
         [DataMember]
-        [Attr("reply_content", "回复内容", DataType.Text)]
+        [Column("reply_content", "回复内容", DataType.Text)]
         public string reply_content { get; set; }
     }
 }

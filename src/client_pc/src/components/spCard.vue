@@ -1,8 +1,12 @@
 <template>
   <div class="card">
-    <h3 v-if="title">{{ title }}</h3>
-    <slot></slot>
-    <a-empty v-if="empty" />
+    <a-skeleton :loading="loading" active>
+      <slot name="title">
+        <h3 v-if="title">{{ title }}</h3>
+      </slot>
+      <slot></slot>
+      <a-empty v-if="empty" />
+    </a-skeleton>
   </div>
 </template>
 
@@ -16,6 +20,10 @@ export default {
     empty: {
       type: Boolean,
       default: false
+    },
+    loading: {
+      type: Boolean,
+      default: true
     }
   }
 };

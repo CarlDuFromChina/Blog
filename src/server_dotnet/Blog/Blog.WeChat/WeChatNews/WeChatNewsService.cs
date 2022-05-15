@@ -1,31 +1,26 @@
 ﻿using Newtonsoft.Json;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Core.Auth;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.Core.Utils;
+
+using Sixpence.Common.Utils;
 using Blog.WeChat.Material;
-using Sixpence.Core;
+using Sixpence.Common;
 using Blog.WeChat.WeChatNewsMaterial;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.WeChatNews
 {
     public class WeChatNewsService : EntityService<wechat_news>
     {
         #region 构造函数
-        public WeChatNewsService()
-        {
-            this._context = new EntityContext<wechat_news>();
-        }
+        public WeChatNewsService() : base() { }
 
-        public WeChatNewsService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<wechat_news>(broker);
-        }
+        public WeChatNewsService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -36,7 +31,7 @@ namespace Blog.WeChat.WeChatNews
         {
             foreach (var item in ids)
             {
-                var data = Broker.Retrieve<wechat_news>(item);
+                var data = Manager.QueryFirst<wechat_news>(item);
                 WeChatApi.DeleteMaterial(data.media_id);
             }
             base.DeleteData(ids);
@@ -59,7 +54,7 @@ namespace Blog.WeChat.WeChatNews
                     author = t.author,
                     digest = t.digest,
                     show_cover_pic = 1,
-                    content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(t.html_content),
+                    content = new WeChatNewsMaterialService(Manager).ConvertLocalUrlToWeChatUrl(t.html_content),
                     content_source_url = ""
                 }
             };
@@ -105,7 +100,7 @@ namespace Blog.WeChat.WeChatNews
                         author,
                         digest,
                         show_cover_pic = show_cover_pic ? 1 : 0,
-                        content = new WeChatNewsMaterialService(Broker).ConvertLocalUrlToWeChatUrl(content),
+                        content = new WeChatNewsMaterialService(Manager).ConvertLocalUrlToWeChatUrl(content),
                         content_source_url,
                         need_open_comment = need_open_comment ? 1 : 0,
                         only_fans_can_comment = only_fans_can_comment ? 1: 0
@@ -115,7 +110,7 @@ namespace Blog.WeChat.WeChatNews
             var result = WeChatApi.AddNews(JsonConvert.SerializeObject(postData));
             var data = new wechat_news()
             {
-                wechat_newsId = result.media_id,
+                id = result.media_id,
                 media_id = result.media_id,
                 author = author,
                 html_content = content,

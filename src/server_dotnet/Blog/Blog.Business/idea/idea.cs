@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +15,21 @@ namespace Blog.idea
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("ideaid", "想法id", DataType.Varchar, 100)]
-        public string ideaId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Attr("content", "想法id", DataType.Text)]
+        [Column("content", "想法id", DataType.Text)]
         public string content { get; set; }
     }
 }

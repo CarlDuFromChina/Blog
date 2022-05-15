@@ -3,15 +3,15 @@
     <sp-content>
       <mt-search v-model="searchValue" placeholder="输入书名快速搜索"></mt-search>
       <div v-infinite-scroll="loadData" :infinite-scroll-disabled="loading" infinite-scroll-distance="10" class="list">
-        <div v-for="row in list" :key="row.Id" class="card item" @click="goReadonly(row.Id)">
+        <div v-for="row in list" :key="row.id" class="card item" @click="goReadonly(row.id)">
           <div class="avatar">
             <img :src="(row.big_surfaceid || '').toDownloadUrl()" alt="" />
           </div>
           <div class="content">
             <div class="title">{{ row.name }}</div>
             <div class="info">
-              <span><sp-icon name="sp-blog-people" style="padding-right: 8px"></sp-icon>{{ row.createdByName }}</span>
-              <span style="float: right">{{ row.createdOn | moment('YYYY-MM-DD') }}</span>
+              <span><sp-icon name="sp-blog-people" style="padding-right: 8px"></sp-icon>{{ row.created_by_name }}</span>
+              <span style="float: right">{{ row.created_at | moment('YYYY-MM-DD') }}</span>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default {
     fetch() {
       return sp
         .get(
-          `${sp.getServerUrl()}api/ReadingNote/GetViewData?searchValue=${this.searchValue}&orderBy=createdon desc&pageSize=${this.pageSize}&pageIndex=${
+          `${sp.getServerUrl()}api/ReadingNote/GetViewData?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
             this.pageIndex
           }&searchList=&viewId=03860DF4-0E9E-4330-80BF-6A1E9AC797A6`
         )

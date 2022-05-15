@@ -2,7 +2,7 @@
   <a-modal v-model="editVisible" title="登录" width="300px" :footer="false">
     <a-form-model ref="form" :model="data" :rules="rules">
       <a-form-model-item prop="code">
-        <a-input v-model="data.code" placeholder="邮箱"></a-input>
+        <a-input v-model="data.code" placeholder="邮箱，如果邮箱不存在即注册"></a-input>
       </a-form-model-item>
       <a-form-model-item prop="password">
         <a-input v-model="data.password" placeholder="密码" type="password" @keyup.enter.native="login"></a-input>
@@ -11,13 +11,18 @@
     <a-button type="primary" block @click="login">
       登录
     </a-button>
-    <a-alert style="margin-top: 8px" message="如果邮箱不存在即注册" type="info" banner closable />
+    <a-form-model-item :style="{ textAlign: 'center', paddingTop: '20px' }">
+      <span style="color: #999aaa">其他登录方式</span><br>
+      <sp-icon name="sp-blog-github" :size="20" @click="thirdPartyLogin('github')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-gitee" :size="20" @click="thirdPartyLogin('gitee')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+      <sp-icon name="sp-blog-qq" :size="20" @click="thirdPartyLogin('qq')" cursor="pointer" :style="{ paddingRight: '8px' }"></sp-icon>
+    </a-form-model-item>
   </a-modal>
 </template>
 
 <script>
-import { encrypt } from 'web-core';
-import { saveAuth } from '../lib/login';
+import { encrypt } from '@sixpence/web-core';
+import { saveAuth, thirdPartyLogin } from '../lib/login';
 // const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
 
 export default {
@@ -25,6 +30,7 @@ export default {
   data() {
     return {
       editVisible: false,
+      thirdPartyLogin: thirdPartyLogin,
       data: {
         code: '',
         password: null
@@ -70,4 +76,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="less" scoped>
+/deep/ .ant-modal-body {
+  padding: 24px 24px 0 24px;
+}
+</style>

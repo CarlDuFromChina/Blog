@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sixpence.EntityFramework.Entity
+namespace Sixpence.ORM.Entity
 {
     /// <summary>
     /// 实体试图

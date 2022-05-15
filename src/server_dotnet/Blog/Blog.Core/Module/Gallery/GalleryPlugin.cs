@@ -1,17 +1,17 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Store.SysFile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Gallery
 {
-    public class GalleryPlugin : IPersistBrokerPlugin
+    public class GalleryPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var obj = context.Entity as gallery;
             switch (context.Action)
@@ -22,12 +22,12 @@ namespace Blog.Core.Module.Gallery
                     break;
                 case EntityAction.PostCreate:
                 case EntityAction.PostUpdate:
-                    var data1 = context.Broker.Retrieve<sys_file>(obj.previewid);
-                    var data2 = context.Broker.Retrieve<sys_file>(obj.imageid);
-                    data1.objectId = obj.Id;
-                    data2.objectId = obj.Id;
-                    context.Broker.Update(data1);
-                    context.Broker.Update(data2);
+                    var data1 = context.EntityManager.QueryFirst<sys_file>(obj.previewid);
+                    var data2 = context.EntityManager.QueryFirst<sys_file>(obj.imageid);
+                    data1.objectId = obj.id;
+                    data2.objectId = obj.id;
+                    context.EntityManager.Update(data1);
+                    context.EntityManager.Update(data2);
                     break;
                 case EntityAction.PreDelete:
                     break;

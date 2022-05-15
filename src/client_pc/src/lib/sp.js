@@ -1,7 +1,8 @@
 import store from '../store';
+import axios from 'axios';
 
 function getServerUrl() {
-  let url = store.getters.getServerUrl;
+  let url = axios.defaults.baseURL || window.origin;
   return url.charAt(url.length - 1) === '/' ? url : url + '/';
 }
 
@@ -11,14 +12,16 @@ function getDownloadUrl(value, isUrl = true) {
   }
   const url = isUrl ? value : `/api/SysFile/Download?objectId=${value}`;
   if (url.charAt(0) === '/') {
-    return `${getServerUrl().trimEnd('/')}${url}`;
+    return `${getServerUrl().trimLast('/')}${url}`;
   }
   return `${getServerUrl()}${url}`;
 }
 
 function getAvatar(id) {
+  id = id || getUserId();
   if (sp.isNullOrEmpty(id)) {
-    return `${getServerUrl()}api/System/GetAvatar?id=${getUserId()}`;
+    var avatar = require('../assets/images/avatar.png');
+    return avatar;
   }
   return `${getServerUrl()}api/System/GetAvatar?id=${id}`;
 }

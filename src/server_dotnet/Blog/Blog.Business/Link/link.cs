@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,38 +14,35 @@ namespace Blog.Business.Link
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("linkid", "链接id", DataType.Varchar, 100, true)]
-        public string linkId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 链接地址
         /// </summary>
         [DataMember]
-        [Attr("link_url", "链接地址", DataType.Text)]
+        [Column("link_url", "链接地址", DataType.Text)]
         public string link_url { get; set; }
 
         /// <summary>
         /// 链接类型
         /// </summary>
         [DataMember]
-        [Attr("link_type", "链接类型", DataType.Varchar, 100)]
+        [Column("link_type", "链接类型", DataType.Varchar, 100)]
         public string link_type { get; set; }
 
         /// <summary>
         /// 摘要
         /// </summary>
         [DataMember]
-        [Attr("brief", "摘要", DataType.Varchar, 100)]
+        [Column("brief", "摘要", DataType.Varchar, 100)]
         public string brief { get; set; }
     }
 }

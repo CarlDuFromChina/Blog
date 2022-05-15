@@ -1,7 +1,7 @@
 ﻿using Blog.Core.Config;
 using log4net;
-using Sixpence.Core;
-using Sixpence.Core.Logging;
+using Sixpence.Common;
+using Sixpence.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net;

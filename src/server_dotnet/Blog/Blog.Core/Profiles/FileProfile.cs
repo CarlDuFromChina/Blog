@@ -14,7 +14,7 @@ namespace Blog.Core.Profiles
         public FileProfile()
         {
             CreateMap<sys_file, FileInfoModel>()
-                .ForMember(dest => dest.id, opt => opt.MapFrom(e => e.sys_fileId))
+                .ForMember(dest => dest.id, opt => opt.MapFrom(e => e.id))
                 .ForMember(dest => dest.name, opt => opt.MapFrom(e => e.name))
                 .ForMember(dest => dest.downloadUrl, opt => opt.MapFrom(e => e.DownloadUrl));
         }

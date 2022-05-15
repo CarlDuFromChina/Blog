@@ -1,17 +1,17 @@
 ﻿INSERT INTO sys_menu (
-    sys_menuid,
+    id,
     name,
     icon,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '41FC5E03-3FC7-4044-9947-5711DE8D7AD9',
@@ -28,24 +28,24 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_menuid FROM sys_menu WHERE sys_menuid = '41FC5E03-3FC7-4044-9947-5711DE8D7AD9'
+    SELECT id FROM sys_menu WHERE id = '41FC5E03-3FC7-4044-9947-5711DE8D7AD9'
 );
 
 INSERT INTO sys_menu (
-    sys_menuid,
+    id,
     parentid,
-    parentidname,
+    parentid_name,
     name,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     'A40BCEF0-039F-4982-812A-79E3F63119DC',
@@ -63,24 +63,24 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_menuid FROM sys_menu WHERE sys_menuid = 'A40BCEF0-039F-4982-812A-79E3F63119DC'
+    SELECT id FROM sys_menu WHERE id = 'A40BCEF0-039F-4982-812A-79E3F63119DC'
 );
 
 INSERT INTO sys_menu (
-    sys_menuid,
+    id,
     parentid,
-    parentidname,
+    parentid_name,
     name,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '3E4691A3-D9BC-43A1-B0ED-C2E3440EC354',
@@ -98,24 +98,24 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_menuid FROM sys_menu WHERE sys_menuid = '3E4691A3-D9BC-43A1-B0ED-C2E3440EC354'
+    SELECT id FROM sys_menu WHERE id = '3E4691A3-D9BC-43A1-B0ED-C2E3440EC354'
 );
 
 INSERT INTO sys_menu (
-    sys_menuid,
+    id,
     parentid,
-    parentidname,
+    parentid_name,
     name,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '451F9C81-0C01-40A1-8FD4-B04E17D4D99B',
@@ -133,5 +133,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_menuid FROM sys_menu WHERE sys_menuid = '451F9C81-0C01-40A1-8FD4-B04E17D4D99B'
+    SELECT id FROM sys_menu WHERE id = '451F9C81-0C01-40A1-8FD4-B04E17D4D99B'
 );

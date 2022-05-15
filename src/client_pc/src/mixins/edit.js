@@ -6,7 +6,7 @@ export default {
   },
   data() {
     return {
-      Id: '',
+      id: '',
       controllerName: '',
       data: {},
       loading: false,
@@ -15,10 +15,10 @@ export default {
   },
   created() {
     if (this.relatedAttr && this.relatedAttr.id) {
-      this.Id = this.relatedAttr.id;
+      this.id = this.relatedAttr.id;
       this.loadData();
     } else if (this.$route.params && this.$route.params.id) {
-      this.Id = this.$route.params.id;
+      this.id = this.$route.params.id;
       this.loadData();
     }
     if (!sp.isNullOrEmpty(this.controllerName)) {
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     pageState() {
-      return sp.isNullOrEmpty(this.Id) ? 'create' : 'edit';
+      return sp.isNullOrEmpty(this.id) ? 'create' : 'edit';
     }
   },
   methods: {
@@ -39,7 +39,7 @@ export default {
       }
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.Id}`);
+        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
         if (this.loadComplete && typeof this.loadComplete === 'function') {
           await this.loadComplete();
         }
@@ -60,9 +60,9 @@ export default {
       }
       this.$refs.form.validate(async valid => {
         if (valid) {
-          const operateName = sp.isNullOrEmpty(this.Id) ? 'CreateData' : 'UpdateData';
-          if (sp.isNullOrEmpty(this.Id)) {
-            this.data.Id = uuid.generate();
+          const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
+          if (sp.isNullOrEmpty(this.id)) {
+            this.data.id = uuid.generate();
           }
           try {
             await sp.post(`api/${this.controllerName}/${operateName}`, this.data);

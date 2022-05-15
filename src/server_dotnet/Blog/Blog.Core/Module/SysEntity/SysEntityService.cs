@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.Module.SysAttrs;
 using System;
 using System.Collections.Generic;
@@ -9,24 +9,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Policy;
 using System.Web;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Models;
 using Blog.Core.Profiles;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.SysEntity
 {
     public class SysEntityService : EntityService<sys_entity>
     {
         #region 构造函数
-        public SysEntityService()
-        {
-            _context = new EntityContext<sys_entity>();
-        }
+        public SysEntityService() : base() { }
 
-        public SysEntityService(IPersistBroker broker)
-        {
-            _context = new EntityContext<sys_entity>(broker);
-        }
+        public SysEntityService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -44,7 +38,7 @@ FROM
                 {
                     Sql = sql,
                     CustomFilter = customFilter,
-                    OrderBy = "name, createdon",
+                    OrderBy = "name, created_at",
                     ViewId = "FBEC5163-587B-437E-995F-1DC97229C906",
                     Name = "所有的实体"
                 }
@@ -66,7 +60,7 @@ FROM
 WHERE
 	entityid = @id
 ";
-            return Broker.RetrieveMultiple<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", id } });
+            return Manager.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", id } }).ToList();
         }
 
         /// <summary>
@@ -77,12 +71,12 @@ WHERE
         public override string CreateData(sys_entity t)
         {
             var id = "";
-            Broker.ExecuteTransaction(() =>
+            Manager.ExecuteTransaction(() =>
             {
                 id = base.CreateData(t);
-                var sql = Broker.DbClient.Driver.CreateTable(t.code);
-                Broker.Execute(sql);
-                new SysAttrsService(Broker).AddSystemAttrs(id);
+                var sql = $"CREATE TABLE {t.code} (id VARCHAR(100) PRIMARY KEY)";
+                Manager.Execute(sql);
+                new SysAttrsService(Manager).AddSystemAttrs(id);
             });
             return id;
         }
@@ -93,17 +87,17 @@ WHERE
         /// <param name="ids"></param>
         public override void DeleteData(List<string> ids)
         {
-            Broker.ExecuteTransaction(() =>
+            Manager.ExecuteTransaction(() =>
             {
-                var dataList = Broker.RetrieveMultiple<sys_entity>(ids).ToList();
+                var dataList = Manager.Query<sys_entity>(ids).ToList();
                 base.DeleteData(ids); // 删除实体
                 var sql = @"
 DELETE FROM sys_attrs WHERE entityid IN (in@ids);
 ";
-                Broker.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } }); // 删除级联字段
+                Manager.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } }); // 删除级联字段
                 dataList.ForEach(data =>
                 {
-                    Broker.Execute($"DROP TABLE {data.code}");
+                    Manager.Execute($"DROP TABLE {data.code}");
                 });
             });
         }
@@ -119,19 +113,18 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             var entity = GetData(entityId);
             
             var attributes = "";
-            var sysEntityAttrList = typeof(SimpleEntity).GetProperties().Select(item => item.Name).ToList();
             foreach (var item in attrs)
             {
                 var column = MapperHelper.Map<Column>(item);
 
                 // 实体id和实体name不需要产生
-                if (item.code != entity.code + "id" && !sysEntityAttrList.Contains(item.code))
+                if (item.code != entity.code + "id")
                 {
                     var attribute = $@"
         /// <summary>
         /// {column.LogicalName}
         /// </summary>
-        [DataMember, Attr(""{column.Name}"", ""{column.LogicalName}"", AttrType.{column.Type}, {column.Length})]
+        [DataMember, Column(""{column.Name}"", ""{column.LogicalName}"", AttrType.{column.Type}, {column.Length})]
         public {column.Type.ToCSharpType()} {column.Name} {{ get; set; }}
 ";
                     attributes += attribute;
@@ -139,7 +132,7 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             }
 
             var content = $@"
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -152,18 +145,8 @@ namespace SixpenceStudio.Core.SysEntity
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr(""{entity.code}id"", ""实体id"", DataType.Varchar, 100)]
-        public string {entity.code}Id
-        {{
-            get
-            {{
-                return this.Id;
-            }}
-            set
-            {{
-                this.Id = value;
-            }}
-        }}
+        [Column(""{entity.PrimaryKey.Name}"", ""实体id"", DataType.Varchar, 100)]
+        public string {entity.PrimaryKey.Name} {{ get; set; }}
 
         {attributes}
     }}

@@ -1,5 +1,6 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
@@ -12,15 +13,9 @@ namespace Blog.Draft
     public class DraftService : EntityService<draft>
     {
         #region 构造函数
-        public DraftService()
-        {
-            this._context = new EntityContext<draft>();
-        }
+        public DraftService() : base() { }
 
-        public DraftService(IPersistBroker Broker)
-        {
-            this._context = new EntityContext<draft>(Broker);
-        }
+        public DraftService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public IList<draft> GetDrafts()
@@ -31,7 +26,7 @@ WHERE blogid NOT IN (
 	SELECT blogid FROM blog
 )
 ";
-            return Broker.RetrieveMultiple<draft>(sql);
+            return Manager.Query<draft>(sql).ToList();
         }
 
         /// <summary>
@@ -45,7 +40,7 @@ WHERE blogid NOT IN (
 SELECT * FROM draft
 WHERE blogid = @blogid
 ";
-            return Broker.Retrieve<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            return Manager.QueryFirst<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
 
         /// <summary>
@@ -58,24 +53,24 @@ WHERE blogid = @blogid
 DELETE FROM draft
 WHERE blogid = @blogid
 ";
-            Broker.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            Manager.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
         }
 
         public override string CreateOrUpdateData(draft t)
         {
-            var data = _context.SingleQuery(t.Id);
+            var data = Repository.FindOne(t.id);
             if (data != null)
             {
-                t.createdBy = data.createdBy;
-                t.createdByName = data.createdByName;
-                t.createdOn = data.createdOn;
-                _context.Update(t);
+                t.created_by = data.created_by;
+                t.created_by_name = data.created_by_name;
+                t.created_at = data.created_at;
+                Repository.Update(t);
             }
             else
             {
-                return _context.Create(t);
+                return Repository.Create(t);
             }
-            return t.Id;
+            return t.id;
         }
     }
 }

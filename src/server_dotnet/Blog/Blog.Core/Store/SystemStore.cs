@@ -1,14 +1,15 @@
-﻿using Sixpence.Core.Logging;
+﻿using Sixpence.Common.Logging;
 using Blog.Core.Store.SysFile;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+
 using System.Web;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Store
 {
@@ -33,8 +34,8 @@ namespace Blog.Core.Store
         /// <param name="filePath"></param>
         public async Task<IActionResult> DownLoad(string objectId)
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            var data = broker.Retrieve<sys_file>(objectId) ?? broker.Retrieve<sys_file>("select * from sys_file where hash_code = @id", new Dictionary<string, object>() { { "@id", objectId } });
+            var manager = EntityManagerFactory.GetManager();
+            var data = manager.QueryFirst<sys_file>(objectId) ?? manager.QueryFirst<sys_file>("select * from sys_file where hash_code = @id", new Dictionary<string, object>() { { "@id", objectId } });
             var fileInfo = new FileInfo(data.GetFilePath());
             if (fileInfo.Exists)
             {
@@ -53,8 +54,8 @@ namespace Blog.Core.Store
         /// <returns></returns>
         public Stream GetStream(string id)
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
-            var data = broker.Retrieve<sys_file>(id);
+            var manager = EntityManagerFactory.GetManager();
+            var data = manager.QueryFirst<sys_file>(id);
             return FileUtil.GetFileStream(data.GetFilePath());
         }
 

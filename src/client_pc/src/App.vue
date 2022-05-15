@@ -1,12 +1,30 @@
 <template>
   <div id="myApp" style="height:100%">
-    <router-view />
+    <a-config-provider :getPopupContainer="getPopupContainer" :locale="locale">
+      <router-view />
+    </a-config-provider>
   </div>
 </template>
 
 <script>
+import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
+
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      locale: zh_CN
+    };
+  },
+  methods: {
+    getPopupContainer(el, dialogContext) {
+      if (dialogContext) {
+        return dialogContext.getDialogWrap();
+      } else {
+        return document.body;
+      }
+    }
+  }
 };
 </script>
 

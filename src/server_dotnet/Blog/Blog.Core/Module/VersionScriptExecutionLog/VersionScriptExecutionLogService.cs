@@ -1,25 +1,19 @@
-﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.Common.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.VersionScriptExecutionLog
 {
     public class VersionScriptExecutionLogService : EntityService<version_script_execution_log>
     {
         #region 构造函数
-        public VersionScriptExecutionLogService()
-        {
-            _context = new EntityContext<version_script_execution_log>();
-        }
+        public VersionScriptExecutionLogService() : base() { }
 
-        public VersionScriptExecutionLogService(IPersistBroker broker)
-        {
-            _context = new EntityContext<version_script_execution_log>(broker);
-        }
+        public VersionScriptExecutionLogService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -33,21 +27,21 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
 select * from version_script_execution_log
 where name = @name and is_success = 1
 ";
-            var data = Broker.Retrieve<version_script_execution_log>(sql, new Dictionary<string, object>() { { "@name", fileName } });
+            var data = Manager.QueryFirst<version_script_execution_log>(sql, new Dictionary<string, object>() { { "@name", fileName } });
             if (data == null)
             {
-                data = new version_script_execution_log() { Id = Guid.NewGuid().ToString(), name = fileName };
+                data = new version_script_execution_log() { id = Guid.NewGuid().ToString(), name = fileName };
                 try
                 {
-                    Broker.ExecuteSqlScript(filePath);
+                    Manager.ExecuteSqlScript(filePath);
                     data.is_success = true;
-                    Broker.Create(data);
+                    Manager.Create(data);
                     return 1;
                 }
                 catch (Exception ex)
                 {
                     data.is_success = false;
-                    Broker.Create(data);
+                    Manager.Create(data);
                     throw ex;
                 }
             }
