@@ -1,32 +1,27 @@
 ﻿using Blog.Core.Auth;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Job;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Blog.Core.Extensions;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.RobotMessageTask
 {
     public class RobotMessageTaskService : EntityService<robot_message_task>
     {
         #region 构造函数
-        public RobotMessageTaskService()
-        {
-            _context = new EntityContext<robot_message_task>();
-        }
+        public RobotMessageTaskService() : base() { }
 
-        public RobotMessageTaskService(IPersistBroker broker)
-        {
-            _context = new EntityContext<robot_message_task>(broker);
-        }
+        public RobotMessageTaskService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public new IEnumerable<robot_message_task> GetAllData()
         {
-            return _context.GetAllEntity();
+            return Repository.GetAllEntity();
         }
 
         public void RunOnce(string id)
@@ -38,28 +33,28 @@ namespace Blog.WeChat.RobotMessageTask
                 { "User", UserIdentityUtil.GetAdmin() }
             };
 
-            JobHelpers.RunOnceNow(data.name, data.robotidName, paramList);
-            var jobState = JobHelpers.GetJobStatus(data.name, data.robotidName).ToSelectOption();
+            JobHelpers.RunOnceNow(data.name, data.robotid_name, paramList);
+            var jobState = JobHelpers.GetJobStatus(data.name, data.robotid_name).ToSelectOption();
             data.job_state = jobState.Value.ToString();
-            data.job_stateName = jobState.Name;
+            data.job_state_name = jobState.Name;
             UpdateData(data);
         }
 
         public void PauseJob(string id)
         {
             var data = GetData(id);
-            JobHelpers.PauseJob(data.name, data.robotidName);
+            JobHelpers.PauseJob(data.name, data.robotid_name);
             data.job_state = "1";
-            data.job_stateName = "暂停";
+            data.job_state_name = "暂停";
             UpdateData(data);
         }
 
         public void ResumeJob(string id)
         {
             var data = GetData(id);
-            JobHelpers.ResumeJob(data.name, data.robotidName);
+            JobHelpers.ResumeJob(data.name, data.robotid_name);
             data.job_state = "0";
-            data.job_stateName = "正常";
+            data.job_state_name = "正常";
             UpdateData(data);
         }
     }

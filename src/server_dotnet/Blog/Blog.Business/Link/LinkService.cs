@@ -1,5 +1,6 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,8 @@ namespace Blog.Business.Link
     public class LinkService : EntityService<link>
     {
         #region 构造函数
-        public LinkService()
-        {
-            this._context = new EntityContext<link>();
-        }
-
-        public LinkService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<link>(broker);
-        }
+        public LinkService() : base() { }
+        public LinkService(IEntityManager manager) : base(manager) { }
         #endregion
     }
 }

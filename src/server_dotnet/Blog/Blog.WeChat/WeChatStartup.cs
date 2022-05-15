@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Blog.Core;
 using Blog.Core.Job;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
 using Blog.WeChat.RobotMessageTask;
-using Sixpence.Core;
+using Sixpence.Common;
 
 namespace Blog.WeChat
 {
@@ -21,8 +21,8 @@ namespace Blog.WeChat
             {
                 new RobotMessageTaskService().GetAllData().Each(item =>
                 {
-                    JobHelpers.RegisterJob(new RobotMessageTaskJob(item.name, item.robotidName, item.runtime), item, item.job_state.ToTriggerState());
-                    logger.Info($"机器人[{item.robotidName}]的[{item.name}]作业已启动");
+                    JobHelpers.RegisterJob(new RobotMessageTaskJob(item.name, item.robotid_name, item.runtime), item, item.job_state.ToTriggerState());
+                    logger.Info($"机器人[{item.robotid_name}]的[{item.name}]作业已启动");
                 });
                 logger.Info("机器人启动完毕");
             }

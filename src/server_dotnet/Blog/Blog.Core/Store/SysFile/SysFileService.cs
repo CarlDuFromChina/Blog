@@ -1,29 +1,25 @@
 ﻿using Blog.Core.Config;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.ORM.Entity;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Sixpence.EntityFramework.Broker;
 using Microsoft.AspNetCore.Http;
 using Blog.Core.Module.DataService;
 using Blog.Core.Profiles;
+using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
+using System.Linq;
 
 namespace Blog.Core.Store.SysFile
 {
     public class SysFileService : EntityService<sys_file>
     {
         #region 构造函数
-        public SysFileService()
-        {
-            this._context = new EntityContext<sys_file>();
-        }
+        public SysFileService() : base() {}
 
-        public SysFileService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<sys_file>(broker);
-        }
+        public SysFileService(IEntityManager manager) : base(manager) {}
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -36,16 +32,16 @@ namespace Blog.Core.Store.SysFile
                     ViewId = "DD1D72FB-D7DE-49AC-B387-273375E6A7BA",
                     Sql = @"
 SELECT
-	sys_fileid,
+	id,
 	NAME,
 	file_type,
 	content_type,
-	createdon,
-	createdbyname
+	created_at,
+	created_by_name
 FROM
 	sys_file
 ",
-                    OrderBy = "createdon desc",
+                    OrderBy = "created_at desc",
                     CustomFilter = new List<string>(){ "name" }
                 },
                 new EntityView()
@@ -54,12 +50,12 @@ FROM
                     ViewId = "3BCF6C07-2B49-4D69-9EB1-A3D5B721C976",
                     Sql = $@"
 SELECT
-	sys_fileid,
+	id,
 	NAME,
 	file_type,
-	createdon,
-	createdbyname,
-	concat('{GetDownloadUrl("")}', sys_fileid) AS downloadUrl
+	created_at,
+	created_by_name,
+	concat('{GetDownloadUrl("")}', id) AS downloadUrl
 FROM
 	sys_file
 ",
@@ -75,7 +71,7 @@ FROM
 SELECT * FROM sys_file
 WHERE hash_code = @code
 ";
-            return Broker.RetrieveMultiple<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Manager.Query<sys_file>(sql, new Dictionary<string, object>() { { "@code", code } }).ToList();
         }
 
         public sys_file UploadFile(Stream stream, string fileSuffix, string fileType, string contentType, string objectId, string fileName = "")
@@ -91,7 +87,7 @@ WHERE hash_code = @code
 
             var sysFile = new sys_file()
             {
-                sys_fileId = id,
+                id = id,
                 name = fileName,
                 real_name = newFileName,
                 hash_code = hash_code,
@@ -118,7 +114,7 @@ WHERE hash_code = @code
             var contentType = file.ContentType;
             var suffix = file.FileName.GetFileType();
 
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 // 上传大图
                 var image = UploadFile(stream, suffix, fileType, contentType, objectId, file.FileName);
@@ -152,7 +148,7 @@ WHERE hash_code = @code
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private string GetPreviewImageFileName(string fileName)
+        public string GetPreviewImageFileName(string fileName)
         {
             AssertUtil.CheckIsNullOrEmpty<SpException>(fileName, "上传文件文件名不能为空", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
             var fileNameArr = fileName.Split(".");

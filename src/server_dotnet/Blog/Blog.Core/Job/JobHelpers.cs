@@ -1,13 +1,16 @@
 ﻿using Blog.Core.Auth;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+using Sixpence.ORM.Entity;
+using Sixpence.Common.Logging;
 using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
+using System.Collections.Specialized;
+using Sixpence.ORM.Driver;
 
 namespace Blog.Core.Job
 {
@@ -16,8 +19,33 @@ namespace Blog.Core.Job
     /// </summary>
     public static class JobHelpers
     {
-        static IScheduler sched = new StdSchedulerFactory().GetScheduler().Result;
-        static JobHelpers() { }
+        static IScheduler sched;
+
+        static JobHelpers()
+        {
+            var config = Sixpence.ORM.DBSourceConfig.Config;
+            var driverType = config.DriverType.GetEnum<DriverType>();
+            var properties = new NameValueCollection()
+            {
+                { "quartz.scheduler.instanceName", "MyClusteredScheduler"},
+                { "quartz.scheduler.instanceId", "AUTO"},
+                { "quartz.threadPool.type", "Quartz.Simpl.DefaultThreadPool, Quartz" },
+                { "quartz.threadPool.threadCount", "25" },
+                { "quartz.threadPool.threadPriority", "5" },
+                { "quartz.jobStore.misfireThreshold", "60000" },
+                { "quartz.jobStore.type", "Quartz.Impl.AdoJobStore.JobStoreTX, Quartz" },
+                { "quartz.jobStore.driverDelegateType", JobExtension.GetDelegateType(driverType) },
+                { "quartz.jobStore.tablePrefix", "QRTZ_" },
+                { "quartz.jobStore.dataSource", "myDS" },
+                { "quartz.jobStore.useProperties", "false" },
+                { "quartz.dataSource.myDS.connectionString", config.ConnectionString },
+                { "quartz.dataSource.myDS.provider", JobExtension.GetDbBDriver(driverType) },
+                { "quartz.serializer.type", "json" }
+            };
+
+            var factory = new StdSchedulerFactory(properties);
+            sched = factory.GetScheduler().Result;
+        }
 
         /// <summary>
         /// 注册作业
@@ -26,7 +54,6 @@ namespace Blog.Core.Job
         {
             var logger = LogFactory.GetLogger("startup");
             var jobs = ServiceContainer.ResolveAll<IJob>().ToList();
-            StartService();
             logger.Info($"共发现{jobs.Count}个Job待运行");
             jobs.Each(item => {
                 if (item == null)
@@ -60,10 +87,11 @@ namespace Blog.Core.Job
                     }
                 }
             });
+            StartService();
         }
 
         /// <summary>
-        /// 注册job
+        /// 动态注册 job
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
@@ -120,7 +148,7 @@ namespace Blog.Core.Job
             var jobKey = new JobKey(name, group);
             if (sched.CheckExists(jobKey).Result)
             {
-                sched.TriggerJob(jobKey);
+                sched.TriggerJob(jobKey).Wait();
             }
         }
 
@@ -138,26 +166,6 @@ namespace Blog.Core.Job
                 sched.UnscheduleJob(new TriggerKey(name, group)); // 移除触发器
                 sched.DeleteJob(new JobKey(name, group)); // 删除任务
             }
-        }
-
-        /// <summary>
-        /// 获取Job下次运行时间
-        /// </summary>
-        /// <param name="jobName"></param>
-        /// <returns></returns>
-        public static DateTimeOffset GetJobNextTime(string jobName)
-        {
-            var jobs = ServiceContainer.ResolveAll<IJob>();
-            var datetime = new DateTimeOffset();
-            jobs.Each(job =>
-            {
-                var instance = Activator.CreateInstance(job.GetType()) as JobBase;
-                if (instance.Name.Equals(jobName))
-                {
-                    datetime = sched.GetTrigger(new TriggerKey(instance.JobKey.Name, instance.JobKey.Group)).Result.GetNextFireTimeUtc().Value;
-                }
-            });
-            return datetime;
         }
 
         /// <summary>

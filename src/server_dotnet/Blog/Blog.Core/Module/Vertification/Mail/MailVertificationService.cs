@@ -1,31 +1,26 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.UserInfo;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Module.Role;
-using Sixpence.Core.Utils;
+using Sixpence.Common.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Sixpence.EntityFramework.Broker;
+
 using Blog.Core.Config;
 using Blog.Core.Module.DataService;
-using Sixpence.Core.Logging;
+using Sixpence.Common.Logging;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Module.Vertification.Mail
 {
     public class MailVertificationService : EntityService<mail_vertification>
     {
         #region 构造函数
-        public MailVertificationService()
-        {
-            _context = new EntityContext<mail_vertification>();
-        }
+        public MailVertificationService() : base() { }
 
-        public MailVertificationService(IPersistBroker broker)
-        {
-            _context = new EntityContext<mail_vertification>(broker);
-        }
+        public MailVertificationService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -40,7 +35,7 @@ WHERE mail_address = @address
 AND is_active = 0
 AND expire_time > CURRENT_TIMESTAMP
 AND mail_type = @type";
-            return Broker.Retrieve<mail_vertification>(sql, new Dictionary<string, object>() { { "@address", mail }, { "@type", mailType.ToString() } });
+            return Manager.QueryFirst<mail_vertification>(sql, new Dictionary<string, object>() { { "@address", mail }, { "@type", mailType.ToString() } });
         }
 
         /// <summary>
@@ -50,7 +45,7 @@ AND mail_type = @type";
         /// <returns></returns>
         public string ActivateUser(string id)
         {
-            return Broker.ExecuteTransaction(() =>
+            return Manager.ExecuteTransaction(() =>
             {
                 var data = GetData(id);
                 if (data == null)
@@ -61,38 +56,37 @@ AND mail_type = @type";
 
                 #region 创建用户
                 var model = JsonConvert.DeserializeObject<LoginRequest>(data.login_request.ToString());
-                var role = new SysRoleService(Broker).GetGuest();
+                var role = new SysRoleService(Manager).GetGuest();
                 var user = new user_info()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    id = Guid.NewGuid().ToString(),
                     code = model.code,
                     password = model.password,
                     name = model.code.Split("@")[0],
                     mailbox = model.code,
-                    roleid = role.Id,
-                    roleidName = role.name,
+                    roleid = role.id,
+                    roleid_name = role.name,
                     stateCode = 1,
-                    stateCodeName = "启用"
+                    stateCode_name = "启用"
                 };
-                Broker.Create(user, false);
+                Manager.Create(user, false);
                 var _authUser = new auth_user()
                 {
-                    Id = user.user_infoId,
+                    id = user.id,
                     name = user.name,
                     code = user.code,
                     roleid = user.roleid,
-                    roleidName = user.roleidName,
-                    user_infoid = user.user_infoId,
+                    roleid_name = user.roleid_name,
+                    user_infoid = user.id,
                     is_lock = false,
-                    is_lockName = "否",
                     last_login_time = DateTime.Now,
                     password = model.password
                 };
-                Broker.Create(_authUser);
+                Manager.Create(_authUser);
                 #endregion
 
                 data.is_active = true;
-                Broker.Update(data);
+                Manager.Update(data);
 
                 return "激活成功";
             });
@@ -107,7 +101,7 @@ AND mail_type = @type";
         {
             try
             {
-                return Broker.ExecuteTransaction(() =>
+                return Manager.ExecuteTransaction(() =>
                 {
                     var data = GetData(id);
                     if (data == null)
@@ -116,7 +110,7 @@ AND mail_type = @type";
                     if (data.expire_time < DateTime.Now)
                         return "重置失败，重置链接已过期";
 
-                    new SystemService(Broker).ResetPassword(data.createdBy);
+                    new SystemService(Manager).ResetPassword(data.created_by);
                     return $"重置成功，初始密码为：{SystemConfig.Config.DefaultPassword}";
                 });
             }

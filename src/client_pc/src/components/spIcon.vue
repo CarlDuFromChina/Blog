@@ -1,5 +1,5 @@
 <template>
-  <div class="svg-icon" @click="click">
+  <div class="svg-icon" @click="click" :style="{ 'cursor': cursor }">
     <svg :width="size" :height="size" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true">
       <use :xlink:href="'#' + name" :fill="color" />
     </svg>
@@ -24,6 +24,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    cursor: {
+      type: String,
+      default: 'default'
     }
   },
   methods: {

@@ -7,17 +7,14 @@ Description：同步微信图文素材Job
 ********************************************************/
 #endregion
 
-using Newtonsoft.Json;
+using Blog.Core.Auth;
+using Blog.Core.Job;
+using Blog.WeChat.WeChatNews;
+using Blog.WeChat.WeChatNewsMaterial;
+using Quartz;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Linq;
-using Quartz;
-using Blog.Core.Job;
-using Sixpence.EntityFramework.Entity;
-using Blog.WeChat.WeChatNews;
-using Blog.Core.Auth.UserInfo;
-using Sixpence.EntityFramework.Broker;
-using Blog.Core.Auth;
-using Blog.WeChat.WeChatNewsMaterial;
 
 namespace Blog.WeChat.Job
 {
@@ -33,20 +30,20 @@ namespace Blog.WeChat.Job
 
         public override void Executing(IJobExecutionContext context)
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
+            var Manager = EntityManagerFactory.GetManager();
             Logger.Debug("开始同步微信公众号图文素材");
             try
             {
-                broker.ExecuteTransaction(() =>
+                Manager.ExecuteTransaction(() =>
                 {
-                    var result = new WeChatNewsService(broker).GetDataList(1, 5000);
+                    var result = new WeChatNewsService(Manager).GetDataList(1, 5000);
                     var user = UserIdentityUtil.GetCurrentUser() ?? UserIdentityUtil.GetSystem();
                     var dataList = (from item in result.item
                                     let news = item.content.news_item.FirstOrDefault()
                                     select new wechat_news()
                                     {
-                                        wechat_newsId = item.media_id,
-                                        html_content = new WeChatNewsMaterialService(broker).ConvertWeChatUrlToLocalUrl(news?.content),
+                                        id = item.media_id,
+                                        html_content = new WeChatNewsMaterialService(Manager).ConvertWeChatUrlToLocalUrl(news?.content),
                                         media_id = item.media_id,
                                         update_time = item.update_time,
                                         name = news?.title,
@@ -54,15 +51,15 @@ namespace Blog.WeChat.Job
                                         digest = news?.digest,
                                         thumb_media_id = news?.thumb_media_id,
                                         content_source_url = news?.content_source_url,
-                                        createdBy = user.Id,
-                                        createdByName = user.Name,
-                                        modifiedBy = user.Id,
-                                        modifiedByName = user.Name,
-                                        createdOn = DateTime.Now,
-                                        modifiedOn = DateTime.Now,
+                                        created_by = user.Id,
+                                        created_by_name = user.Name,
+                                        updated_by = user.Id,
+                                        updated_by_name = user.Name,
+                                        updated_at = DateTime.Now,
+                                        created_at = DateTime.Now
                                     })
                                    .ToList();
-                    broker.BulkCreateOrUpdate(dataList);
+                    Manager.BulkCreateOrUpdate(dataList);
                     Logger.Debug($"发现{result.item_count}篇文章需要同步");
                     Logger.Debug($"同步微信公众号图文素材成功，共同步：{dataList.Count()}篇文章");
                 });

@@ -12,6 +12,7 @@ import moment from 'vue-moment';
 import './lib/extension';
 import './directives';
 import store from './store';
+import 'current-device';
 
 Vue.use(moment);
 Vue.use(MintUI);
@@ -26,11 +27,19 @@ if (process.env.NODE_ENV === 'development' && !sp.isNullOrEmpty(serverUrl)) {
   console.info('服务器地址修改为：' + serverUrl);
 }
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
+// 如果是移动端则跳转到移动端应用
+sp.originGet('./static/config.json').then(resp => {
+  var config = resp.data;
+  if (!window.device.mobile()) {
+    window.location.href = config.pc_url;
+  } else {
+    /* eslint-disable no-new */
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      components: { App },
+      template: '<App/>'
+    });
+  }
 });

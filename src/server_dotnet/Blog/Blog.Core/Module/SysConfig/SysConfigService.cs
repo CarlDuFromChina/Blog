@@ -1,5 +1,5 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +10,9 @@ namespace Blog.Core.Module.SysConfig
     public class SysConfigService : EntityService<sys_config>
     {
         #region 构造函数
-        public SysConfigService()
-        {
-            _context = new EntityContext<sys_config>();
-        }
+        public SysConfigService() : base() { }
 
-        public SysConfigService(IPersistBroker broker)
-        {
-            _context = new EntityContext<sys_config>(broker);
-        }
+        public SysConfigService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public object GetValue(string code)
@@ -28,7 +22,7 @@ namespace Blog.Core.Module.SysConfig
                 var sql = @"
 select * from sys_config where code = @code;
 ";
-                var data = Broker.Retrieve<sys_config>(sql, new Dictionary<string, object>() { { "@code", code } });
+                var data = Manager.QueryFirst<sys_config>(sql, new Dictionary<string, object>() { { "@code", code } });
                 return data?.value;
             }
             return "";

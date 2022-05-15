@@ -1,15 +1,15 @@
 INSERT INTO sys_config (
-    sys_configid,
+    id,
     name,
     code,
     value,
     description,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     'B00741E8-F7E8-4726-96EA-9A30734586F6',
@@ -24,5 +24,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_configid FROM sys_config WHERE sys_configid = 'B00741E8-F7E8-4726-96EA-9A30734586F6'
+    SELECT id FROM sys_config WHERE id = 'B00741E8-F7E8-4726-96EA-9A30734586F6'
 );

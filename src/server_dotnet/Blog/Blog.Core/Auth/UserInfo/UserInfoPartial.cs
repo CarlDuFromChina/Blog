@@ -10,7 +10,7 @@ namespace Blog.Core.Auth.UserInfo
     public partial class user_info
     {
         [DataMember]
-        public  string is_lockName { get; set; }
+        public  string is_lock_name { get; set; }
 
         [DataMember]
         public string password { get; set; }

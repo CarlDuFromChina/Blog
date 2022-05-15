@@ -1,24 +1,24 @@
 ﻿using Newtonsoft.Json;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
-using Sixpence.Core.Logging;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.Logging;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.WeChat.FocusUser
 {
     public class FocusUserService
     {
-        IPersistBroker broker;
+        IEntityManager manager;
         ILog logger;
 
         public FocusUserService()
         {
-            broker = PersistBrokerFactory.GetPersistBroker();
+            manager = EntityManagerFactory.GetManager();
             logger = LogFactory.GetLogger("wechat");
         }
 

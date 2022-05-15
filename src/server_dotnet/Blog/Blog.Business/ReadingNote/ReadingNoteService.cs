@@ -1,5 +1,6 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,9 @@ namespace Blog.ReadingNote
     public class ReadingNoteService : EntityService<reading_note>
     {
         #region 构造函数
-        public ReadingNoteService()
-        {
-            this._context = new EntityContext<reading_note>();
-        }
+        public ReadingNoteService() : base() { }
 
-        public ReadingNoteService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<reading_note>(broker);
-        }
+        public ReadingNoteService(IEntityManager manager) : base(manager) { }
         #endregion
 
         public override IList<EntityView> GetViewList()
@@ -31,7 +26,7 @@ namespace Blog.ReadingNote
                     ViewId = "B7E8A50C-47E9-4A4F-879B-55D7BC7FFDB6",
                     Sql = "select * from reading_note",
                     CustomFilter = new List<string>(){ "name" },
-                    OrderBy = "createdon",
+                    OrderBy = "created_at",
                     Name = "全部阅读笔记"
                 },
                 new EntityView()
@@ -39,7 +34,7 @@ namespace Blog.ReadingNote
                     ViewId = "03860DF4-0E9E-4330-80BF-6A1E9AC797A6",
                     Sql = @"    
 SELECT
-	reading_noteid,
+	id,
 	name,
 	book_title,
 	content,
@@ -47,18 +42,18 @@ SELECT
 	surface_url,
 	big_surfaceid,
 	big_surface_url,
-	createdby,
-	createdbyname,
-	createdon,
-	modifiedby modifiedbyname,
-	modifiedon 
+	created_by,
+	created_by_name,
+	created_at,
+	updated_by updated_by_name,
+	updated_at 
 FROM
 	reading_note 
 WHERE
 	is_show = 0
 ",
                     CustomFilter = new List<string>(){ "name" },
-                    OrderBy = "createdon",
+                    OrderBy = "created_at",
                     Name = "展示的阅读笔记"
                 }
             };

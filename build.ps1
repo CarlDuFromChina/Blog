@@ -61,14 +61,21 @@ else
   New-Item -ItemType directory ".\release\"
 }
 
-if (Test-Path .\release\web) {
-  Remove-Item -Recurse -Force ".\release\web\*"
+if (Test-Path .\release\html-pc) {
+  Remove-Item -Recurse -Force ".\release\html-pc\*"
 }
 else
 {
-  New-Item -ItemType directory ".\release\web"
+  New-Item -ItemType directory ".\release\html-pc"
 }
-New-Item -ItemType directory ".\release\web\debug\"
+
+if (Test-Path .\release\html-mobile) {
+  Remove-Item -Recurse -Force ".\release\html-mobile\*"
+}
+else
+{
+  New-Item -ItemType directory ".\release\html-mobile"
+}
 
 # Restore Dotnet Packages
 Write-Section-Message "Build dotnet"
@@ -95,7 +102,7 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release2 = ".\src\client_pc\dist\*"
-Copy-Item -Force -Recurse $release2 ".\release\web\"
+Copy-Item -Force -Recurse $release2 ".\release\html-pc\"
 
 # Build mobile.vue
 
@@ -109,11 +116,12 @@ Pop-Location
 Write-Success-Message "OK."
 
 $release3 = ".\src\client_mobile\dist\*"
-Copy-Item -Force -Recurse $release3 ".\release\web\debug\"
+Copy-Item -Force -Recurse $release3 ".\release\html-mobile\"
 
 ## Compression
 Write-Section-Message "Compression..."
-Compress-Archive ".\release\web\*" -DestinationPath ".\release\web.zip" -Force
+Compress-Archive ".\release\html-pc\*" -DestinationPath ".\release\html-pc.zip" -Force
+Compress-Archive ".\release\html-mobile\*" -DestinationPath ".\release\html-mobile.zip" -Force
 Compress-Archive ".\release\server\*" -DestinationPath ".\release\server.zip" -Force
 # Done
 Write-Section-Message "Finished!"

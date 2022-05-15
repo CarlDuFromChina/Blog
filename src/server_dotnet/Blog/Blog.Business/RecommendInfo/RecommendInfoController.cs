@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

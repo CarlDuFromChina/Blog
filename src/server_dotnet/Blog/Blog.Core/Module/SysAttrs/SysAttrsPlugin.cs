@@ -1,21 +1,21 @@
 ﻿using Blog.Core.Module.SysEntity;
 using Blog.Core.Profiles;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Models;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
+using Sixpence.ORM.EntityManager;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Blog.Core.Module.SysAttrs
 {
-    public class SysAttrsPlugin : IPersistBrokerPlugin
+    public class SysAttrsPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             var entity = context.Entity;
-            var broker = context.Broker;
+            var manager = context.EntityManager;
 
             switch (context.Action)
             {
@@ -23,16 +23,16 @@ namespace Blog.Core.Module.SysAttrs
                     {
                         var data = entity as sys_attrs;
                         var columns = new List<Column>() { MapperHelper.Map<Column>(data) };
-                        broker.Execute(broker.DbClient.Driver.GetAddColumnSql(data.entityCode, columns));
+                        manager.Execute(manager.DbClient.Driver.GetAddColumnSql(data.entityCode, columns));
                     }
                     break;
                 case EntityAction.PostDelete:
                     {
                         var column = new Column() { Name = entity.GetAttributeValue<string>("code") };
-                        var tableName = broker.Retrieve<sys_entity>(entity.GetAttributeValue<string>("entityid"))?.code;
+                        var tableName = manager.QueryFirst<sys_entity>(entity.GetAttributeValue<string>("entityid"))?.code;
                         if (!string.IsNullOrEmpty(tableName))
                         {
-                            broker.Execute(broker.DbClient.Driver.GetDropColumnSql(tableName, new List<Column>() { column }));
+                            manager.Execute(manager.DbClient.Driver.GetDropColumnSql(tableName, new List<Column>() { column }));
                         }
                     }
                     break;

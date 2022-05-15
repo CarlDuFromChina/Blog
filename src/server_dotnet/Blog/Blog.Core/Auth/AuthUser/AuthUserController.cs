@@ -41,5 +41,16 @@ namespace Blog.Core.Auth
         {
             new AuthUserService().UnlockUser(id);
         }
+
+        /// <summary>
+        /// 绑定第三方系统 账号
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="code"></param>
+        [HttpPost]
+        public void BindThirdPartyAccount(ThirdPartyLoginType type, string userid, string code)
+        {
+            new AuthUserService().BindThirdPartyAccount(type, userid, code);
+        }
     }
 }

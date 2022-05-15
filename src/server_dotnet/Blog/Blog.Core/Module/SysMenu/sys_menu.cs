@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,64 +14,61 @@ namespace Blog.Core.Module.SysMenu
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("sys_menuid", "实体id", DataType.Varchar, 100)]
-        public string sys_menuId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Attr("parentid", "上级菜单id", DataType.Varchar, 100)]
+        [Column("parentid", "上级菜单id", DataType.Varchar, 100)]
         public string parentid { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Attr("parentidname", "上级菜单名", DataType.Varchar, 100)]
-        public string parentIdName { get; set; }
+        [Column("parentid_name", "上级菜单名", DataType.Varchar, 100)]
+        public string parentId_name { get; set; }
 
         /// <summary>
         /// 路由地址
         /// </summary>
         [DataMember]
-        [Attr("router", "路由地址", DataType.Varchar, 200)]
+        [Column("router", "路由地址", DataType.Varchar, 200)]
         public string router { get; set; }
 
         /// <summary>
         /// 菜单索引
         /// </summary>
         [DataMember]
-        [Attr("menu_index", "菜单索引", DataType.Int4)]
+        [Column("menu_index", "菜单索引", DataType.Int4)]
         public int? menu_Index { get; set; }
 
         /// <summary>
         /// 状态
         /// </summary>
         [DataMember]
-        [Attr("statecode", "状态", DataType.Int4)]
+        [Column("statecode", "状态", DataType.Int4)]
         public int? stateCode { get; set; }
 
 
         [DataMember]
-        [Attr("statecodename", "状态", DataType.Varchar, 100)]
-        public string stateCodeName { get; set; }
+        [Column("statecode_name", "状态", DataType.Varchar, 100)]
+        public string stateCode_name { get; set; }
 
         /// <summary>
         /// 图标
         /// </summary>
         [DataMember]
-        [Attr("icon", "图标", DataType.Varchar, 100)]
+        [Column("icon", "图标", DataType.Varchar, 100)]
         public string icon { get; set; }
     }
 }

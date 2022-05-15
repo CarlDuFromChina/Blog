@@ -1,8 +1,9 @@
-﻿using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+﻿using Sixpence.ORM.Entity;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System.Collections.Generic;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.ORM.Repository;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth.UserInfo
 {
@@ -11,12 +12,12 @@ namespace Blog.Core.Auth.UserInfo
         #region 构造函数
         public UserInfoService()
         {
-            this._context = new EntityContext<user_info>();
+            Repository = new Repository<user_info>();
         }
 
-        public UserInfoService(IPersistBroker broker)
+        public UserInfoService(IEntityManager manager)
         {
-            this._context = new EntityContext<user_info>(broker);
+            Repository = new Repository<user_info>(manager);
         }
         #endregion
 
@@ -24,16 +25,16 @@ namespace Blog.Core.Auth.UserInfo
         {
             var sql = @"
 SELECT
-    is_lockName,
+    is_lock_name,
 	user_info.*
 FROM
 	user_info
 LEFT JOIN (
     SELECT
         user_infoid,
-        is_lockName
+        is_lock_name
     FROM auth_user
-) au ON user_info.user_infoid = au.user_infoid
+) au ON user_info.id = au.user_infoid
 ";
             var customFilter = new List<string>() { "name" };
             return new List<EntityView>()
@@ -42,7 +43,7 @@ LEFT JOIN (
                 {
                     Sql = sql,
                     CustomFilter = customFilter,
-                    OrderBy = "name, createdon",
+                    OrderBy = "name, created_at",
                     ViewId = "59F908EB-A353-4205-ABE4-FA9DB27DD434",
                     Name = "所有的用户信息"
                 }
@@ -51,7 +52,7 @@ LEFT JOIN (
 
         public user_info GetData()
         {
-            return Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            return Repository.FindOne(UserIdentityUtil.GetCurrentUserId());
         }
 
         /// <summary>
@@ -61,10 +62,7 @@ LEFT JOIN (
         /// <returns></returns>
         public user_info GetDataByCode(string code)
         {
-            var sql = @"
-SELECT * FROM user_info
-WHERE code = @code";
-            return Broker.Retrieve<user_info>(sql, new Dictionary<string, object>() { { "@code", code } });
+            return Repository.FindOne(new Dictionary<string, object>() { { "code", code } });
         }
 
         /// <summary>
@@ -73,9 +71,9 @@ WHERE code = @code";
         /// <returns></returns>
         public bool InfoFilled()
         {
-            var user = Broker.Retrieve<user_info>(UserIdentityUtil.GetCurrentUserId());
+            var user = Repository.FindOne(UserIdentityUtil.GetCurrentUserId());
             AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
-            if (user.Id == UserIdentityUtil.ADMIN_ID)
+            if (user.id == UserIdentityUtil.ADMIN_ID)
             {
                 return false;
             }

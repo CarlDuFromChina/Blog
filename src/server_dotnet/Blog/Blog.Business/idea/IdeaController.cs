@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Models;
 
 namespace Blog.idea
 {

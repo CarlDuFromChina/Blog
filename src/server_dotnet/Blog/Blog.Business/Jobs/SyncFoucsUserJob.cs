@@ -16,11 +16,11 @@ using System.Threading.Tasks;
 using Quartz;
 using Blog.Core.Job;
 using Blog.WeChat.FocusUser;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using Blog.Core.Auth;
-using Sixpence.Core.Utils;
-using Sixpence.Core;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.Utils;
+using Sixpence.Common;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Jobs
 {
@@ -34,7 +34,7 @@ namespace Blog.Jobs
 
         public override void Executing(IJobExecutionContext context)
         {
-            var broker = PersistBrokerFactory.GetPersistBroker();
+            var manager = EntityManagerFactory.GetManager();
             var focusUserService = new FocusUserService();
             var user = UserIdentityUtil.GetCurrentUser();
             var focusUserList = focusUserService.GetFocusUserList();
@@ -44,14 +44,14 @@ namespace Blog.Jobs
                 var user_list = new List<OpenId>();
                 focusUserList.data.openid.ForEach(item => user_list.Add(new OpenId() { openid = item, lang = "zh_CN" }));
                 var focusUsers = focusUserService.GetFocusUsers(JsonConvert.SerializeObject(new { user_list }));
-                broker.ExecuteTransaction(() =>
+                manager.ExecuteTransaction(() =>
                 {
                     var dataList = focusUsers.user_list
                         .Select(focusUser =>
                         {
                                   var wechat_user = new wechat_user()
                                   {
-                                      Id = focusUser.openid,
+                                      id = focusUser.openid,
                                       subscribe = Convert.ToInt32(focusUser.subscribe),
                                       nickname = focusUser.nickname,
                                       name = focusUser.nickname,
@@ -68,17 +68,17 @@ namespace Blog.Jobs
                                       subscribe_scene = focusUser.subscribe_scene,
                                       qr_scene = focusUser.qr_scene,
                                       qr_scene_str = focusUser.qr_scene_str,
-                                      createdBy = user.Id,
-                                      createdByName = user.Name,
-                                      modifiedBy = user.Id,
-                                      modifiedByName = user.Name,
-                                      createdOn = DateTime.Now,
-                                      modifiedOn = DateTime.Now,
+                                      created_by = user.Id,
+                                      created_by_name = user.Name,
+                                      updated_by = user.Id,
+                                      updated_by_name = user.Name,
+                                      created_at = DateTime.Now,
+                                      updated_at = DateTime.Now,
                                   };
                                   return wechat_user;
                               })
                         .ToList();
-                    broker.BulkCreateOrUpdate(dataList);
+                    manager.BulkCreateOrUpdate(dataList);
                     Logger.Debug($"创建或更新{dataList.Count}条关注用户信息");
                 });
             }

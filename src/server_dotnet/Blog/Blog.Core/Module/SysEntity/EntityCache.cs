@@ -1,5 +1,6 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace Blog.Core.Module.SysEntity
         {
             return Entities.GetOrAdd(EntityCachePrefix + entityName, (key) =>
             {
-                var broker = PersistBrokerFactory.GetPersistBroker();
-                var data = broker.Retrieve<sys_entity>("select * from sys_entity where code = @name", new Dictionary<string, object>() { { "@name", entityName } });
+                var manager = EntityManagerFactory.GetManager();
+                var data = manager.QueryFirst<sys_entity>("select * from sys_entity where code = @name", new Dictionary<string, object>() { { "@name", entityName } });
                 return data;
             });
         }

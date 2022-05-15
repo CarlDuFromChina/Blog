@@ -1,0 +1,40 @@
+<template>
+  <sp-list
+    :controller-name="controllerName"
+    :operations="operations"
+    :columns="columns"
+    :editComponent="editComponent"
+    :customApi="customApi"
+    :use-pagination="false"
+  ></sp-list>
+</template>
+
+<script>
+import sysMenuEdit from './sysMenuEdit';
+
+export default {
+  name: 'sysMenuList',
+  data() {
+    return {
+      controllerName: 'SysMenu',
+      operations: ['new', 'delete'],
+      columns: [
+        { prop: 'name', label: '菜单名' },
+        { prop: 'router', label: '路由' },
+        { prop: 'menu_Index', label: '索引' },
+        { prop: 'created_by_name', label: '创建人' },
+        { prop: 'created_at', label: '创建日期', type: 'datetime' },
+        { prop: 'modified_by_name', label: '最后修改人' },
+        { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
+        { prop: 'stateCode_name', label: '状态' }
+      ],
+      editComponent: sysMenuEdit
+    };
+  },
+  computed: {
+    customApi() {
+      return 'api/SysMenu/GetDataList';
+    }
+  }
+};
+</script>

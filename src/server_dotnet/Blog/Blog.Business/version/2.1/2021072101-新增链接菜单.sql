@@ -1,18 +1,18 @@
 INSERT INTO sys_menu (
-    sys_menuid,
+    id,
     parentid,
-    parentidname,
+    parentId_name,
     name,
     menu_index,
     statecode,
-    statecodename,
+    statecode_name,
     router,
-    createdby,
-    createdbyname,
-    createdon,
-    modifiedby,
-    modifiedbyname,
-    modifiedon
+    created_by,
+    created_by_name,
+    created_at,
+    updated_by,
+    updated_by_name,
+    updated_at
 )
 SELECT
     '72941895-810C-40DD-AEF9-A9CCF9276962',
@@ -30,5 +30,5 @@ SELECT
     '系统',
     (SELECT NOW())
 WHERE NOT EXISTS (
-    SELECT sys_menuid FROM sys_menu WHERE sys_menuid = '72941895-810C-40DD-AEF9-A9CCF9276962'
+    SELECT id FROM sys_menu WHERE id = '72941895-810C-40DD-AEF9-A9CCF9276962'
 );

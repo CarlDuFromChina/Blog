@@ -9,6 +9,7 @@ using System.Web;
 
 namespace Blog.Core.Module.Job
 {
+    [Authorize(Policy = "Api")]
     public class JobController : BaseApiController
     {
         [HttpGet]
@@ -21,6 +22,18 @@ namespace Blog.Core.Module.Job
         public void RunOnceNow(string name)
         {
             new JobService().RunOnceNow(name);
+        }
+
+        [HttpGet]
+        public void Pause(string jobName)
+        {
+            new JobService().Pause(jobName);
+        }
+
+        [HttpGet]
+        public void Resume(string jobName)
+        {
+            new JobService().Resume(jobName);
         }
     }
 }

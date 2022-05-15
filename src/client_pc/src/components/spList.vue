@@ -68,6 +68,7 @@
       </slot>
     </a-modal>
     <!-- 编辑页 -->
+    <slot />
   </div>
 </template>
 
@@ -133,6 +134,11 @@ export default {
     // 导出
     exportData: {
       type: Function
+    },
+    // 自动加载
+    autoLoad: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -155,7 +161,7 @@ export default {
       selectionIds: [],
       rowSelection: {
         onChange: (selectedRowKeys, selectedRows) => {
-          this.selectionIds = selectedRows.map(item => item.Id);
+          this.selectionIds = selectedRows.map(item => item.id);
         }
       },
       pagination: {
@@ -169,7 +175,7 @@ export default {
   },
   mounted() {
     // 标准表格则加载
-    if (!this.$slots.body) {
+    if (!this.$slots.body && this.autoLoad) {
       this.loadData();
     }
   },
@@ -180,7 +186,8 @@ export default {
         const column = {
           title: item.label,
           dataIndex: item.prop,
-          key: item.prop
+          key: item.prop,
+          ellipsis: item.ellipsis
         };
         if (item.width) {
           column.width = item.width;
@@ -244,7 +251,7 @@ export default {
         return;
       }
       this.relatedAttr = {
-        id: row.Id
+        id: row.id
       };
       this.editVisible = true;
     },
@@ -291,8 +298,8 @@ export default {
     },
     setKey(table) {
       if (table && table.length > 0) {
-        table.forEach((item, index) => {
-          item.key = (item || {}).Id || uuid.generate();
+        table.forEach((item) => {
+          item.key = (item || {}).id || uuid.generate();
           if (item.children && item.children.length > 0) {
             this.setKey(item.children);
           }

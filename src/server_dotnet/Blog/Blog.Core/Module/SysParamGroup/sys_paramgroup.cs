@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +14,21 @@ namespace Blog.Core.Module.SysParamGroup
         /// 主键
         /// </summary>
         [DataMember]
-        [Attr("sys_paramgroupid", "实体id", DataType.Varchar, 100)]
-        public string sys_paramGroupId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Attr("code", "编码", DataType.Varchar, 100)]
+        [Column("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
     }
 }

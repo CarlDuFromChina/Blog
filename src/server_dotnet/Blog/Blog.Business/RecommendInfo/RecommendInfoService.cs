@@ -1,5 +1,6 @@
-﻿using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+﻿
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,9 @@ namespace Blog.RecommendInfo
     public class RecommendInfoService : EntityService<recommend_info>
     {
         #region 构造函数
-        public RecommendInfoService()
-        {
-            _context = new EntityContext<recommend_info>();
-        }
+        public RecommendInfoService() : base() { }
 
-        public RecommendInfoService(IPersistBroker Broker)
-        {
-            _context = new EntityContext<recommend_info>(Broker);
-        }
+        public RecommendInfoService(IEntityManager manager) : base(manager) { }
         #endregion
 
         /// <summary>
@@ -36,11 +31,11 @@ FROM
 WHERE
 	recommend_type = @type 
 ORDER BY
-	createdon DESC 
+	created_at DESC 
 ";
-            Broker.DbClient.Driver.AddLimit(ref sql, null, 5);
+            Manager.DbClient.Driver.AddLimit(ref sql, null, 5);
             var paramList = new Dictionary<string, object>() { { "@type", type } };
-            var data = Broker.RetrieveMultiple<recommend_info>(sql, paramList);
+            var data = Manager.Query<recommend_info>(sql, paramList).ToList();
             return data;
         }
 
@@ -53,7 +48,7 @@ ORDER BY
             var sql = @"
 UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE recommend_infoid = @id
 ";
-            Broker.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
+            Manager.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }
     }
 }

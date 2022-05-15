@@ -1,4 +1,4 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -13,38 +13,35 @@ namespace Blog.WeChat.WeChatNewsMaterial
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("wechat_news_materialid", "实体id", DataType.Varchar, 100)]
-        public string wechat_news_materialId
-        {
-            get
-            {
-                return Id;
-            }
-            set
-            {
-                Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
+
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 本地文件id
         /// </summary>
         [DataMember]
-        [Attr("fileid", "本地文件id", DataType.Varchar, 100)]
+        [Column("fileid", "本地文件id", DataType.Varchar, 100)]
         public string fileid { get; set; }
 
         /// <summary>
         /// 本地地址
         /// </summary>
         [DataMember]
-        [Attr("local_url", "本地地址", DataType.Text)]
+        [Column("local_url", "本地地址", DataType.Text)]
         public string local_url { get; set; }
 
         /// <summary>
         /// 图片url
         /// </summary>
         [DataMember]
-        [Attr("media_url", "图片url", DataType.Text)]
+        [Column("media_url", "图片url", DataType.Text)]
         public string media_url { get; set; }
     }
 }

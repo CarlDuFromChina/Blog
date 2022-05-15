@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sixpence.Core;
+using Sixpence.Common;
+using Sixpence.Common.IoC;
 using System;
 using System.Collections.Generic;
 using System.IO;

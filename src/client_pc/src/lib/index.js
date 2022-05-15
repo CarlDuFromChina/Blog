@@ -1,24 +1,25 @@
-import { common, http, uuid } from 'web-core';
+import { common, http, uuid } from '@sixpence/web-core';
 import store from '../store';
 import axios from 'axios';
 import './jigsaw';
 import spExtension from './sp';
 
-window.sp = Object.assign({}, common, http, spExtension);
-window.uuid = Object.assign({}, uuid);
-const serverUrl = localStorage.getItem('server_url');
-if (process.env.NODE_ENV === 'development') {
-  if (!sp.isNullOrEmpty(serverUrl)) {
-    store.commit('updateServerUrl', serverUrl);
-    console.info('服务器地址修改为：' + serverUrl);
-  } else {
-    console.info('你可以通过localStorage添加server_url属性指定请求地址');
+var originHttp = {
+  originGet: (url, config) => {
+    var instance = axios.create({
+      timeout: 5000,
+      baseURL: window.origin
+    });
+    return instance.get(url, config);
   }
-}
+};
 
+window.sp = Object.assign({}, common, http, originHttp, spExtension);
+window.uuid = Object.assign({}, uuid);
+
+axios.defaults.baseURL = process.env.VUE_APP_AXIOS_BASE_URL;
 axios.defaults.timeout = 20000;
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = sp.getServerUrl();
 axios.interceptors.request.use(async config => {
   await checkToken();
   config.headers.Authorization = `Bearer ${store.getters.getToken}`;
@@ -102,5 +103,5 @@ async function refreshToken() {
 function reLogin() {
   store.commit('clearAuth');
   store.commit('changeLogin', false); // 修改登录状态
-  location.href = '/#/login';
+  location.href = '/login';
 }

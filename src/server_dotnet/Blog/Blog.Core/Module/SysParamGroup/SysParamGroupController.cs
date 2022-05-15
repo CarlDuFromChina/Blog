@@ -1,11 +1,11 @@
-﻿using Sixpence.EntityFramework.Entity;
+﻿using Sixpence.ORM.Entity;
 using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Sixpence.EntityFramework.SelectOption;
+
 
 namespace Blog.Core.Module.SysParamGroup
 {

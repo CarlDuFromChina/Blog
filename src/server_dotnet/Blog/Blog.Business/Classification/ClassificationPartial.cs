@@ -10,7 +10,7 @@ namespace Blog.Business.Classification
     public partial class classification
     {
         [DataMember]
-        public string is_freeName
+        public string is_free_name
         {
             get
             {

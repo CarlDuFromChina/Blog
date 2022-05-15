@@ -1,14 +1,15 @@
 ﻿using Blog.Core.Auth.Role.BasicRole;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core;
-using Sixpence.Core.Utils;
+using Sixpence.ORM.Entity;
+using Sixpence.Common;
+using Sixpence.Common.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
+using Sixpence.Common.IoC;
+using Sixpence.ORM.EntityManager;
 
 namespace Blog.Core.Auth.Privilege
 {
@@ -27,21 +28,30 @@ namespace Blog.Core.Auth.Privilege
         {
             return UserPrivliege.GetOrAdd(UserPrivilegesPrefix + userId, (key) =>
             {
-                var broker = PersistBrokerFactory.GetPersistBroker();
-                var user = broker.Retrieve<auth_user>(userId);
-                return broker.RetrieveMultiple<sys_role_privilege>("select * from sys_role_privilege where sys_roleid = @id", new Dictionary<string, object>() { { "@id", user.roleid } }).ToList();
+                var manager = EntityManagerFactory.GetManager();
+                var user = manager.QueryFirst<auth_user>(userId);
+                return manager.Query<sys_role_privilege>("select * from sys_role_privilege where sys_roleid = @id", new Dictionary<string, object>() { { "@id", user.roleid } }).ToList();
             });
         }
 
         /// <summary>
         /// 清除用户权限信息缓存
         /// </summary>
-        public static void Clear(IPersistBroker broker)
+        /// <param name="id"></param>
+        public static void Clear(string id)
+        {
+            UserPrivliege.TryRemove(UserPrivilegesPrefix + id, out var privileges);
+        }
+
+        /// <summary>
+        /// 清除用户权限信息缓存
+        /// </summary>
+        public static void Clear(IEntityManager manager)
         {
             UserPrivliege.Clear();
             ServiceContainer.ResolveAll<IRole>().Each(item =>
             {
-                (item as BasicRole).Broker = broker;
+                (item as BasicRole).Manager = manager;
                 item.ClearCache();
                 MemoryCacheUtil.RemoveCacheItem(item.GetRoleKey);
                 MemoryCacheUtil.Set(item.GetRoleKey, new RolePrivilegeModel() { Role = item.GetSysRole(), Privileges = item.GetRolePrivilege() }, 3600 * 12);

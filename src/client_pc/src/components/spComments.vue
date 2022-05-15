@@ -21,7 +21,7 @@
     >
       <a-list-item slot="renderItem" slot-scope="item">
         <sp-comment :data="item" @replied="getDataList" @login="showLogin">
-          <sp-comment v-for="item2 in item.Comments" :key="item2.Id" :data="item2" @replied="getDataList" @login="showLogin"></sp-comment>
+          <sp-comment v-for="item2 in item.Comments" :key="item2.id" :data="item2" @replied="getDataList" @login="showLogin"></sp-comment>
         </sp-comment>
       </a-list-item>
     </a-list>
@@ -84,7 +84,7 @@ export default {
     },
     getDataList() {
       const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
-      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=createdOn desc`).then(resp => {
+      sp.get(`api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(searchList)}&orderBy=created_at desc`).then(resp => {
         this.comments = resp;
       });
     },
@@ -99,17 +99,17 @@ export default {
       setTimeout(() => {
         this.submitting = false;
         const comment = {
-          Id: uuid.generate(),
+          id: uuid.generate(),
           name: '评论',
           comment: this.value,
           comment_type: 'comment',
-          object_ownerid: this.data.createdBy,
-          object_owneridName: this.data.createdByName,
+          object_ownerid: this.data.created_by,
+          object_ownerid_name: this.data.created_by_name,
           objectid: this.objectId,
           object_name: this.objectName,
           object_title: this.data.title
         };
-        sp.post('api/Comments/CreateData', comment).then(resp => {
+        sp.post('api/Comments/CreateData', comment).then(() => {
           this.getDataList();
           this.$message.success('留言成功');
         });
@@ -123,11 +123,7 @@ export default {
       return this.$moment(val).fromNow();
     },
     getAvatar() {
-      const userId = sp.getUserId();
-      if (sp.isNullOrEmpty(userId)) {
-        return 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-      }
-      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
+      return sp.getAvatar();
     }
   }
 };

@@ -1,8 +1,8 @@
 ﻿using Blog.Core.Auth;
 using Blog.Core.Auth.Privilege;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.EntityFramework.Models;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +13,11 @@ namespace Blog.Core.Module.SysMenu
     public class SysMenuService : EntityService<sys_menu>
     {
         #region 构造函数
-        public SysMenuService()
-        {
-            this._context = new EntityContext<sys_menu>();
-        }
-
-        public SysMenuService(IPersistBroker broker)
-        {
-            this._context = new EntityContext<sys_menu>(broker);
-        }
+        public SysMenuService() : base() { }
+        public SysMenuService(IEntityManager manager) : base(manager) { }
         #endregion
 
-        public override IList<sys_menu> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
+        public override IEnumerable<sys_menu> GetDataList(IList<SearchCondition> searchList, string orderBy, string viewId = "", string searchValue = "")
         {
             var data = base.GetDataList(searchList, orderBy, viewId).Filter().ToList();
             var firstMenu = data
@@ -32,7 +25,7 @@ namespace Blog.Core.Module.SysMenu
                 .Select(item =>
                 {
                     item.children = data
-                        .Where(e => e.parentid == item.Id)
+                        .Where(e => e.parentid == item.id)
                         .OrderBy(e => e.menu_Index)
                         .ToList();
                     return item;
@@ -52,7 +45,7 @@ namespace Blog.Core.Module.SysMenu
                 item.children = new List<sys_menu>();
                 data.ForEach(item2 =>
                 {
-                    if (item2.parentid == item.Id)
+                    if (item2.parentid == item.id)
                     {
                         item.children.Add(item2);
                     }
@@ -73,7 +66,7 @@ SELECT * FROM sys_menu
 WHERE parentid IS NULL
 ORDER BY menu_index
 ";
-            var data = Broker.RetrieveMultiple<sys_menu>(sql);
+            var data = Manager.Query<sys_menu>(sql).ToList();
             return data;
         }
     }

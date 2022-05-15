@@ -6,9 +6,8 @@ Created: 2020/11/8 16:32:01
 Description：
 ********************************************************/
 #endregion
-
-using Sixpence.EntityFramework.Broker;
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {
-    public class WeChatFocusReplyPlugin : IPersistBrokerPlugin
+    public class WeChatFocusReplyPlugin : IEntityManagerPlugin
     {
-        public void Execute(PersistBrokerPluginContext context)
+        public void Execute(EntityManagerPluginContext context)
         {
             switch (context.Action)
             {

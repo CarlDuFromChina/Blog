@@ -1,4 +1,4 @@
-using Sixpence.EntityFramework.Entity;
+using Sixpence.ORM.Entity;
 using System;
 using System.Runtime.Serialization;
 
@@ -12,39 +12,35 @@ namespace Blog.Business.Classification
         /// 实体id
         /// </summary>
         [DataMember]
-        [Attr("classificationid", "博客分类id", DataType.Varchar, 100)]
-        public string classificationId
-        {
-            get
-            {
-                return this.Id;
-            }
-            set
-            {
-                this.Id = value;
-            }
-        }
+        [PrimaryColumn]
+        public string id { get; set; }
 
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [DataMember]
+        [Column("name", "名称", DataType.Varchar, 100)]
+        public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Attr("code", "编码", DataType.Varchar, 100)]
+        [Column("code", "编码", DataType.Varchar, 100)]
         public string code { get; set; }
 
         /// <summary>
         /// 是否付费阅读
         /// </summary>
         [DataMember]
-        [Attr("is_free", "是否付费阅读", DataType.Int4)]
+        [Column("is_free", "是否付费阅读", DataType.Int4)]
         public int is_free { get; set; }
 
         /// <summary>
         /// 索引
         /// </summary>
         [DataMember]
-        [Attr("index", "索引", DataType.Int4)]
+        [Column("index", "索引", DataType.Int4)]
         public int index { get; set; }
     }
 }

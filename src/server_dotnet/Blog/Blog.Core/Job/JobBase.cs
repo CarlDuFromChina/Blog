@@ -1,14 +1,15 @@
 ﻿using Blog.Core.Auth;
-using Sixpence.EntityFramework.Entity;
-using Sixpence.Core.Logging;
+using Sixpence.ORM.Entity;
+using Sixpence.Common.Logging;
 using log4net;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Sixpence.EntityFramework.Broker;
-using Sixpence.Core.Current;
+using Sixpence.Common.Current;
+using Sixpence.ORM.EntityManager;
+using Blog.Core.Module.JobHisotry;
 
 namespace Blog.Core.Job
 {
@@ -62,29 +63,30 @@ namespace Blog.Core.Job
 
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var broker = PersistBrokerFactory.GetPersistBroker();
+                var manager = EntityManagerFactory.GetManager();
                 UserIdentityUtil.SetCurrentUser(user);
+                var history = new job_history()
+                {
+                    id = Guid.NewGuid().ToString(),
+                    job_name = this.Name,
+                    start_time = DateTime.Now,
+                    status = "成功"
+                };
                 try
                 {
-                    broker.ExecuteTransaction(() =>
-                    {
-                          Executing(context);
-                    // 更新下次执行时间
-                    var nextTime = JobHelpers.GetJobNextTime(Name);
-                          var nextTimeSql = "";
-                          var paramList = new Dictionary<string, object>() {
-                            { "@time", DateTime.Now },
-                            { "@name", Name }
-                        };
-                          paramList.Add("@nextTime", nextTime.UtcDateTime);
-                          nextTimeSql = ", nextruntime = @nextTime";
-                          broker.Execute($"UPDATE job SET lastruntime = @time {nextTimeSql} WHERE name = @name", paramList);
-                      });
+                    Executing(context);
                 }
                 catch (Exception e)
                 {
+                    history.status = "失败";
+                    history.error_msg = e.Message;
                     Logger.Error($"作业：{Name}执行异常", e);
                     throw e;
+                }
+                finally
+                {
+                    history.end_time = DateTime.Now;
+                    manager.Create(history);
                 }
                 stopWatch.Stop();
                 Logger.Debug($"作业：{Name} 执行结束，耗时{stopWatch.ElapsedMilliseconds}ms");
