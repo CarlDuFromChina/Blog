@@ -90,7 +90,7 @@ namespace Blog.Core
 
             app.UseORM(options =>
             {
-                options.EntityClassNameCase = ClassNameCase.UnderScore;
+                options.EntityClassNameCase = NameCase.UnderScore;
                 options.AutoGenerate = true;
             });
 

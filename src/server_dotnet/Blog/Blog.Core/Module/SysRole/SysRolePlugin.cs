@@ -24,7 +24,7 @@ namespace Blog.Core.Module.Role
             {
                 case EntityAction.PostDelete:
                     {
-                        AssertUtil.CheckBoolean<SpException>(context.Entity.GetAttributeValue("is_basic") is  true, "禁止删除基础角色", "D283AEBF-60CA-4DFF-B08D-6D3DD10AFBBA");
+                        AssertUtil.IsTrue(context.Entity.GetAttributeValue("is_basic") is  true, "禁止删除基础角色");
                     }
                     break;
                 case EntityAction.PostCreate:

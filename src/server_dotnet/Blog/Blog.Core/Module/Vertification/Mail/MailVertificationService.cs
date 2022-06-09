@@ -116,7 +116,7 @@ AND mail_type = @type";
             }
             catch (Exception ex)
             {
-                LogUtils.Error("重置密码失败", ex);
+                LogUtil.Error("重置密码失败", ex);
                 return "服务器内部错误，请联系管理员";
             }
         }

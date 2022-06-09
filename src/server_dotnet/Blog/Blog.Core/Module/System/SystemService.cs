@@ -182,8 +182,8 @@ namespace Blog.Core.Module.DataService
         /// <returns></returns>
         public LoginResponse Signup(LoginRequest model)
         {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
+            AssertUtil.IsNullOrEmpty(model.code, "账号不能为空");
+            AssertUtil.IsNullOrEmpty(model.password, "密码不能为空");
 
             return Manager.ExecuteTransaction(() =>
             {
@@ -273,7 +273,7 @@ WHERE user_infoid = @id;
         public void ForgetPassword(string code)
         {
             var user = Manager.QueryFirst<user_info>("SELECT * FROM user_info WHERE code = @mail OR mailbox = @mail", new Dictionary<string, object>() { { "@mail", code } });
-            AssertUtil.CheckNull<SpException>(user, "用户不存在", "5E507D9C-47BC-4586-880D-D9E42D02FEA4");
+            AssertUtil.IsNull(user, "用户不存在");
             UserIdentityUtil.SetCurrentUser(MapperHelper.Map<CurrentUserModel>(user));
             var id = Guid.NewGuid().ToString();
             var sms = new mail_vertification()

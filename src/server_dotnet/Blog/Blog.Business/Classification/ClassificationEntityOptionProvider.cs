@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Blog.Core.Entity;
 using Blog.Core.Module.SysParamGroup;
-using Sixpence.ORM.Entity;
 using Sixpence.ORM.EntityManager;
+using System.Collections.Generic;
 
 namespace Blog.Business.Classification
 {

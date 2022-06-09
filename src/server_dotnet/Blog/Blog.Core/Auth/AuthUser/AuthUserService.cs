@@ -48,7 +48,7 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
             Manager.ExecuteTransaction(() =>
             {
                 var userId = UserIdentityUtil.GetCurrentUserId();
-                AssertUtil.CheckBoolean<SpException>(userId == id, "请勿锁定自己", "4B1DD6F4-977B-43B4-BA48-C02668A661B3");
+                AssertUtil.IsTrue(userId == id, "请勿锁定自己");
                 var data = Manager.QueryFirst<auth_user>("select * from auth_user where user_infoid = @id", new Dictionary<string, object>() { { "@id", id } });
                 data.is_lock = true;
                 UpdateData(data);
@@ -77,9 +77,9 @@ SELECT * FROM auth_user WHERE code = @code AND password = @password;
         /// <param name="code"></param>
         public void BindThirdPartyAccount(ThirdPartyLoginType type, string id, string code)
         {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(id, "用户id不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
-            AssertUtil.CheckIsNullOrEmpty<SpException>(code, "编码不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
-            AssertUtil.CheckNull<SpException>(type, "绑定类型不能为空", "F905B437-3963-4BB2-A748-B6194EF7AA6B");
+            AssertUtil.IsNullOrEmpty(id, "用户id不能为空");
+            AssertUtil.IsNullOrEmpty(code, "编码不能为空");
+            AssertUtil.IsNull(type, "绑定类型不能为空");
             ServiceContainer.Resolve<IThirdPartyBindStrategy>(name => name.Contains(type.ToString(), StringComparison.OrdinalIgnoreCase)).Bind(code, id);
         }
     }

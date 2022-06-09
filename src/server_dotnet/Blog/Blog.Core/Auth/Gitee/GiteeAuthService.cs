@@ -18,7 +18,7 @@ namespace Blog.Core.Auth.Gitee
     public class GiteeAuthService
     {
         protected IEntityManager Manager;
-        protected ILog Logger => LogFactory.GetLogger("gitee");
+        protected ILog Logger => LoggerFactory.GetLogger("gitee");
 
         public GiteeAuthService()
         {

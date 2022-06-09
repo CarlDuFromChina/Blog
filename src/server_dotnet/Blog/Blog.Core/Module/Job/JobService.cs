@@ -60,7 +60,7 @@ LEFT JOIN qrtz_cron_triggers AS qct ON qt.trigger_name = qct.trigger_name
         public void Pause(string jobName)
         {
             var job = ServiceContainer.ResolveAll<IJob>().FirstOrDefault(item => (item as JobBase).Name == jobName) as JobBase;
-            AssertUtil.CheckNull<SpException>(job, $"未找到名为[{jobName}]作业", "");
+            AssertUtil.IsNull(job, $"未找到名为[{jobName}]作业");
             JobHelpers.PauseJob(job.Name, job.GetType().Namespace);
         }
 
@@ -71,7 +71,7 @@ LEFT JOIN qrtz_cron_triggers AS qct ON qt.trigger_name = qct.trigger_name
         public void Resume(string jobName)
         {
             var job = ServiceContainer.ResolveAll<IJob>().FirstOrDefault(item => (item as JobBase).Name == jobName) as JobBase;
-            AssertUtil.CheckNull<SpException>(job, $"未找到名为[{jobName}]作业", "");
+            AssertUtil.IsNull(job, $"未找到名为[{jobName}]作业");
             JobHelpers.ResumeJob(job.Name, job.GetType().Namespace);
         }
     }

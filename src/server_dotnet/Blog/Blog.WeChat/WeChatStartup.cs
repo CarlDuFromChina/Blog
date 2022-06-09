@@ -15,7 +15,7 @@ namespace Blog.WeChat
     {
         public virtual void Configure()
         {
-            var logger = LogFactory.GetLogger("startup");
+            var logger = LoggerFactory.GetLogger("startup");
             logger.Info("正在启动机器人作业...");
             try
             {

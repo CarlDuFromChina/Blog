@@ -15,7 +15,7 @@ namespace Blog.Core.Auth.Gitee
             var manager = EntityManagerFactory.GetManager();
             var giteeService = new GiteeAuthService(manager);
             var sysRoleService = new SysRoleService(manager);
-            var logger = LogFactory.GetLogger("gitee");
+            var logger = LoggerFactory.GetLogger("gitee");
 
             try
             {

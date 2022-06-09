@@ -16,7 +16,7 @@ namespace Blog.WeChat.WeChatReply.Focus
         public WeChatFocusReplyService(IEntityManager manager) : base(manager) { }
         #endregion
 
-        private ILog logger = LogFactory.GetLogger("wechat");
+        private ILog logger = LoggerFactory.GetLogger("wechat");
 
         public void Activate(string id)
         {

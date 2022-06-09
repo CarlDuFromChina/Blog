@@ -15,7 +15,7 @@ namespace Blog.Core.Utils
         private static string Sender = MailConfig.Config.Name;
         private static string SMTP = MailConfig.Config.SMTP;
         private static string Password = MailConfig.Config.Password;
-        private static ILog logger = LogFactory.GetLogger("mail");
+        private static ILog logger = LoggerFactory.GetLogger("mail");
 
         public static void SendMail(string reciver, string title, string content)
         {
@@ -39,7 +39,7 @@ namespace Blog.Core.Utils
             {
                 logger.Debug("邮件发送失败");
                 logger.Error(ex);
-                throw new SpException("邮件发送失败，请联系管理员", "D580E104-629E-4588-A15F-0C8AD3B4AA41");
+                throw new SpException("邮件发送失败，请联系管理员");
             }
         }
     }

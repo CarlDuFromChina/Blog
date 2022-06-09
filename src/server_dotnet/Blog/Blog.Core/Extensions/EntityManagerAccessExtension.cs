@@ -26,7 +26,10 @@ namespace Blog.Core.Extensions
         public static string FilteredCreate(this IEntityManager manager, BaseEntity entity)
         {
             var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的创建权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的创建权限");
+            }
             return manager.Create(entity);
         }
 
@@ -39,7 +42,10 @@ namespace Blog.Core.Extensions
         public static int FiltededUpdate(this IEntityManager manager, BaseEntity entity)
         {
             var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的更新权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的更新权限");
+            }
             return manager.Update(entity);
         }
 
@@ -74,7 +80,10 @@ namespace Blog.Core.Extensions
         public static T FilteredQueryFirst<T>(this IEntityManager manager, string id) where T : BaseEntity, new()
         {
             var sysEntity = EntityCache.GetEntity(new T().EntityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的查询权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的查询权限");
+            }
             return manager.QueryFirst<T>(id);
         }
 
@@ -89,7 +98,10 @@ namespace Blog.Core.Extensions
         public static IEnumerable<T> FilteredQuery<T>(this IEntityManager manager, string sql, Dictionary<string, object> paramList = null) where T : BaseEntity, new()
         {
             var sysEntity = EntityCache.GetEntity(new T().EntityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的查询权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的查询权限");
+            }
             return manager.Query<T>(sql, paramList);
         }
 
@@ -102,7 +114,10 @@ namespace Blog.Core.Extensions
         public static int FilteredDelete(this IEntityManager manager, BaseEntity entity)
         {
             var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的删除权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的删除权限");
+            }
             return manager.Delete(entity);
         }
 
@@ -116,7 +131,10 @@ namespace Blog.Core.Extensions
         public static int FilteredDelete(this IEntityManager manager, string entityName, string id)
         {
             var sysEntity = EntityCache.GetEntity(entityName);
-            AssertUtil.CheckBoolean<InvalidCredentialException>(!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value), $"用户没有实体[{sysEntity.name}]的删除权限", "451FC4BA-46B2-4838-B8D0-69617DFCAF39");
+            if (!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value))
+            {
+                throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的删除权限");
+            }
             return manager.Delete(entityName, id);
         }
 
@@ -144,7 +162,7 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static string GetFilteredSql(this IEntityManager manager, string ownerName = "created_by")
         {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(UserIdentityUtil.GetCurrentUserId(), "无法获取当前用户", "11F1C19C-D69E-4A46-BAB6-BAE84E32F7B2");
+            AssertUtil.IsNullOrEmpty(UserIdentityUtil.GetCurrentUserId(), "无法获取当前用户");
             return " AND {0}." + ownerName + $" = '{UserIdentityUtil.GetCurrentUserId()}'";
         }
     }

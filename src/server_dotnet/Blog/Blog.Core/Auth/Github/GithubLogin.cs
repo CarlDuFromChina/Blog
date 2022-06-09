@@ -18,7 +18,7 @@ namespace Blog.Core.Auth.Github
             var manager = EntityManagerFactory.GetManager();
             var githubService = new GithubAuthService(manager);
             var sysRoleService = new SysRoleService(manager);
-            var logger = LogFactory.GetLogger("github");
+            var logger = LoggerFactory.GetLogger("github");
 
             try
             {

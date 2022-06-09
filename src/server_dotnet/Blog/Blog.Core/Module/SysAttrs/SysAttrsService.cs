@@ -46,7 +46,7 @@ SELECT * FROM sys_attrs
 WHERE entityid = @id AND code = @code;
 ";
                     var count = Manager.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.id }, { "@code", item.Name } }).Count();
-                    AssertUtil.CheckBoolean<SpException>(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加", "E86150F7-52CC-4FB7-A6C4-B743BF382E92");
+                    AssertUtil.IsTrue(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加");
                     var attrModel = new sys_attrs()
                     {
                         id = Guid.NewGuid().ToString(),

@@ -25,7 +25,7 @@ namespace Blog.Business.Blog.Sync
             {
                 blog data = Manager.QueryFirst<blog>(id);
                 var contentUrl = $"{SystemConfig.Config.Protocol}://{SystemConfig.Config.Domain}/post/{id}";
-                AssertUtil.CheckIsNullOrEmpty<SpException>(data.surfaceid, "请上传博客封面", "4365FB1F-2EE7-40CF-852C-F6CFA71E8DE2");
+                AssertUtil.IsNullOrEmpty(data.surfaceid, "请上传博客封面");
 
                 // 如果封面素材未上传则创建封面素材
                 string mediaId = Manager.QueryFirst<wechat_material>("SELECT * FROM wechat_material WHERE sys_fileid = @id", new Dictionary<string, object>() { { "@id", data.surfaceid } })?.media_id;

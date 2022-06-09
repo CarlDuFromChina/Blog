@@ -44,7 +44,7 @@ namespace Blog.Core.Store.SysFile
         public List<FileInfoModel> Upload([FromForm] List<IFormFile> files, [FromQuery] string fileType, [FromQuery] string objectId = "")
         {
             if (files == null || !files.Any())
-                throw new SpException("上传文件不能为空", "");
+                throw new SpException("上传文件不能为空");
 
             var fileList = new List<FileInfoModel>();
 

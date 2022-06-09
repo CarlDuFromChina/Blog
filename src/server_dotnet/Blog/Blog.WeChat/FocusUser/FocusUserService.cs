@@ -19,7 +19,7 @@ namespace Blog.WeChat.FocusUser
         public FocusUserService()
         {
             manager = EntityManagerFactory.GetManager();
-            logger = LogFactory.GetLogger("wechat");
+            logger = LoggerFactory.GetLogger("wechat");
         }
 
         /// <summary>

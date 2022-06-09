@@ -22,7 +22,7 @@ namespace Sixpence.ORM.Entity
     {
         public void Execute(IEntityManager manager, IEnumerable<IEntity> entities)
         {
-            var logger = LogFactory.GetLogger("entity");
+            var logger = LoggerFactory.GetLogger("entity");
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             entities.Each(item =>
                 {
@@ -86,7 +86,7 @@ namespace Sixpence.ORM.Entity
 
             #region 执行版本更新脚本
             {
-                var vLogger = LogFactory.GetLogger("version");
+                var vLogger = LoggerFactory.GetLogger("version");
                 FileHelper.GetFileList("*.sql", FolderType.Version)
                         .OrderBy(item => Path.GetFileName(item))
                         .ToList()

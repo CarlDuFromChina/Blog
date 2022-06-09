@@ -87,7 +87,7 @@ namespace Blog.Business.Blog.Sync.Juejin
         {
             if (!GetJuejinStatus()) return null;
 
-            AssertUtil.CheckIsNullOrEmpty<SpException>(dto.category_id, "博客分类不能为空", "52669331-ED29-4E9B-8D2C-B5F671852BC1");
+            AssertUtil.IsNullOrEmpty(dto.category_id, "博客分类不能为空");
 
             var draft = new Draft()
             {
@@ -118,7 +118,7 @@ namespace Blog.Business.Blog.Sync.Juejin
             var response = HttpUtil.Post("https://api.juejin.cn/content_api/v1/article_draft/create?aid=2608&uuid=6980253040042001932", JsonConvert.SerializeObject(draft), headers);
             var resp = JsonConvert.DeserializeObject<JuejinResponse<JuejinDraftCreateResponseData>>(response);
 
-            AssertUtil.CheckBoolean<SpException>(resp.err_no != 0, $"草稿创建失败，错误信息：{resp.err_msg}", "52669331-ED29-4E9B-8D2C-B5F671852BC1");
+            AssertUtil.IsTrue(resp.err_no != 0, $"草稿创建失败，错误信息：{resp.err_msg}");
 
             return resp.data;
         }
@@ -140,7 +140,7 @@ namespace Blog.Business.Blog.Sync.Juejin
             var response = HttpUtil.Post("https://api.juejin.cn/content_api/v1/article/publish?aid=2608&uuid=6897189016987272712", JsonConvert.SerializeObject(param), headers);
             var resp = JsonConvert.DeserializeObject<JuejinResponse<JuejinDraftPublish>>(response);
 
-            AssertUtil.CheckBoolean<SpException>(resp.err_no != 0, $"博客发布失败，错误信息：{resp.err_msg}", "52669331-ED29-4E9B-8D2C-B5F671852BC1");
+            AssertUtil.IsTrue(resp.err_no != 0, $"博客发布失败，错误信息：{resp.err_msg}");
         }
     }
 }
