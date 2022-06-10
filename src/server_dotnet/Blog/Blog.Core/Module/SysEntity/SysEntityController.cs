@@ -29,7 +29,7 @@ namespace Blog.Core.Module.SysEntity
         /// <param name="entityId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Export(string entityId)
+        public IActionResult Export(string entityId = "")
         {
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
             var result = new SysEntityService().Export(entityId);

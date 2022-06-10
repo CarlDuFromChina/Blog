@@ -1,13 +1,16 @@
-﻿using Blog.Core.Auth;
+﻿using Blog.Core;
+using Blog.Core.Auth;
 using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Extensions;
 using Blog.Core.Module.SysEntity;
+using Blog.Core.Utils;
 using Sixpence.ORM.EntityManager;
 using Sixpence.ORM.Models;
 using Sixpence.ORM.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Sixpence.ORM.Entity
@@ -141,6 +144,19 @@ namespace Sixpence.ORM.Entity
         public virtual void DeleteData(List<string> ids)
         {
             Repository.FilteredDelete(ids);
+        }
+
+        /// <summary>
+        /// 导出CSV文件
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Export()
+        {
+            var fileName = $"{new T().EntityName}-{EntityCommon.GenerateGuidNumber()}.csv";
+            var fullFilePath = Path.Combine(FolderType.Temp.GetPath(), fileName);
+            var dataList = GetAllData();
+            CsvUtil.Write(dataList, fullFilePath);
+            return fullFilePath;
         }
         #endregion
 

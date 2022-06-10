@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sixpence.ORM.Models;
+using Sixpence.Common.Utils;
+using System.IO;
 
 namespace Blog.Core.WebApi
 {
@@ -115,6 +117,14 @@ namespace Blog.Core.WebApi
         public EntityPrivilegeResponse GetPrivilege()
         {
             return new S().GetPrivilege();
+        }
+
+        [HttpGet, AllowAnonymous]
+        public virtual IActionResult ExportCsv()
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+            var fileName = new S().Export();
+            return File(FileUtil.GetFileStream(fileName), "application/octet-stream", Path.GetFileName(fileName));
         }
     }
 }
