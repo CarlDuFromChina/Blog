@@ -8,12 +8,14 @@ namespace Blog.Core.Module.SysParamGroup
     public class SysParamGroupController : EntityBaseController<sys_paramgroup, SysParamGroupService>
     {
         [HttpGet]
+        [Route("GetParams")]
         public IEnumerable<SelectOption> GetParams(string code)
         {
             return new SysParamGroupService().GetParams(code);
         }
 
         [HttpGet]
+        [Route("GetParamsList")]
         public IEnumerable<IEnumerable<SelectOption>> GetParamsList(string code)
         {
             var codeList = new string[] { };
@@ -25,6 +27,7 @@ namespace Blog.Core.Module.SysParamGroup
         }
 
         [HttpGet]
+        [Route("GetEntitiyList")]
         public IEnumerable<IEnumerable<SelectOption>> GetEntitiyList(string code)
         {
             var codeList = new string[] { };
@@ -36,6 +39,7 @@ namespace Blog.Core.Module.SysParamGroup
         }
 
         [HttpGet]
+        [Route("Export")]
         public IActionResult Export(string id)
         {
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");

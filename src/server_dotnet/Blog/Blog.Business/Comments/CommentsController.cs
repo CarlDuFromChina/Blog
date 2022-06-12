@@ -12,13 +12,13 @@ namespace Blog.Comments
 {
     public class CommentsController : BaseApiController
     {
-        [HttpPost]
+        [HttpPost, Route("data")]
         public string CreateData(comments entity)
         {
             return new CommentsService().CreateData(entity);
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("data")]
         public virtual IList<comments> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);

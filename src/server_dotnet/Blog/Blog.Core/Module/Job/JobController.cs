@@ -13,24 +13,28 @@ namespace Blog.Core.Module.Job
     public class JobController : BaseApiController
     {
         [HttpGet]
+        [Route("data")]
         public IList<job> GetDataList()
         {
             return new JobService().GetDataList();
         }
 
         [HttpGet]
+        [Route("RunOnceNow")]
         public void RunOnceNow(string name)
         {
             new JobService().RunOnceNow(name);
         }
 
         [HttpGet]
+        [Route("Pause")]
         public void Pause(string jobName)
         {
             new JobService().Pause(jobName);
         }
 
         [HttpGet]
+        [Route("Resume")]
         public void Resume(string jobName)
         {
             new JobService().Resume(jobName);

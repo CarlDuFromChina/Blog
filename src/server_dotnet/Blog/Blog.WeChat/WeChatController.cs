@@ -18,7 +18,7 @@ namespace Blog.WeChat
         /// 获取微信access_token
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Route("GetAccessToken")]
         public string GetAccessToken()
         {
             return WeChatService.AccessToken;
@@ -31,7 +31,7 @@ namespace Blog.WeChat
         /// <param name="timestamp"></param>
         /// <param name="nonce"></param>
         /// <param name="echostr"></param>
-        [HttpGet, HttpPost, AllowAnonymous]
+        [HttpGet, HttpPost, AllowAnonymous, Route("Get")]
         public async Task Get()
         {
             if (HttpContext.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase))

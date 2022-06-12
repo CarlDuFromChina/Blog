@@ -10,7 +10,7 @@ namespace Blog.Business.Link
 {
     public class LinkController : EntityBaseController<link, LinkService>
     {
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("data")]
         public override IList<link> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             return base.GetDataList(searchList, orderBy, viewId, searchValue);

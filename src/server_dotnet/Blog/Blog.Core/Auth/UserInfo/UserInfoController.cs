@@ -12,6 +12,7 @@ namespace Blog.Core.Auth.UserInfo
     public class UserInfoController : EntityBaseController<user_info, UserInfoService>
     {
         [HttpGet, AllowAnonymous]
+        [Route("data")]
         public override user_info GetData(string id)
         {
             return base.GetData(id);
@@ -22,6 +23,7 @@ namespace Blog.Core.Auth.UserInfo
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("InfoFilled")]
         public bool InfoFilled()
         {
             return new UserInfoService().InfoFilled();

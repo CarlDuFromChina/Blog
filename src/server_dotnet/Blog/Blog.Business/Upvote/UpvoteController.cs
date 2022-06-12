@@ -9,7 +9,7 @@ namespace Blog.Business.Upvote
 {
     public class UpvoteController : EntityBaseController<upvote, UpvoteService>
     {
-        [HttpGet]
+        [HttpGet, Route("IsUp")]
         public bool IsUp(string objectid)
         {
             return new UpvoteService().IsUp(objectid);

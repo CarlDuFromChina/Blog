@@ -13,12 +13,14 @@ namespace Blog.Core.Auth.Privilege
     public class SysRolePrivilegeController : EntityBaseController<sys_role_privilege, SysRolePrivilegeService>
     {
         [HttpGet]
+        [Route("GetUserPrivileges")]
         public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
             return new SysRolePrivilegeService().GetUserPrivileges(roleid, roleType);
         }
 
         [HttpPost]
+        [Route("BulkSave")]
         public void BulkSave([FromBody]string dataList)
         {
             var privileges = string.IsNullOrEmpty(dataList) ? null : JsonConvert.DeserializeObject<List<sys_role_privilege>>(dataList);

@@ -20,7 +20,7 @@ namespace Blog.Business.Blog
         /// 查询所有博客菜单
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Route("GetBlogRouterNameList")]
         public IEnumerable<string> GetBlogRouterNameList()
         {
             return new BlogService().GetBlogRouterNameList();
@@ -33,7 +33,7 @@ namespace Blog.Business.Blog
         /// <param name="orderBy"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("data")]
         public override IList<blog> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             return base.GetDataList(searchList, orderBy, viewId, searchValue);
@@ -48,7 +48,7 @@ namespace Blog.Business.Blog
         /// <param name="pageIndex"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("data")]
         public override DataModel<blog> GetViewData(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
         {
             return base.GetViewData(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
@@ -58,7 +58,7 @@ namespace Blog.Business.Blog
         /// 获取博客分类数据
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("categories")]
         public PostCategories categories()
         {
             return new BlogService().GetCategories();
@@ -69,7 +69,7 @@ namespace Blog.Business.Blog
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("data")]
         public override blog GetData(string id)
         {
             return MemoryCacheUtil.GetOrAddCacheItem(id, () => base.GetData(id), DateTime.Now.AddHours(2));
@@ -79,7 +79,7 @@ namespace Blog.Business.Blog
         /// 点赞
         /// </summary>
         /// <param name="blogId"></param>
-        [HttpGet]
+        [HttpGet, Route("Upvote")]
         public bool Upvote(string id)
         {
             return new BlogService().Upvote(id);
@@ -91,7 +91,7 @@ namespace Blog.Business.Blog
         /// <param name="id">博客id</param>
         /// <param name="destination">目标系统，例如：Juejin、WeChat</param>
         /// <param name="param">参数</param>
-        [HttpPost]
+        [HttpPost, Route("SyncBlog")]
         public void SyncBlog(string id, string destination, [FromBody]object param)
         {
             new BlogService().SyncBlog(id, destination, param);
@@ -101,7 +101,7 @@ namespace Blog.Business.Blog
         /// 获取创作记录日历
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("GetActivity")]
         public IEnumerable<BlogActivityModel> GetActivity()
         {
             return new BlogService().GetActivity();
@@ -112,7 +112,7 @@ namespace Blog.Business.Blog
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Route("ExportMarkdown")]
         public IActionResult ExportMarkdown(string id)
         {
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
@@ -124,7 +124,7 @@ namespace Blog.Business.Blog
         /// 获取主页用户
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet, AllowAnonymous, Route("GetIndexUser")]
         public user_info GetIndexUser()
         {
             return new BlogService().GetIndexUser();

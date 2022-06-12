@@ -11,6 +11,7 @@ namespace Blog.Core.Module.SysConfig
     public class SysConfigController : EntityBaseController<sys_config, SysConfigService>
     {
         [HttpGet]
+        [Route("GetValue")]
         public object GetValue(string code)
         {
             return new SysConfigService().GetValue(code);
@@ -21,6 +22,7 @@ namespace Blog.Core.Module.SysConfig
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
+        [Route("EnableComment")]
         public string EnableComment()
         {
             return new SysConfigService().GetValue("enable_comment")?.ToString();
@@ -31,6 +33,7 @@ namespace Blog.Core.Module.SysConfig
         /// </summary>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
+        [Route("WebsiteInfo")]
         public string WebsiteInfo()
         {
             return new SysConfigService().GetValue("website_info")?.ToString();

@@ -15,6 +15,7 @@ namespace Blog.Core.Module.Gallery
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("image")]
         public ImagesModel GetImages(string searchValue, int pageIndex, int pageSize)
         {
             return new PixabayService().GetImages(searchValue, pageIndex, pageSize);
@@ -26,6 +27,7 @@ namespace Blog.Core.Module.Gallery
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("image")]
         public List<string> UploadImage(ImageModel image)
         {
             return new GalleryService().UploadImage(image);
@@ -36,6 +38,7 @@ namespace Blog.Core.Module.Gallery
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("RandomImage")]
         public gallery RandomImage()
         {
             return new GalleryService().GetRandomImage();

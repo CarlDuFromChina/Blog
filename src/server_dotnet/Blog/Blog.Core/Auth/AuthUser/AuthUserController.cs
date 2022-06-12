@@ -15,6 +15,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize(Policy = "Refresh")]
+        [Route("RefreshAccessToken")]
         public Token RefreshAccessToken()
         {
             var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
@@ -27,6 +28,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <param name="id"></param>
         [HttpGet]
+        [Route("LockUser")]
         public void LockUser(string id)
         {
             new AuthUserService().LockUser(id);
@@ -37,6 +39,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <param name="id"></param>
         [HttpGet]
+        [Route("UnlockUser")]
         public void UnlockUser(string id)
         {
             new AuthUserService().UnlockUser(id);
@@ -48,6 +51,7 @@ namespace Blog.Core.Auth
         /// <param name="userid"></param>
         /// <param name="code"></param>
         [HttpPost]
+        [Route("BindThirdPartyAccount")]
         public void BindThirdPartyAccount(ThirdPartyLoginType type, string userid, string code)
         {
             new AuthUserService().BindThirdPartyAccount(type, userid, code);

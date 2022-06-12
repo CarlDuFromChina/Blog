@@ -26,6 +26,7 @@ namespace Blog.Core.Store.SysFile
         /// <param name="objectId"></param>
         /// <returns></returns>
         [HttpGet, AllowAnonymous]
+        [Route("Download")]
         public Task<IActionResult> Download(string objectId)
         {
             var config = StoreConfig.Config;
@@ -41,6 +42,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
+        [Route("Upload")]
         public List<FileInfoModel> Upload([FromForm] List<IFormFile> files, [FromQuery] string fileType, [FromQuery] string objectId = "")
         {
             if (files == null || !files.Any())
@@ -62,6 +64,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
+        [Route("UploadImage")]
         public FileInfoModel UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             if (file == null)
@@ -81,6 +84,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
+        [Route("UploadBigImage")]
         public IEnumerable<FileInfoModel> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             if (file == null)
