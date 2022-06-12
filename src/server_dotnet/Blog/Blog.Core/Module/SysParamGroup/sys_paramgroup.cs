@@ -21,14 +21,14 @@ namespace Blog.Core.Module.SysParamGroup
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [Column]
         public string code { get; set; }
     }
 }

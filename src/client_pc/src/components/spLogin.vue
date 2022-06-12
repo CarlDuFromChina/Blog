@@ -45,11 +45,11 @@ export default {
     login() {
       this.$refs.form.validate().then(async () => {
         try {
-          const key = await sp.get('api/System/GetPublicKey');
+          const key = await sp.get('api/System/public_key');
           const { rsa, md5 } = encrypt;
           this.data.publicKey = key;
           this.data.password = rsa.encrypt(md5.encrypt(this.data.password), key);
-          const resp = await sp.post('api/System/SignInOrSignUp', this.data);
+          const resp = await sp.post('api/System/fast_signin', this.data);
           if (resp.result) {
             saveAuth(this.$store, resp);
             this.editVisible = false;

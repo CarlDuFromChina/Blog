@@ -16,7 +16,7 @@ namespace Blog.Core.Module.Role
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            if (context.EntityName != "sys_role") return;
+            if (context.Entity.GetEntityName() != "sys_role") return;
 
             var obj = context.Entity as sys_role;
 

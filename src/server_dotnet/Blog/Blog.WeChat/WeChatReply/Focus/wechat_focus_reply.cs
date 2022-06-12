@@ -22,28 +22,28 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Column("content", "内容", DataType.Text)]
+        [Column]
         public string content { get; set; }
 
         /// <summary>
         /// 公众号
         /// </summary>
         [DataMember]
-        [Column("wechat", "公众号", DataType.Varchar, 100)]
+        [Column]
         public string wechat { get; set; }
 
         /// <summary>
         /// 启用
         /// </summary>
         [DataMember]
-        [Column("checked", "启用", DataType.Int4)]
-        public int? @checked { get; set; }
+        [Column(name: "checked")]
+        public bool? @checked { get; set; }
     }
 }

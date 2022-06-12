@@ -106,7 +106,7 @@ export default {
     },
     handleDelete(row) {
       const id = row.sys_attrsId;
-      sp.post('api/SysAttrs/DeleteData', [id]).then(() => {
+      sp.delete(`api/SysAttrs/${id}`).then(() => {
         this.$message.success('删除成功');
         this.loadAttrs();
       });
@@ -118,7 +118,7 @@ export default {
       this.loadAttrs();
     },
     loadAttrs() {
-      sp.get(`api/SysEntity/GetEntityAttrs?id=${this.id}`).then(resp => {
+      sp.get(`api/SysEntity/attrs?id=${this.id}`).then(resp => {
         this.attrs = resp;
       });
     }

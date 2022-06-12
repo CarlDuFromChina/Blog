@@ -25,8 +25,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static string FilteredCreate(this IEntityManager manager, BaseEntity entity)
         {
-            var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            if (!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value))
+            var sysEntity = EntityCache.GetEntity(entity.GetEntityName());
+            if (!AuthAccess.CheckWriteAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的创建权限");
             }
@@ -41,8 +41,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static int FiltededUpdate(this IEntityManager manager, BaseEntity entity)
         {
-            var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            if (!AuthAccess.CheckWriteAccess(sysEntity.PrimaryKey.Value))
+            var sysEntity = EntityCache.GetEntity(entity.GetEntityName());
+            if (!AuthAccess.CheckWriteAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的更新权限");
             }
@@ -57,8 +57,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static string FilteredCreateOrUpdateData(this IEntityManager manager, BaseEntity entity)
         {
-            var id = entity.PrimaryKey.Value;
-            var isExist = manager.QueryCount($"select count(1) from {entity.EntityName} where {entity.PrimaryKey.Name} = @id", new Dictionary<string, object>() { { "@id", entity.PrimaryKey.Value} }) > 0;
+            var id = entity.GetPrimaryColumn().Value;
+            var isExist = manager.QueryCount($"select count(1) from {entity.GetEntityName()} where {entity.GetPrimaryColumn().Name} = @id", new Dictionary<string, object>() { { "@id", entity.GetPrimaryColumn().Value} }) > 0;
             if (isExist)
             {
                 manager.Update(entity);
@@ -79,8 +79,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static T FilteredQueryFirst<T>(this IEntityManager manager, string id) where T : BaseEntity, new()
         {
-            var sysEntity = EntityCache.GetEntity(new T().EntityName);
-            if (!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value))
+            var sysEntity = EntityCache.GetEntity(new T().GetEntityName());
+            if (!AuthAccess.CheckReadAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的查询权限");
             }
@@ -97,8 +97,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static IEnumerable<T> FilteredQuery<T>(this IEntityManager manager, string sql, Dictionary<string, object> paramList = null) where T : BaseEntity, new()
         {
-            var sysEntity = EntityCache.GetEntity(new T().EntityName);
-            if (!AuthAccess.CheckReadAccess(sysEntity.PrimaryKey.Value))
+            var sysEntity = EntityCache.GetEntity(new T().GetEntityName());
+            if (!AuthAccess.CheckReadAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的查询权限");
             }
@@ -113,8 +113,8 @@ namespace Blog.Core.Extensions
         /// <returns></returns>
         public static int FilteredDelete(this IEntityManager manager, BaseEntity entity)
         {
-            var sysEntity = EntityCache.GetEntity(entity.EntityName);
-            if (!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value))
+            var sysEntity = EntityCache.GetEntity(entity.GetEntityName());
+            if (!AuthAccess.CheckDeleteAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的删除权限");
             }
@@ -131,7 +131,7 @@ namespace Blog.Core.Extensions
         public static int FilteredDelete(this IEntityManager manager, string entityName, string id)
         {
             var sysEntity = EntityCache.GetEntity(entityName);
-            if (!AuthAccess.CheckDeleteAccess(sysEntity.PrimaryKey.Value))
+            if (!AuthAccess.CheckDeleteAccess(sysEntity.GetPrimaryColumn().Value))
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的删除权限");
             }

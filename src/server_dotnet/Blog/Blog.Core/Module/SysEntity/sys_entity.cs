@@ -23,25 +23,25 @@ namespace Blog.Core.Module.SysEntity
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
-        [DataMember, Column("code", "编码", DataType.Varchar, 100, true)]
+        [DataMember, Column]
         public string code { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Column("is_sys", "是否系统实体", DataType.Int4, true)]
-        public bool is_sys { get; set; }
+        [DataMember, Column]
+        public bool? is_sys { get; set; }
 
         /// <summary>
         /// 是否系统实体
         /// </summary>
-        [DataMember, Column("is_sys_name", "是否系统实体", DataType.Varchar, 100, false)]
+        [DataMember, Column]
         public string is_sys_name { get; set; }
     }
 }

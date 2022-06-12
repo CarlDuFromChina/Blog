@@ -19,28 +19,35 @@ namespace Blog.Business.Classification
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [Column]
         public string code { get; set; }
 
         /// <summary>
         /// 是否付费阅读
         /// </summary>
         [DataMember]
-        [Column("is_free", "是否付费阅读", DataType.Int4)]
-        public int is_free { get; set; }
+        [Column(defaultValue: true)]
+        public bool? is_free { get; set; }
+
+        /// <summary>
+        /// 是否付费阅读
+        /// </summary>
+        [DataMember]
+        [Column]
+        public string is_free_name { get; set; }
 
         /// <summary>
         /// 索引
         /// </summary>
         [DataMember]
-        [Column("index", "索引", DataType.Int4)]
+        [Column]
         public int index { get; set; }
     }
 }

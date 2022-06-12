@@ -94,10 +94,10 @@ export default {
       });
     },
     fetchData(callback) {
-      sp.get(`api/idea/GetViewData?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
+      sp.get(`api/idea/data?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
         resp => {
           const dataList = resp.DataList.map(item => {
-            item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.created_by}`;
+            item.avatar = `${sp.getServerUrl()}api/system/avatar/${item.created_by}`;
             return item;
           });
           this.total = resp.RecordCount;

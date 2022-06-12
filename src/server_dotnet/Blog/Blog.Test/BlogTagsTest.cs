@@ -1,4 +1,4 @@
-﻿using Blog.Business.Blog;
+﻿using Blog.Business.Post;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -31,8 +31,8 @@ namespace Blog.Test
         public void CheckTagsConvert()
         {
             var manager = EntityManagerFactory.GetManager();
-            var blog = manager.QueryFirst<blog>("select * from blog where tags is not null", null);
-            var tags = JsonConvert.DeserializeObject<List<string>>(blog.tags.ToString());
+            var post = manager.QueryFirst<post>("select * from post where tags is not null", null);
+            var tags = JsonConvert.DeserializeObject<List<string>>(post.tags.ToString());
             Assert.IsTrue(!tags.IsEmpty());
         }
     }

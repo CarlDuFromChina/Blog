@@ -35,7 +35,7 @@ export default {
     }
   },
   created() {
-    sp.get('/api/blog/categories').then(resp => {
+    sp.get('/api/post/categories').then(resp => {
       this.count = resp.count;
       this.data = resp.data;
       this.data.forEach(category => {

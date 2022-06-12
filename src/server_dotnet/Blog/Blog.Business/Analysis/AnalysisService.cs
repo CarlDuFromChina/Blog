@@ -1,5 +1,4 @@
 ﻿
-using Sixpence.ORM.Entity;
 using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
@@ -25,10 +24,10 @@ namespace Blog.Analysis
 
         public IEnumerable<TimelineModel> GetTimeline()
         {
-            var blog = Manager.Query<TimelineModel>(@"SELECT created_at, title, created_by_name FROM blog");
+            var post = Manager.Query<TimelineModel>(@"SELECT created_at, title, created_by_name FROM post");
             var reading = Manager.Query<TimelineModel>(@"SELECT created_at, name AS title, created_by_name FROM reading_note");
             return new List<TimelineModel>()
-                .Concat(blog)
+                .Concat(post)
                 .Concat(reading)
                 .OrderByDescending(item => item.created_at);
         }

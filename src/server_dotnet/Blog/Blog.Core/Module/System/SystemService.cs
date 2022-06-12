@@ -107,7 +107,7 @@ namespace Blog.Core.Module.DataService
                 return new LoginResponse() { result = false, message = "用户名或密码错误" };
             }
 
-            if (authUser.is_lock)
+            if (authUser.is_lock.Value)
             {
                 return new LoginResponse() { result = false, message = "用户已被锁定，请联系管理员" };
             }

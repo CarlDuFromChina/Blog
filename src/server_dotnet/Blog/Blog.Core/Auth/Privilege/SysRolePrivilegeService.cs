@@ -40,7 +40,7 @@ namespace Blog.Core.Auth.Privilege
             var role = Manager.QueryFirst<sys_role>(roleid);
             var privileges = new List<sys_role_privilege>();
 
-            if (role.is_basic)
+            if (role.is_basic.Value)
             {
                 privileges = ServiceContainer.ResolveAll<IRole>().FirstOrDefault(item => item.Role.GetDescription() == role.name).GetRolePrivilege().ToList();
             }

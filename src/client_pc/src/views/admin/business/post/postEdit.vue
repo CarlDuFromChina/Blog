@@ -30,11 +30,11 @@
         </a-row>
         <a-row>
           <a-col>
-            <a-form-model-item label="分类" prop="blog_type">
+            <a-form-model-item label="分类" prop="post_type">
               <sp-select
-                v-model="data.blog_type"
+                v-model="data.post_type"
                 :options="selectDataList.classification"
-                @change="item => (data.blog_type_name = item.name)"
+                @change="item => (data.post_type_name = item.name)"
               ></sp-select>
             </a-form-model-item>
           </a-col>
@@ -131,7 +131,7 @@ export default {
       html: '',
       configs: {},
       editVisible: false,
-      controllerName: 'blog',
+      controllerName: 'post',
       selectParamNameList: ['article_type'],
       selectEntityNameList: ['classification'],
       fileList: [],
@@ -144,7 +144,7 @@ export default {
       token: this.$store.getters.getToken,
       rules: {
         title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
+        post_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
         article_type: [{ required: true, message: '请选择文章类型', trigger: 'blur' }]
       }
     };
@@ -158,7 +158,7 @@ export default {
     }
   },
   watch: {
-    'data.blog_type': {
+    'data.post_type': {
       handler(newVal, oldVal) {
         if (this.selectDataList.classification) {
           let item = this.selectDataList.classification.find(item => item.Value === oldVal);
@@ -245,7 +245,7 @@ export default {
     },
     // 保存博客
     save() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           this.editVisible = false;
           this.data.id = sp.isNullOrEmpty(this.data.id) ? this.draft.blogId : this.data.id;
@@ -256,12 +256,17 @@ export default {
             this.data.tags = this.tags;
           }
           this.data.html_content = this.html;
-          sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
-            .then(() => {
-              this.$message.success('发布成功！');
-              this.$router.back();
-            })
-            .catch(error => this.$message.error(error));
+          try {
+            if (this.pageState === 'create') {
+              await sp.post('api/post', this.data);
+            } else {
+              await sp.put('api/post', this.data);
+            }
+            this.$message.success('发布成功！');
+            this.$router.back();
+          } catch (error) {
+            this.$message.error(error);
+          }
         }
       });
     },
@@ -291,7 +296,7 @@ export default {
           okText: '确定',
           cancelText: '取消',
           onOk: () => {
-            sp.post(`api/Blog/SyncBlog?id=${this.id}&destination=${dest}`)
+            sp.post(`api/post/sync?id=${this.id}&destination=${dest}`)
               .then(() => {
                 this.$message.success('同步成功');
               })

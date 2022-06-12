@@ -68,8 +68,8 @@ export default {
       baseUrl: sp.getServerUrl(),
       fileList: [],
       data: {
-        is_show: 0,
-        disable_comment: 0
+        is_show: false,
+        disable_comment: false
       }
     };
   },
@@ -79,22 +79,6 @@ export default {
     });
   },
   computed: {
-    isShow: {
-      get() {
-        return !this.data.is_show;
-      },
-      set(val) {
-        this.data.is_show = val ? 0 : 1;
-      }
-    },
-    disableComment: {
-      get() {
-        return !!this.data.disable_comment;
-      },
-      set(val) {
-        this.data.disable_comment = val ? 1 : 0;
-      }
-    },
     uploadImgParams() {
       return {
         fileType: 'reading_note',

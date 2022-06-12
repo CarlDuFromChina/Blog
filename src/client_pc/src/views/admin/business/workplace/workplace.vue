@@ -41,7 +41,7 @@ export default {
   created() {
     this.getUserInfo();
     this.loadTimeline();
-    this.avatarUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
+    this.avatarUrl = `${sp.getServerUrl()}api/system/avatar/${sp.getUserId()}`;
   },
   mounted() {
     this.loadCalendar();
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     getUserInfo() {
-      sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
+      sp.get(`api/UserInfo/${sp.getUserId()}`).then(resp => {
         this.user_info = resp;
       });
     },
@@ -83,7 +83,7 @@ export default {
     },
     async loadCalendar() {
       const el = document.getElementById('calendar');
-      const activityData = await sp.get('api/Blog/GetActivity');
+      const activityData = await sp.get('api/post/activity_records');
       const myChart = echarts.init(el);
       var option = {
         visualMap: {
@@ -118,7 +118,7 @@ export default {
       myChart.setOption(option);
     },
     async loadTimeline() {
-      this.timeline = await sp.get('api/Analysis/GetTimeline');
+      this.timeline = await sp.get('api/Analysis/timeline');
     }
   }
 };

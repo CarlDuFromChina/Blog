@@ -20,14 +20,14 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 是否执行成功
         /// </summary>
         [DataMember]
-        [Column("is_success", "是否执行成功", DataType.Int4)]
-        public bool is_success { get; set; }
+        [Column]
+        public bool? is_success { get; set; }
     }
 }

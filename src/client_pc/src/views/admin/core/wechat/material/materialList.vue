@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetViewData?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=${JSON.stringify(
+      return `api/${this.controllerName}/data?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=${JSON.stringify(
         this.searchList
       )}`;
     },
@@ -92,7 +92,8 @@ export default {
         });
     },
     async getSysParam() {
-      this.materialList = await sp.get('api/SysParamGroup/GetParams?code=wechat_material_type');
+      var resp = await sp.get('api/SysParamGroup/options?code=wechat_material_type');
+      this.materialList = resp[0];
     }
   }
 };

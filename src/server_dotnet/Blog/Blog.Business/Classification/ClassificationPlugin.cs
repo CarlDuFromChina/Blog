@@ -20,7 +20,7 @@ namespace Blog.Business.Classification
                     break;
                 case EntityAction.PostDelete:
                     {
-                        var menu = context.EntityManager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{context.Entity.GetAttributeValue<string>("code")}"} });
+                        var menu = context.EntityManager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"post/{context.Entity.GetAttributeValue<string>("code")}" } });
                         if (menu != null)
                         {
                             context.EntityManager.Delete(menu);
@@ -34,10 +34,10 @@ namespace Blog.Business.Classification
 
         private void CreateOrUpdateMenu(IEntityManager manager, classification data)
         {
-            var menu = manager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"blogs/{data.code}" } });
+            var menu = manager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"post/{data.code}" } });
             if (menu != null)
             {
-                menu.menu_Index = data.index;
+                menu.menu_index = data.index;
                 menu.name = data.name;
                 manager.Update(menu);
             }
@@ -49,10 +49,10 @@ namespace Blog.Business.Classification
                     name = data.name,
                     parentid = "8201EFED-76E2-4CD1-A522-4803D52D4D92",
                     parentId_name = "博客管理",
-                    router = $"blogs/{data.code}",
-                    menu_Index = data.index,
-                    stateCode = 1,
-                    stateCode_name = "启用"
+                    router = $"post/{data.code}",
+                    menu_index = data.index,
+                    statecode = true,
+                    statecode_name = "启用"
                 };
                 manager.Create(menu);
             }

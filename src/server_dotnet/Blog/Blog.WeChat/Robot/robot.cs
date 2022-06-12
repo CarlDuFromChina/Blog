@@ -20,35 +20,35 @@ namespace Blog.WeChat.Robot
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 钩子地址
         /// </summary>
         [DataMember]
-        [Column("hook", "钩子地址", DataType.Varchar, 500)]
+        [Column]
         public string hook { get; set; }
 
         /// <summary>
         /// 说明
         /// </summary>
         [DataMember]
-        [Column("description", "说明", DataType.Varchar, 200)]
+        [Column]
         public string description { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
         [DataMember]
-        [Column("robot_type", "类型", DataType.Varchar, 100)]
+        [Column]
         public string robot_type { get; set; }
 
         /// <summary>
         /// 类型名称
         /// </summary>
         [DataMember]
-        [Column("robot_type_name", "类型名称", DataType.Varchar, 100)]
+        [Column]
         public string robot_type_name { get; set; }
     }
 }

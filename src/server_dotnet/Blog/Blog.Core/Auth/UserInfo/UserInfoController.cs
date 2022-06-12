@@ -11,8 +11,7 @@ namespace Blog.Core.Auth.UserInfo
 {
     public class UserInfoController : EntityBaseController<user_info, UserInfoService>
     {
-        [HttpGet, AllowAnonymous]
-        [Route("data")]
+        [HttpGet("{id}"), AllowAnonymous]
         public override user_info GetData(string id)
         {
             return base.GetData(id);
@@ -22,8 +21,7 @@ namespace Blog.Core.Auth.UserInfo
         /// 是否需要填充信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("InfoFilled")]
+        [HttpGet("is_incomplete")]
         public bool InfoFilled()
         {
             return new UserInfoService().InfoFilled();

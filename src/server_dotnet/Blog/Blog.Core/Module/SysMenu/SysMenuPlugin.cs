@@ -22,7 +22,7 @@ namespace Blog.Core.Module.SysMenu
                     UserPrivilegesCache.Clear(manager);
                     break;
                 case EntityAction.PostDelete:
-                    var privileges = new SysRolePrivilegeService(manager).GetPrivileges(context.Entity.PrimaryKey.Value)?.ToArray();
+                    var privileges = new SysRolePrivilegeService(manager).GetPrivileges(context.Entity.GetPrimaryColumn().Value)?.ToArray();
                     manager.Delete(privileges);
                     UserPrivilegesCache.Clear(manager);
                     break;

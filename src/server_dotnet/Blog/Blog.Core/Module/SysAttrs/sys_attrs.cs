@@ -21,56 +21,56 @@ namespace Blog.Core.Module.SysAttrs
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [Column]
         public string code { get; set; }
 
         /// <summary>
         /// 实体id
         /// </summary>
         [DataMember]
-        [Column("entityid", "实体id", DataType.Varchar, 100)]
+        [Column]
         public string entityid { get; set; }
 
         /// <summary>
         /// 实体名
         /// </summary>
         [DataMember]
-        [Column("entityid_name", "实体名", DataType.Varchar, 100)]
+        [Column]
         public string entityid_name { get; set; }
 
         /// <summary>
         /// 字段类型
         /// </summary>
         [DataMember]
-        [Column("attr_type", "字段类型", DataType.Varchar, 100)]
+        [Column]
         public string attr_type { get; set; }
 
         /// <summary>
         /// 字段长度
         /// </summary>
         [DataMember]
-        [Column("attr_length", "字段长度", DataType.Int4)]
+        [Column]
         public int? attr_length { get; set; }
 
         /// <summary>
         /// 是否必填
         /// </summary>
         [DataMember]
-        [Column("isrequire", "是否必填", DataType.Int4)]
-        public bool isrequire { get; set; }
+        [Column]
+        public bool? isrequire { get; set; }
 
         /// <summary>
         /// 默认值
         /// </summary>
         [DataMember]
-        [Column("default_value", "默认值", DataType.Varchar, 200)]
+        [Column]
         public string default_value { get; set; }
     }
 }

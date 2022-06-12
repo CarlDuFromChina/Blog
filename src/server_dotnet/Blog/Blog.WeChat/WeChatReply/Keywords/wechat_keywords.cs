@@ -20,14 +20,14 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 回复内容
         /// </summary>
         [DataMember]
-        [Column("reply_content", "回复内容", DataType.Text)]
+        [Column]
         public string reply_content { get; set; }
     }
 }

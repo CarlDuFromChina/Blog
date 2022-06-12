@@ -18,7 +18,7 @@ namespace Blog.WeChat
         /// 获取微信access_token
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("GetAccessToken")]
+        [HttpGet("access_token")]
         public string GetAccessToken()
         {
             return WeChatService.AccessToken;

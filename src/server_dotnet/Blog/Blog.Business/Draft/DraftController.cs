@@ -15,17 +15,17 @@ namespace Blog.Draft
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, Route("GetDataByBlogId")]
-        public draft GetDataByBlogId(string id)
+        [HttpGet("post/{postid}")]
+        public draft GetDataByPostId(string postid)
         {
-            return new DraftService().GetDataByBlogId(id);
+            return new DraftService().GetDataByPostId(postid);
         }
 
         /// <summary>
         /// 获取博客草稿（新建）
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("GetDrafts")]
+        [HttpGet("drafts")]
         public IList<draft> GetDrafts()
         {
             return new DraftService().GetDrafts();

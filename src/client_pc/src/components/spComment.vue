@@ -93,7 +93,7 @@ export default {
         replyid_name: this.data.created_by_name,
         parentid: this.data.parentid || this.data.id
       };
-      sp.post('api/Comments/CreateData', comment).then(() => {
+      sp.post('api/comments', comment).then(() => {
         this.$message.success('留言成功');
         this.showReply = false;
         this.value = '';

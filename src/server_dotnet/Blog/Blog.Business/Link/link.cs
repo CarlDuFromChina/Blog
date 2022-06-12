@@ -21,28 +21,28 @@ namespace Blog.Business.Link
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 链接地址
         /// </summary>
         [DataMember]
-        [Column("link_url", "链接地址", DataType.Text)]
+        [Column]
         public string link_url { get; set; }
 
         /// <summary>
         /// 链接类型
         /// </summary>
         [DataMember]
-        [Column("link_type", "链接类型", DataType.Varchar, 100)]
+        [Column]
         public string link_type { get; set; }
 
         /// <summary>
         /// 摘要
         /// </summary>
         [DataMember]
-        [Column("brief", "摘要", DataType.Varchar, 100)]
+        [Column]
         public string brief { get; set; }
     }
 }

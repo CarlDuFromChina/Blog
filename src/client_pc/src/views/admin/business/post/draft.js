@@ -45,7 +45,7 @@ export default {
     window.clearInterval(this.secondId); // 销毁倒计时事件
   },
   async mounted() {
-    const enable = await sp.get(`/api/SysConfig/GetValue?code=${this.configCode}`);
+    const enable = await sp.get(`/api/SysConfig/value?code=${this.configCode}`);
     if (enable === 'true' || enable === true) {
       if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
         await this.popDraft(this.$route.params.draftId); // 打开草稿
@@ -73,7 +73,7 @@ export default {
      * @param {String} id - 博客id
      */
     async popDraft(id) {
-      return sp.get(`api/Draft/GetDataByBlogId?id=${id}`).then(resp => {
+      return sp.get(`api/draft/post/${id}`).then(resp => {
         this.draft = resp;
         const { blogId, content, title } = resp;
         this.data.blogId = blogId;
@@ -85,7 +85,7 @@ export default {
      * 获取草稿
      **/
     async getDraft() {
-      return sp.get(`api/Draft/GetDataByBlogId?id=${this.id}`).then(resp => {
+      return sp.get(`api/draft/post/${this.id}`).then(resp => {
         if (resp) {
           this.draft = resp;
           this.$confirm({
@@ -98,13 +98,13 @@ export default {
               this.data.blogId = blogId;
               this.data.content = content;
               this.data.title = title;
-              sp.post('api/Draft/DeleteData', [this.draft.id])
+              sp.delete(`/api/draft/${this.draft.id}`)
                 .finally(() => {
                   this.$emit('open-watch');
                 });
             },
             onCancel: () => {
-              sp.post('api/Draft/DeleteData', [this.draft.id]).then(() => {
+              sp.delete(`/api/draft/${this.draft.id}`).then(() => {
                 this.$message.info('已删除草稿');
               })
                 .finally(() => {
@@ -126,7 +126,7 @@ export default {
       this.draft.title = this.data.title || '草稿';
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
-      sp.post('api/Draft/CreateOrUpdateData', this.draft)
+      sp.post('api/draft/save', this.draft)
         .then(() => {
           this.saveStatusValue = 'success';
           this.isDirty = false;

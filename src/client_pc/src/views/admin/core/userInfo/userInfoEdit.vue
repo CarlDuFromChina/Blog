@@ -101,7 +101,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-model-item label="状态">
-              <a-radio-group v-model="data.stateCode" @change="handleStateCodeChange">
+              <a-radio-group v-model="data.statecode">
                 <a-radio
                   v-for="(item, index) in [
                     { name: '启用', value: 1 },
@@ -217,7 +217,7 @@ export default {
   },
   async created() {
     this.token = this.$store.getters.getToken;
-    sp.get('api/SysRole/GetRoles').then(resp => {
+    sp.get('api/SysRole/role_options').then(resp => {
       this.roles = resp;
     });
   },
@@ -241,9 +241,6 @@ export default {
     handleChangeGender() {
       this.data.gender_name = this.data.gender === 0 ? '男' : '女';
     },
-    handleStateCodeChange() {
-      this.data.stateCode_name = this.data.stateCode === 1 ? '启用' : '禁用';
-    },
     handleAvatarChange(file) {
       if (file) {
         this.avatarChange = true;
@@ -256,7 +253,7 @@ export default {
     },
     async loadComplete() {
       if (!sp.isNullOrEmpty(this.data.avatar)) {
-        const image = await sp.get(`api/SysFile/GetData?id=${this.data.avatar}`);
+        const image = await sp.get(`api/SysFile/${this.data.avatar}`);
         this.fileList = [
           {
             uid: '-1',
@@ -267,7 +264,7 @@ export default {
         ];
       }
       if (!sp.isNullOrEmpty(this.data.life_photo)) {
-        const image = await sp.get(`api/SysFile/GetData?id=${this.data.life_photo}`);
+        const image = await sp.get(`api/SysFile/${this.data.life_photo}`);
         this.lifePhotos = [
           {
             uid: '-1',

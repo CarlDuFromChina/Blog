@@ -21,14 +21,14 @@ namespace Blog.WeChat.WeChatReply.Focus
         public void Activate(string id)
         {
             var data = GetData(id);
-            data.@checked = 1;
+            data.@checked = true;
             UpdateData(data);
         }
 
         public void Deactivate(string id)
         {
             var data = GetData(id);
-            data.@checked = 0;
+            data.@checked = false;
             UpdateData(data);
         }
 

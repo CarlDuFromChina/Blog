@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Blog.Core.Auth
@@ -9,75 +10,37 @@ namespace Blog.Core.Auth
     [KeyAttributes("请勿重复创建用户", "code")]
     public partial class auth_user : BaseEntity
     {
-        /// <summary>
-        /// 实体id
-        /// </summary>
-        [DataMember]
-        [PrimaryColumn("id")]
+        [PrimaryColumn, DataMember]
         public string id { get; set; }
 
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column, DataMember, Description("名称")]
         public string name { get; set; }
 
-        [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [Column, DataMember, Description("编码")]
         public string code { get; set; }
 
-        [DataMember]
-        [Column("password", "密码", DataType.Varchar, 100)]
+        [Column, DataMember, Description("密码")]
         public string password { get; set; }
 
-        /// <summary>
-        /// 角色权限id
-        /// </summary>
-        [DataMember]
-        [Column("roleid", "角色权限id", DataType.Varchar, 100)]
+        [Column, DataMember, Description("角色权限id")]
         public string roleid { get; set; }
 
-        /// <summary>
-        /// 角色权限名
-        /// </summary>
-        [DataMember]
-        [Column("roleid_name", "角色权限名", DataType.Varchar, 100)]
+        [Column, DataMember, Description("角色权限名")]
         public string roleid_name { get; set; }
 
-        /// <summary>
-        /// 用户id
-        /// </summary>
-        [DataMember]
-        [Column("user_infoid", "用户id", DataType.Varchar, 100)]
+        [Column, DataMember, Description("用户id")]
         public string user_infoid { get; set; }
 
-        /// <summary>
-        /// 锁定
-        /// </summary>
-        [DataMember]
-        [Column("is_lock", "锁定", DataType.Int4)]
-        public bool is_lock { get; set; }
+        [Column, DataMember, Description("锁定")]
+        public bool? is_lock { get; set; }
 
-        /// <summary>
-        /// 是否锁定
-        /// </summary>
-        [DataMember]
-        [Column("is_lock_name", "是否锁定", DataType.Varchar, 100)]
+        [Column, DataMember, Description("锁定")]
         public string is_lock_name { get; set; }
 
-        /// <summary>
-        /// 上次登录时间
-        /// </summary>
-        [DataMember]
-        [Column("last_login_time", "上次登录时间", DataType.Timestamp)]
+        [Column, DataMember, Description("上次登录时间")]
         public DateTime? last_login_time { get; set; }
 
-        /// <summary>
-        /// 尝试登录次数
-        /// </summary>
-        [DataMember]
-        [Column("try_times", "尝试登录次数", DataType.Int4)]
+        [Column, DataMember, Description("尝试登录次数")]
         public int? try_times { get; set; }
     }
 }

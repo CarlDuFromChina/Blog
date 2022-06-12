@@ -14,8 +14,7 @@ namespace Blog.Core.Module.MessageRemind
         /// 获取未读消息数量
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("GetUnReadMessageCount")]
+        [HttpGet("unread_message_count")]
         public object GetUnReadMessageCount()
         {
             return new MessageRemindService().GetUnReadMessageCount();

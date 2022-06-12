@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       controllerName: 'UserInfo',
-      operations: ['new', 'delete', 'search'],
+      operations: ['new', 'delete', 'search', 'export'],
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'code', label: '编码' },
@@ -49,7 +49,7 @@ export default {
         return;
       }
 
-      sp.get(`api/AuthUser/LockUser?id=${this.selectionIds[0]}`)
+      sp.get(`api/AuthUser/${this.selectionIds[0]}/lock`)
         .then(() => {
           this.$message.success('锁定成功');
         })
@@ -67,7 +67,7 @@ export default {
         return;
       }
 
-      sp.get(`api/AuthUser/UnlockUser?id=${this.selectionIds[0]}`)
+      sp.get(`api/AuthUser/${this.selectionIds[0]}/lock`)
         .then(() => {
           this.$message.success('解锁成功');
         })

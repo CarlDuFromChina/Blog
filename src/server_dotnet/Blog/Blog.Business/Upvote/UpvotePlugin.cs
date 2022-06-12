@@ -36,7 +36,7 @@ namespace Blog.Business.Upvote
                     break;
                 case EntityAction.PreDelete:
                     {
-                        var data = context.EntityManager.QueryFirst<upvote>(context.Entity.PrimaryKey.Value);
+                        var data = context.EntityManager.QueryFirst<upvote>(context.Entity.GetPrimaryColumn().Value);
                         var sql = @"
 SELECT * FROM (
 	SELECT *, content::jsonb ->> 'objectId' AS objectid

@@ -13,24 +13,39 @@ namespace Blog.Core.Module.JobHisotry
         [PrimaryColumn]
         public string id { get; set; }
 
+        /// <summary>
+        /// 作业名
+        /// </summary>
         [DataMember]
-        [Column("job_name", "作业名", DataType.Varchar, 100, true)]
+        [Column]
         public string job_name { get; set; }
 
+        /// <summary>
+        /// 开始时间
+        /// </summary>
         [DataMember]
-        [Column("start_time", "开始时间", DataType.Timestamp, true)]
+        [Column]
         public DateTime? start_time { get; set; }
-        
+
+        /// <summary>
+        /// 结束时间
+        /// </summary>
         [DataMember]
-        [Column("end_time", "结束时间", DataType.Timestamp, true)]
+        [Column]
         public DateTime? end_time { get; set; }
 
+        /// <summary>
+        /// 状态
+        /// </summary>
         [DataMember]
-        [Column("status", "状态", DataType.Varchar, 100, true)]
+        [Column]
         public string status { get; set; }
 
+        /// <summary>
+        /// 错误原因
+        /// </summary>
         [DataMember]
-        [Column("error_msg", "错误原因", DataType.Text)]
+        [Column]
         public string error_msg { get; set; }
     }
 }

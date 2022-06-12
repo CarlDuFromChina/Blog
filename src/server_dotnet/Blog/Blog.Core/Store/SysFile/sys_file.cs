@@ -18,21 +18,21 @@ namespace Blog.Core.Store.SysFile
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 500)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 文件对象
         /// </summary>
         [DataMember]
-        [Column("objectid", "文件对象", DataType.Varchar, 100)]
+        [Column]
         public string objectId { get; set; }
 
         /// <summary>
         /// 真实文件名
         /// </summary>
         [DataMember]
-        [Column("real_name", "真实文件名", DataType.Varchar, 500)]
+        [Column]
         public string real_name { get; set; }
 
         
@@ -40,28 +40,28 @@ namespace Blog.Core.Store.SysFile
         /// 文件路径
         /// </summary>
         [DataMember]
-        [Column("file_path", "文件路径", DataType.Text)]
+        [Column]
         public string file_path { get; set; }
 
         /// <summary>
         /// 哈希值
         /// </summary>
         [DataMember]
-        [Column("hash_code", "哈希值", DataType.Varchar, 40)]
+        [Column]
         public string hash_code { get; set; }
 
         /// <summary>
         /// 文件类型
         /// </summary>
         [DataMember]
-        [Column("file_type", "文件类型", DataType.Varchar, 100)]
+        [Column]
         public string file_type { get; set; }
 
         /// <summary>
         /// 内容类型
         /// </summary>
         [DataMember]
-        [Column("content_type", "内容类型", DataType.Varchar, 100)]
+        [Column]
         public string content_type { get; set; }
     }
 }

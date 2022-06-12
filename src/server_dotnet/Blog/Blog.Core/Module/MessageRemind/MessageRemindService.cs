@@ -58,7 +58,7 @@ WHERE message_type = 'system'",
         {
             var sql = @"
 UPDATE message_remind
-SET	is_read = 1, is_read_name = '是'
+SET	is_read = true, is_read_name = '是'
 WHERE id IN (in@ids)
 ";
             Manager.Execute(sql, new Dictionary<string, object>() { { "in@ids", string.Join(",", ids) } });
@@ -72,7 +72,7 @@ WHERE id IN (in@ids)
             }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
             var model = base.GetDataList(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
-            var ids = model.DataList.Where(item => !item.is_read).Select(item => item.id);
+            var ids = model.DataList.Where(item => !item.is_read.Value ).Select(item => item.id);
             ReadMessage(ids);
             return model;
         }
@@ -85,7 +85,7 @@ WHERE id IN (in@ids)
             }
             searchList.Add(new SearchCondition() { Name = "receiverid", Type = SearchType.Equals, Value = UserIdentityUtil.GetCurrentUserId() });
             var model = base.GetDataList(searchList, orderBy, viewId, searchValue);
-            var ids = model.Where(item => !item.is_read).Select(item => item.id);
+            var ids = model.Where(item => !item.is_read.Value).Select(item => item.id);
             ReadMessage(ids);
             return model;
         }
@@ -101,7 +101,7 @@ WHERE id IN (in@ids)
             var sql = @"
 SELECT COUNT(1)
 FROM message_remind
-WHERE receiverid = @id AND is_read = 0";
+WHERE receiverid = @id AND is_read is false";
             var total = Manager.ExecuteScalar(sql, paramList);
             var upvote = Manager.ExecuteScalar($"{sql} AND message_type = 'upvote'", paramList);
             var comment = Manager.ExecuteScalar($"{sql} AND message_type IN ('comment', 'reply')", paramList);

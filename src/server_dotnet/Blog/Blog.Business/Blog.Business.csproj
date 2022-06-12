@@ -11,66 +11,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\build\</OutputPath>
+    <OutputPath>..\build\netcoreapp3.1\netcoreapp3.1\netcoreapp3.1\netcoreapp3.1</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="version\2.0\2021070901-新增内容管理菜单.sql" />
-    <None Remove="version\2.0\2021070902-新增分析中心菜单.sql" />
     <None Remove="version\2.2\2021072101-新增链接菜单.sql" />
-    <None Remove="version\2.0\2021070903-初始化推荐信息类型选项集.sql" />
-    <None Remove="version\2.2\2021082401-更新评论名称.sql" />
-    <None Remove="version\2.3.3\2021102901-新增评论控制参数.sql" />
-    <None Remove="version\2.3\2021091501-删除点赞数字段.sql" />
-    <None Remove="version\2.4\2021100901-新增博客管理菜单.sql" />
-    <None Remove="version\2.5\2021112701-删除友人博客实体.sql" />
-    <None Remove="version\2.5\2021121501-新增首页用户系统参数 - 复制.sql" />
-    <None Remove="version\2.5\2022042501-新增掘金Cookie系统参数.sql" />
-    <None Remove="version\2.5\2022050601-更新菜单博客路由.sql" />
+    <None Remove="version\3.0\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="version\2.0\2021070901-新增内容管理菜单.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.0\2021070902-新增分析中心菜单.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.2\2021082401-更新评论名称.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.1\2021072101-新增链接菜单.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.0\2021070903-初始化推荐信息类型选项集.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.3.3\2021102901-新增评论控制参数.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.3\2021091501-删除点赞数字段.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.5\2021121501-新增首页用户系统参数 - 复制.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.5\2022050601-更新菜单博客路由.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.5\2022042501-新增掘金Cookie系统参数.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.5\2021112701-删除友人博客实体.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="version\2.4\2021100901-新增博客管理菜单.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
   </ItemGroup>
 
@@ -80,4 +31,7 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="version\3.0\" />
+  </ItemGroup>
 </Project>
