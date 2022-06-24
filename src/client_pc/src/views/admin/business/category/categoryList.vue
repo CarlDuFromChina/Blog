@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import editComponent from './classificationEdit';
+import editComponent from './categoryEdit.vue';
 
 export default {
-  name: 'classification-list',
+  name: 'category-list',
   data() {
     return {
-      controllerName: 'Classification',
+      controllerName: 'category',
       editComponent,
       columns: [
         { prop: 'name', label: '名称' },

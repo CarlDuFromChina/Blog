@@ -3,10 +3,10 @@ using System;
 using System.Runtime.Serialization;
 
 
-namespace Blog.Business.Classification
+namespace Blog.Business.Category
 {
-    [Entity("classification", "博客分类", false)]
-    public partial class classification : BaseEntity
+    [Entity("category", "博客分类", false)]
+    public partial class category : BaseEntity
     {
         /// <summary>
         /// 实体id

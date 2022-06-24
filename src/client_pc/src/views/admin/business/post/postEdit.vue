@@ -33,7 +33,7 @@
             <a-form-model-item label="分类" prop="post_type">
               <sp-select
                 v-model="data.post_type"
-                :options="selectDataList.classification"
+                :options="selectDataList.category"
                 @change="item => (data.post_type_name = item.name)"
               ></sp-select>
             </a-form-model-item>
@@ -133,7 +133,7 @@ export default {
       editVisible: false,
       controllerName: 'post',
       selectParamNameList: ['article_type'],
-      selectEntityNameList: ['classification'],
+      selectEntityNameList: ['category'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
       tags: [],
@@ -160,8 +160,8 @@ export default {
   watch: {
     'data.post_type': {
       handler(newVal, oldVal) {
-        if (this.selectDataList.classification) {
-          let item = this.selectDataList.classification.find(item => item.Value === oldVal);
+        if (this.selectDataList.category) {
+          let item = this.selectDataList.category.find(item => item.Value === oldVal);
           if (item) {
             const index = this.tags.indexOf(item.Name);
             if (index !== -1) {
@@ -169,7 +169,7 @@ export default {
             }
           }
 
-          item = this.selectDataList.classification.find(item => item.Value === newVal);
+          item = this.selectDataList.category.find(item => item.Value === newVal);
           if (item && new Set(this.tags.concat(item.Name)).size === this.tags.concat(item.Name).length) {
             this.tags.push(item.Name);
           }

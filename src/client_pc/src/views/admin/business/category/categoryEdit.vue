@@ -19,11 +19,11 @@
 import { edit } from '@/mixins';
 
 export default {
-  name: 'classification-edit',
+  name: 'category-edit',
   mixins: [edit],
   data() {
     return {
-      controllerName: 'Classification',
+      controllerName: 'category',
       data: {
         is_free: false
       }

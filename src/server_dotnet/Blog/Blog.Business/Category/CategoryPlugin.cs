@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Business.Classification
+namespace Blog.Business.Category
 {
-    public class ClassificationPlugin : IEntityManagerPlugin
+    public class CategoryPlugin : IEntityManagerPlugin
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            var data = context.Entity as classification;
+            var data = context.Entity as category;
             switch (context.Action)
             {
                 case EntityAction.PostCreate:
@@ -32,7 +32,7 @@ namespace Blog.Business.Classification
             }
         }
 
-        private void CreateOrUpdateMenu(IEntityManager manager, classification data)
+        private void CreateOrUpdateMenu(IEntityManager manager, category data)
         {
             var menu = manager.QueryFirst<sys_menu>("SELECT * FROM sys_menu WHERE router = @code", new Dictionary<string, object>() { { "@code", $"post/{data.code}" } });
             if (menu != null)

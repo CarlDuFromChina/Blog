@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Business.Classification
+namespace Blog.Business.Category
 {
-    public class ClassificationService : EntityService<classification>
+    public class CategoryService : EntityService<category>
     {
         #region 构造函数
-        public ClassificationService() : base() { }
+        public CategoryService() : base() { }
 
-        public ClassificationService(IEntityManager manager) : base(manager) { }
+        public CategoryService(IEntityManager manager) : base(manager) { }
         #endregion
     }
 }
