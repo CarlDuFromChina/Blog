@@ -99,7 +99,6 @@ export default {
       setTimeout(() => {
         this.submitting = false;
         const comment = {
-          id: uuid.generate(),
           name: '评论',
           comment: this.value,
           comment_type: 'comment',

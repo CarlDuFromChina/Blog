@@ -25,7 +25,7 @@ export default {
   },
   created() {
     sp.get('api/link/data').then(resp => {
-      this.items = resp;
+      this.items = resp.DataList;
       setTimeout(() => {
         this.loading = false;
       }, 200);

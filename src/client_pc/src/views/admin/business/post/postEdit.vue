@@ -225,7 +225,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.id || this.draft.blogId || '');
+      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.id || this.draft.postid || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -248,7 +248,6 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.editVisible = false;
-          this.data.id = sp.isNullOrEmpty(this.data.id) ? this.draft.blogId : this.data.id;
           if (sp.isNullOrEmpty(this.data.brief)) {
             this.data.brief = htmlToText(this.html, { baseElement: 'p', limits: { ellipsis: '...', maxInputLength: 200 } });
           }

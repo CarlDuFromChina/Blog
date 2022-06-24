@@ -30,6 +30,10 @@ namespace Blog.Core.Extensions
             {
                 throw new InvalidCredentialException($"用户没有实体[{sysEntity.name}]的创建权限");
             }
+            if (string.IsNullOrEmpty(entity.GetPrimaryColumn().Value))
+            {
+                entity.SetAttributeValue(entity.GetPrimaryColumn().Name, entity.NewId());
+            }
             return manager.Create(entity);
         }
 

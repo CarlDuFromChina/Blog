@@ -24,7 +24,7 @@ namespace Blog.RecommendInfo
         public void RecordReadingTimes(string id)
         {
             var sql = @"
-UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE recommend_infoid = @id
+UPDATE recommend_info SET reading_times = COALESCE(reading_times, 0) + 1 WHERE id = @id
 ";
             Manager.Execute(sql, new Dictionary<string, object>() { { "@id", id } });
         }

@@ -83,7 +83,6 @@ export default {
         return;
       }
       const comment = {
-        id: uuid.generate(),
         name: '回复',
         comment: this.value,
         objectid: this.data.objectId,

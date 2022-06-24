@@ -15,7 +15,7 @@ namespace Blog.Draft
         /// 主键
         /// </summary>
         [DataMember]
-        [PrimaryColumn]
+        [PrimaryColumn(primaryType: PrimaryType.GUIDNumber)]
         public string id { get; set; }
 
         /// <summary>

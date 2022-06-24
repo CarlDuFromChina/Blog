@@ -89,7 +89,6 @@ export default {
     async saveData() {
       const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
       if (sp.isNullOrEmpty(this.id)) {
-        this.data.id = uuid.generate();
         await sp.post(`api/${this.controllerName}`, this.data);
       } else {
         await sp.put(`api/${this.controllerName}`, this.data);

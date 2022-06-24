@@ -97,9 +97,6 @@ export default {
         this.$message.error('字段长度必须大于0');
         return;
       }
-      if (sp.isNullOrEmpty(this.id)) {
-        this.data.id = uuid.generate();
-      }
       const that = this;
       this.$refs.form.validate(resp => {
         if (resp) {

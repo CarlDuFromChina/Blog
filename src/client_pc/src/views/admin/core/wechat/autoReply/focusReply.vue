@@ -37,7 +37,6 @@ export default {
       this.data.content = this.$refs.editor.editor.txt.text();
       try {
         if (operationName === 'CreateData') {
-          this.data.id = uuid.generate();
           await sp.post(url, this.data);
         } else {
           await sp.put(url, this.data);

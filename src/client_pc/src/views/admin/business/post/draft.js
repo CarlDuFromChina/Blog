@@ -8,7 +8,6 @@
 export default {
   data() {
     return {
-      draftId: '',
       draft: {},
       isDirty: false,
       seconds: 60,
@@ -46,13 +45,12 @@ export default {
   },
   async mounted() {
     const enable = await sp.get(`/api/SysConfig/value?code=${this.configCode}`);
-    if (enable === 'true' || enable === true) {
+    if (enable === 'true' || enable === true) { 
+      debugger;
       if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
         await this.popDraft(this.$route.params.draftId); // 打开草稿
         this.$emit('open-watch');
       } else if (this.pageState === 'create') {
-        this.draft.blogId = uuid.generate();
-        this.draft.draftId = uuid.generate();
         this.$emit('open-watch');
       } else {
         await this.getDraft(); // 获取草稿
@@ -75,8 +73,8 @@ export default {
     async popDraft(id) {
       return sp.get(`api/draft/post/${id}`).then(resp => {
         this.draft = resp;
-        const { blogId, content, title } = resp;
-        this.data.blogId = blogId;
+        const { postid, content, title } = resp;
+        this.data.id = postid;
         this.data.content = content;
         this.data.title = title;
       });
@@ -94,8 +92,8 @@ export default {
             okText: '恢复',
             cancelText: '取消',
             onOk: () => {
-              const { blogId, content, title } = resp;
-              this.data.blogId = blogId;
+              const { postid, content, title } = resp;
+              this.data.id = postid;
               this.data.content = content;
               this.data.title = title;
               sp.delete(`/api/draft/${this.draft.id}`)
@@ -113,8 +111,6 @@ export default {
             }
           });
         } else {
-          this.draft.draftId = uuid.generate();
-          this.draft.blogId = this.id;
           this.$emit('open-watch');
         }
       });
@@ -127,9 +123,10 @@ export default {
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
       sp.post('api/draft/save', this.draft)
-        .then(() => {
+        .then(resp => {
           this.saveStatusValue = 'success';
           this.isDirty = false;
+          this.draft.id = resp;
         })
         .catch(() => {
           this.saveStatusValue = 'fail';

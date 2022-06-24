@@ -2,7 +2,7 @@
   <a-spin :spinning="loading" style="height: 100%;overflow-y: auto">
     <sp-header>
       <div style="display: inline-block;padding-right:10px;">
-        <a-button icon="check" type="primary" @click="saveData" :loading="loading">提交</a-button>
+        <a-button icon="check" type="primary" @click="saveData" :loading="loading" style="margin-right:10px">提交</a-button>
         <a-button icon="left" @click="$router.back()">返回</a-button>
       </div>
     </sp-header>

@@ -34,7 +34,7 @@ export default {
         const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
         const resp = await sp.get('api/RecommendInfo/data?searchList=' + JSON.stringify(searchList));
         if (resp) {
-          this.data = resp;
+          this.data = resp.DataList;
         }
       } catch (error) {
         this.$message.error(error);
