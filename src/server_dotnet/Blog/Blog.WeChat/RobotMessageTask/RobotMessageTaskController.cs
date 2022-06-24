@@ -10,19 +10,19 @@ namespace Blog.WeChat.RobotMessageTask
 {
     public class RobotMessageTaskController : EntityBaseController<robot_message_task, RobotMessageTaskService>
     {
-        [HttpGet, Route("RunOnce")]
+        [HttpGet("{id}/run")]
         public void RunOnce(string id)
         {
             new RobotMessageTaskService().RunOnce(id);
         }
 
-        [HttpGet, Route("PauseJob")]
+        [HttpGet("{id}/pause")]
         public void PauseJob(string id)
         {
             new RobotMessageTaskService().PauseJob(id);
         }
 
-        [HttpGet, Route("ResumeJob")]
+        [HttpGet("{id}/resume")]
         public void ResumeJob(string id)
         {
             new RobotMessageTaskService().ResumeJob(id);

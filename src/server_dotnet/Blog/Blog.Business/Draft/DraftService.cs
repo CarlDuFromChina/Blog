@@ -22,8 +22,8 @@ namespace Blog.Draft
         {
             var sql = @"
 SELECT * FROM draft
-WHERE blogid NOT IN (
-	SELECT blogid FROM blog
+WHERE postid NOT IN (
+	SELECT postid FROM post
 )
 ";
             return Manager.Query<draft>(sql).ToList();
@@ -32,28 +32,28 @@ WHERE blogid NOT IN (
         /// <summary>
         /// 根据博客id获取草稿
         /// </summary>
-        /// <param name="blogId"></param>
+        /// <param name="postId"></param>
         /// <returns></returns>
-        public draft GetDataByBlogId(string blogId)
+        public draft GetDataByPostId(string postId)
         {
             var sql = @"
 SELECT * FROM draft
-WHERE blogid = @blogid
+WHERE postid = @postid
 ";
-            return Manager.QueryFirst<draft>(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            return Manager.QueryFirst<draft>(sql, new Dictionary<string, object>() { { "@postid", postId } });
         }
 
         /// <summary>
         /// 根据博客id删除草稿
         /// </summary>
-        /// <param name="blogId"></param>
-        public void DeleteDataByBlogId(string blogId)
+        /// <param name="postId"></param>
+        public void DeleteDataByPostId(string postId)
         {
             var sql = @"
 DELETE FROM draft
-WHERE blogid = @blogid
+WHERE postid = @postid
 ";
-            Manager.Execute(sql, new Dictionary<string, object>() { { "@blogid", blogId } });
+            Manager.Execute(sql, new Dictionary<string, object>() { { "@postid", postId } });
         }
 
         public override string CreateOrUpdateData(draft t)

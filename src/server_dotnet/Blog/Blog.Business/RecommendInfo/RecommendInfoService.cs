@@ -18,28 +18,6 @@ namespace Blog.RecommendInfo
         #endregion
 
         /// <summary>
-        /// 获取推荐信息
-        /// </summary>
-        /// <returns></returns>
-        public IList<recommend_info> GetRecommendList(string type = "url")
-        {
-            var sql = $@"
-SELECT
-	* 
-FROM
-	recommend_info 
-WHERE
-	recommend_type = @type 
-ORDER BY
-	created_at DESC 
-";
-            Manager.DbClient.Driver.AddLimit(ref sql, null, 5);
-            var paramList = new Dictionary<string, object>() { { "@type", type } };
-            var data = Manager.Query<recommend_info>(sql, paramList).ToList();
-            return data;
-        }
-
-        /// <summary>
         /// 记录阅读次数
         /// </summary>
         /// <param name="id">id</param>

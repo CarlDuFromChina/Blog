@@ -70,7 +70,7 @@ export default {
     };
   },
   created() {
-    sp.get('api/sysconfig/websiteinfo').then(resp => {
+    sp.get('api/sysconfig/website_info').then(resp => {
       if (!sp.isNullOrEmpty(resp)) {
         try {
           var { author, email, record_no } = resp;

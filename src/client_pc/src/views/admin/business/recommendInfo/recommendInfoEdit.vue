@@ -36,8 +36,8 @@ export default {
     };
   },
   created() {
-    sp.get('api/SysParamGroup/GetParams?code=recommend_type').then(resp => {
-      this.recommentType = resp;
+    sp.get('api/SysParamGroup/options?code=recommend_type').then(resp => {
+      this.recommentType = resp[0];
     });
   },
   methods: {

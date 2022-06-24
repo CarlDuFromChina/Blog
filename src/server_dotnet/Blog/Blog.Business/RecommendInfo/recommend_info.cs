@@ -22,35 +22,35 @@ namespace Blog.RecommendInfo
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 链接地址
         /// </summary>
         [DataMember]
-        [Column("url", "链接地址", DataType.Varchar, 400)]
+        [Column]
         public string url { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
         [DataMember]
-        [Column("recommend_type", "推荐类型", DataType.Varchar, 100)]
+        [Column]
         public string recommend_type { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
         [DataMember]
-        [Column("recommend_type_name", "推荐类型", DataType.Varchar, 100)]
+        [Column]
         public string recommend_type_name { get; set; }
 
         /// <summary>
         /// 阅读次数
         /// </summary>
         [DataMember]
-        [Column("reading_times", "阅读次数", DataType.Int4)]
+        [Column]
         public int? reading_times { get; set; }
 
     }

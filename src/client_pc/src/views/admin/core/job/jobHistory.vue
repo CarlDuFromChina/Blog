@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(this.searchList)}&orderBy=created_at desc`;
+      return `api/${this.controllerName}/data?searchList=${JSON.stringify(this.searchList)}&orderBy=created_at desc`;
     }
   },
   methods: {

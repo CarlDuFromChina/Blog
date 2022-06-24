@@ -19,42 +19,42 @@ namespace Blog.Core.Module.Gallery
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 标签
         /// </summary>
         [DataMember]
-        [Column("tags", "实体id", DataType.Varchar, 100)]
+        [Column]
         public string tags { get; set; }
 
         /// <summary>
         /// 预览图
         /// </summary>
         [DataMember]
-        [Column("preview_url", "预览图", DataType.Varchar, 200)]
+        [Column]
         public string preview_url { get; set; }
 
         /// <summary>
         /// 大图
         /// </summary>
         [DataMember]
-        [Column("image_url", "大图", DataType.Varchar, 200)]
+        [Column]
         public string image_url { get; set; }
 
         /// <summary>
         /// 预览图片id
         /// </summary>
         [DataMember]
-        [Column("previewid", "预览图片id", DataType.Varchar, 100)]
+        [Column]
         public string previewid { get; set; }
 
         /// <summary>
         /// 大图id
         /// </summary>
         [DataMember]
-        [Column("imageid", "大图id", DataType.Varchar, 100)]
+        [Column]
         public string imageid { get; set; }
     }
 }

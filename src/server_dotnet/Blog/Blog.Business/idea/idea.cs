@@ -22,14 +22,14 @@ namespace Blog.idea
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Column("content", "想法id", DataType.Text)]
+        [Column]
         public string content { get; set; }
     }
 }

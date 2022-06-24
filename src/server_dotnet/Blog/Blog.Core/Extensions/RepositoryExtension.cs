@@ -19,7 +19,7 @@ namespace Blog.Core.Extensions
         public static IEnumerable<E> GetAllEntity<E>(this IRepository<E> repository)
             where E : BaseEntity, new()
         {
-            var sql = $"SELECT *  FROM {new E().EntityName}";
+            var sql = $"SELECT *  FROM {new E().GetEntityName()}";
             var data = repository.Manager.Query<E>(sql);
             return data;
         }
@@ -78,7 +78,7 @@ namespace Blog.Core.Extensions
         public static string FilteredCreate<E>(this IRepository<E> repository, E entity)
             where E : BaseEntity, new()
         {
-            if (string.IsNullOrEmpty(entity.PrimaryKey.Value))
+            if (string.IsNullOrEmpty(entity.GetPrimaryColumn().Value))
             {
                 return "";
             }
@@ -95,7 +95,7 @@ namespace Blog.Core.Extensions
         public static string FilteredCreateOrUpdateData<E>(this IRepository<E> repository, E entity)
             where E : BaseEntity, new()
         {
-            var id = entity.PrimaryKey.Value;
+            var id = entity.GetPrimaryColumn().Value;
             var isExist = repository.Manager.QueryFirst<E>(id) != null;
             if (isExist)
             {
@@ -121,7 +121,7 @@ namespace Blog.Core.Extensions
                 ids.Each(id =>
                 {
                     var data = repository.Manager.FilteredQueryFirst<E>(id);
-                    repository.Manager.FilteredDelete(new E().EntityName, id);
+                    repository.Manager.FilteredDelete(new E().GetEntityName(), id);
                 });
             });
         }
@@ -135,7 +135,7 @@ namespace Blog.Core.Extensions
         public static IEnumerable<E> FilteredQuery<E>(this IRepository<E> repository)
             where E : BaseEntity, new()
         {
-            return repository.Manager.FilteredQuery<E>($"select * from {new E().EntityName}");
+            return repository.Manager.FilteredQuery<E>($"select * from {new E().GetEntityName()}");
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Blog.Core.Extensions
         public static void FilteredUpdate<E>(this IRepository<E> repository, E entity)
             where E : BaseEntity, new()
         {
-            if (string.IsNullOrEmpty(entity?.PrimaryKey.Value))
+            if (string.IsNullOrEmpty(entity?.GetPrimaryColumn().Value))
             {
                 return;
             }
@@ -178,7 +178,7 @@ namespace Blog.Core.Extensions
         private static void GetSql<E>(ref string sql, IList<SearchCondition> searchList, ref Dictionary<string, object> paramList, string orderBy, EntityView view, string searchValue)
             where E : BaseEntity, new()
         {
-            var entityName = new E().EntityName;
+            var entityName = new E().GetEntityName();
             var count = 0;
 
             var index = sql.IndexOf("where", StringComparison.CurrentCultureIgnoreCase);
@@ -216,7 +216,7 @@ namespace Blog.Core.Extensions
             else
             {
                 orderBy.Replace("ORDER BY", "", StringComparison.OrdinalIgnoreCase);
-                orderBy = $" ORDER BY {orderBy},{new E().PrimaryKey.Name}";
+                orderBy = $" ORDER BY {orderBy},{new E().GetPrimaryColumn().Name}";
             }
 
             sql += orderBy;

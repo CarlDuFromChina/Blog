@@ -22,7 +22,7 @@ export default {
       this.loadData();
     }
     if (!sp.isNullOrEmpty(this.controllerName)) {
-      sp.get(`api/${this.controllerName}/GetPrivilege`).then(resp => {
+      sp.get(`api/${this.controllerName}/privilege`).then(resp => {
         this.privilege = resp;
       });
     }
@@ -39,7 +39,7 @@ export default {
       }
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
+        this.data = await sp.get(`api/${this.controllerName}/${this.id}`);
         if (this.loadComplete && typeof this.loadComplete === 'function') {
           await this.loadComplete();
         }
@@ -65,7 +65,11 @@ export default {
             this.data.id = uuid.generate();
           }
           try {
-            await sp.post(`api/${this.controllerName}/${operateName}`, this.data);
+            if (operateName === 'CreateData') {
+              await sp.post(`api/${this.controllerName}`, this.data);
+            } else {
+              await sp.put(`api/${this.controllerName}`, this.data);
+            }
             this.$message.success(operateName === 'CreateData' ? '添加成功' : '更新成功');
             if (this.postSave && typeof this.postSave === 'function') {
               await this.postSave();

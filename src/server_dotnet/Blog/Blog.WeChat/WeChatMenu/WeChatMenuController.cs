@@ -10,19 +10,19 @@ namespace Blog.WeChat.WeChatMenu
 {
     public class WeChatMenuController : BaseApiController
     {
-        [HttpPost, Route("CreateMenu")]
+        [HttpPost]
         public void CreateMenu(SelfMenuInfo menu)
         {
             WeChatMenuService.CreateMenu(menu);
         }
 
-        [HttpGet, Route("GetMenu")]
+        [HttpGet]
         public WeChatMenuModel GetMenu()
         {
             return WeChatMenuService.GetMenu();
         }
 
-        [HttpGet, Route("DeleteMenu")]
+        [HttpDelete]
         public void DeleteMenu()
         {
             WeChatMenuService.DeleteMenu();

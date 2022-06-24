@@ -20,42 +20,42 @@ namespace Blog.Core.Module.Role
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
         [DataMember]
-        [Column("description", "描述", DataType.Varchar, 200)]
+        [Column]
         public string description { get; set; }
 
         /// <summary>
         /// 是否基础角色
         /// </summary>
         [DataMember]
-        [Column("is_basic", "是否基础角色", DataType.Int4)]
-        public bool is_basic { get; set; }
+        [Column]
+        public bool? is_basic { get; set; }
 
         /// <summary>
         /// 是否基础角色
         /// </summary>
         [DataMember]
-        [Column("is_basic_name", "是否基础角色", DataType.Varchar, 100)]
+        [Column]
         public string is_basic_name { get; set; }
         
         /// <summary>
         /// 继承角色
         /// </summary>
         [DataMember]
-        [Column("parent_roleid", "继承角色", DataType.Varchar, 100)]
+        [Column]
         public string parent_roleid { get; set; }
 
         /// <summary>
         /// 继承角色
         /// </summary>
         [DataMember]
-        [Column("parent_roleid_name", "继承角色", DataType.Varchar, 100)]
+        [Column]
         public string parent_roleid_name { get; set; }
     }
 }

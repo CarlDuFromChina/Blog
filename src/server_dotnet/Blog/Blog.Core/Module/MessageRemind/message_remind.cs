@@ -19,36 +19,36 @@ namespace Blog.Core.Module.MessageRemind
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 接收人id
         /// </summary>
         [DataMember]
-        [Column("receiverId", "接收人", DataType.Varchar, 100)]
+        [Column]
         public string receiverId { get; set; }
 
         /// <summary>
         /// 接收人名称
         /// </summary>
         [DataMember]
-        [Column("receiverId_name", "接收人", DataType.Varchar, 100)]
+        [Column]
         public string receiverId_name { get; set; }
 
         /// <summary>
         /// 是否阅读
         /// </summary>
         [DataMember]
-        [Column("is_read", "实体名", DataType.Int4)]
-        public bool is_read { get; set; }
+        [Column]
+        public bool? is_read { get; set; }
 
 
         /// <summary>
         /// 是否阅读
         /// </summary>
         [DataMember]
-        [Column("is_read_name", "实体名", DataType.Varchar, 100)]
+        [Column]
         public string is_read_name { get; set; }
 
 
@@ -56,14 +56,14 @@ namespace Blog.Core.Module.MessageRemind
         /// 消息内容
         /// </summary>
         [DataMember]
-        [Column("content", "消息内容", DataType.Text)]
+        [Column]
         public string content { get; set; }
 
         /// <summary>
         /// 消息类型
         /// </summary>
         [DataMember]
-        [Column("message_type", "消息类型", DataType.Varchar, 100)]
+        [Column]
         public string message_type { get; set; }
     }
 }

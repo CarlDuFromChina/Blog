@@ -21,54 +21,54 @@ namespace Blog.Core.Module.SysMenu
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Column("parentid", "上级菜单id", DataType.Varchar, 100)]
+        [Column]
         public string parentid { get; set; }
 
         /// <summary>
         /// 上级菜单
         /// </summary>
         [DataMember]
-        [Column("parentid_name", "上级菜单名", DataType.Varchar, 100)]
+        [Column]
         public string parentId_name { get; set; }
 
         /// <summary>
         /// 路由地址
         /// </summary>
         [DataMember]
-        [Column("router", "路由地址", DataType.Varchar, 200)]
+        [Column]
         public string router { get; set; }
 
         /// <summary>
         /// 菜单索引
         /// </summary>
         [DataMember]
-        [Column("menu_index", "菜单索引", DataType.Int4)]
-        public int? menu_Index { get; set; }
+        [Column]
+        public int? menu_index { get; set; }
 
         /// <summary>
         /// 状态
         /// </summary>
         [DataMember]
-        [Column("statecode", "状态", DataType.Int4)]
-        public int? stateCode { get; set; }
+        [Column]
+        public bool? statecode { get; set; }
 
 
         [DataMember]
-        [Column("statecode_name", "状态", DataType.Varchar, 100)]
-        public string stateCode_name { get; set; }
+        [Column]
+        public string statecode_name { get; set; }
 
         /// <summary>
         /// 图标
         /// </summary>
         [DataMember]
-        [Column("icon", "图标", DataType.Varchar, 100)]
+        [Column]
         public string icon { get; set; }
     }
 }

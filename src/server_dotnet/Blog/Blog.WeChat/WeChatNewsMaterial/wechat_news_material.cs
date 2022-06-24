@@ -20,28 +20,28 @@ namespace Blog.WeChat.WeChatNewsMaterial
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 本地文件id
         /// </summary>
         [DataMember]
-        [Column("fileid", "本地文件id", DataType.Varchar, 100)]
+        [Column]
         public string fileid { get; set; }
 
         /// <summary>
         /// 本地地址
         /// </summary>
         [DataMember]
-        [Column("local_url", "本地地址", DataType.Text)]
+        [Column]
         public string local_url { get; set; }
 
         /// <summary>
         /// 图片url
         /// </summary>
         [DataMember]
-        [Column("media_url", "图片url", DataType.Text)]
+        [Column]
         public string media_url { get; set; }
     }
 }

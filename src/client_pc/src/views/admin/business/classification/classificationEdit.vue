@@ -25,19 +25,9 @@ export default {
     return {
       controllerName: 'Classification',
       data: {
-        is_free: 0
+        is_free: false
       }
     };
-  },
-  computed: {
-    isFree: {
-      get() {
-        return !!this.data.is_free;
-      },
-      set(val) {
-        this.data.is_free = val ? 1 : 0;
-      }
-    }
   },
   methods: {
     postSave() {

@@ -22,28 +22,28 @@ namespace Blog.Draft
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 博客id
         /// </summary>
         [DataMember]
-        [Column("blogid", "博客id", DataType.Varchar, 100)]
-        public string blogId { get; set; }
+        [Column]
+        public string postid { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Column("content", "内容", DataType.Text)]
+        [Column]
         public string content { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
         [DataMember]
-        [Column("title", "标题", DataType.Varchar, 100)]
+        [Column]
         public string title { get; set; }
     }
 }

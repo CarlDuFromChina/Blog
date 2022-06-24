@@ -27,7 +27,7 @@
       </a-col>
       <a-col :span="8">
         <a-form-model-item label="必填">
-          <a-switch @change="data.isrequire2 = !data.isrequire2"></a-switch>
+          <a-switch v-mode="data.isrequire"></a-switch>
         </a-form-model-item>
       </a-col>
     </a-row>
@@ -103,11 +103,10 @@ export default {
       const that = this;
       this.$refs.form.validate(resp => {
         if (resp) {
-          that.data.isrequire = that.data.isrequire2 ? 1 : 0;
           if (sp.isNull(that.data.attr_length)) {
             that.data.attr_length = 0;
           }
-          sp.post(`api/${this.controllerName}/CreateData`, that.data)
+          sp.post(`api/${this.controllerName}`, that.data)
             .then(() => {
               that.$emit('close');
               that.$refs.form.resetFields();

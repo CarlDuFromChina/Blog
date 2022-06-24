@@ -9,10 +9,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sixpence.ORM.Models;
 using Sixpence.Common.Utils;
+using System.IO;
 
 namespace Blog.Core.WebApi
 {
-    [Authorize( Policy = "Api")]
+    [Authorize(Policy = "Api")]
     public class EntityBaseController<E, S> : BaseApiController
         where E : BaseEntity, new()
         where S : EntityService<E>, new()
@@ -21,27 +22,10 @@ namespace Blog.Core.WebApi
         /// 获取视图
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("view")]
+        [HttpGet("views")]
         public IList<EntityView> GetViewList()
         {
             return new S().GetViewList();
-        }
-
-        /// <summary>
-        /// 获取筛选数据
-        /// </summary>
-        /// <param name="searchList"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="viewId"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("data")]
-        public virtual IList<E> GetDataList(string searchList = "", string orderBy = "",string viewId = "", string searchValue = "")
-        {
-            var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new S().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
         }
 
         /// <summary>
@@ -54,8 +38,7 @@ namespace Blog.Core.WebApi
         /// <param name="viewId"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("data")]
+        [HttpGet("data")]
         public virtual DataModel<E> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
@@ -81,7 +64,7 @@ namespace Blog.Core.WebApi
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("data/{id}")]
+        [Route("{id}")]
         public virtual E GetData(string id)
         {
             return new S().GetData(id);
@@ -93,7 +76,6 @@ namespace Blog.Core.WebApi
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("data")]
         public string CreateData(E entity)
         {
             return new S().CreateData(entity);
@@ -104,7 +86,6 @@ namespace Blog.Core.WebApi
         /// </summary>
         /// <param name="entity"></param>
         [HttpPut]
-        [Route("data")]
         public void UpdateData(E entity)
         {
             new S().UpdateData(entity);
@@ -126,11 +107,14 @@ namespace Blog.Core.WebApi
         /// 删除数据
         /// </summary>
         /// <param name="ids"></param>
-        [HttpDelete]
-        [Route("data")]
-        public void DeleteData([FromBody]List<string> ids)
+        [HttpDelete("{id}")]
+        public void DeleteData(string id)
         {
-            new S().DeleteData(ids);
+            if (!string.IsNullOrEmpty(id))
+            {
+                var ids = id.Split(",").ToList();
+                new S().DeleteData(ids);
+            }
         }
 
         [HttpGet]
@@ -140,7 +124,7 @@ namespace Blog.Core.WebApi
             return new S().GetPrivilege();
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet, Route("export/csv")]
         public virtual IActionResult ExportCsv()
         {
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");

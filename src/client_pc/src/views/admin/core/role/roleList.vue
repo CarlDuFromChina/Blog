@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       controllerName: 'SysRole',
-      operations: ['new', 'delete', 'search'],
+      operations: ['new', 'delete', 'search', 'export'],
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'description', label: '描述', width: 400 },

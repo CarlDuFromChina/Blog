@@ -22,7 +22,7 @@ namespace Blog.Core.Module.DataService
         /// 获取公钥
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous, Route("GetPublicKey")]
+        [HttpGet("public_key"), AllowAnonymous]
         public string GetPublicKey()
         {
             return new SystemService().GetPublicKey();
@@ -32,7 +32,7 @@ namespace Blog.Core.Module.DataService
         /// 获取随机图片
         /// </summary>
         /// <returns>图片源</returns>
-        [HttpGet, AllowAnonymous, Route("GetRandomImage")]
+        [HttpGet("random_image"), AllowAnonymous]
         public string GetRandomImage()
         {
             return new SystemService().GetRandomImage();
@@ -43,7 +43,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous, Route("GetAvatar")]
+        [HttpGet("avatar/{id}"), AllowAnonymous]
         public object GetAvatar(string id)
         {
             return new SystemService().GetAvatar(id);
@@ -53,7 +53,7 @@ namespace Blog.Core.Module.DataService
         /// 测试
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous, Route("Test")]
+        [HttpGet("test"), AllowAnonymous]
         public bool Test()
         {
             var token = HttpCurrentContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
@@ -72,7 +72,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, AllowAnonymous, Route("Login")]
+        [HttpPost("login"), AllowAnonymous]
         public LoginResponse Login(LoginRequest model)
         {
             return new SystemService().Login(model);
@@ -82,7 +82,7 @@ namespace Blog.Core.Module.DataService
         /// 登录参数
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous, Route("LoginConfig")]
+        [HttpGet("login_config"), AllowAnonymous]
         public LoginConfig LoginConfig()
         {
             return new SystemService().GetLoginConfig();
@@ -93,7 +93,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, AllowAnonymous, Route("Signup")]
+        [HttpPost("signup"), AllowAnonymous]
         public LoginResponse Signup(LoginRequest model)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
@@ -105,7 +105,7 @@ namespace Blog.Core.Module.DataService
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost, AllowAnonymous, Route("SignInOrSignUp")]
+        [HttpPost("fast_signin"), AllowAnonymous]
         public LoginResponse SignInOrSignUp(LoginRequest model)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
@@ -116,7 +116,7 @@ namespace Blog.Core.Module.DataService
         /// 修改密码
         /// </summary>
         /// <param name="password"></param>
-        [HttpPost, Route("EditPassword")]
+        [HttpPut("password")]
         public void EditPassword([FromBody] string password)
         {
             new SystemService().EditPassword(password);
@@ -126,7 +126,7 @@ namespace Blog.Core.Module.DataService
         /// 重置密码
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet, Route("ResetPassword")]
+        [HttpPut("password/reset")]
         public void ResetPassword(string id)
         {
             new SystemService().ResetPassword(id);
@@ -136,7 +136,7 @@ namespace Blog.Core.Module.DataService
         /// 忘记密码
         /// </summary>
         /// <param name="code"></param>
-        [HttpGet, Route("ForgetPassword")]
+        [HttpGet("password/forget")]
         public void ForgetPassword(string code)
         {
             new SystemService().ForgetPassword(code);
@@ -146,7 +146,7 @@ namespace Blog.Core.Module.DataService
         /// 是否展示后台
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("GetShowAdmin")]
+        [HttpGet("is_show_admin")]
         public bool GetShowAdmin()
         {
             return new SystemService().GetShowAdmin();

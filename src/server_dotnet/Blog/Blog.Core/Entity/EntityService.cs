@@ -50,7 +50,7 @@ namespace Sixpence.ORM.Entity
         /// <returns></returns>
         public virtual IList<EntityView> GetViewList()
         {
-            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1";
+            var sql = $"SELECT * FROM {new T().GetEntityName()} WHERE 1=1";
             return new List<EntityView>()
             {
                 new EntityView()
@@ -152,7 +152,7 @@ namespace Sixpence.ORM.Entity
         /// <returns></returns>
         public virtual string Export()
         {
-            var fileName = $"{new T().EntityName}-{EntityCommon.GenerateGuidNumber()}.csv";
+            var fileName = $"{new T().GetEntityName()}.csv";
             var fullFilePath = Path.Combine(FolderType.Temp.GetPath(), fileName);
             var dataList = GetAllData();
             CsvUtil.Write(dataList, fullFilePath);
@@ -172,7 +172,7 @@ SELECT * FROM sys_role_privilege
 WHERE sys_roleid = @id and object_type = 'sys_entity'
 and objectid = @entityid";
             var user = Manager.QueryFirst<user_info>(UserIdentityUtil.GetCurrentUserId());
-            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().EntityName)?.PrimaryKey.Value } };
+            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().GetEntityName())?.GetPrimaryColumn().Value } };
             var data = Manager.QueryFirst<sys_role_privilege>(sql, paramList);
 
             return new EntityPrivilegeResponse()

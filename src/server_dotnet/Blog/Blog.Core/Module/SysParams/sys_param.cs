@@ -21,23 +21,28 @@ namespace Blog.Core.Module.SysParams
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
         [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [Column]
         public string code { get; set; }
 
+        /// <summary>
+        /// 选项集
+        /// </summary>
         [DataMember]
-        [Column("sys_paramgroupid", "选项集id", DataType.Varchar, 100)]
+        [Column]
         public string sys_paramGroupId { get; set; }
 
-
+        /// <summary>
+        /// 选项集名
+        /// </summary>
         [DataMember]
-        [Column("sys_paramgroupid_name", "选项集名", DataType.Varchar, 100)]
+        [Column]
         public string sys_paramgroupid_name { get; set; }
     }
 }

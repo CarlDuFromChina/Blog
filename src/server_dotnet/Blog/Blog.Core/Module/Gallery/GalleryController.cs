@@ -14,8 +14,7 @@ namespace Blog.Core.Module.Gallery
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("image")]
+        [HttpGet("cloud/search")]
         public ImagesModel GetImages(string searchValue, int pageIndex, int pageSize)
         {
             return new PixabayService().GetImages(searchValue, pageIndex, pageSize);
@@ -26,8 +25,7 @@ namespace Blog.Core.Module.Gallery
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("image")]
+        [HttpPost("upload")]
         public List<string> UploadImage(ImageModel image)
         {
             return new GalleryService().UploadImage(image);
@@ -37,8 +35,7 @@ namespace Blog.Core.Module.Gallery
         /// 获取随机图片
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("RandomImage")]
+        [HttpGet("random_image")]
         public gallery RandomImage()
         {
             return new GalleryService().GetRandomImage();

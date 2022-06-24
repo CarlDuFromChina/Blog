@@ -18,14 +18,14 @@ namespace Blog.ReadingNote
         /// 名称
         /// </summary>
         [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [Column]
         public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
         [DataMember]
-        [Column("content", "内容", DataType.Text)]
+        [Column]
         public string content { get; set; }
 
 
@@ -33,15 +33,15 @@ namespace Blog.ReadingNote
         /// 是否展示
         /// </summary>
         [DataMember]
-        [Column("is_show", "是否展示", DataType.Int4)]
-        public int? is_show { get; set; }
+        [Column(defaultValue: false)]
+        public bool? is_show { get; set; }
 
 
         /// <summary>
         /// 书名
         /// </summary>
         [DataMember]
-        [Column("book_title", "书名", DataType.Varchar, 100)]
+        [Column]
         public string book_title { get; set; }
 
 
@@ -49,7 +49,7 @@ namespace Blog.ReadingNote
         /// 封面
         /// </summary>
         [DataMember]
-        [Column("surfaceid", "封面", DataType.Varchar, 100)]
+        [Column]
         public string surfaceid { get; set; }
 
 
@@ -57,7 +57,7 @@ namespace Blog.ReadingNote
         /// 封面链接
         /// </summary>
         [DataMember]
-        [Column("surface_url", "封面链接", DataType.Varchar, 200)]
+        [Column]
         public string surface_url { get; set; }
 
 
@@ -65,7 +65,7 @@ namespace Blog.ReadingNote
         /// 封面大图
         /// </summary>
         [DataMember]
-        [Column("big_surfaceid", "封面大图", DataType.Varchar, 100)]
+        [Column]
         public string big_surfaceid { get; set; }
 
 
@@ -73,7 +73,7 @@ namespace Blog.ReadingNote
         /// 封面大图链接
         /// </summary>
         [DataMember]
-        [Column("big_surface_url", "封面大图链接", DataType.Varchar, 200)]
+        [Column]
         public string big_surface_url { get; set; }
 
 
@@ -81,14 +81,14 @@ namespace Blog.ReadingNote
         /// 禁止评论
         /// </summary>
         [DataMember]
-        [Column("disable_comment", "禁止评论", DataType.Int4)]
-        public int? disable_comment { get; set; }
+        [Column]
+        public bool? disable_comment { get; set; }
 
         /// <summary>
         /// 摘要
         /// </summary>
         [DataMember]
-        [Column("brief", "摘要", DataType.Text)]
+        [Column]
         public string brief { get; set; }
     }
 }

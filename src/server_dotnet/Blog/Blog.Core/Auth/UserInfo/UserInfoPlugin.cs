@@ -84,7 +84,7 @@ WHERE user_infoid = @id
         {
             var allowUpdateRole = new SysRoleService(manager).AllowCreateOrUpdateRole(entity["roleid"].ToString());
             AssertUtil.IsTrue(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleid_name"]}]");
-            AssertUtil.IsTrue(entity.PrimaryKey.Value == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新");
+            AssertUtil.IsTrue(entity.GetPrimaryColumn().Value == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新");
         }
 
         /// <summary>

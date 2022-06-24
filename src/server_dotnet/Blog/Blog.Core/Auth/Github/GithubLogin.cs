@@ -56,8 +56,8 @@ namespace Blog.Core.Auth.Github
                         roleid = role.id,
                         roleid_name = role.name,
                         github_id = githubUser.id.ToString(),
-                        stateCode = 1,
-                        stateCode_name = "启用"
+                        statecode = true,
+                        statecode_name = "启用"
                     };
                     manager.Create(user, false);
                     var _authUser = new auth_user()

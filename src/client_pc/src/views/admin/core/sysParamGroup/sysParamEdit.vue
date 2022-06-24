@@ -33,23 +33,23 @@ export default {
   },
   methods: {
     saveData() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           const { id, name } = this.parentId();
           this.data.sys_paramGroupid = id;
           this.data.sys_paramGroupid_name = name;
-          const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
           if (sp.isNullOrEmpty(this.id)) {
             this.data.id = uuid.generate();
+            await sp.post(`api/${this.controllerName}`, this.data);
+          } else {
+            await sp.put(`api/${this.controllerName}`, this.data);
           }
-          sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
-            if (this.postSave && typeof this.postSave === 'function') {
-              this.postSave();
-            }
-            this.$emit('close');
-            this.$emit('load-data');
-            this.$message.success('添加成功');
-          });
+          if (this.postSave && typeof this.postSave === 'function') {
+            this.postSave();
+          }
+          this.$emit('close');
+          this.$emit('load-data');
+          this.$message.success('添加成功');
         } else {
           this.$message.error('请检查表单必填项');
         }

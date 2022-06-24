@@ -28,10 +28,10 @@ export default {
     };
   },
   created() {
-    sp.get('api/Blog/GetPrivilege').then(resp => {
+    sp.get('api/post/privilege').then(resp => {
       this.blogPrivilege = resp;
     });
-    sp.get('api/Idea/GetPrivilege').then(resp => {
+    sp.get('api/idea/privilege').then(resp => {
       this.ideaPrivilege = resp;
     });
   },

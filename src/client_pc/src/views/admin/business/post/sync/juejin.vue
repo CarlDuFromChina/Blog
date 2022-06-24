@@ -60,7 +60,7 @@ export default {
             okText: '确定',
             cancelText: '取消',
             onOk: () => {
-              sp.post(`api/Blog/SyncBlog?id=${this.id}&destination=juejin`, this.data)
+              sp.post(`api/post/sync?id=${this.id}&destination=juejin`, this.data)
                 .then(() => {
                   this.$message.success('同步成功');
                 })

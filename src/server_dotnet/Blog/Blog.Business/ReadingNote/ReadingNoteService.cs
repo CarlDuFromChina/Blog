@@ -50,7 +50,7 @@ SELECT
 FROM
 	reading_note 
 WHERE
-	is_show = 0
+	is_show is false
 ",
                     CustomFilter = new List<string>(){ "name" },
                     OrderBy = "created_at",

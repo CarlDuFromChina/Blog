@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Sixpence.ORM.EntityManager;
+using Blog.Core.Utils;
+using System.Data;
 
 namespace Blog.Core.Module.VersionScriptExecutionLog
 {
@@ -25,7 +27,7 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
             var fileName = Path.GetFileName(filePath);
             var sql = @"
 select * from version_script_execution_log
-where name = @name and is_success = 1
+where name = @name and is_success is true
 ";
             var data = Manager.QueryFirst<version_script_execution_log>(sql, new Dictionary<string, object>() { { "@name", fileName } });
             if (data == null)
@@ -33,7 +35,22 @@ where name = @name and is_success = 1
                 data = new version_script_execution_log() { id = Guid.NewGuid().ToString(), name = fileName };
                 try
                 {
-                    Manager.ExecuteSqlScript(filePath);
+                    if (filePath.EndsWith(".sql"))
+                    {
+                        Manager.ExecuteSqlScript(filePath);
+                    }
+                    if (filePath.EndsWith(".csv"))
+                    {
+                        var startIndex = fileName.IndexOf("-");
+                        var endIndex = fileName.IndexOf(".");
+                        var typeName = fileName.Remove(endIndex, fileName.Length - endIndex).Remove(0, startIndex + 1);
+                        var columns = Manager.Query($"select * from {typeName} where 1 <> 1").Columns;
+                        var dt = CsvUtil.Read(filePath, columns);
+                        Manager.ExecuteTransaction(() =>
+                        {
+                            Manager.BulkCreateOrUpdate(typeName, "id", dt, null);
+                        });
+                    }
                     data.is_success = true;
                     Manager.Create(data);
                     return 1;
