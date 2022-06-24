@@ -78,12 +78,7 @@ namespace Blog.Core.Extensions
         public static string FilteredCreate<E>(this IRepository<E> repository, E entity)
             where E : BaseEntity, new()
         {
-            if (string.IsNullOrEmpty(entity.GetPrimaryColumn().Value))
-            {
-                return "";
-            }
-            var id = repository.Manager.FilteredCreate(entity);
-            return id;
+            return repository.Manager.FilteredCreate(entity);
         }
 
         /// <summary>
@@ -96,8 +91,8 @@ namespace Blog.Core.Extensions
             where E : BaseEntity, new()
         {
             var id = entity.GetPrimaryColumn().Value;
-            var isExist = repository.Manager.QueryFirst<E>(id) != null;
-            if (isExist)
+
+            if (!string.IsNullOrEmpty(id) && repository.Manager.QueryFirst<E>(id) != null)
             {
                 repository.Update(entity);
             }
@@ -105,6 +100,7 @@ namespace Blog.Core.Extensions
             {
                 id = repository.Create(entity);
             }
+
             return id;
         }
 
