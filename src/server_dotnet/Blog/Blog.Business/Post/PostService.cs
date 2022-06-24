@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Blog.Business.Category;
 using Blog.Business.Post.Model;
 using Blog.Business.Post.Sync;
 using Blog.Business.Upvote;
@@ -123,7 +124,7 @@ WHERE 1=1 AND post.is_show is true";
 
             var categories = dataList
                 .GroupBy(p => p.post_type)
-                .Select(b => new Category() { category = b.First().post_type, category_name = b.First().post_type_name, data = new List<CategoryData>() })
+                .Select(b => new Model.Category() { category = b.First().post_type, category_name = b.First().post_type_name, data = new List<CategoryData>() })
                 .ToList();
 
             dataList.Each(item =>

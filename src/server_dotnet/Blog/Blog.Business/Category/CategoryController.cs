@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Business.Classification
+namespace Blog.Business.Category
 {
-    public class ClassificationController : EntityBaseController<classification, ClassificationService>
+    public class CategoryController : EntityBaseController<category, CategoryService>
     {
 
     }
