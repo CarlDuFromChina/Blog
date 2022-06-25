@@ -49,11 +49,9 @@ WHERE postid = @postid
         /// <param name="postId"></param>
         public void DeleteDataByPostId(string postId)
         {
-            var sql = @"
-DELETE FROM draft
-WHERE postid = @postid
-";
-            Manager.Execute(sql, new Dictionary<string, object>() { { "@postid", postId } });
+            var draft = Manager.QueryFirst<draft>("select * from draft where postid = @id or id = @id", new { id = postId });
+            if (draft != null)
+                Manager.Delete(draft);
         }
 
         public override string CreateOrUpdateData(draft t)

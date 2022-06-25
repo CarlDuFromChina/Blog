@@ -21,7 +21,7 @@ namespace Blog.RecommendInfo
         /// <summary>
         /// 记录阅读次数
         /// </summary>
-        /// <param name="blogId"></param>
+        /// <param name="id"></param>
         [HttpGet("reading_times"), AllowAnonymous]
         public void RecordReadingTimes(string id)
         {

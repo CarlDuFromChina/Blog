@@ -19,13 +19,6 @@ namespace Blog.Draft
         public string id { get; set; }
 
         /// <summary>
-        /// 名称
-        /// </summary>
-        [DataMember]
-        [Column]
-        public string name { get; set; }
-
-        /// <summary>
         /// 博客id
         /// </summary>
         [DataMember]

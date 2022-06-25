@@ -61,7 +61,7 @@ namespace Blog.Business.Post
         /// <summary>
         /// 点赞
         /// </summary>
-        /// <param name="blogId"></param>
+        /// <param name="id"></param>
         [HttpGet("upvote")]
         public bool Upvote(string id)
         {
