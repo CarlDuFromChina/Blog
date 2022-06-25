@@ -45,8 +45,11 @@ export default {
   },
   async mounted() {
     const enable = await sp.get(`/api/SysConfig/value?code=${this.configCode}`);
+
     if (enable === 'true' || enable === true) { 
-      debugger;
+      // 1、从草稿列表页进入编辑页面
+      // 2、新创建的博客
+      // 3、编辑博客
       if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
         await this.popDraft(this.$route.params.draftId); // 打开草稿
         this.$emit('open-watch');
@@ -71,10 +74,10 @@ export default {
      * @param {String} id - 博客id
      */
     async popDraft(id) {
-      return sp.get(`api/draft/post/${id}`).then(resp => {
+      return sp.get(`api/draft/${id}`).then(resp => {
         this.draft = resp;
-        const { postid, content, title } = resp;
-        this.data.id = postid;
+        const { content, title } = resp;
+        this.data.id = id;
         this.data.content = content;
         this.data.title = title;
       });
@@ -83,7 +86,7 @@ export default {
      * 获取草稿
      **/
     async getDraft() {
-      return sp.get(`api/draft/post/${this.id}`).then(resp => {
+      return sp.get(`api/draft/post/${this.data.id}`).then(resp => {
         if (resp) {
           this.draft = resp;
           this.$confirm({
@@ -122,6 +125,9 @@ export default {
       this.draft.title = this.data.title || '草稿';
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
+      if (!sp.isNullOrEmpty(this.data.id)) {
+        this.draft.postid = this.data.id;
+      }
       sp.post('api/draft/save', this.draft)
         .then(resp => {
           this.saveStatusValue = 'success';

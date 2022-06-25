@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -21,36 +22,31 @@ namespace Blog.RecommendInfo
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 链接地址
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("链接地址")]
         public string url { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("推荐类型")]
         public string recommend_type { get; set; }
 
         /// <summary>
         /// 推荐类型
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("推荐类型")]
         public string recommend_type_name { get; set; }
 
         /// <summary>
         /// 阅读次数
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("阅读次数")]
         public int? reading_times { get; set; }
 
     }

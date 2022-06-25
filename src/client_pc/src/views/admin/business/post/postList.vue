@@ -88,7 +88,7 @@ export default {
     } else {
       // 获取博客类型选项集
       sp.get('api/category/data').then(resp => {
-        this.blogType = resp.map(item => ({
+        this.blogType = resp.DataList.map(item => ({
           Name: item.name,
           Value: item.code
         }));

@@ -4,12 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Web;
-using Sixpence.ORM.Models;
 using Blog.Core.Profiles;
 using Sixpence.ORM.EntityManager;
 using Sixpence.ORM;
@@ -125,8 +119,7 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
         /// <summary>
         /// {column.LogicalName}
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description(""{column.LogicalName}"")]
         public {Manager.Driver.Convert2CSharpType(column.Type)} {column.Name} {{ get; set; }}
 ";
                     attributes += attribute;
@@ -136,9 +129,10 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             var content = $@"
 using Sixpence.ORM.Entity;
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace SixpenceStudio.Core.SysEntity
+namespace SixpenceStudio.Core
 {{
     [Entity(""{entity.code}"",""{entity.GetLogicalName()}"", {entity.is_sys})]
     public partial class {entity.code} : BaseEntity

@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/admin/postEdit/:id?',
+    path: '/admin/postEdit',
     name: 'postEdit',
     component: () => import('./postEdit')
   },

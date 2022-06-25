@@ -1,6 +1,7 @@
 
 using Sixpence.ORM.Entity;
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 
@@ -19,15 +20,13 @@ namespace Blog.WeChat.WeChatReply.Keywords
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 回复内容
         /// </summary>
-        [DataMember]
-        [Column]
+        [DataMember, Column, Description("回复内容")]
         public string reply_content { get; set; }
     }
 }

@@ -256,11 +256,7 @@ export default {
           }
           this.data.html_content = this.html;
           try {
-            if (this.pageState === 'create') {
-              await sp.post('api/post', this.data);
-            } else {
-              await sp.put('api/post', this.data);
-            }
+            await sp.post('api/post/save', this.data);
             this.$message.success('发布成功！');
             this.$router.back();
           } catch (error) {

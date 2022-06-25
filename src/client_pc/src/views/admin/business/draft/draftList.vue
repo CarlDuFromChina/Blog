@@ -21,7 +21,7 @@ export default {
       this.$router.push({
         name: 'postEdit',
         params: {
-          draftId: item.postid
+          draftId: item.id
         }
       });
     }
