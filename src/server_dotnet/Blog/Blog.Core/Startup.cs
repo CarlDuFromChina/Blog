@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blog.Core.Auth;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
