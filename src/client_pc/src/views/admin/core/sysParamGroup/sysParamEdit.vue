@@ -38,7 +38,7 @@ export default {
           const { id, name } = this.parentId();
           this.data.sys_paramGroupid = id;
           this.data.sys_paramGroupid_name = name;
-          if (sp.isNullOrEmpty(this.id)) {
+          if (sp.isNullOrEmpty(this.data.id)) {
             await sp.post(`api/${this.controllerName}`, this.data);
           } else {
             await sp.put(`api/${this.controllerName}`, this.data);

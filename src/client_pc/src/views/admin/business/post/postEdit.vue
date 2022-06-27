@@ -225,7 +225,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.id || this.draft.postid || '');
+      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.data.id || this.draft.postid || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -277,7 +277,7 @@ export default {
       this.tags = val;
     },
     syncBlog(dest) {
-      if (sp.isNullOrEmpty(this.id)) {
+      if (sp.isNullOrEmpty(this.data.id)) {
         this.$message.error('请先保存博客，再进行同步');
         return;
       }
@@ -291,7 +291,7 @@ export default {
           okText: '确定',
           cancelText: '取消',
           onOk: () => {
-            sp.post(`api/post/sync?id=${this.id}&destination=${dest}`)
+            sp.post(`api/post/sync?id=${this.data.id}&destination=${dest}`)
               .then(() => {
                 this.$message.success('同步成功');
               })
