@@ -1,18 +1,21 @@
 <template>
   <sp-view>
-    <sp-header :title="data.name"></sp-header>
+    <sp-header :title="data.title"></sp-header>
     <sp-content>
-      <div v-html="data.content" class="content"></div>
+      <div v-html="content" class="content markdown-body" v-highlight></div>
     </sp-content>
   </sp-view>
 </template>
 
 <script>
+import marked from 'marked';
+
 export default {
-  name: 'friend-readonly',
+  name: 'post',
   data() {
     return {
       data: {},
+      content: '',
       Id: this.$route.params.id || ''
     };
   },
@@ -22,9 +25,12 @@ export default {
   methods: {
     loadData() {
       this.$indicator.open('加载中...');
-      sp.get(`api/FriendBlog/GetData?id=${this.Id}`)
+      sp.get(`api/post/id=${this.Id}`)
         .then(resp => {
           this.data = resp;
+          this.content = marked(resp.content, {
+            sanitize: true
+          });
         })
         .finally(() => {
           setTimeout(() => {
