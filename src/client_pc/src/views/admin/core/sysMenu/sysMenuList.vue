@@ -24,7 +24,7 @@ export default {
         { prop: 'menu_index', label: '索引' },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
-        { prop: 'modified_by_name', label: '最后修改人' },
+        { prop: 'updated_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
         { prop: 'statecode_name', label: '状态' }
       ],

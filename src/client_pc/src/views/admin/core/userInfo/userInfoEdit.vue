@@ -101,17 +101,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-model-item label="状态">
-              <a-radio-group v-model="data.statecode">
-                <a-radio
-                  v-for="(item, index) in [
-                    { name: '启用', value: 1 },
-                    { name: '禁用', value: 0 }
-                  ]"
-                  :key="index"
-                  :value="item.value"
-                  >{{ item.name }}</a-radio
-                >
-              </a-radio-group>
+              <a-switch v-model="data.statecode"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>

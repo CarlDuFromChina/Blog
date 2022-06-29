@@ -15,12 +15,12 @@
         </a-col>
         <a-col :span="4">
           <a-form-model-item label="是否前台显示">
-            <a-switch v-model="isShow"></a-switch>
+            <a-switch v-model="data.is_show"></a-switch>
           </a-form-model-item>
         </a-col>
         <a-col :span="4">
           <a-form-model-item label="禁止评论">
-            <a-switch v-model="disableComment"></a-switch>
+            <a-switch v-model="data.disable_comment"></a-switch>
           </a-form-model-item>
         </a-col>
         <a-col :span="4">

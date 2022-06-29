@@ -84,7 +84,8 @@ export default {
     },
     goEdit(item) {
       this.$router.push({
-        path: `postEdit/${(item || {}).id || ''}`
+        name: `postEdit`,
+        params: { id: item.id }
       });
     }
   }

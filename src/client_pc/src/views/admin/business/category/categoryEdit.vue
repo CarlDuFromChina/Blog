@@ -10,7 +10,7 @@
       <a-input-number v-model="data.index"></a-input-number>
     </a-form-model-item>
     <a-form-model-item label="是否付费">
-      <a-switch v-model="isFree"></a-switch>
+      <a-switch v-model="data.is_free"></a-switch>
     </a-form-model-item>
   </a-form-model>
 </template>

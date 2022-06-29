@@ -277,8 +277,8 @@ export default {
     },
     loadRecommand() {
       const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
-      sp.get('api/RecommendInfo/data?searchList=' + JSON.stringify(searchList)).then(resp => {
-        this.recommandList = resp;
+      sp.get('api/RecommendInfo/data?pageSize=5&pageIndex=1&searchList=' + JSON.stringify(searchList)).then(resp => {
+        this.recommandList = resp.DataList;
       });
     },
     read(item) {
