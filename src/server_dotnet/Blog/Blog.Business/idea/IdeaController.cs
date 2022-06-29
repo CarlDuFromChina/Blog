@@ -13,22 +13,16 @@ namespace Blog.idea
 {
     public class IdeaController : EntityBaseController<idea, IdeaSerivice>
     {
-        [HttpGet, AllowAnonymous]
+        [HttpGet("{id}"), AllowAnonymous]
         public override idea GetData(string id)
         {
             return base.GetData(id);
         }
 
-        [HttpGet, AllowAnonymous]
-        public override IList<idea> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
+        [HttpGet("data"), AllowAnonymous]
+        public override DataModel<idea> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, viewId, searchValue);
-        }
-
-        [HttpGet, AllowAnonymous]
-        public override DataModel<idea> GetViewData(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
-        {
-            return base.GetViewData(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+            return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);
         }
     }
 }

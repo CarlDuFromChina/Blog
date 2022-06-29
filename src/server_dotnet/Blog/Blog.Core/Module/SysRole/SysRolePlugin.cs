@@ -16,7 +16,7 @@ namespace Blog.Core.Module.Role
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            if (context.EntityName != "sys_role") return;
+            if (context.Entity.GetEntityName() != "sys_role") return;
 
             var obj = context.Entity as sys_role;
 
@@ -24,7 +24,7 @@ namespace Blog.Core.Module.Role
             {
                 case EntityAction.PostDelete:
                     {
-                        AssertUtil.CheckBoolean<SpException>(context.Entity.GetAttributeValue("is_basic") is  true, "禁止删除基础角色", "D283AEBF-60CA-4DFF-B08D-6D3DD10AFBBA");
+                        AssertUtil.IsTrue(context.Entity.GetAttributeValue("is_basic") is  true, "禁止删除基础角色");
                     }
                     break;
                 case EntityAction.PostCreate:

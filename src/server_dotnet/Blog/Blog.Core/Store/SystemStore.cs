@@ -43,7 +43,7 @@ namespace Blog.Core.Store
                 HttpCurrentContext.Response.Headers.Add("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileInfo.Name, System.Text.Encoding.UTF8));
                 return new FileStreamResult(stream, "application/octet-stream");
             }
-            LogUtils.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");
+            LogUtil.Error($"文件{fileInfo.Name}未找到，文件路径：{fileInfo.FullName}");
             throw new FileNotFoundException();
         }
 

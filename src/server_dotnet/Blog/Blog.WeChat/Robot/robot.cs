@@ -1,6 +1,7 @@
 
 using Sixpence.ORM.Entity;
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 
@@ -19,36 +20,31 @@ namespace Blog.WeChat.Robot
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 钩子地址
         /// </summary>
-        [DataMember]
-        [Column("hook", "钩子地址", DataType.Varchar, 500)]
+        [DataMember, Column, Description("钩子地址")]
         public string hook { get; set; }
 
         /// <summary>
         /// 说明
         /// </summary>
-        [DataMember]
-        [Column("description", "说明", DataType.Varchar, 200)]
+        [DataMember, Column, Description("说明")]
         public string description { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
-        [DataMember]
-        [Column("robot_type", "类型", DataType.Varchar, 100)]
+        [DataMember, Column, Description("类型")]
         public string robot_type { get; set; }
 
         /// <summary>
         /// 类型名称
         /// </summary>
-        [DataMember]
-        [Column("robot_type_name", "类型名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("类型名称")]
         public string robot_type_name { get; set; }
     }
 }

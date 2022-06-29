@@ -23,7 +23,7 @@ function getAvatar(id) {
     var avatar = require('../assets/images/avatar.png');
     return avatar;
   }
-  return `${getServerUrl()}api/System/GetAvatar?id=${id}`;
+  return `${getServerUrl()}api/system/avatar/${id}`;
 }
 
 function getUserId() {

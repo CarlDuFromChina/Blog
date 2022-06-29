@@ -2,7 +2,7 @@
   <a-spin :spinning="loading" style="height: 100%;overflow-y: auto">
     <sp-header>
       <div style="display: inline-block;padding-right:10px;">
-        <a-button icon="check" type="primary" @click="saveData" :loading="loading">提交</a-button>
+        <a-button icon="check" type="primary" @click="saveData" :loading="loading" style="margin-right:10px">提交</a-button>
         <a-button icon="left" @click="$router.back()">返回</a-button>
       </div>
     </sp-header>
@@ -68,8 +68,8 @@ export default {
       baseUrl: sp.getServerUrl(),
       fileList: [],
       data: {
-        is_show: 0,
-        disable_comment: 0
+        is_show: false,
+        disable_comment: false
       }
     };
   },
@@ -79,22 +79,6 @@ export default {
     });
   },
   computed: {
-    isShow: {
-      get() {
-        return !this.data.is_show;
-      },
-      set(val) {
-        this.data.is_show = val ? 0 : 1;
-      }
-    },
-    disableComment: {
-      get() {
-        return !!this.data.disable_comment;
-      },
-      set(val) {
-        this.data.disable_comment = val ? 1 : 0;
-      }
-    },
     uploadImgParams() {
       return {
         fileType: 'reading_note',

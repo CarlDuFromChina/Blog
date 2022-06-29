@@ -1,13 +1,16 @@
-﻿using Blog.Core.Auth;
+﻿using Blog.Core;
+using Blog.Core.Auth;
 using Blog.Core.Auth.Privilege;
 using Blog.Core.Auth.UserInfo;
 using Blog.Core.Extensions;
 using Blog.Core.Module.SysEntity;
+using Blog.Core.Utils;
 using Sixpence.ORM.EntityManager;
 using Sixpence.ORM.Models;
 using Sixpence.ORM.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Sixpence.ORM.Entity
@@ -47,7 +50,7 @@ namespace Sixpence.ORM.Entity
         /// <returns></returns>
         public virtual IList<EntityView> GetViewList()
         {
-            var sql = $"SELECT * FROM {new T().EntityName} WHERE 1=1";
+            var sql = $"SELECT * FROM {new T().GetEntityName()} WHERE 1=1";
             return new List<EntityView>()
             {
                 new EntityView()
@@ -142,6 +145,19 @@ namespace Sixpence.ORM.Entity
         {
             Repository.FilteredDelete(ids);
         }
+
+        /// <summary>
+        /// 导出CSV文件
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Export()
+        {
+            var fileName = $"{new T().GetEntityName()}.csv";
+            var fullFilePath = Path.Combine(FolderType.Temp.GetPath(), fileName);
+            var dataList = GetAllData();
+            CsvUtil.Write(dataList, fullFilePath);
+            return fullFilePath;
+        }
         #endregion
 
         /// <summary>
@@ -156,7 +172,7 @@ SELECT * FROM sys_role_privilege
 WHERE sys_roleid = @id and object_type = 'sys_entity'
 and objectid = @entityid";
             var user = Manager.QueryFirst<user_info>(UserIdentityUtil.GetCurrentUserId());
-            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().EntityName)?.PrimaryKey.Value } };
+            var paramList = new Dictionary<string, object>() { { "@id", user.roleid }, { "@entityid", EntityCache.GetEntity(new T().GetEntityName())?.GetPrimaryColumn().Value } };
             var data = Manager.QueryFirst<sys_role_privilege>(sql, paramList);
 
             return new EntityPrivilegeResponse()

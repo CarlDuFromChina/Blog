@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -14,22 +15,19 @@ namespace Blog.idea
         /// <summary>
         /// 主键
         /// </summary>
-        [DataMember]
-        [PrimaryColumn]
+        [DataMember, PrimaryColumn]
         public string id { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        [DataMember]
-        [Column("content", "想法id", DataType.Text)]
+        [DataMember, Column, Description("内容")]
         public string content { get; set; }
     }
 }

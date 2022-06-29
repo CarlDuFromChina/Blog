@@ -141,9 +141,9 @@ WHERE id NOT IN (
             var privilege = new sys_role_privilege()
             {
                 id = Guid.NewGuid().ToString(),
-                objectid = entity.PrimaryKey.Value,
+                objectid = entity.GetPrimaryColumn().Value,
                 objectid_name = entity.GetAttributeValue<string>("name"),
-                object_type = entity.EntityName,
+                object_type = entity.GetEntityName(),
                 sys_roleid = role.id,
                 sys_roleid_name = role.name,
                 created_by = user.Id,

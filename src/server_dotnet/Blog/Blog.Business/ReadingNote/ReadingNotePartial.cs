@@ -14,7 +14,7 @@ namespace Blog.ReadingNote
         {
             get
             {
-                return this.is_show == 0 ? "否" : "是";
+                return this.is_show.Value ? "是" : "否";
             }
         }
     }

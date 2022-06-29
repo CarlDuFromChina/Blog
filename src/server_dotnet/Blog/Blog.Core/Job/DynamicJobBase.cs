@@ -36,7 +36,7 @@ namespace Blog.Core.Job
         /// <summary>
         /// 日志
         /// </summary>
-        protected ILog Logger => LogFactory.GetLogger("job_" + GetType().Name.ToLower());
+        protected ILog Logger => LoggerFactory.GetLogger("job_" + GetType().Name.ToLower());
 
         /// <summary>
         /// 默认触发器状态

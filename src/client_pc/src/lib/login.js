@@ -58,13 +58,13 @@ export function thirdPartyBind(type, id) {
 
 var github = {
   async login() {
-    var config = await sp.get('/api/system/LoginConfig').then(resp => resp.github);
+    var config = await sp.get('/api/system/login_config').then(resp => resp.github);
     var redirectUri = `${window.location.origin}/github-oauth`; // 回传登录地址
     var url = `https://github.com/login/oauth/authorize?client_id=${config.client_id}&redirect_uri=${redirectUri}`;
     window.location.href = url;
   },
   async bind(userid) {
-    var config = await sp.get('/api/system/LoginConfig').then(resp => resp.github);
+    var config = await sp.get('/api/system/login_config').then(resp => resp.github);
     var redirectUri = `${window.location.origin}/github-oauth/${userid}`; // 回传登录地址
     var url = `https://github.com/login/oauth/authorize?client_id=${config.client_id}&redirect_uri=${redirectUri}`;
     window.location.href = url;
@@ -84,13 +84,13 @@ var qq = {
 
 var gitee = {
   async login() {
-    var config = await sp.get('/api/system/LoginConfig').then(resp => resp.gitee);
+    var config = await sp.get('/api/system/login_config').then(resp => resp.gitee);
     var redirectUri = `${window.location.origin}/gitee-oauth`
     var url = `https://gitee.com/oauth/authorize?response_type=code&redirect_uri=${redirectUri}&client_id=${config.client_id}`;
     window.location.href = url;
   },
   async bind(userid) {
-    var config = await sp.get('/api/system/LoginConfig').then(resp => resp.gitee);
+    var config = await sp.get('/api/system/login_config').then(resp => resp.gitee);
     var redirectUri = `${window.location.origin}/gitee-oauth?id=${userid}`; // 回传登录地址
     var url = `https://gitee.com/oauth/authorize?response_type=code&redirect_uri=${redirectUri}&client_id=${config.client_id}`;
     window.location.href = url;

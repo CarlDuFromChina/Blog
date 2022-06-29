@@ -17,7 +17,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="10">
-          <a-form-model-item label="博客分类" v-if="!classification">
+          <a-form-model-item label="博客分类" v-if="!category">
             <a-select mode="multiple" style="width: 100%" placeholder="Please select" v-model="searchData.type">
               <a-select-option v-for="item in blogType" :key="item.Value">
                 {{ item.Name }}
@@ -41,7 +41,7 @@ export default {
   name: 'blog-list',
   data() {
     return {
-      controllerName: 'Blog',
+      controllerName: 'post',
       editComponent: postEdit,
       operations: ['new', 'delete', 'search', 'more', 'export'],
       columns: [
@@ -59,7 +59,7 @@ export default {
         type: [],
         date: []
       },
-      classification: ''
+      category: ''
     };
   },
   computed: {
@@ -74,21 +74,21 @@ export default {
         });
       }
       if (!sp.isNull(type) && type.length > 0) {
-        searchList.push({ Name: 'blog_type', Value: type, Type: 5 });
+        searchList.push({ Name: 'post_type', Value: type, Type: 5 });
       }
-      if (!sp.isNullOrEmpty(this.classification)) {
-        searchList.push({ Name: 'blog_type', Value: this.classification, Type: 0 });
+      if (!sp.isNullOrEmpty(this.category)) {
+        searchList.push({ Name: 'post_type', Value: this.category, Type: 0 });
       }
       return searchList;
     }
   },
   created() {
-    if (this.$route.params.classification) {
-      this.classification = this.$route.params.classification;
+    if (this.$route.params.category) {
+      this.category = this.$route.params.category;
     } else {
       // 获取博客类型选项集
-      sp.get('api/Classification/GetDataList').then(resp => {
-        this.blogType = resp.map(item => ({
+      sp.get('api/category/data').then(resp => {
+        this.blogType = resp.DataList.map(item => ({
           Name: item.name,
           Value: item.code
         }));
@@ -127,7 +127,7 @@ export default {
       }
 
       const id = selectionIds[0];
-      sp.get(`api/blog/ExportMarkdown?id=${id}`);
+      sp.get(`api/post/export/markdown/${id}`);
     }
   }
 };

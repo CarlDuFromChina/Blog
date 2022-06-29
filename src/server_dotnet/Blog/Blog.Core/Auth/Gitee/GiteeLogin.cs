@@ -15,7 +15,7 @@ namespace Blog.Core.Auth.Gitee
             var manager = EntityManagerFactory.GetManager();
             var giteeService = new GiteeAuthService(manager);
             var sysRoleService = new SysRoleService(manager);
-            var logger = LogFactory.GetLogger("gitee");
+            var logger = LoggerFactory.GetLogger("gitee");
 
             try
             {
@@ -53,8 +53,8 @@ namespace Blog.Core.Auth.Gitee
                         roleid = role.id,
                         roleid_name = role.name,
                         gitee_id = giteeUser.id.ToString(),
-                        stateCode = 1,
-                        stateCode_name = "启用"
+                        statecode = true,
+                        statecode_name = "启用"
                     };
                     manager.Create(user, false);
                     var _authUser = new auth_user()

@@ -22,7 +22,7 @@ namespace Blog.WeChat.WeChatNews
         /// <param name="content_source_url">图文消息的原文地址，即点击“阅读原文”后的URL</param>
         /// <param name="need_open_comment">Uint32 是否打开评论，0不打开，1打开</param>
         /// <param name="only_fans_can_comment">Uint32 是否粉丝才可评论，0所有人可评论，1粉丝才可评论</param>
-        [HttpGet]
+        [HttpPost("add")]
         public void CreateData(string title, string thumb_media_id, string author, string digest, bool show_cover_pic, string content, string content_source_url, bool need_open_comment, bool only_fans_can_comment)
         {
             new WeChatNewsService().CreateData(title, thumb_media_id, author, digest, show_cover_pic, content, content_source_url, need_open_comment, only_fans_can_comment);

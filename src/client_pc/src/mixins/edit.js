@@ -15,21 +15,21 @@ export default {
   },
   created() {
     if (this.relatedAttr && this.relatedAttr.id) {
-      this.id = this.relatedAttr.id;
+      this.data.id = this.relatedAttr.id;
       this.loadData();
     } else if (this.$route.params && this.$route.params.id) {
-      this.id = this.$route.params.id;
+      this.data.id = this.$route.params.id;
       this.loadData();
     }
     if (!sp.isNullOrEmpty(this.controllerName)) {
-      sp.get(`api/${this.controllerName}/GetPrivilege`).then(resp => {
+      sp.get(`api/${this.controllerName}/privilege`).then(resp => {
         this.privilege = resp;
       });
     }
   },
   computed: {
     pageState() {
-      return sp.isNullOrEmpty(this.id) ? 'create' : 'edit';
+      return sp.isNullOrEmpty(this.data.id) ? 'create' : 'edit';
     }
   },
   methods: {
@@ -39,7 +39,7 @@ export default {
       }
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
+        this.data = await sp.get(`api/${this.controllerName}/${this.data.id}`);
         if (this.loadComplete && typeof this.loadComplete === 'function') {
           await this.loadComplete();
         }
@@ -60,12 +60,13 @@ export default {
       }
       this.$refs.form.validate(async valid => {
         if (valid) {
-          const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
-          if (sp.isNullOrEmpty(this.id)) {
-            this.data.id = uuid.generate();
-          }
+          const operateName = sp.isNullOrEmpty(this.data.id) ? 'CreateData' : 'UpdateData';
           try {
-            await sp.post(`api/${this.controllerName}/${operateName}`, this.data);
+            if (operateName === 'CreateData') {
+              await sp.post(`api/${this.controllerName}`, this.data);
+            } else {
+              await sp.put(`api/${this.controllerName}`, this.data);
+            }
             this.$message.success(operateName === 'CreateData' ? '添加成功' : '更新成功');
             if (this.postSave && typeof this.postSave === 'function') {
               await this.postSave();

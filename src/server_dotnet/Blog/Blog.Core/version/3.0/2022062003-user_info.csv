@@ -1,0 +1,2 @@
+is_lock_name,password,id,name,code,gender,gender_name,realname,mailbox,introduction,cellphone,avatar,life_photo,roleid,github_id,gitee_id,roleid_name,stateCode,stateCode_name,created_by,created_by_name,created_at,updated_by,updated_by_name,updated_at
+,,00000000-0000-0000-0000-000000000000,系统管理员,Admin,,,,,,,,,00000000-0000-0000-0000-000000000000,,,系统管理员,TRUE,启用,111111111-11111-1111-1111-111111111111,系统,09/05/2021 20:06:21,111111111-11111-1111-1111-111111111111,系统,09/05/2021 20:06:21

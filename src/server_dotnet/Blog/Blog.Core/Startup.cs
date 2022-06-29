@@ -1,3 +1,4 @@
+using AutoMapper;
 using Blog.Core.Auth;
 using Blog.Core.Job;
 using Blog.Core.Module.SysRole;
@@ -90,7 +91,7 @@ namespace Blog.Core
 
             app.UseORM(options =>
             {
-                options.EntityClassNameCase = ClassNameCase.UnderScore;
+                options.EntityClassNameCase = NameCase.UnderScore;
                 options.AutoGenerate = true;
             });
 

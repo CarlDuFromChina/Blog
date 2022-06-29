@@ -13,6 +13,7 @@ using Sixpence.ORM.Extensions;
 using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace Sixpence.ORM.Entity
     {
         public void Execute(IEntityManager manager, IEnumerable<IEntity> entities)
         {
-            var logger = LogFactory.GetLogger("entity");
+            var logger = LoggerFactory.GetLogger("entity");
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
             entities.Each(item =>
                 {
@@ -42,7 +43,7 @@ namespace Sixpence.ORM.Entity
                     }
                     #endregion
 
-                    var attrs = item.GetColumns();
+                    var attrs = EntityCommon.GetColumns(item, manager.Driver);
                     var attrsList = new SysEntityService(manager).GetEntityAttrs(entity.id).Select(e => e.code);
 
                     #region 实体字段变更（删除字段）
@@ -52,7 +53,7 @@ namespace Sixpence.ORM.Entity
                         {
                             var sql = @"DELETE FROM sys_attrs WHERE lower(code) = @code AND entityid = @entityid";
                             manager.Execute(sql, new Dictionary<string, object>() { { "@code", attr.ToLower() }, { "@entityid", EntityCache.GetEntity(item.GetEntityName())?.id } });
-                            sql = manager.Driver.GetDropColumnSql(item.GetEntityName(), new List<Column>() { new Column() { Name = attr } });
+                            sql = manager.Driver.GetDropColumnSql(item.GetEntityName(), new List<ColumnOptions>() { new ColumnOptions() { Name = attr } });
                             manager.Execute(sql);
                             logger.Debug($"实体{item.GetLogicalName()} （{item.GetEntityName()}）删除字段：{attr}");
                         }
@@ -86,23 +87,26 @@ namespace Sixpence.ORM.Entity
 
             #region 执行版本更新脚本
             {
-                var vLogger = LogFactory.GetLogger("version");
-                FileHelper.GetFileList("*.sql", FolderType.Version)
+                var vLogger = LoggerFactory.GetLogger("version");
+                FileHelper.GetFileList("*.*", FolderType.Version)
                         .OrderBy(item => Path.GetFileName(item))
                         .ToList()
-                        .Each(sqlFile =>
+                        .Each(filePath =>
                         {
                             try
                             {
-                                var count = new VersionScriptExecutionLogService(manager).ExecuteScript(sqlFile);
-                                if (count == 1)
+                                if (filePath.EndsWith(".sql") || filePath.EndsWith(".csv"))
                                 {
-                                    vLogger.Info($"脚本：{Path.GetFileName(sqlFile)}执行成功");
+                                    var count = new VersionScriptExecutionLogService(manager).ExecuteScript(filePath);
+                                    if (count == 1)
+                                    {
+                                        vLogger.Info($"脚本：{Path.GetFileName(filePath)}执行成功");
+                                    }
                                 }
                             }
                             catch (Exception ex)
                             {
-                                vLogger.Error($"脚本：{Path.GetFileName(sqlFile)}执行失败", ex);
+                                vLogger.Error($"脚本：{Path.GetFileName(filePath)}执行失败", ex);
                             }
                         });
             }

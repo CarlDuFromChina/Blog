@@ -150,9 +150,9 @@ WHERE hash_code = @code
         /// <returns></returns>
         public string GetPreviewImageFileName(string fileName)
         {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(fileName, "上传文件文件名不能为空", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
+            AssertUtil.IsNullOrEmpty(fileName, "上传文件文件名不能为空");
             var fileNameArr = fileName.Split(".");
-            AssertUtil.CheckBoolean<SpException>(fileNameArr.Length != 2, "上传文件文件名格式错误", "BE7C3444-6B56-4806-8417-9677E5FDF0D2");
+            AssertUtil.IsTrue(fileNameArr.Length != 2, "上传文件文件名格式错误");
             return $"{fileNameArr[0]}_small.{fileNameArr[1]}";
         }
     }

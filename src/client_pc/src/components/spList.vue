@@ -147,7 +147,7 @@ export default {
       normalOperations: [
         { name: 'new', icon: 'plus', operate: this.createData },
         { name: 'delete', icon: 'delete', operate: this.deleteData },
-        { name: 'export', icon: 'export', operate: this.exportData },
+        { name: 'export', icon: 'export', operate: this.exportCsv },
         { name: 'search' },
         { name: 'more' }
       ],
@@ -268,7 +268,7 @@ export default {
         return;
       }
       this.loading = true;
-      let url = `api/${this.controllerName}/GetViewData?searchList=${JSON.stringify(
+      let url = `api/${this.controllerName}/data?searchList=${JSON.stringify(
         this.searchList
       )}&orderBy=&pageSize=$pageSize&pageIndex=$pageIndex&searchValue=$searchValue`;
       if (!sp.isNullOrEmpty(this.customApi)) {
@@ -335,7 +335,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/${this.controllerName}/DeleteData`, this.selectionIds)
+          sp.delete(`api/${this.controllerName}/${this.selectionIds.join(',')}`)
             .then(() => {
               this.$message.success('删除成功');
               this.loadData();
@@ -348,6 +348,13 @@ export default {
           this.$message.info('已取消删除');
         }
       });
+    },
+    exportCsv() {
+      if (this.exportData && typeof this.exportData === 'function') {
+        this.exportData();
+        return;
+      }
+      sp.get(`/api/${this.controllerName}/export/csv`);
     }
   }
 };

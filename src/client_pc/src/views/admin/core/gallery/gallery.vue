@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetViewData?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=&viewId=`;
+      return `api/${this.controllerName}/data?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=&viewId=`;
     }
   },
   created() {

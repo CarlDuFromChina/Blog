@@ -10,7 +10,7 @@ namespace Blog.WeChat.FocusUser
 {
     public class WeChatUserController : EntityBaseController<wechat_user, WeChatUserService>
     {
-        [HttpGet]
+        [HttpGet("focus_user")]
         public FocusUserListModel GetFocusUserList()
         {
             return new FocusUserService().GetFocusUserList();

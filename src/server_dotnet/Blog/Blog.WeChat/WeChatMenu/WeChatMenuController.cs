@@ -22,7 +22,7 @@ namespace Blog.WeChat.WeChatMenu
             return WeChatMenuService.GetMenu();
         }
 
-        [HttpGet]
+        [HttpDelete]
         public void DeleteMenu()
         {
             WeChatMenuService.DeleteMenu();

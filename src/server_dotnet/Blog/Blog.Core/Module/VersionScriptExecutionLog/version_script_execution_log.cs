@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -19,15 +20,13 @@ namespace Blog.Core.Module.VersionScriptExecutionLog
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 是否执行成功
         /// </summary>
-        [DataMember]
-        [Column("is_success", "是否执行成功", DataType.Int4)]
-        public bool is_success { get; set; }
+        [DataMember, Column, Description("是否执行成功")]
+        public bool? is_success { get; set; }
     }
 }

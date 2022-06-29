@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -13,24 +14,34 @@ namespace Blog.Core.Module.JobHisotry
         [PrimaryColumn]
         public string id { get; set; }
 
-        [DataMember]
-        [Column("job_name", "作业名", DataType.Varchar, 100, true)]
+        /// <summary>
+        /// 作业名
+        /// </summary>
+        [DataMember, Column, Description("作业名")]
         public string job_name { get; set; }
 
-        [DataMember]
-        [Column("start_time", "开始时间", DataType.Timestamp, true)]
+        /// <summary>
+        /// 开始时间
+        /// </summary>
+        [DataMember, Column, Description("开始时间")]
         public DateTime? start_time { get; set; }
-        
-        [DataMember]
-        [Column("end_time", "结束时间", DataType.Timestamp, true)]
+
+        /// <summary>
+        /// 结束时间
+        /// </summary>
+        [DataMember, Column, Description("结束时间")]
         public DateTime? end_time { get; set; }
 
-        [DataMember]
-        [Column("status", "状态", DataType.Varchar, 100, true)]
+        /// <summary>
+        /// 状态
+        /// </summary>
+        [DataMember, Column, Description("状态")]
         public string status { get; set; }
 
-        [DataMember]
-        [Column("error_msg", "错误原因", DataType.Text)]
+        /// <summary>
+        /// 错误原因
+        /// </summary>
+        [DataMember, Column, Description("错误原因")]
         public string error_msg { get; set; }
     }
 }

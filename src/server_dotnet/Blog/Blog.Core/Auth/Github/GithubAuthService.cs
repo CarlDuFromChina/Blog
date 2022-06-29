@@ -19,7 +19,7 @@ namespace Blog.Core.Auth.Github
     public class GithubAuthService
     {
         protected IEntityManager Manager;
-        protected ILog Logger => LogFactory.GetLogger("github");
+        protected ILog Logger => LoggerFactory.GetLogger("github");
 
         #region 构造函数
         public GithubAuthService()

@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -17,51 +18,43 @@ namespace Blog.Core.Store.SysFile
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 500)]
+        [DataMember, Column, Description("")]
         public string name { get; set; }
 
         /// <summary>
         /// 文件对象
         /// </summary>
-        [DataMember]
-        [Column("objectid", "文件对象", DataType.Varchar, 100)]
+        [DataMember, Column, Description("文件对象")]
         public string objectId { get; set; }
 
         /// <summary>
         /// 真实文件名
         /// </summary>
-        [DataMember]
-        [Column("real_name", "真实文件名", DataType.Varchar, 500)]
+        [DataMember, Column, Description("真实文件名")]
         public string real_name { get; set; }
 
-        
         /// <summary>
         /// 文件路径
         /// </summary>
-        [DataMember]
-        [Column("file_path", "文件路径", DataType.Text)]
+        [DataMember, Column, Description("文件路径")]
         public string file_path { get; set; }
 
         /// <summary>
         /// 哈希值
         /// </summary>
-        [DataMember]
-        [Column("hash_code", "哈希值", DataType.Varchar, 40)]
+        [DataMember, Column, Description("哈希值")]
         public string hash_code { get; set; }
 
         /// <summary>
         /// 文件类型
         /// </summary>
-        [DataMember]
-        [Column("file_type", "文件类型", DataType.Varchar, 100)]
+        [DataMember, Column, Description("文件类型")]
         public string file_type { get; set; }
 
         /// <summary>
         /// 内容类型
         /// </summary>
-        [DataMember]
-        [Column("content_type", "内容类型", DataType.Varchar, 100)]
+        [DataMember, Column, Description("内容类型")]
         public string content_type { get; set; }
     }
 }

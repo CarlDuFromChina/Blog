@@ -4,6 +4,7 @@ using Sixpence.Common.Utils;
 using System.Collections.Generic;
 using Sixpence.ORM.Repository;
 using Sixpence.ORM.EntityManager;
+using System.Linq;
 
 namespace Blog.Core.Auth.UserInfo
 {
@@ -72,12 +73,17 @@ LEFT JOIN (
         public bool InfoFilled()
         {
             var user = Repository.FindOne(UserIdentityUtil.GetCurrentUserId());
-            AssertUtil.CheckNull<SpException>(user, "未查询到用户", "BE999374-F0CF-4274-8D9D-1E436FBA6935");
+            AssertUtil.IsNull(user, "未查询到用户");
             if (user.id == UserIdentityUtil.ADMIN_ID)
             {
                 return false;
             }
-            return !user.gender.HasValue || AssertUtil.CheckEmpty(user.mailbox, user.cellphone, user.realname);
+            return !user.gender.HasValue || CheckEmpty(user.mailbox, user.cellphone, user.realname);
+        }
+
+        private bool CheckEmpty(params string[] args)
+        {
+            return args.Any(item => string.IsNullOrEmpty(item));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Blog.Core.Module.SysEntity
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            if (context.EntityName != "sys_entity") return;
+            if (context.Entity.GetEntityName() != "sys_entity") return;
 
             var manager = context.EntityManager;
             switch (context.Action)
@@ -25,7 +25,7 @@ namespace Blog.Core.Module.SysEntity
                     UserPrivilegesCache.Clear(manager);
                     break;
                 case EntityAction.PostDelete:
-                    var privileges = new SysRolePrivilegeService(manager).GetPrivileges(context.Entity.PrimaryKey.Value).ToArray();
+                    var privileges = new SysRolePrivilegeService(manager).GetPrivileges(context.Entity.GetPrimaryColumn().Value).ToArray();
                     manager.Delete(privileges);
                     UserPrivilegesCache.Clear(manager);
                     break;

@@ -18,22 +18,22 @@ namespace Blog.Core.Module.Job
             return new JobService().GetDataList();
         }
 
-        [HttpGet]
+        [HttpPost("run")]
         public void RunOnceNow(string name)
         {
             new JobService().RunOnceNow(name);
         }
 
-        [HttpGet]
-        public void Pause(string jobName)
+        [HttpPost("pause")]
+        public void Pause(string name)
         {
-            new JobService().Pause(jobName);
+            new JobService().Pause(name);
         }
 
-        [HttpGet]
-        public void Resume(string jobName)
+        [HttpPost("resume")]
+        public void Resume(string name)
         {
-            new JobService().Resume(jobName);
+            new JobService().Resume(name);
         }
     }
 }

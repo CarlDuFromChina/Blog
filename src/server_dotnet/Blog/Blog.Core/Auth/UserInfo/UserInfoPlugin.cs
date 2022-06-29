@@ -68,7 +68,7 @@ SELECT * FROM auth_user
 WHERE user_infoid = @id
 ";
             var authInfo = manager.QueryFirst<auth_user>(sql, new Dictionary<string, object>() { { "@id", entity["id"]?.ToString() } });
-            AssertUtil.CheckNull<SpException>(authInfo, "用户Id不能为空", "C37CCF94-6B27-4BF4-AF29-DBEDC9E53E5D");
+            AssertUtil.IsNull(authInfo, "用户Id不能为空");
             authInfo.name = entity["name"]?.ToString();
             authInfo.roleid = entity["roleid"]?.ToString();
             authInfo.roleid_name = entity["roleid_name"]?.ToString();
@@ -83,8 +83,8 @@ WHERE user_infoid = @id
         private void CheckUserInfo(BaseEntity entity, IEntityManager manager)
         {
             var allowUpdateRole = new SysRoleService(manager).AllowCreateOrUpdateRole(entity["roleid"].ToString());
-            AssertUtil.CheckBoolean<SpException>(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleid_name"]}]", "2ABD2CBA-A7CB-4F61-841F-7CD4E6C1BD69");
-            AssertUtil.CheckBoolean<SpException>(entity.PrimaryKey.Value == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新", "");
+            AssertUtil.IsTrue(!allowUpdateRole, $"你没有权限修改角色为[{entity["roleid_name"]}]");
+            AssertUtil.IsTrue(entity.GetPrimaryColumn().Value == "00000000-0000-0000-0000-000000000000", "系统管理员信息禁止更新");
         }
 
         /// <summary>

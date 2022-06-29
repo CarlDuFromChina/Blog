@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetDataList`;
+      return `api/${this.controllerName}`;
     }
   },
   methods: {
@@ -58,7 +58,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/RunOnceNow?name=${row.name}`)
+          sp.get(`api/${this.controllerName}/run?name=${row.name}`)
             .then(() => {
               this.$refs.list.loadData();
               this.$message.success('执行成功');
@@ -74,7 +74,7 @@ export default {
       });
     },
     pause(row) {
-      sp.get(`api/${this.controllerName}/pause?jobName=${row.name}`)
+      sp.get(`api/${this.controllerName}/pause?name=${row.name}`)
         .then(() => {
           this.$refs.list.loadData();
           this.$message.success('执行成功');
@@ -85,7 +85,7 @@ export default {
         });
     },
     resume(row) {
-      sp.get(`api/${this.controllerName}/resume?jobName=${row.name}`)
+      sp.get(`api/${this.controllerName}/resume?name=${row.name}`)
         .then(() => {
           this.$refs.list.loadData();
           this.$message.success('执行成功');

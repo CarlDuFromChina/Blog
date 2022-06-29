@@ -5,7 +5,6 @@
     :columns="columns"
     :operations="operations"
     :editComponent="editComponent"
-    :exportData="exportData"
   ></sp-list>
 </template>
 
@@ -17,32 +16,17 @@ export default {
   data() {
     return {
       controllerName: 'SysParamGroup',
-      operations: ['new', 'delete', 'export', 'search'],
+      operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'code', label: '编码' },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
-        { prop: 'modified_by_name', label: '最后修改人' },
+        { prop: 'updated_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' }
       ],
       editComponent: sysParamGroupEdit
     };
-  },
-  methods: {
-    exportData() {
-      const selectionIds = this.$refs.list.selectionIds;
-      if (!selectionIds || selectionIds.length === 0) {
-        this.$message.warning('请选择一项，再进行导出');
-        return;
-      }
-      if (selectionIds.length > 1) {
-        this.$message.warning('最多导出一条记录');
-      }
-
-      const id = selectionIds[0];
-      sp.get(`api/${this.controllerName}/Export?id=${id}`);
-    }
   }
 };
 </script>

@@ -69,11 +69,11 @@ export default {
   },
   created() {
     this.getMenu();
-    this.imageUrl = `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
-    sp.get(`api/UserInfo/GetData?id=${sp.getUserId()}`).then(resp => {
+    this.imageUrl = `${sp.getServerUrl()}api/system/avatar/${sp.getUserId()}`;
+    sp.get(`api/UserInfo/${sp.getUserId()}`).then(resp => {
       this.$store.commit('updateUser', resp);
     });
-    sp.get('api/MessageRemind/GetUnReadMessageCount').then(resp => {
+    sp.get('api/MessageRemind/unread_message_count').then(resp => {
       this.messageCount = resp.total;
     });
   },
@@ -86,13 +86,13 @@ export default {
     getMenu() {
       const searchList = [
         {
-          Name: 'stateCode',
-          Value: 1
+          Name: 'statecode',
+          Value: true
         }
       ];
-      sp.get(`api/sysmenu/GetDataList?searchList=${JSON.stringify(searchList)}`)
+      sp.get(`api/sysmenu/data?searchList=${JSON.stringify(searchList)}`)
         .then(resp => {
-          resp.forEach(e => {
+          resp.DataList.forEach(e => {
             const menu = {
               title: e.name,
               router: e.router,

@@ -27,7 +27,7 @@ namespace Blog.WeChat.WeChatReply.Focus
                     var entity = context.Entity;
                     if (entity.GetAttributeValue("checked") == null)
                     {
-                        context.Entity["checked"] = 0;
+                        context.Entity["checked"] = false;
                     }
                     if (entity.GetAttributeValue("wechat") == null)
                     {

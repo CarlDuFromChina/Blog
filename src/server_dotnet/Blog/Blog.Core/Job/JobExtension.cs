@@ -1,24 +1,18 @@
-﻿using Blog.Core.Auth;
-using Sixpence.ORM.Entity;
-using Sixpence.Common.Utils;
+﻿using Blog.Core.Entity;
 using Microsoft.AspNetCore.Builder;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sixpence.Common;
-
 using Sixpence.Common.IoC;
+using Sixpence.Common.Utils;
 using Sixpence.ORM.Driver;
-using Sixpence.ORM;
+using System;
+using System.Linq;
 
 namespace Blog.Core.Job
 {
     public static class JobExtension
     {
-        public static SelectOption ToSelectOption(this TriggerState triggerState)
+        public static Entity.SelectOption ToSelectOption(this TriggerState triggerState)
         {
             switch (triggerState)
             {
@@ -44,8 +38,6 @@ namespace Blog.Core.Job
             {
                 case DriverType.Postgresql:
                     return "Quartz.Impl.AdoJobStore.PostgreSQLDelegate, Quartz";
-                case DriverType.Mysql:
-                    return "Quartz.Impl.AdoJobStore.SQLiteDelegate, Quartz";
                 default:
                     return null;
             }
@@ -57,8 +49,6 @@ namespace Blog.Core.Job
             {
                 case DriverType.Postgresql:
                     return "Npgsql";
-                case DriverType.Mysql:
-                    return "MySql";
                 default:
                     return null;
             }

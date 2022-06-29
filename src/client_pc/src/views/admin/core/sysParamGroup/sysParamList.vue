@@ -35,7 +35,7 @@ export default {
         { prop: 'code', label: '编码' },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
-        { prop: 'modified_by_name', label: '最后修改人' },
+        { prop: 'updated_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' }
       ],
       editComponent: sysParamEdit
@@ -51,7 +51,7 @@ export default {
       ];
     },
     customApi() {
-      return `api/${this.controllerName}/GetViewData?searchList=${JSON.stringify(
+      return `api/${this.controllerName}/data?searchList=${JSON.stringify(
         this.searchList
       )}&orderBy=&pageSize=$pageSize&pageIndex=$pageIndex&searchValue=$searchValue`;
     }

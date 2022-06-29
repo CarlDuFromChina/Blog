@@ -70,7 +70,7 @@ namespace Blog.WeChat.Material
         public WeChatSuccessUploadResponse CreateData(MaterialType type, string fileId)
         {
             var file = new SysFileService().GetData(fileId);
-            AssertUtil.CheckBoolean<SpException>(file == null, $"根据fileid：{fileId}未找到记录", "36B5F5C9-ED65-4CAC-BE60-712278056EA9");
+            AssertUtil.IsNull(file, $"根据fileid：{fileId}未找到记录");
 
             // 检查素材库是否已经上传
             var data = Manager.QueryFirst<wechat_material>("select * from wechat_material where sys_fileid = @sys_fileid", new Dictionary<string, object>() { { "@sys_fileid", file.id } });
