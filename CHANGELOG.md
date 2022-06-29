@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## V 3.0.0
+
+1. 按照 Http 规范全面重命名了接口
+1. 创建数据时未传入id的情况下按照实体规则自动生成id
+1. 支持 CSV 导出
+1. 博客分类和博客实体名修改（category、post）
+1. 博客实体 id 使用 GUID Number
+1. 升级了 Sixpence.ORM@2.2.0
+
 ## V 2.5.0
 
 1. 移除友人帐
