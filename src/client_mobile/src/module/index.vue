@@ -11,11 +11,11 @@
           <sp-icon slot="icon" size="20" name="sp-blog-blog"></sp-icon>
           博客
         </mt-tab-item>
-        <mt-tab-item id="2">
+        <mt-tab-item id="1">
           <sp-icon slot="icon" size="20" name="sp-blog-reading"></sp-icon>
           读书笔记
         </mt-tab-item>
-        <mt-tab-item id="3">
+        <mt-tab-item id="2">
           <sp-icon slot="icon" size="20" name="sp-blog-idea"></sp-icon>
           想法
         </mt-tab-item>
