@@ -25,7 +25,7 @@ export default {
   methods: {
     loadData() {
       this.$indicator.open('加载中...');
-      sp.get(`api/post/id=${this.Id}`)
+      sp.get(`api/post/${this.Id}`)
         .then(resp => {
           this.data = resp;
           this.content = marked(resp.content, {

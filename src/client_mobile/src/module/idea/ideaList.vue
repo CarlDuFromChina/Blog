@@ -9,6 +9,7 @@
           </div>
         </div>
       </div>
+      <sp-error type="no-content" v-show="dataList.length === 0"></sp-error>
     </sp-content>
   </sp-view>
 </template>

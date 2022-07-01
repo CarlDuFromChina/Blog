@@ -10,7 +10,7 @@
           <div class="content">
             <div class="title">{{ row.title }}</div>
             <div class="info">
-              <span><sp-icon name="sp-post-view" style="padding-right: 8px"></sp-icon>{{ row.reading_times }}</span>
+              <span><sp-icon name="sp-blog-view" style="padding-right: 8px"></sp-icon>{{ row.reading_times }}</span>
               <span style="float: right">{{ row.created_at | moment('YYYY-MM-DD') }}</span>
             </div>
           </div>
