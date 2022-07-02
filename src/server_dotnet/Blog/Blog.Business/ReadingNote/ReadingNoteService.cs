@@ -45,12 +45,13 @@ SELECT
 	created_by,
 	created_by_name,
 	created_at,
-	updated_by updated_by_name,
+	updated_by,
+	updated_by_name,
 	updated_at 
 FROM
 	reading_note 
 WHERE
-	is_show is false
+	is_show is true
 ",
                     CustomFilter = new List<string>(){ "name" },
                     OrderBy = "created_at",

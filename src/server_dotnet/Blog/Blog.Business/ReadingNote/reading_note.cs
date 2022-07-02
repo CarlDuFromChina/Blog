@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Blog.ReadingNote
 {
-    [Entity("reading_note", "读书笔记", false)]
+    [Entity("reading_note", "读书笔记")]
     public partial class reading_note : BaseEntity
     {
         /// <summary>
@@ -32,6 +32,12 @@ namespace Blog.ReadingNote
         /// </summary>
         [DataMember, Column(defaultValue: false), Description("是否展示")]
         public bool? is_show { get; set; }
+
+        /// <summary>
+        /// 是否展示
+        /// </summary>
+        [DataMember, Column, Description("是否展示")]
+        public string is_show_name { get; set; }
 
         /// <summary>
         /// 书名
