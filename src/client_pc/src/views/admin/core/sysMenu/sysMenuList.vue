@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     customApi() {
-      return 'api/SysMenu/data';
+      return 'api/SysMenu/search';
     }
   }
 };

@@ -87,7 +87,7 @@ export default {
       this.category = this.$route.params.category;
     } else {
       // 获取博客类型选项集
-      sp.get('api/category/data').then(resp => {
+      sp.get('api/category/search').then(resp => {
         this.blogType = resp.DataList.map(item => ({
           Name: item.name,
           Value: item.code

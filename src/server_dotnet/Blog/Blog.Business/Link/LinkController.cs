@@ -11,7 +11,7 @@ namespace Blog.Business.Link
 {
     public class LinkController : EntityBaseController<link, LinkService>
     {
-        [HttpGet("data"), AllowAnonymous]
+        [HttpGet("search"), AllowAnonymous]
         public override DataModel<link> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);

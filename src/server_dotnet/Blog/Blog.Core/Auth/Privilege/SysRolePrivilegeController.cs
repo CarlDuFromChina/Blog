@@ -8,7 +8,7 @@ namespace Blog.Core.Auth.Privilege
 {
     public class SysRolePrivilegeController : EntityBaseController<sys_role_privilege, SysRolePrivilegeService>
     {
-        [HttpGet("search")]
+        [HttpGet("{roleid}/{roleType}")]
         public IEnumerable<sys_role_privilege> GetUserPrivileges(string roleid, RoleType roleType)
         {
             return new SysRolePrivilegeService().GetUserPrivileges(roleid, roleType);

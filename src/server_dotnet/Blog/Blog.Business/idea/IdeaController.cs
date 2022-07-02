@@ -19,7 +19,7 @@ namespace Blog.idea
             return base.GetData(id);
         }
 
-        [HttpGet("data"), AllowAnonymous]
+        [HttpGet("search"), AllowAnonymous]
         public override DataModel<idea> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);

@@ -62,7 +62,7 @@ export default {
     },
     fetch() {
       sp.get(
-        `${sp.getServerUrl()}api/post/data?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
+        `${sp.getServerUrl()}api/post/search?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
           this.pageIndex
         }&searchList=&viewId=463BE7FE-5435-4841-A365-C9C946C0D655`
       ).then(resp => {

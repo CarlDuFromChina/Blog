@@ -15,7 +15,7 @@ namespace Blog.Comments
             return new CommentsService().CreateData(entity);
         }
 
-        [HttpGet("data")]
+        [HttpGet("search")]
         public virtual DataModel<comments> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);

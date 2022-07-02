@@ -268,7 +268,7 @@ export default {
         return;
       }
       this.loading = true;
-      let url = `api/${this.controllerName}/data?searchList=${JSON.stringify(
+      let url = `api/${this.controllerName}/search?searchList=${JSON.stringify(
         this.searchList
       )}&orderBy=&pageSize=$pageSize&pageIndex=$pageIndex&searchValue=$searchValue`;
       if (!sp.isNullOrEmpty(this.customApi)) {

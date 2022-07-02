@@ -51,7 +51,7 @@ export default {
       ];
     },
     customApi() {
-      return `api/${this.controllerName}/data?searchList=${JSON.stringify(
+      return `api/${this.controllerName}/search?searchList=${JSON.stringify(
         this.searchList
       )}&orderBy=&pageSize=$pageSize&pageIndex=$pageIndex&searchValue=$searchValue`;
     }

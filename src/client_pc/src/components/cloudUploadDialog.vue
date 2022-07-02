@@ -85,7 +85,7 @@ export default {
       this.loadData();
     },
     getLocalData() {
-      let url = `api/${this.controllerName}/data?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
+      let url = `api/${this.controllerName}/search?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
       url += `&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`;
       return sp.get(url).then(resp => {
         this.dataList = resp.DataList.map(item => ({
@@ -102,7 +102,7 @@ export default {
     getCloudData() {
       return sp
         .get(
-          `api/${this.controllerName}/cloud/data?searchValue=${encodeURIComponent(this.searchValue)}&pageIndex=${this.pageIndex}&pageSize=${
+          `api/${this.controllerName}/cloud/search?searchValue=${encodeURIComponent(this.searchValue)}&pageIndex=${this.pageIndex}&pageSize=${
             this.pageSize
           }`
         )

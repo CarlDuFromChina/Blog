@@ -32,7 +32,7 @@ export default {
       this.loading = true;
       try {
         const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
-        const resp = await sp.get('api/RecommendInfo/data?pageindex=1&pagesize=5&searchList=' + JSON.stringify(searchList));
+        const resp = await sp.get('api/RecommendInfo/search?pageindex=1&pagesize=5&searchList=' + JSON.stringify(searchList));
         if (resp) {
           this.data = resp.DataList;
         }

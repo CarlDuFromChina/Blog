@@ -31,7 +31,7 @@ export default {
       }
       this.loading = true;
       try {
-        let url = 'api/post/data?orderBy=created_at desc';
+        let url = 'api/post/search?orderBy=created_at desc';
         url += '&pageSize=5';
         url += '&pageIndex=1';
         url += '&searchList=';

@@ -84,7 +84,7 @@ export default {
     },
     getDataList() {
       const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
-      sp.get(`api/${this.controllerName}/data?searchList=${JSON.stringify(searchList)}&orderBy=created_at desc`).then(resp => {
+      sp.get(`api/${this.controllerName}/search?searchList=${JSON.stringify(searchList)}&orderBy=created_at desc`).then(resp => {
         this.comments = resp;
       });
     },

@@ -62,7 +62,7 @@ export default {
       return searchList;
     },
     customApi() {
-      let url = `api/${this.controllerName}/data?pageIndex=$pageIndex&pagesize=$pageSize`;
+      let url = `api/${this.controllerName}/search?pageIndex=$pageIndex&pagesize=$pageSize`;
       url += `&orderBy=&searchValue=$searchValue&searchList=${JSON.stringify(this.searchList)}&viewId=DD1D72FB-D7DE-49AC-B387-273375E6A7BA`;
       return url;
     }

@@ -90,7 +90,7 @@ export default {
           Value: true
         }
       ];
-      sp.get(`api/sysmenu/data?searchList=${JSON.stringify(searchList)}`)
+      sp.get(`api/sysmenu/search?searchList=${JSON.stringify(searchList)}`)
         .then(resp => {
           resp.DataList.forEach(e => {
             const menu = {

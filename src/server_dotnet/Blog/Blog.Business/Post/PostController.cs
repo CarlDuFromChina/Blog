@@ -31,7 +31,7 @@ namespace Blog.Business.Post
         /// <param name="pageIndex"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
-        [HttpGet("data"), AllowAnonymous]
+        [HttpGet("search"), AllowAnonymous]
         public override DataModel<post> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);

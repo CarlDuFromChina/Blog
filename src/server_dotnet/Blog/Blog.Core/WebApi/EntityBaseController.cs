@@ -38,7 +38,7 @@ namespace Blog.Core.WebApi
         /// <param name="viewId"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        [HttpGet("data")]
+        [HttpGet("search")]
         public virtual DataModel<E> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
@@ -56,6 +56,21 @@ namespace Blog.Core.WebApi
             int.TryParse(pageSize, out var size);
             int.TryParse(pageIndex, out var index);
             return new S().GetDataList(_searchList, orderBy, size, index, viewId, searchValue);
+        }
+
+        /// <summary>
+        /// 获取所有数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public virtual DataModel<E> GetDataList()
+        {
+            var list = new S().GetAllData().ToList();
+            return new DataModel<E>()
+            {
+                DataList = list,
+                RecordCount = list.Count
+            };
         }
 
         /// <summary>

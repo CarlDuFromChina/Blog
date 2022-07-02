@@ -33,7 +33,7 @@ export default {
         return;
       }
       this.loading = true;
-      let url = `api/${this.controllerName}/data?searchList=&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
+      let url = `api/${this.controllerName}/search?searchList=&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}`;
       sp.get(url)
         .then(resp => {
           if (resp && resp.DataList) {
