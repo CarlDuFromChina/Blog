@@ -137,10 +137,10 @@ WHERE hash_code = @code
         {
             if (isRelative)
             {
-                return $"/api/SysFile/Download?objectId={fileid}";
+                return $"/api/sys_file/download?objectId={fileid}";
             }
             var config = SystemConfig.Config;
-            return $"{config.Protocol}://{config.Domain}/api/SysFile/Download?objectId={fileid}";
+            return $"{config.Protocol}://{config.Domain}/api/sys_file/download?objectId={fileid}";
         }
 
         /// <summary>

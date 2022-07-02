@@ -201,7 +201,7 @@ namespace Blog.Core.Module.DataService
                     id = id,
                     name = "账号激活邮件",
                     content = $@"你好,<br/><br/>
-请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/mail_vertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
 ",
                     expire_time = DateTime.Now.AddHours(2),
                     is_active = false,
@@ -281,7 +281,7 @@ WHERE user_infoid = @id;
                 id = id,
                 name = "重置密码",
                 content = $@"你好,<br/><br/>
-请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ResetPassword?id={id}"">链接</a>重置密码
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/mail_vertification/ResetPassword?id={id}"">链接</a>重置密码
 ",
                 expire_time = DateTime.Now.AddHours(2),
                 is_active = false,
