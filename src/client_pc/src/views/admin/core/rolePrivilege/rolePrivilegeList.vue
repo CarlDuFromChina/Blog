@@ -9,7 +9,7 @@ export default {
   name: 'sysRolePrivilegeList',
   data() {
     return {
-      controllerName: 'SysRolePrivilege',
+      controllerName: 'sys_role_rivilege',
       operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'objectid_name', label: '实体名' },

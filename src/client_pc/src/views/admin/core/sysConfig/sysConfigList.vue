@@ -9,7 +9,7 @@ export default {
   name: 'sysConfigList',
   data() {
     return {
-      controllerName: 'SysConfig',
+      controllerName: 'sys_config',
       operations: ['search', 'export'],
       columns: [
         { prop: 'name', label: '名称' },

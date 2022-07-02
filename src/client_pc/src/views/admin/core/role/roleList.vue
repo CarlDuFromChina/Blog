@@ -9,7 +9,7 @@ export default {
   name: 'sysRoleList',
   data() {
     return {
-      controllerName: 'SysRole',
+      controllerName: 'sys_role',
       operations: ['new', 'delete', 'search', 'export'],
       columns: [
         { prop: 'name', label: '名称' },

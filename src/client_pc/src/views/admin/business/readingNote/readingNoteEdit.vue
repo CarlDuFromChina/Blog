@@ -64,7 +64,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'ReadingNote',
+      controllerName: 'reading_note',
       baseUrl: sp.getServerUrl(),
       fileList: [],
       data: {

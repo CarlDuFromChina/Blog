@@ -9,7 +9,7 @@ export default {
   name: 'sysEntityList',
   data() {
     return {
-      controllerName: 'SysEntity',
+      controllerName: 'sys_entity',
       operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'name', label: '名称' },

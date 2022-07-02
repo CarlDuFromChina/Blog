@@ -37,7 +37,7 @@ export default {
   mixins: [select],
   data() {
     return {
-      controllerName: 'SysFile',
+      controllerName: 'sys_file',
       operations: ['delete', 'search', 'more'],
       columns: [
         { prop: 'name', label: '名称' },

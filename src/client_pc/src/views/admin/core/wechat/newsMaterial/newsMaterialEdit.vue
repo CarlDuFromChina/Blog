@@ -25,7 +25,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'WeChatNews'
+      controllerName: 'wechat_news'
     };
   }
 };

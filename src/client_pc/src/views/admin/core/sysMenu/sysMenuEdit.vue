@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'sysmenu',
+      controllerName: 'sys_menu',
       id: '',
       dialogVisible: false,
       data: {},

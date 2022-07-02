@@ -7,7 +7,7 @@ export default {
   name: 'draft-edit',
   data() {
     return {
-      controllerName: 'Draft',
+      controllerName: 'draft',
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'created_by_name', label: '创建人' },

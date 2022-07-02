@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'SysParam',
+      controllerName: 'sys_param',
       operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'name', label: '名称' },

@@ -64,7 +64,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        [Route("UploadImage")]
+        [Route("upload_image")]
         public FileInfoModel UploadImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             if (file == null)
@@ -84,7 +84,7 @@ namespace Blog.Core.Store.SysFile
         /// <returns></returns>
         [HttpPost]
         [RequestSizeLimit(100 * 1024 * 1024)]
-        [Route("UploadBigImage")]
+        [Route("upload_big_image")]
         public IEnumerable<FileInfoModel> UploadBigImage([FromForm] IFormFile file, [FromQuery]string fileType, [FromQuery]string objectId = "")
         {
             if (file == null)

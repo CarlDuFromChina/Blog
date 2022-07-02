@@ -72,7 +72,7 @@ export default {
   methods: {
     fetchData() {
       sp.get(
-        `api/MessageRemind/search?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
+        `api/message_remind/search?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&viewId=${this.viewId}&searchValue=${this.searchValue}`
       ).then(resp => {
         this.total = resp.RecordCount;
         resp.DataList.forEach(item => {

@@ -184,7 +184,7 @@ export default {
   components: { editPassword },
   data() {
     return {
-      controllerName: 'UserInfo',
+      controllerName: 'user_info',
       thirdPartyBind: thirdPartyBind,
       avatarChange: false,
       lifePhotoChange: false,
@@ -207,7 +207,7 @@ export default {
   },
   async created() {
     this.token = this.$store.getters.getToken;
-    sp.get('api/SysRole/role_options').then(resp => {
+    sp.get('api/sys_role/role_options').then(resp => {
       this.roles = resp;
     });
   },
@@ -243,7 +243,7 @@ export default {
     },
     async loadComplete() {
       if (!sp.isNullOrEmpty(this.data.avatar)) {
-        const image = await sp.get(`api/SysFile/${this.data.avatar}`);
+        const image = await sp.get(`api/sys_file/${this.data.avatar}`);
         this.fileList = [
           {
             uid: '-1',
@@ -254,7 +254,7 @@ export default {
         ];
       }
       if (!sp.isNullOrEmpty(this.data.life_photo)) {
-        const image = await sp.get(`api/SysFile/${this.data.life_photo}`);
+        const image = await sp.get(`api/sys_file/${this.data.life_photo}`);
         this.lifePhotos = [
           {
             uid: '-1',
@@ -276,7 +276,7 @@ export default {
     preSave() {
       if (this.avatarChange) {
         // 保存后上传头像
-        let url = '/api/SysFile/UploadImage?fileType=avatar';
+        let url = '/api/sys_file/upload_image?fileType=avatar';
         // 关联实体id
         if (!sp.isNullOrEmpty(this.data.id)) {
           url += `&objectId=${this.data.id}`;
@@ -290,7 +290,7 @@ export default {
       }
       if (this.lifePhotoChange) {
         // 保存后上传头像
-        let url = '/api/SysFile/UploadImage?fileType=life_photo';
+        let url = '/api/sys_file/upload_image?fileType=life_photo';
         // 关联实体id
         if (!sp.isNullOrEmpty(this.data.id)) {
           url += `&objectId=${this.data.id}`;

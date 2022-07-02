@@ -16,7 +16,7 @@ export default {
   name: 'sysMenuList',
   data() {
     return {
-      controllerName: 'SysMenu',
+      controllerName: 'sys_menu',
       operations: ['new', 'delete', 'export'],
       columns: [
         { prop: 'name', label: '菜单名' },
@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     customApi() {
-      return 'api/SysMenu/search';
+      return 'api/sys_menu/search';
     }
   }
 };

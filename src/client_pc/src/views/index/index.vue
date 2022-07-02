@@ -41,7 +41,7 @@ export default {
   },
   created() {
     if (this.isLoggedIn) {
-      sp.get('api/UserInfo/is_incomplete').then(resp => {
+      sp.get('api/user_info/is_incomplete').then(resp => {
         if (resp) {
           const key = `open${Date.now()}`;
           this.$notification.open({
@@ -71,7 +71,7 @@ export default {
         }
       });
     }
-    sp.get('api/SysConfig/is_enable_comment').then(resp => {
+    sp.get('api/sys_config/is_enable_comment').then(resp => {
       this.$store.commit('updateShowComment', resp);
     });
   },

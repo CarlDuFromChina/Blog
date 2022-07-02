@@ -134,7 +134,7 @@ export default {
       });
     },
     test() {
-      sp.get('api/System/test').then(resp => {
+      sp.get('api/system/test').then(resp => {
         if (resp) {
           this.$router.push({ name: 'workplace' });
         } else {
@@ -173,8 +173,8 @@ export default {
       try {
         const valid = await this.validate();
         if (valid) {
-          const key = await sp.get('api/System/public_key');
-          const url = 'api/System/Login';
+          const key = await sp.get('api/system/public_key');
+          const url = 'api/system/Login';
           const { rsa, md5 } = encrypt;
           const data = {
             code: this.data.code,
@@ -213,7 +213,7 @@ export default {
       this.forgetLoading = true;
       this.$refs.forgetForm.validate(resp => {
         if (resp) {
-          sp.get(`api/System/password/forget?code=${this.forgetData.code}`)
+          sp.get(`api/system/password/forget?code=${this.forgetData.code}`)
             .then(() => {
               this.$message.error('重置密码邮件已发送');
             })
@@ -237,11 +237,11 @@ export default {
       try {
         const valid = await this.$refs.signupForm.validate();
         if (valid) {
-          const key = await sp.get('api/System/public_key');
+          const key = await sp.get('api/system/public_key');
           const { rsa, md5 } = encrypt;
           this.signupData.publicKey = key;
           this.signupData.password = rsa.encrypt(md5.encrypt(this.signupData.password), key);
-          const resp = await sp.post('api/System/Signup', this.signupData);
+          const resp = await sp.post('api/system/signup', this.signupData);
           if (resp.level === 'Warning') {
             this.$message.warning(resp.message);
             this.signupVisible = false;

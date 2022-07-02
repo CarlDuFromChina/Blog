@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {
-    public class WeChatFocusReplyController : EntityBaseController<wechat_focus_reply, WeChatFocusReplyService>
+    public class WechatFocusReplyController : EntityBaseController<wechat_focus_reply, WeChatFocusReplyService>
     {
         /// <summary>
         /// 激活

@@ -50,7 +50,7 @@ export default {
     return {
       visible: false,
       dataList: [],
-      controllerName: 'Gallery',
+      controllerName: 'gallery',
       selected: null,
       loading: false,
       baseUrl: sp.getServerUrl(),
@@ -134,7 +134,7 @@ export default {
       }
     },
     async uploadImages() {
-      return sp.post('api/Gallery/upload', this.selected);
+      return sp.post('api/gallery/upload', this.selected);
     },
     async getRandomImage() {
       return sp.get('api/gallery/random_image');
@@ -161,9 +161,9 @@ export default {
           var resp = await this.uploadImages();
           this.$emit('selected', {
             surfaceid: resp[0],
-            surface_url: `api/SysFile/Download?objectId=${resp[0]}`,
+            surface_url: `api/sys_file/download?objectId=${resp[0]}`,
             big_surfaceid: resp[1],
-            big_surface_url: `api/SysFile/Download?objectId=${resp[1]}`
+            big_surface_url: `api/sys_file/download?objectId=${resp[1]}`
           });
           break;
         }

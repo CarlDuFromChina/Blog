@@ -74,7 +74,7 @@ export default {
       Authorization: `Bearer ${localStorage.getItem('Token') || ''}`
     };
     this.editor.config.uploadImgMaxLength = 1; // 最多一次上传一张照片
-    this.editor.config.uploadImgServer = `${sp.getServerUrl()}api/SysFile/UploadImage`; // 上传图片服务地址
+    this.editor.config.uploadImgServer = `${sp.getServerUrl()}api/sys_file/upload_image`; // 上传图片服务地址
     this.editor.config.uploadImgHooks = {
       customInsert: function(insertImgFn, result) {
         insertImgFn(sp.getDownloadUrl(result.downloadUrl));

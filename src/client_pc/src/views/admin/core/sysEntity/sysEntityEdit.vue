@@ -77,7 +77,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysEntity',
+      controllerName: 'sys_entity',
       attrs: [],
       editVisible: false,
       rules: {
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     exportData() {
-      sp.get(`api/SysEntity/Export?entityid=${this.data.id}`);
+      sp.get(`api/sys_entity/export?entityid=${this.data.id}`);
     },
     handleClose() {
       this.editVisible = false;
@@ -106,7 +106,7 @@ export default {
     },
     handleDelete(row) {
       const id = row.sys_attrsId;
-      sp.delete(`api/SysAttrs/${id}`).then(() => {
+      sp.delete(`api/sys_attrs/${id}`).then(() => {
         this.$message.success('删除成功');
         this.loadAttrs();
       });
@@ -118,7 +118,7 @@ export default {
       this.loadAttrs();
     },
     loadAttrs() {
-      sp.get(`api/SysEntity/attrs?id=${this.data.id}`).then(resp => {
+      sp.get(`api/sys_entity/attrs?id=${this.data.id}`).then(resp => {
         this.attrs = resp;
       });
     }

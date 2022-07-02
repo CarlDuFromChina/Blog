@@ -15,7 +15,7 @@ export default {
   name: 'readingNoteList',
   data() {
     return {
-      controllerName: 'ReadingNote',
+      controllerName: 'reading_note',
       editComponent: readingNoteEdit,
       operations: ['new', 'delete', 'search'],
       columns: [

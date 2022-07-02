@@ -70,10 +70,10 @@ export default {
   created() {
     this.getMenu();
     this.imageUrl = `${sp.getServerUrl()}api/system/avatar/${sp.getUserId()}`;
-    sp.get(`api/UserInfo/${sp.getUserId()}`).then(resp => {
+    sp.get(`api/user_info/${sp.getUserId()}`).then(resp => {
       this.$store.commit('updateUser', resp);
     });
-    sp.get('api/MessageRemind/unread_message_count').then(resp => {
+    sp.get('api/message_remind/unread_message_count').then(resp => {
       this.messageCount = resp.total;
     });
   },
@@ -90,7 +90,7 @@ export default {
           Value: true
         }
       ];
-      sp.get(`api/sysmenu/search?searchList=${JSON.stringify(searchList)}`)
+      sp.get(`api/sys_menu/search?searchList=${JSON.stringify(searchList)}`)
         .then(resp => {
           resp.DataList.forEach(e => {
             const menu = {

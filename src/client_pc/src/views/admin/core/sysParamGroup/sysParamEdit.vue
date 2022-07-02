@@ -24,7 +24,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysParam',
+      controllerName: 'sys_param',
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
         code: [{ required: true, message: '请再次编码', trigger: 'blur' }]

@@ -206,9 +206,9 @@ export default {
     if (this.data.title) {
       document.title = this.data.title;
     }
-    this.user = await sp.get(`api/UserInfo/${this.data.created_by}`);
+    this.user = await sp.get(`api/user_info/${this.data.created_by}`);
     if (this.isLoggedIn) {
-      this.isUp = await sp.get(`api/Upvote/is_up?objectid=${this.data.id}`);
+      this.isUp = await sp.get(`api/upvote/is_up?objectid=${this.data.id}`);
     }
     this.loadRecommand();
   },
@@ -277,12 +277,12 @@ export default {
     },
     loadRecommand() {
       const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
-      sp.get('api/RecommendInfo/search?pageSize=5&pageIndex=1&searchList=' + JSON.stringify(searchList)).then(resp => {
+      sp.get('api/recommend_info/search?pageSize=5&pageIndex=1&searchList=' + JSON.stringify(searchList)).then(resp => {
         this.recommandList = resp.DataList;
       });
     },
     read(item) {
-      sp.get(`api/RecommendInfo/reading_times?id=${item.id}`);
+      sp.get(`api/recommend_info/reading_times?id=${item.id}`);
       item.reading_times = (item.reading_times || 0) + 1;
       window.open(item.url);
     },

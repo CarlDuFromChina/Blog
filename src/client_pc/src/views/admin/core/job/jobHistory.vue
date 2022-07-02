@@ -14,7 +14,7 @@ export default {
   name: 'job-history',
   data() {
     return {
-      controllerName: 'JobHistory',
+      controllerName: 'job_history',
       columns: [
         { prop: 'job_name', label: '名称' },
         { prop: 'status', label: '状态' },

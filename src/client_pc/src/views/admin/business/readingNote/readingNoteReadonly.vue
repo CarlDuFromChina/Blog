@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      controllerName: 'ReadingNote',
+      controllerName: 'reading_note',
       data: {},
       loading: false,
       imageUrl: '',
@@ -69,8 +69,8 @@ export default {
   async mounted() {
     await this.loadData();
     document.getElementById('content').innerHTML = this.data.content;
-    this.user = await sp.get(`api/UserInfo/${this.data.created_by}`);
-    this.imageUrl = `${sp.getServerUrl()}api/SysFile/Download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
+    this.user = await sp.get(`api/user_info/${this.data.created_by}`);
+    this.imageUrl = `${sp.getServerUrl()}api/sys_file/download?objectId=13c5929e-cfca-406b-979b-d7a102a7ed10`;
   },
   computed: {
     showComment() {

@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'Comments',
+      controllerName: 'comments',
       showReply: false,
       value: '',
     };

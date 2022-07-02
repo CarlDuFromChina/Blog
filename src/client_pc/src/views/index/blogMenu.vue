@@ -63,10 +63,10 @@ export default {
   },
   created() {
     if (this.isLoggedIn) {
-      sp.get('api/MessageRemind/unread_message_count').then(resp => {
+      sp.get('api/message_remind/unread_message_count').then(resp => {
         this.messageCount = resp.total;
       });
-      sp.get('api/System/is_show_admin').then(resp => {
+      sp.get('api/system/is_show_admin').then(resp => {
         this.showAdmin = resp;
       });
     }

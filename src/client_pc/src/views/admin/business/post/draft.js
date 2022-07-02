@@ -44,7 +44,7 @@ export default {
     window.clearInterval(this.secondId); // 销毁倒计时事件
   },
   async mounted() {
-    const enable = await sp.get(`/api/SysConfig/value?code=${this.configCode}`);
+    const enable = await sp.get(`/api/sys_config/value?code=${this.configCode}`);
 
     if (enable === 'true' || enable === true) { 
       // 1、从草稿列表页进入编辑页面

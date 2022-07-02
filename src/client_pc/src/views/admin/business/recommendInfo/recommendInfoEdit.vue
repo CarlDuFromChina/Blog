@@ -27,7 +27,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'RecommendInfo',
+      controllerName: 'recommend_info',
       id: '',
       data: {},
       recommentType: [],
@@ -36,7 +36,7 @@ export default {
     };
   },
   created() {
-    sp.get('api/SysParamGroup/options?code=recommend_type').then(resp => {
+    sp.get('api/sys_param_group/options?code=recommend_type').then(resp => {
       this.recommentType = resp[0];
     });
   },
@@ -52,7 +52,7 @@ export default {
         const headers = {
           Authorization: 'Bearer ' + window.localStorage.getItem('Token')
         };
-        const url = '/api/SysFile/UploadImage?fileType=book_surface&objectId=' + this.data.id;
+        const url = '/api/sys_file/upload_image?fileType=book_surface&objectId=' + this.data.id;
         const formData = new FormData();
         formData.append('file', this.fileList[0]);
         sp.post(url, formData, headers);

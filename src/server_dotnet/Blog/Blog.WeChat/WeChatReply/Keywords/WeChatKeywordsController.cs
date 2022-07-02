@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.WeChatReply.Keywords
 {
-    public class WeChatKeywordsController : EntityBaseController<wechat_keywords, WeChatKeywordsService>
+    public class WechatKeywordsController : EntityBaseController<wechat_keywords, WeChatKeywordsService>
     {
 
     }

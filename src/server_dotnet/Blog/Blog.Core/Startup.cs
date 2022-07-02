@@ -6,6 +6,8 @@ using Blog.Core.Profiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blog.Core
@@ -49,11 +52,16 @@ namespace Blog.Core
                 });
             });
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
-            });
+            services
+                .AddControllers(options =>
+                {
+                    options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.DateFormatString = "yyyy/MM/dd HH:mm:ss";
+                });
 
             services.AddControllersWithViews(options =>
             {
@@ -123,8 +131,21 @@ namespace Blog.Core
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "DefaultApi", pattern: "{controller}/{action}/{id}" ).RequireCors("CorsPolicy");
+                endpoints.MapControllerRoute
+                (
+                    name: "default",
+                    pattern: "{controller:slugify}/{action:slugify}/{id?}"
+                )
+                .RequireCors("CorsPolicy");
             });
+        }
+    }
+
+    public class SlugifyParameterTransformer : IOutboundParameterTransformer
+    {
+        public string TransformOutbound(object value)
+        {
+            return value == null ? null : Regex.Replace(value.ToString(), "([a-z])([A-Z])", "$1_$2").ToLower();
         }
     }
 }

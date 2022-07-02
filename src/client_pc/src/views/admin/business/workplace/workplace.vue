@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     getUserInfo() {
-      sp.get(`api/UserInfo/${sp.getUserId()}`).then(resp => {
+      sp.get(`api/user_info/${sp.getUserId()}`).then(resp => {
         this.user_info = resp;
       });
     },
@@ -118,7 +118,7 @@ export default {
       myChart.setOption(option);
     },
     async loadTimeline() {
-      this.timeline = await sp.get('api/Analysis/timeline');
+      this.timeline = await sp.get('api/analysis/timeline');
     }
   }
 };

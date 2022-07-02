@@ -12,7 +12,7 @@ export default {
   name: 'readingNoteList',
   data() {
     return {
-      controllerName: 'ReadingNote',
+      controllerName: 'reading_note',
       loading: false,
       isLoadedAll: false
     };

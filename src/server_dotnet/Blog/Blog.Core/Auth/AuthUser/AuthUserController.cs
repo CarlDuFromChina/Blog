@@ -15,7 +15,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize(Policy = "Refresh")]
-        [Route("RefreshAccessToken")]
+        [Route("refresh_access_token")]
         public Token RefreshAccessToken()
         {
             var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");

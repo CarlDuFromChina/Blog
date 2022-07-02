@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.Material
 {
-    public class WeChatMaterialController : EntityBaseController<wechat_material, WeChatMaterialService>
+    public class WechatMaterialController : EntityBaseController<wechat_material, WeChatMaterialService>
     {
     }
 }

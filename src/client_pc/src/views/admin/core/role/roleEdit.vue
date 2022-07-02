@@ -51,7 +51,7 @@ export default {
   components: { entityPrivilege, menuPrivilege },
   data() {
     return {
-      controllerName: 'SysRole',
+      controllerName: 'sys_role',
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
       },
@@ -64,7 +64,7 @@ export default {
     };
   },
   created() {
-    sp.get('api/SysRole/basic_role_options').then(resp => {
+    sp.get('api/sys_role/basic_role_options').then(resp => {
       this.roles = resp;
     });
   },
@@ -73,8 +73,8 @@ export default {
       this.getEntities();
     },
     async getEntities() {
-      this.entityList = await sp.get(`api/SysRolePrivilege/${this.data.id}/0`);
-      this.menuList = await sp.get(`api/SysRolePrivilege/${this.data.id}/1`);
+      this.entityList = await sp.get(`api/sys_role_privilege/${this.data.id}/0`);
+      this.menuList = await sp.get(`api/sys_role_privilege/${this.data.id}/1`);
     }
   }
 };

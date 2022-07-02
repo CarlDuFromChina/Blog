@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'Comments',
+      controllerName: 'comments',
       comments: [],
       submitting: false,
       value: ''
@@ -85,7 +85,7 @@ export default {
     getDataList() {
       const searchList = [{ Name: 'objectid', Value: this.objectId, Type: 0 }];
       sp.get(`api/${this.controllerName}/search?searchList=${JSON.stringify(searchList)}&orderBy=created_at desc`).then(resp => {
-        this.comments = resp;
+        this.comments = resp.DataList;
       });
     },
     handleSubmit() {
@@ -108,7 +108,7 @@ export default {
           object_name: this.objectName,
           object_title: this.data.title
         };
-        sp.post('api/Comments/CreateData', comment).then(() => {
+        sp.post('api/comments', comment).then(() => {
           this.getDataList();
           this.$message.success('留言成功');
         });

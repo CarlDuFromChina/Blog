@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'SysAttrs',
+      controllerName: 'sys_attrs',
       typeOptions: [
         {
           value: 'varchar',

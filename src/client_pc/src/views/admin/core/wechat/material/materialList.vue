@@ -21,7 +21,7 @@ export default {
       pageIndex: 1,
       pageSize: 15,
       loading: false,
-      controllerName: 'WeChatMaterial',
+      controllerName: 'wechat_material',
       operations: ['search', 'more'],
       columns: [
         { prop: 'name', label: '名称' },
@@ -92,7 +92,7 @@ export default {
         });
     },
     async getSysParam() {
-      var resp = await sp.get('api/SysParamGroup/options?code=wechat_material_type');
+      var resp = await sp.get('api/sys_param_group/options?code=wechat_material_type');
       this.materialList = resp[0];
     }
   }

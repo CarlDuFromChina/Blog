@@ -32,7 +32,7 @@ export default {
       }
       this.loading = true;
       const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
-      sp.get('api/RecommendInfo/search?searchList=' + JSON.stringify(searchList))
+      sp.get('api/recommend_info/search?searchList=' + JSON.stringify(searchList))
         .then(resp => {
           this.data = resp.map(item => ({ src: item.url }));
         })

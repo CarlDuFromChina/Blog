@@ -15,7 +15,7 @@ export default {
   name: 'sysParamGroupList',
   data() {
     return {
-      controllerName: 'SysParamGroup',
+      controllerName: 'sys_param_group',
       operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'name', label: '名称' },

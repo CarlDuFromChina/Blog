@@ -79,7 +79,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/idea/DeleteData`, [id])
+          sp.delete(`api/idea/${id}`)
             .then(() => {
               this.$message.success('删除成功');
               this.loadData();

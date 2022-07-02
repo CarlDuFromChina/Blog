@@ -16,7 +16,7 @@ export default {
   name: 'robot-message-task-list',
   data() {
     return {
-      controllerName: 'RobotMessageTask',
+      controllerName: 'robot_message_task',
       operations: ['new', 'delete'],
       columns: [
         { prop: 'name', label: '任务名' },

@@ -19,7 +19,7 @@ export default {
     return {
       data: {},
       content: '',
-      controllerName: 'WeChatFocusReply'
+      controllerName: 'wechat_focus_reply'
     };
   },
   created() {

@@ -36,7 +36,7 @@ export default {
       pageSize: 15,
       total: 0,
       loading: false,
-      controllerName: 'Gallery',
+      controllerName: 'gallery',
       baseUrl: sp.getServerUrl(),
       buttons: [{ name: 'new', icon: 'plus', operate: () => (this.editVisible = true) }]
     };

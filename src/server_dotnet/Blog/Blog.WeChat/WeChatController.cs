@@ -12,7 +12,7 @@ using static Blog.WeChat.WeChatMaterialExtension;
 
 namespace Blog.WeChat
 {
-    public class WeChatController : BaseApiController
+    public class WechatController : BaseApiController
     {
         /// <summary>
         /// 获取微信access_token
