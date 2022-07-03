@@ -34,11 +34,7 @@
       </a-col>
       <a-col :span="12">
         <a-form-model-item label="状态">
-          <a-radio-group v-model="data.statecode" @change="handleStateCodeChange">
-            <a-radio v-for="(item, index) in [{ name: '启用', value: 1 }, { name: '禁用', value: 0 }]" :key="index" :value="item.value">{{
-              item.name
-            }}</a-radio>
-          </a-radio-group>
+          <a-switch v-model="data.statecode"></a-switch>
         </a-form-model-item>
       </a-col>
     </a-row>
@@ -75,11 +71,8 @@ export default {
     handleParentIdChange(val) {
       const obj = this.selectData.find(item => item.id === val);
       if (!sp.isNull(obj)) {
-        this.data.parentIdName = obj.name;
+        this.data.parentid_name = obj.name;
       }
-    },
-    handleStateCodeChange() {
-      this.data.statecode_name = this.data.statecode === 1 ? '启用' : '禁用';
     },
     getSelectData() {
       sp.get(`api/${this.controllerName}/first_menu`).then(resp => {

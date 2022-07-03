@@ -94,7 +94,7 @@ namespace Blog.Core.Utils
                         foreach (DataColumn column in dt.Columns)
                         {
                             var value = item[column.ColumnName];
-                            if (!string.IsNullOrEmpty(value?.ToString()))
+                            if (value != DBNull.Value && !string.IsNullOrEmpty(value?.ToString()))
                             {
                                 row[column.ColumnName] = item[column.ColumnName];
                             }

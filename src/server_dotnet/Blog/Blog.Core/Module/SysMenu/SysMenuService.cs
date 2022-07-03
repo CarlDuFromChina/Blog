@@ -63,7 +63,7 @@ namespace Blog.Core.Module.SysMenu
         {
             var sql = @"
 SELECT * FROM sys_menu
-WHERE parentid IS NULL
+WHERE parentid IS NULL OR parentid = ''
 ORDER BY menu_index
 ";
             var data = Manager.Query<sys_menu>(sql).ToList();

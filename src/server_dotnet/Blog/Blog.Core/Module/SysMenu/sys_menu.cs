@@ -34,7 +34,7 @@ namespace Blog.Core.Module.SysMenu
         /// 上级菜单
         /// </summary>
         [DataMember, Column, Description("上级菜单")]
-        public string parentId_name { get; set; }
+        public string parentid_name { get; set; }
 
         /// <summary>
         /// 路由地址
