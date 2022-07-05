@@ -48,7 +48,7 @@ namespace Blog.Business.Category
                     id = Guid.NewGuid().ToString(),
                     name = data.name,
                     parentid = "8201EFED-76E2-4CD1-A522-4803D52D4D92",
-                    parentId_name = "博客管理",
+                    parentid_name = "博客管理",
                     router = $"post/{data.code}",
                     menu_index = data.index,
                     statecode = true,
