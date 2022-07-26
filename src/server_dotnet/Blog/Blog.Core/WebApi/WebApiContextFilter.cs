@@ -14,7 +14,7 @@ namespace Blog.Core.WebApi
     {
         public void Log(ActionExecutingContext context)
         {
-            var log = LogFactory.GetLogger("webapi");
+            var log = LoggerFactory.GetLogger("webapi");
             var url = context.HttpContext.Request.Path;
             var method = context.HttpContext.Request.Method;
             var info = $"{method}：{url}";

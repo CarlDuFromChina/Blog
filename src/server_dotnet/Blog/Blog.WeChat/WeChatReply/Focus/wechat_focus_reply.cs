@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -21,29 +22,25 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        [DataMember]
-        [Column("content", "内容", DataType.Text)]
+        [DataMember, Column, Description("内容")]
         public string content { get; set; }
 
         /// <summary>
         /// 公众号
         /// </summary>
-        [DataMember]
-        [Column("wechat", "公众号", DataType.Varchar, 100)]
+        [DataMember, Column, Description("公众号")]
         public string wechat { get; set; }
 
         /// <summary>
         /// 启用
         /// </summary>
-        [DataMember]
-        [Column("checked", "启用", DataType.Int4)]
-        public int? @checked { get; set; }
+        [DataMember, Column(name: "checked"), Description("启用")]
+        public bool? @checked { get; set; }
     }
 }

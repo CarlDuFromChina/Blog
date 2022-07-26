@@ -1,6 +1,7 @@
 ﻿using Sixpence.ORM.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -20,15 +21,13 @@ namespace Blog.Core.Module.SysParamGroup
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
-        [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [DataMember, Column, Description("编码")]
         public string code { get; set; }
     }
 }

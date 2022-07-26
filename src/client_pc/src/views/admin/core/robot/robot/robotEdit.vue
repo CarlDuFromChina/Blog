@@ -37,7 +37,7 @@ export default {
   mixins: [edit, select],
   data() {
     return {
-      controllerName: 'Robot',
+      controllerName: 'robot',
       rules: {
         name: [{ required: true, message: '请输入参数名', trigger: 'blur' }],
         hook: [{ required: true, message: '请输入钩子地址', trigger: 'blur' }],

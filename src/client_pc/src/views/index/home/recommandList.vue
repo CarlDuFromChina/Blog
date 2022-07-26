@@ -31,9 +31,10 @@ export default {
       }
       this.loading = true;
       try {
-        const resp = await sp.get('api/RecommendInfo/GetRecommendList');
+        const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
+        const resp = await sp.get('api/recommend_info/search?pageindex=1&pagesize=5&searchList=' + JSON.stringify(searchList));
         if (resp) {
-          this.data = resp;
+          this.data = resp.DataList;
         }
       } catch (error) {
         this.$message.error(error);
@@ -44,7 +45,7 @@ export default {
       }
     },
     read(item) {
-      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.id}`);
+      sp.get(`api/recommend_info/reading_times?id=${item.id}`);
       item.reading_times = (item.reading_times || 0) + 1;
       window.open(item.url);
     }

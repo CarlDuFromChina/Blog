@@ -1,16 +1,12 @@
 ﻿using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Blog.Core.Module.SysConfig
 {
     public class SysConfigController : EntityBaseController<sys_config, SysConfigService>
     {
-        [HttpGet]
+        [HttpGet("value")]
         public object GetValue(string code)
         {
             return new SysConfigService().GetValue(code);
@@ -20,7 +16,7 @@ namespace Blog.Core.Module.SysConfig
         /// 是否开启评论
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet("is_enable_comment"), AllowAnonymous]
         public string EnableComment()
         {
             return new SysConfigService().GetValue("enable_comment")?.ToString();
@@ -30,7 +26,7 @@ namespace Blog.Core.Module.SysConfig
         /// 网站信息
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet("website_info"), AllowAnonymous]
         public string WebsiteInfo()
         {
             return new SysConfigService().GetValue("website_info")?.ToString();

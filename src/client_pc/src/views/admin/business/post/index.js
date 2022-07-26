@@ -1,11 +1,11 @@
 export default [
   {
-    path: '/admin/postEdit/:id?',
+    path: '/admin/postEdit',
     name: 'postEdit',
     component: () => import('./postEdit')
   },
   {
-    path: '/admin/post/:classification?',
+    path: '/admin/post/:category?',
     name: 'post-list',
     component: () => import('./postList'),
     meta: { title: '文章管理' }

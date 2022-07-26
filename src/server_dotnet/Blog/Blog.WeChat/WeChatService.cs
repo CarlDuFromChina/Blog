@@ -48,7 +48,7 @@ namespace Blog.WeChat
         static WeChatService()
         {
             var config = WeChatConfig.Config;
-            AssertUtil.CheckBoolean<SpException>(config == null, "未找到微信公众号配置", "87A36C30-3A62-457A-8D01-1A1E2C9250FC");
+            AssertUtil.IsNull(config, "未找到微信公众号配置");
             _appid = config.Appid;
             _token = config.Token;
             _secret = config.Secret;
@@ -68,7 +68,7 @@ namespace Blog.WeChat
             };
             MemoryCacheUtil.RemoveCacheItem("AccessToken");
             MemoryCacheUtil.Set("AccessToken", accessToken);
-            var logger = LogFactory.GetLogger("wechat");
+            var logger = LoggerFactory.GetLogger("wechat");
             logger.Debug("获取微信access_token成功：" + accessToken.AccessToken);
             return accessToken;
         }

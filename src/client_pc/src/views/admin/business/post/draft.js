@@ -8,7 +8,6 @@
 export default {
   data() {
     return {
-      draftId: '',
       draft: {},
       isDirty: false,
       seconds: 60,
@@ -45,14 +44,16 @@ export default {
     window.clearInterval(this.secondId); // 销毁倒计时事件
   },
   async mounted() {
-    const enable = await sp.get(`/api/SysConfig/GetValue?code=${this.configCode}`);
-    if (enable === 'true' || enable === true) {
+    const enable = await sp.get(`/api/sys_config/value?code=${this.configCode}`);
+
+    if (enable === 'true' || enable === true) { 
+      // 1、从草稿列表页进入编辑页面
+      // 2、新创建的博客
+      // 3、编辑博客
       if (!sp.isNullOrEmpty(this.$route.params.draftId)) {
         await this.popDraft(this.$route.params.draftId); // 打开草稿
         this.$emit('open-watch');
       } else if (this.pageState === 'create') {
-        this.draft.blogId = uuid.generate();
-        this.draft.draftId = uuid.generate();
         this.$emit('open-watch');
       } else {
         await this.getDraft(); // 获取草稿
@@ -73,10 +74,10 @@ export default {
      * @param {String} id - 博客id
      */
     async popDraft(id) {
-      return sp.get(`api/Draft/GetDataByBlogId?id=${id}`).then(resp => {
+      return sp.get(`api/draft/${id}`).then(resp => {
         this.draft = resp;
-        const { blogId, content, title } = resp;
-        this.data.blogId = blogId;
+        const { content, title } = resp;
+        this.data.id = id;
         this.data.content = content;
         this.data.title = title;
       });
@@ -85,7 +86,7 @@ export default {
      * 获取草稿
      **/
     async getDraft() {
-      return sp.get(`api/Draft/GetDataByBlogId?id=${this.id}`).then(resp => {
+      return sp.get(`api/draft/post/${this.data.id}`).then(resp => {
         if (resp) {
           this.draft = resp;
           this.$confirm({
@@ -94,17 +95,17 @@ export default {
             okText: '恢复',
             cancelText: '取消',
             onOk: () => {
-              const { blogId, content, title } = resp;
-              this.data.blogId = blogId;
+              const { postid, content, title } = resp;
+              this.data.id = postid;
               this.data.content = content;
               this.data.title = title;
-              sp.post('api/Draft/DeleteData', [this.draft.id])
+              sp.delete(`/api/draft/${this.draft.id}`)
                 .finally(() => {
                   this.$emit('open-watch');
                 });
             },
             onCancel: () => {
-              sp.post('api/Draft/DeleteData', [this.draft.id]).then(() => {
+              sp.delete(`/api/draft/${this.draft.id}`).then(() => {
                 this.$message.info('已删除草稿');
               })
                 .finally(() => {
@@ -113,8 +114,6 @@ export default {
             }
           });
         } else {
-          this.draft.draftId = uuid.generate();
-          this.draft.blogId = this.id;
           this.$emit('open-watch');
         }
       });
@@ -126,10 +125,14 @@ export default {
       this.draft.title = this.data.title || '草稿';
       this.draft.content = this.data.content;
       this.draft.images = this.data.images;
-      sp.post('api/Draft/CreateOrUpdateData', this.draft)
-        .then(() => {
+      if (!sp.isNullOrEmpty(this.data.id)) {
+        this.draft.postid = this.data.id;
+      }
+      sp.post('api/draft/save', this.draft)
+        .then(resp => {
           this.saveStatusValue = 'success';
           this.isDirty = false;
+          this.draft.id = resp;
         })
         .catch(() => {
           this.saveStatusValue = 'fail';

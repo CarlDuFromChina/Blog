@@ -10,7 +10,7 @@ namespace Blog.Core.Auth.Privilege
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            if (context.EntityName != nameof(sys_role_privilege)) return;
+            if (context.Entity.GetEntityName() != nameof(sys_role_privilege)) return;
 
             switch (context.Action)
             {

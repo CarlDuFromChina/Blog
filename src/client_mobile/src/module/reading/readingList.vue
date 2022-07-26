@@ -59,7 +59,7 @@ export default {
     fetch() {
       return sp
         .get(
-          `${sp.getServerUrl()}api/ReadingNote/GetViewData?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
+          `${sp.getServerUrl()}api/ReadingNote/search?searchValue=${this.searchValue}&orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${
             this.pageIndex
           }&searchList=&viewId=03860DF4-0E9E-4330-80BF-6A1E9AC797A6`
         )

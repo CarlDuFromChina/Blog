@@ -17,7 +17,7 @@ namespace Blog.Core.Module.SysEntity
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("attrs")]
         public IList<sys_attrs> GetEntityAttrs(string id)
         {
             return new SysEntityService().GetEntityAttrs(id);
@@ -28,8 +28,8 @@ namespace Blog.Core.Module.SysEntity
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Export(string entityId)
+        [HttpGet("export/cs")]
+        public IActionResult ExportCs(string entityId)
         {
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
             var result = new SysEntityService().Export(entityId);

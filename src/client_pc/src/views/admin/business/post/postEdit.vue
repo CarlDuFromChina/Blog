@@ -30,11 +30,11 @@
         </a-row>
         <a-row>
           <a-col>
-            <a-form-model-item label="分类" prop="blog_type">
+            <a-form-model-item label="分类" prop="post_type">
               <sp-select
-                v-model="data.blog_type"
-                :options="selectDataList.classification"
-                @change="item => (data.blog_type_name = item.name)"
+                v-model="data.post_type"
+                :options="selectDataList.category"
+                @change="item => (data.post_type_name = item.name)"
               ></sp-select>
             </a-form-model-item>
           </a-col>
@@ -131,9 +131,9 @@ export default {
       html: '',
       configs: {},
       editVisible: false,
-      controllerName: 'blog',
+      controllerName: 'post',
       selectParamNameList: ['article_type'],
-      selectEntityNameList: ['classification'],
+      selectEntityNameList: ['category'],
       fileList: [],
       baseUrl: sp.getServerUrl(),
       tags: [],
@@ -144,7 +144,7 @@ export default {
       token: this.$store.getters.getToken,
       rules: {
         title: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        blog_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
+        post_type: [{ required: true, message: '请选择分类', trigger: 'blur' }],
         article_type: [{ required: true, message: '请选择文章类型', trigger: 'blur' }]
       }
     };
@@ -158,10 +158,10 @@ export default {
     }
   },
   watch: {
-    'data.blog_type': {
+    'data.post_type': {
       handler(newVal, oldVal) {
-        if (this.selectDataList.classification) {
-          let item = this.selectDataList.classification.find(item => item.Value === oldVal);
+        if (this.selectDataList.category) {
+          let item = this.selectDataList.category.find(item => item.Value === oldVal);
           if (item) {
             const index = this.tags.indexOf(item.Name);
             if (index !== -1) {
@@ -169,7 +169,7 @@ export default {
             }
           }
 
-          item = this.selectDataList.classification.find(item => item.Value === newVal);
+          item = this.selectDataList.category.find(item => item.Value === newVal);
           if (item && new Set(this.tags.concat(item.Name)).size === this.tags.concat(item.Name).length) {
             this.tags.push(item.Name);
           }
@@ -225,7 +225,7 @@ export default {
     },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, file) {
-      const url = '/api/SysFile/UploadImage?fileType=blog_content&objectId=' + (this.id || this.draft.blogId || '');
+      const url = '/api/sys_file/upload_image?fileType=blog_content&objectId=' + (this.data.id || this.draft.postid || '');
       const formData = new FormData();
       formData.append('file', file);
       sp.post(url, formData, this.headers).then(resp => {
@@ -245,10 +245,9 @@ export default {
     },
     // 保存博客
     save() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           this.editVisible = false;
-          this.data.id = sp.isNullOrEmpty(this.data.id) ? this.draft.blogId : this.data.id;
           if (sp.isNullOrEmpty(this.data.brief)) {
             this.data.brief = htmlToText(this.html, { baseElement: 'p', limits: { ellipsis: '...', maxInputLength: 200 } });
           }
@@ -256,12 +255,13 @@ export default {
             this.data.tags = this.tags;
           }
           this.data.html_content = this.html;
-          sp.post(`api/blog/${this.pageState === 'create' ? 'CreateData' : 'UpdateData'}`, this.data)
-            .then(() => {
-              this.$message.success('发布成功！');
-              this.$router.back();
-            })
-            .catch(error => this.$message.error(error));
+          try {
+            await sp.post('api/post/save', this.data);
+            this.$message.success('发布成功！');
+            this.$router.back();
+          } catch (error) {
+            this.$message.error(error);
+          }
         }
       });
     },
@@ -277,7 +277,7 @@ export default {
       this.tags = val;
     },
     syncBlog(dest) {
-      if (sp.isNullOrEmpty(this.id)) {
+      if (sp.isNullOrEmpty(this.data.id)) {
         this.$message.error('请先保存博客，再进行同步');
         return;
       }
@@ -291,7 +291,7 @@ export default {
           okText: '确定',
           cancelText: '取消',
           onOk: () => {
-            sp.post(`api/Blog/SyncBlog?id=${this.id}&destination=${dest}`)
+            sp.post(`api/post/sync?id=${this.data.id}&destination=${dest}`)
               .then(() => {
                 this.$message.success('同步成功');
               })

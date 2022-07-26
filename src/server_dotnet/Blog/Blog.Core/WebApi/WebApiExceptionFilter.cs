@@ -17,7 +17,7 @@ namespace Blog.Core.WebApi
         public override void OnException(ExceptionContext context)
         {
             // 1.异常日志记录
-            LogUtils.Error(context.Exception.Message, context.Exception);
+            LogUtil.Error(context.Exception.Message, context.Exception);
 
             var exception = context.Exception.GetBaseException();
 

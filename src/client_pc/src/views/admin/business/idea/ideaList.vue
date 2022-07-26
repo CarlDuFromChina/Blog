@@ -79,7 +79,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.post(`api/idea/DeleteData`, [id])
+          sp.delete(`api/idea/${id}`)
             .then(() => {
               this.$message.success('删除成功');
               this.loadData();
@@ -94,10 +94,10 @@ export default {
       });
     },
     fetchData(callback) {
-      sp.get(`api/idea/GetViewData?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
+      sp.get(`api/idea/search?orderBy=created_at desc&pageSize=${this.pageSize}&pageIndex=${this.pageIndex}&searchList=&searchValue=`).then(
         resp => {
           const dataList = resp.DataList.map(item => {
-            item.avatar = `${sp.getServerUrl()}api/System/GetAvatar?id=${item.created_by}`;
+            item.avatar = `${sp.getServerUrl()}api/system/avatar/${item.created_by}`;
             return item;
           });
           this.total = resp.RecordCount;

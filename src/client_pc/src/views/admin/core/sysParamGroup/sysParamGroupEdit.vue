@@ -36,7 +36,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysParamGroup',
+      controllerName: 'sys_param_group',
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'Null' }],
         code: [{ required: true, message: '请再次编码', trigger: 'Null' }]
@@ -46,7 +46,7 @@ export default {
   computed: {
     relatedAttrs() {
       return {
-        id: this.id,
+        id: this.data.id,
         name: this.data.name
       };
     }

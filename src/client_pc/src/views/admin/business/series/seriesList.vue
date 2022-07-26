@@ -31,13 +31,13 @@ export default {
   name: 'blog-list',
   data() {
     return {
-      controllerName: 'Blog',
+      controllerName: 'post',
       editComponent: postEdit,
       operations: ['new', 'delete', 'search', 'more'],
       columns: [
         { prop: 'title', label: '标题' },
         { prop: 'tags', label: '标签', type: 'tag' },
-        { prop: 'modified_by_name', label: '最后修改人' },
+        { prop: 'updated_by_name', label: '最后修改人' },
         { prop: 'updated_at', label: '最后修改日期', type: 'datetime' },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
@@ -63,7 +63,7 @@ export default {
       return searchList;
     },
     customApi() {
-      return `api/${this.controllerName}/GetViewData?searchList=${JSON.stringify(
+      return `api/${this.controllerName}/search?searchList=${JSON.stringify(
         this.searchList
       )}&orderBy=&pageSize=$pageSize&pageIndex=$pageIndex&searchValue=$searchValue&viewId=ACCE50D6-81A5-4240-BD82-126A50764FAB`;
     }
@@ -84,7 +84,8 @@ export default {
     },
     goEdit(item) {
       this.$router.push({
-        path: `postEdit/${(item || {}).id || ''}`
+        name: `postEdit`,
+        params: { id: item.id }
       });
     }
   }

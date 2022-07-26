@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Blog.Core.Config;
 using Blog.Core.Module.DataService;
 using Sixpence.Common.Logging;
@@ -32,7 +31,7 @@ namespace Blog.Core.Module.Vertification.Mail
         {
             var sql = @"SELECT * FROM mail_vertification
 WHERE mail_address = @address
-AND is_active = 0
+AND is_active is false
 AND expire_time > CURRENT_TIMESTAMP
 AND mail_type = @type";
             return Manager.QueryFirst<mail_vertification>(sql, new Dictionary<string, object>() { { "@address", mail }, { "@type", mailType.ToString() } });
@@ -66,8 +65,8 @@ AND mail_type = @type";
                     mailbox = model.code,
                     roleid = role.id,
                     roleid_name = role.name,
-                    stateCode = 1,
-                    stateCode_name = "启用"
+                    statecode = true,
+                    statecode_name = "启用"
                 };
                 Manager.Create(user, false);
                 var _authUser = new auth_user()
@@ -116,7 +115,7 @@ AND mail_type = @type";
             }
             catch (Exception ex)
             {
-                LogUtils.Error("重置密码失败", ex);
+                LogUtil.Error("重置密码失败", ex);
                 return "服务器内部错误，请联系管理员";
             }
         }

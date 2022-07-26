@@ -45,7 +45,7 @@ export default {
       });
     },
     bindUser(code, id) {
-      sp.post(`/api/AuthUser/BindThirdPartyAccount?type=0&userid=${id}&code=${code}`)
+      sp.post(`/api/auth_user/bind?type=0&userid=${id}&code=${code}`)
         .then(() => {
           this.$message.success('绑定成功！');
           this.$router.push({ name: 'index' });

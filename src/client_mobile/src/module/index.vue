@@ -12,14 +12,10 @@
           博客
         </mt-tab-item>
         <mt-tab-item id="1">
-          <sp-icon slot="icon" size="20" name="sp-blog-wechat-friend"></sp-icon>
-          友人博客
-        </mt-tab-item>
-        <mt-tab-item id="2">
           <sp-icon slot="icon" size="20" name="sp-blog-reading"></sp-icon>
           读书笔记
         </mt-tab-item>
-        <mt-tab-item id="3">
+        <mt-tab-item id="2">
           <sp-icon slot="icon" size="20" name="sp-blog-idea"></sp-icon>
           想法
         </mt-tab-item>
@@ -34,7 +30,7 @@ export default {
   data() {
     return {
       selected: '0',
-      routeNameList: ['blog-list', 'friend-list', 'reading-list', 'idea-list']
+      routeNameList: ['post-list', 'reading-list', 'idea-list']
     };
   },
   created() {

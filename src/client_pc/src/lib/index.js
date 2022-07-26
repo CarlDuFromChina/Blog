@@ -91,7 +91,7 @@ async function checkToken() {
  */
 async function refreshToken() {
   store.commit('changeTokenWithRefreshToken'); // 更换成RefreshToken
-  const resp = await sp.get('api/AuthUser/RefreshAccessToken');
+  const resp = await sp.get('api/auth_user/refresh_access_token');
   if (resp) {
     store.commit('updateAccessToken', resp);
   }

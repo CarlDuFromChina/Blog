@@ -15,7 +15,7 @@ namespace Blog.Core.Module.Vertification.Mail
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet("user/activate"), AllowAnonymous]
         public string ActivateUser(string id)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());
@@ -27,7 +27,7 @@ namespace Blog.Core.Module.Vertification.Mail
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet("passsword/reset"), AllowAnonymous]
         public string ResetPassword(string id)
         {
             UserIdentityUtil.SetCurrentUser(UserIdentityUtil.GetSystem());

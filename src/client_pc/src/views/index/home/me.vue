@@ -21,7 +21,7 @@ export default {
     };
   },
   async created() {
-    var user = await sp.get('api/blog/GetIndexUser');
+    var user = await sp.get('api/post/index_user');
     if (user) {
       if (user.life_photo) {
         this.lifePhoto = sp.getDownloadUrl(user.life_photo, false);

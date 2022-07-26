@@ -27,7 +27,7 @@ namespace Blog.Core.Job
         /// <summary>
         /// 日志
         /// </summary>
-        protected virtual ILog Logger => LogFactory.GetLogger("job");
+        protected virtual ILog Logger => LoggerFactory.GetLogger("job");
 
         /// <summary>
         /// Job Key

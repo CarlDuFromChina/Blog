@@ -1,4 +1,5 @@
-﻿using Blog.Core.Module.SysParamGroup;
+﻿using Blog.Core.Entity;
+using Blog.Core.Module.SysParamGroup;
 using Sixpence.ORM.Entity;
 using Sixpence.ORM.EntityManager;
 using System;

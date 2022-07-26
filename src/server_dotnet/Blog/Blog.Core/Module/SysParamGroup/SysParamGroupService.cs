@@ -1,14 +1,13 @@
-﻿using Sixpence.ORM.Entity;
+﻿using Blog.Core.Entity;
 using Blog.Core.Module.SysEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sixpence.Common;
-using System.IO;
 using Blog.Core.Module.SysParams;
+using Sixpence.Common;
 using Sixpence.Common.IoC;
+using Sixpence.ORM.Entity;
 using Sixpence.ORM.EntityManager;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Blog.Core.Module.SysParamGroup
 {
@@ -92,80 +91,6 @@ DELETE FROM sys_param WHERE sys_paramgroupid IN (in@ids)
                 Manager.Execute(sql, new Dictionary<string, object>() { { "in@ids", ids } });
                 base.DeleteData(ids);
             });
-        }
-
-        public (string fileName, string ContentType, byte[] bytes) Export(string id)
-        {
-            var data = GetData(id);
-            var paramList = Manager.Query<sys_param>("SELECT * FROM sys_param WHERE sys_paramgroupid = @id", new Dictionary<string, object>() { { "@id", id } });
-
-            var content = $@"INSERT INTO sys_paramgroup (
-    sys_paramgroupid,
-    name,
-    code,
-    created_by,
-    created_by_name,
-    created_at,
-    updated_by,
-    updated_by_name,
-    updated_at
-)
-SELECT
-    '{data.id}',
-    '{data.name}',
-    '{data.code}',
-    '111111111-11111-1111-1111-111111111111',
-    '系统',
-    (SELECT NOW()),
-    '111111111-11111-1111-1111-111111111111',
-    '系统',
-    (SELECT NOW())
-WHERE NOT EXISTS (
-    SELECT id FROM sys_paramgroup WHERE id = '{data.id}'
-);
-";
-            paramList.Each(param =>
-            {
-                content += $@"
-INSERT INTO sys_param (
-    sys_paramid,
-    name,
-    code,
-    sys_paramgroupid,
-    sys_paramgroupid_name,
-    created_by,
-    created_by_name,
-    created_at,
-    updated_by,
-    updated_by_name,
-    updated_at
-)
-SELECT
-    '{param.id}',
-    '{param.name}',
-    '{param.code}',
-    '{data.id}',
-    '{data.name}',
-    '111111111-11111-1111-1111-111111111111',
-    '系统',
-    (SELECT NOW()),
-    '111111111-11111-1111-1111-111111111111',
-    '系统',
-    (SELECT NOW())
-WHERE NOT EXISTS (
-    SELECT sys_paramid FROM sys_param WHERE sys_paramid = '{param.id}'
-);";
-            });
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                using (StreamWriter writer = new StreamWriter(ms))
-                {
-                    writer.WriteLine(content);
-                    writer.Close();
-                }
-                return ($"{data.code}.sql", "application/octet-stream", ms.ToArray());
-            }
         }
     }
 }

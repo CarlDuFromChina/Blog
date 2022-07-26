@@ -45,7 +45,7 @@ export default {
       this.saveData(item);
     },
     saveData(data) {
-      sp.post(`api/SysRolePrivilege/UpdateData`, data)
+      sp.put(`api/sys_role_privilege`, data)
         .then(() => {
           this.$message.success('修改成功');
         })

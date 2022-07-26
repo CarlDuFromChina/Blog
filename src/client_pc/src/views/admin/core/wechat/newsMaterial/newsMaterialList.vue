@@ -9,7 +9,7 @@ export default {
   name: 'materialList',
   data() {
     return {
-      controllerName: 'WeChatNews',
+      controllerName: 'wechat_news',
       editComponent: newsMaterialEdit,
       operations: ['new', 'delete', 'search'],
       columns: [

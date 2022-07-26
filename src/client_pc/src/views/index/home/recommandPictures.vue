@@ -31,7 +31,8 @@ export default {
         return;
       }
       this.loading = true;
-      sp.get('api/RecommendInfo/GetRecommendList?type=picture')
+      const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
+      sp.get('api/recommend_info/search?searchList=' + JSON.stringify(searchList))
         .then(resp => {
           this.data = resp.map(item => ({ src: item.url }));
         })

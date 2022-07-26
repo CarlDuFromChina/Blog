@@ -16,19 +16,19 @@ namespace Blog.WeChat.WeChatReply.Focus
         public WeChatFocusReplyService(IEntityManager manager) : base(manager) { }
         #endregion
 
-        private ILog logger = LogFactory.GetLogger("wechat");
+        private ILog logger = LoggerFactory.GetLogger("wechat");
 
         public void Activate(string id)
         {
             var data = GetData(id);
-            data.@checked = 1;
+            data.@checked = true;
             UpdateData(data);
         }
 
         public void Deactivate(string id)
         {
             var data = GetData(id);
-            data.@checked = 0;
+            data.@checked = false;
             UpdateData(data);
         }
 

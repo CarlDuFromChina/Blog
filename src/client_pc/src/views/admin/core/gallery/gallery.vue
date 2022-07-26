@@ -36,14 +36,14 @@ export default {
       pageSize: 15,
       total: 0,
       loading: false,
-      controllerName: 'Gallery',
+      controllerName: 'gallery',
       baseUrl: sp.getServerUrl(),
       buttons: [{ name: 'new', icon: 'plus', operate: () => (this.editVisible = true) }]
     };
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetViewData?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=&viewId=`;
+      return `api/${this.controllerName}/search?pageIndex=$pageIndex&pagesize=$pageSize&orderBy=&searchValue=&searchList=&viewId=`;
     }
   },
   created() {

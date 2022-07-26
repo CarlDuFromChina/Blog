@@ -15,12 +15,12 @@ export default {
   name: 'readingNoteList',
   data() {
     return {
-      controllerName: 'ReadingNote',
+      controllerName: 'reading_note',
       editComponent: readingNoteEdit,
       operations: ['new', 'delete', 'search'],
       columns: [
         { prop: 'book_title', label: '标题' },
-        { prop: 'isShowName', label: '是否展示' },
+        { prop: 'is_show_name', label: '是否展示' },
         { prop: 'created_by_name', label: '创建人' },
         { prop: 'created_at', label: '创建日期', type: 'datetime' },
         { prop: 'action', label: '操作', type: 'actions', actions: [{ name: '查看', size: 'small', method: this.goReadonly }] }

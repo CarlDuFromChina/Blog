@@ -50,7 +50,7 @@ export default {
     return {
       visible: false,
       dataList: [],
-      controllerName: 'Gallery',
+      controllerName: 'gallery',
       selected: null,
       loading: false,
       baseUrl: sp.getServerUrl(),
@@ -85,7 +85,7 @@ export default {
       this.loadData();
     },
     getLocalData() {
-      let url = `api/${this.controllerName}/GetViewData?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
+      let url = `api/${this.controllerName}/search?searchValue=&viewId=0F0DC786-CF7D-4997-B42C-47FB09B12AAE&searchList=&orderBy=`;
       url += `&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`;
       return sp.get(url).then(resp => {
         this.dataList = resp.DataList.map(item => ({
@@ -102,7 +102,7 @@ export default {
     getCloudData() {
       return sp
         .get(
-          `api/${this.controllerName}/GetImages?searchValue=${encodeURIComponent(this.searchValue)}&pageIndex=${this.pageIndex}&pageSize=${
+          `api/${this.controllerName}/cloud/search?searchValue=${encodeURIComponent(this.searchValue)}&pageIndex=${this.pageIndex}&pageSize=${
             this.pageSize
           }`
         )
@@ -134,10 +134,10 @@ export default {
       }
     },
     async uploadImages() {
-      return sp.post('api/Gallery/UploadImage', this.selected);
+      return sp.post('api/gallery/upload', this.selected);
     },
     async getRandomImage() {
-      return sp.get('api/gallery/randomimage');
+      return sp.get('api/gallery/random_image');
     },
     async handleOk() {
       switch (this.source) {
@@ -161,9 +161,9 @@ export default {
           var resp = await this.uploadImages();
           this.$emit('selected', {
             surfaceid: resp[0],
-            surface_url: `api/SysFile/Download?objectId=${resp[0]}`,
+            surface_url: `api/sys_file/download?objectId=${resp[0]}`,
             big_surfaceid: resp[1],
-            big_surface_url: `api/SysFile/Download?objectId=${resp[1]}`
+            big_surface_url: `api/sys_file/download?objectId=${resp[1]}`
           });
           break;
         }

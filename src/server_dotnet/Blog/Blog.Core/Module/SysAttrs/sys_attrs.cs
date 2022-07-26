@@ -1,5 +1,6 @@
 ﻿using Sixpence.ORM.Entity;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -20,57 +21,49 @@ namespace Blog.Core.Module.SysAttrs
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 编码
         /// </summary>
-        [DataMember]
-        [Column("code", "编码", DataType.Varchar, 100)]
+        [DataMember, Column, Description("编码")]
         public string code { get; set; }
 
         /// <summary>
         /// 实体id
         /// </summary>
-        [DataMember]
-        [Column("entityid", "实体id", DataType.Varchar, 100)]
+        [DataMember, Column, Description("实体id")]
         public string entityid { get; set; }
 
         /// <summary>
         /// 实体名
         /// </summary>
-        [DataMember]
-        [Column("entityid_name", "实体名", DataType.Varchar, 100)]
+        [DataMember, Column, Description("实体名")]
         public string entityid_name { get; set; }
 
         /// <summary>
         /// 字段类型
         /// </summary>
-        [DataMember]
-        [Column("attr_type", "字段类型", DataType.Varchar, 100)]
+        [DataMember, Column, Description("字段类型")]
         public string attr_type { get; set; }
 
         /// <summary>
         /// 字段长度
         /// </summary>
-        [DataMember]
-        [Column("attr_length", "字段长度", DataType.Int4)]
+        [DataMember, Column, Description("字段长度")]
         public int? attr_length { get; set; }
 
         /// <summary>
         /// 是否必填
         /// </summary>
-        [DataMember]
-        [Column("isrequire", "是否必填", DataType.Int4)]
-        public bool isrequire { get; set; }
+        [DataMember, Column, Description("是否必填")]
+        public bool? isrequire { get; set; }
 
         /// <summary>
         /// 默认值
         /// </summary>
-        [DataMember]
-        [Column("default_value", "默认值", DataType.Varchar, 200)]
+        [DataMember, Column, Description("默认值")]
         public string default_value { get; set; }
     }
 }

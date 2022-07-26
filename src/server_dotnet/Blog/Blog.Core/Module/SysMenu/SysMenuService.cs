@@ -26,11 +26,11 @@ namespace Blog.Core.Module.SysMenu
                 {
                     item.children = data
                         .Where(e => e.parentid == item.id)
-                        .OrderBy(e => e.menu_Index)
+                        .OrderBy(e => e.menu_index)
                         .ToList();
                     return item;
                 })
-                .OrderBy(e => e.menu_Index)
+                .OrderBy(e => e.menu_index)
                 .ToList();
             return firstMenu;
         }
@@ -50,9 +50,9 @@ namespace Blog.Core.Module.SysMenu
                         item.children.Add(item2);
                     }
                 });
-                item.children = item.children.OrderBy(e => e.menu_Index).ToList();
+                item.children = item.children.OrderBy(e => e.menu_index).ToList();
             });
-            firstMenu = firstMenu.OrderBy(e => e.menu_Index).ToList();
+            firstMenu = firstMenu.OrderBy(e => e.menu_index).ToList();
             return new DataModel<sys_menu>() { 
                 DataList = firstMenu,
                 RecordCount = data.Count()
@@ -63,7 +63,7 @@ namespace Blog.Core.Module.SysMenu
         {
             var sql = @"
 SELECT * FROM sys_menu
-WHERE parentid IS NULL
+WHERE parentid IS NULL OR parentid = ''
 ORDER BY menu_index
 ";
             var data = Manager.Query<sys_menu>(sql).ToList();

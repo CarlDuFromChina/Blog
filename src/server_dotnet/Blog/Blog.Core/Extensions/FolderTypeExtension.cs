@@ -35,7 +35,7 @@ namespace Blog.Core
             }
             catch
             {
-                throw new SpException("文件目录初始化失败", "4EC3BE59-CAFB-4FA4-878E-68FFC265487B");
+                throw new SpException("文件目录初始化失败");
             }
         }
 

@@ -46,7 +46,7 @@ export default {
   mixins: [edit, select],
   data() {
     return {
-      controllerName: 'RobotMessageTask',
+      controllerName: 'robot_message_task',
       rules: {
         name: [{ required: true, message: '请输入任务名', trigger: 'blur' }],
         runtime: [{ required: true, message: '请输入执行时间', trigger: 'blur' }]

@@ -12,7 +12,7 @@ namespace Blog.Core.WebApi
 {
     [ApiController]
     [WebApiExceptionFilter]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
     public class BaseApiController : ControllerBase
     {

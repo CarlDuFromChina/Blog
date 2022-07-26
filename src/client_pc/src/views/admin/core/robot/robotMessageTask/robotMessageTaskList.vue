@@ -16,7 +16,7 @@ export default {
   name: 'robot-message-task-list',
   data() {
     return {
-      controllerName: 'RobotMessageTask',
+      controllerName: 'robot_message_task',
       operations: ['new', 'delete'],
       columns: [
         { prop: 'name', label: '任务名' },
@@ -47,7 +47,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/RunOnce?id=${row.id}`).then(() => {
+          sp.get(`api/${this.controllerName}/${row.id}/run`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });
@@ -64,7 +64,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/PauseJob?id=${row.id}`).then(() => {
+          sp.get(`api/${this.controllerName}/${row.id}/pause`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });
@@ -81,7 +81,7 @@ export default {
         okText: '确认',
         cancelText: '取消',
         onOk: () => {
-          sp.get(`api/${this.controllerName}/ResumeJob?id=${row.id}`).then(() => {
+          sp.get(`api/${this.controllerName}/${row.id}/resume`).then(() => {
             this.$refs.list.loadData();
             this.$message.success('执行成功');
           });

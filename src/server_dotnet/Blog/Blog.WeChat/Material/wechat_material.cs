@@ -1,8 +1,8 @@
 
 using Sixpence.ORM.Entity;
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
-
 
 namespace Blog.WeChat.Material
 {
@@ -19,58 +19,49 @@ namespace Blog.WeChat.Material
         /// <summary>
         /// 名称
         /// </summary>
-        [DataMember]
-        [Column("name", "名称", DataType.Varchar, 100)]
+        [DataMember, Column, Description("名称")]
         public string name { get; set; }
 
         /// <summary>
         /// 媒体id
         /// </summary>
-        [DataMember]
-        [Column("media_id", "媒体id", DataType.Varchar, 100)]
+        [DataMember, Column, Description("媒体id")]
         public string media_id { get; set; }
-
 
         /// <summary>
         /// 地址
         /// </summary>
-        [DataMember]
-        [Column("url", "地址", DataType.Varchar, 400)]
+        [DataMember, Column, Description("地址")]
         public string url { get; set; }
 
         /// <summary>
         /// 文件id
         /// </summary>
-        [DataMember]
-        [Column("sys_fileid", "文件id", DataType.Varchar, 100)]
+        [DataMember, Column, Description("文件id")]
         public string sys_fileid { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
-        [DataMember]
-        [Column("type", "类型", DataType.Varchar, 100)]
+        [DataMember, Column, Description("类型")]
         public string type { get; set; }
 
         /// <summary>
         /// 宽度
         /// </summary>
-        [DataMember]
-        [Column("width", "宽度", DataType.Int4)]
+        [DataMember, Column, Description("宽度")]
         public int? width { get; set; }
 
         /// <summary>
         /// 高度
         /// </summary>
-        [DataMember]
-        [Column("height", "高度", DataType.Int4)]
+        [DataMember, Column, Description("高度")]
         public int? height { get; set; }
 
         /// <summary>
         /// 本地地址
         /// </summary>
-        [DataMember]
-        [Column("local_url", "本地地址", DataType.Varchar, 200)]
+        [DataMember, Column, Description("本地地址")]
         public string local_url { get; set; }
     }
 }

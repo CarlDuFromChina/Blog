@@ -57,15 +57,16 @@ export default {
       ],
       showAdmin: false,
       messageCount: 0,
-      searchValue: ''
+      searchValue: '',
+      getAvatar: sp.getAvatar
     };
   },
   created() {
     if (this.isLoggedIn) {
-      sp.get('api/MessageRemind/GetUnReadMessageCount').then(resp => {
+      sp.get('api/message_remind/unread_message_count').then(resp => {
         this.messageCount = resp.total;
       });
-      sp.get('api/System/GetShowAdmin').then(resp => {
+      sp.get('api/system/is_show_admin').then(resp => {
         this.showAdmin = resp;
       });
     }
@@ -82,9 +83,6 @@ export default {
   methods: {
     openUserEdit() {
       this.$emit('openUserEdit');
-    },
-    getAvatar() {
-      return `${sp.getServerUrl()}api/System/GetAvatar?id=${sp.getUserId()}`;
     },
     // 菜单切换
     menuChange() {

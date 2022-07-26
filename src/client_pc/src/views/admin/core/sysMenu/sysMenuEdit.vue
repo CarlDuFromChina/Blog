@@ -15,7 +15,7 @@
     <a-row :gutter="24">
       <a-col :span="12">
         <a-form-model-item label="索引">
-          <a-input-number v-model="data.menu_Index" style="width:100%"></a-input-number>
+          <a-input-number v-model="data.menu_index" style="width:100%"></a-input-number>
         </a-form-model-item>
       </a-col>
       <a-col :span="12">
@@ -34,11 +34,7 @@
       </a-col>
       <a-col :span="12">
         <a-form-model-item label="状态">
-          <a-radio-group v-model="data.stateCode" @change="handleStateCodeChange">
-            <a-radio v-for="(item, index) in [{ name: '启用', value: 1 }, { name: '禁用', value: 0 }]" :key="index" :value="item.value">{{
-              item.name
-            }}</a-radio>
-          </a-radio-group>
+          <a-switch v-model="data.statecode"></a-switch>
         </a-form-model-item>
       </a-col>
     </a-row>
@@ -55,7 +51,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'sysmenu',
+      controllerName: 'sys_menu',
       id: '',
       dialogVisible: false,
       data: {},
@@ -65,7 +61,7 @@ export default {
   created() {
     if (this.relatedAttr && this.relatedAttr.id) {
       this.id = this.relatedAttr.id;
-      sp.get(`api/${this.controllerName}/GetData?id=${this.id}`).then(resp => {
+      sp.get(`api/${this.controllerName}/${this.id}`).then(resp => {
         this.data = resp;
       });
     }
@@ -75,27 +71,24 @@ export default {
     handleParentIdChange(val) {
       const obj = this.selectData.find(item => item.id === val);
       if (!sp.isNull(obj)) {
-        this.data.parentIdName = obj.name;
+        this.data.parentid_name = obj.name;
       }
     },
-    handleStateCodeChange() {
-      this.data.stateCode_name = this.data.stateCode === 1 ? '启用' : '禁用';
-    },
     getSelectData() {
-      sp.get(`api/${this.controllerName}/GetFirstMenu`).then(resp => {
+      sp.get(`api/${this.controllerName}/first_menu`).then(resp => {
         this.selectData = resp;
       });
     },
-    saveData() {
+    async saveData() {
       const operateName = sp.isNullOrEmpty(this.id) ? 'CreateData' : 'UpdateData';
       if (sp.isNullOrEmpty(this.id)) {
-        this.data.id = uuid.generate();
+        await sp.post(`api/${this.controllerName}`, this.data);
+      } else {
+        await sp.put(`api/${this.controllerName}`, this.data);
       }
-      sp.post(`api/${this.controllerName}/${operateName}`, this.data).then(() => {
-        this.$emit('close');
-        this.$emit('load-data');
-        this.$message.success(operateName === 'CreateData' ? '添加成功' : '更新成功');
-      });
+      this.$emit('close');
+      this.$emit('load-data');
+      this.$message.success(operateName === 'CreateData' ? '添加成功' : '更新成功');
     }
   }
 };

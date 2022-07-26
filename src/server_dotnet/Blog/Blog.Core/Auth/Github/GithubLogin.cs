@@ -18,7 +18,7 @@ namespace Blog.Core.Auth.Github
             var manager = EntityManagerFactory.GetManager();
             var githubService = new GithubAuthService(manager);
             var sysRoleService = new SysRoleService(manager);
-            var logger = LogFactory.GetLogger("github");
+            var logger = LoggerFactory.GetLogger("github");
 
             try
             {
@@ -56,8 +56,8 @@ namespace Blog.Core.Auth.Github
                         roleid = role.id,
                         roleid_name = role.name,
                         github_id = githubUser.id.ToString(),
-                        stateCode = 1,
-                        stateCode_name = "启用"
+                        statecode = true,
+                        statecode_name = "启用"
                     };
                     manager.Create(user, false);
                     var _authUser = new auth_user()

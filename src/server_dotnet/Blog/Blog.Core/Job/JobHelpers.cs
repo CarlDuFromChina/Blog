@@ -52,7 +52,7 @@ namespace Blog.Core.Job
         /// </summary>
         public static void Start()
         {
-            var logger = LogFactory.GetLogger("startup");
+            var logger = LoggerFactory.GetLogger("startup");
             var jobs = ServiceContainer.ResolveAll<IJob>().ToList();
             logger.Info($"共发现{jobs.Count}个Job待运行");
             jobs.Each(item => {

@@ -101,17 +101,7 @@
           </a-col>
           <a-col :span="12">
             <a-form-model-item label="状态">
-              <a-radio-group v-model="data.stateCode" @change="handleStateCodeChange">
-                <a-radio
-                  v-for="(item, index) in [
-                    { name: '启用', value: 1 },
-                    { name: '禁用', value: 0 }
-                  ]"
-                  :key="index"
-                  :value="item.value"
-                  >{{ item.name }}</a-radio
-                >
-              </a-radio-group>
+              <a-switch v-model="data.statecode"></a-switch>
             </a-form-model-item>
           </a-col>
         </a-row>
@@ -194,7 +184,7 @@ export default {
   components: { editPassword },
   data() {
     return {
-      controllerName: 'UserInfo',
+      controllerName: 'user_info',
       thirdPartyBind: thirdPartyBind,
       avatarChange: false,
       lifePhotoChange: false,
@@ -217,7 +207,7 @@ export default {
   },
   async created() {
     this.token = this.$store.getters.getToken;
-    sp.get('api/SysRole/GetRoles').then(resp => {
+    sp.get('api/sys_role/role_options').then(resp => {
       this.roles = resp;
     });
   },
@@ -241,9 +231,6 @@ export default {
     handleChangeGender() {
       this.data.gender_name = this.data.gender === 0 ? '男' : '女';
     },
-    handleStateCodeChange() {
-      this.data.stateCode_name = this.data.stateCode === 1 ? '启用' : '禁用';
-    },
     handleAvatarChange(file) {
       if (file) {
         this.avatarChange = true;
@@ -256,7 +243,7 @@ export default {
     },
     async loadComplete() {
       if (!sp.isNullOrEmpty(this.data.avatar)) {
-        const image = await sp.get(`api/SysFile/GetData?id=${this.data.avatar}`);
+        const image = await sp.get(`api/sys_file/${this.data.avatar}`);
         this.fileList = [
           {
             uid: '-1',
@@ -267,7 +254,7 @@ export default {
         ];
       }
       if (!sp.isNullOrEmpty(this.data.life_photo)) {
-        const image = await sp.get(`api/SysFile/GetData?id=${this.data.life_photo}`);
+        const image = await sp.get(`api/sys_file/${this.data.life_photo}`);
         this.lifePhotos = [
           {
             uid: '-1',
@@ -289,10 +276,10 @@ export default {
     preSave() {
       if (this.avatarChange) {
         // 保存后上传头像
-        let url = '/api/SysFile/UploadImage?fileType=avatar';
+        let url = '/api/sys_file/upload_image?fileType=avatar';
         // 关联实体id
-        if (!sp.isNullOrEmpty(this.id)) {
-          url += `&objectId=${this.id}`;
+        if (!sp.isNullOrEmpty(this.data.id)) {
+          url += `&objectId=${this.data.id}`;
         }
         const formData = new FormData();
         formData.append('file', this.fileList[0]);
@@ -303,10 +290,10 @@ export default {
       }
       if (this.lifePhotoChange) {
         // 保存后上传头像
-        let url = '/api/SysFile/UploadImage?fileType=life_photo';
+        let url = '/api/sys_file/upload_image?fileType=life_photo';
         // 关联实体id
-        if (!sp.isNullOrEmpty(this.id)) {
-          url += `&objectId=${this.id}`;
+        if (!sp.isNullOrEmpty(this.data.id)) {
+          url += `&objectId=${this.data.id}`;
         }
         const formData = new FormData();
         formData.append('file', this.lifePhotos[0]);

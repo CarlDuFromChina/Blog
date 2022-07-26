@@ -10,7 +10,7 @@ namespace Blog.Analysis
 {
     public class AnalysisController : BaseApiController
     {
-        [HttpGet]
+        [HttpGet("timeline")]
         public IEnumerable<TimelineModel> GetTimeline()
         {
             return new AnalysisService().GetTimeline();

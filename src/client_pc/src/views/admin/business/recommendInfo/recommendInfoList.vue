@@ -9,7 +9,7 @@ export default {
   name: 'RecommendInfoList',
   data() {
     return {
-      controllerName: 'RecommendInfo',
+      controllerName: 'recommend_info',
       editComponent: recommendInfoEdit,
       columns: [
         { prop: 'name', label: '名称' },

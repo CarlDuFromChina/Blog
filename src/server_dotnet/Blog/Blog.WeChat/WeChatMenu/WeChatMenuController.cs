@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.WeChatMenu
 {
-    public class WeChatMenuController : BaseApiController
+    public class WechatMenuController : BaseApiController
     {
         [HttpPost]
         public void CreateMenu(SelfMenuInfo menu)
@@ -22,7 +22,7 @@ namespace Blog.WeChat.WeChatMenu
             return WeChatMenuService.GetMenu();
         }
 
-        [HttpGet]
+        [HttpDelete]
         public void DeleteMenu()
         {
             WeChatMenuService.DeleteMenu();

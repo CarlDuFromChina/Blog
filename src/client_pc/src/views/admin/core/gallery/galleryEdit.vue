@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'Gallery',
+      controllerName: 'gallery',
       baseUrl: sp.getServerUrl(),
       smallImage: [],
       bigImage: [],
@@ -100,7 +100,7 @@ export default {
       this.tags = val;
     },
     upload(param) {
-      const url = '/api/SysFile/UploadBigImage?fileType=gallery&objectId=';
+      const url = '/api/sys_file/upload_big_image?fileType=gallery&objectId=';
       const formData = new FormData();
       formData.append('file', param.file);
       return sp.post(url, formData, this.headers).then(resp => resp);

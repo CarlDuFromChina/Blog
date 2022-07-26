@@ -1,20 +1,19 @@
-﻿using Blog.Core.WebApi;
+﻿using Blog.Core.Entity;
+using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Mvc;
-using Sixpence.ORM.Entity;
 using System.Collections.Generic;
-
 
 namespace Blog.Core.Module.Role
 {
     public class SysRoleController : EntityBaseController<sys_role, SysRoleService>
     {
-        [HttpGet]
+        [HttpGet("basic_role_options")]
         public IEnumerable<SelectOption> GetBasicRole()
         {
             return new SysRoleService().GetBasicRole();
         }
 
-        [HttpGet]
+        [HttpGet("role_options")]
         public IEnumerable<SelectOption> GetRoles()
         {
             return new SysRoleService().GetRoles();

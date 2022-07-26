@@ -30,7 +30,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysFile',
+      controllerName: 'sys_file',
       baseUrl: sp.getServerUrl()
     };
   },

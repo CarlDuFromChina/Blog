@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using Sixpence.ORM.Entity;
-using System.Collections.Generic;
-using Blog.Core.WebApi;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Blog.Core.Auth;
-using Sixpence.ORM.Models;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Blog.Core.WebApi;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Sixpence.ORM.Models;
 
 namespace Blog.Comments
 {
@@ -18,11 +15,24 @@ namespace Blog.Comments
             return new CommentsService().CreateData(entity);
         }
 
-        [HttpGet, AllowAnonymous]
-        public virtual IList<comments> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
+        [HttpGet("search")]
+        public virtual DataModel<comments> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new CommentsService().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
+
+            if (string.IsNullOrEmpty(pageSize) || string.IsNullOrEmpty(pageIndex))
+            {
+                var list = new CommentsService().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
+                return new DataModel<comments>()
+                {
+                    DataList = list,
+                    RecordCount = list.Count
+                };
+            }
+
+            int.TryParse(pageSize, out var size);
+            int.TryParse(pageIndex, out var index);
+            return new CommentsService().GetDataList(_searchList, orderBy, size, index, viewId, searchValue);
         }
     }
 }

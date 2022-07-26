@@ -1,6 +1,7 @@
 ﻿using Blog.Core.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sixpence.ORM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Blog.Business.Link
 {
     public class LinkController : EntityBaseController<link, LinkService>
     {
-        [HttpGet, AllowAnonymous]
-        public override IList<link> GetDataList(string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
+        [HttpGet("search"), AllowAnonymous]
+        public override DataModel<link> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
-            return base.GetDataList(searchList, orderBy, viewId, searchValue);
+            return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);
         }
     }
 }

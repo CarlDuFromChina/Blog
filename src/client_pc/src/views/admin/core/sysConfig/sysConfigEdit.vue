@@ -37,7 +37,7 @@ export default {
   mixins: [edit],
   data() {
     return {
-      controllerName: 'SysConfig',
+      controllerName: 'sys_config',
       rules: {
         name: [{ required: true, message: '请输入参数名', trigger: 'blur' }],
         code: [{ required: true, message: '请输入编码', trigger: 'blur' }],

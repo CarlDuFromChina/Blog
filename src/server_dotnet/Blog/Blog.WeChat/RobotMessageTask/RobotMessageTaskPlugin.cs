@@ -13,7 +13,7 @@ namespace Blog.WeChat.RobotMessageTask
     {
         public void Execute(EntityManagerPluginContext context)
         {
-            if (context.EntityName != "robot_message_task")
+            if (context.Entity.GetEntityName() != "robot_message_task")
             {
                 return;
             }

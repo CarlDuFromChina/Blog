@@ -4,14 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Web;
-using Sixpence.ORM.Models;
 using Blog.Core.Profiles;
 using Sixpence.ORM.EntityManager;
+using Sixpence.ORM;
 
 namespace Blog.Core.Module.SysEntity
 {
@@ -115,7 +110,7 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             var attributes = "";
             foreach (var item in attrs)
             {
-                var column = MapperHelper.Map<Column>(item);
+                var column = MapperHelper.Map<ColumnOptions>(item);
 
                 // 实体id和实体name不需要产生
                 if (item.code != entity.code + "id")
@@ -124,8 +119,8 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
         /// <summary>
         /// {column.LogicalName}
         /// </summary>
-        [DataMember, Column(""{column.Name}"", ""{column.LogicalName}"", AttrType.{column.Type}, {column.Length})]
-        public {column.Type.ToCSharpType()} {column.Name} {{ get; set; }}
+        [DataMember, Column, Description(""{column.LogicalName}"")]
+        public {Manager.Driver.Convert2CSharpType(column.Type)} {column.Name} {{ get; set; }}
 ";
                     attributes += attribute;
                 }
@@ -134,9 +129,10 @@ DELETE FROM sys_attrs WHERE entityid IN (in@ids);
             var content = $@"
 using Sixpence.ORM.Entity;
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace SixpenceStudio.Core.SysEntity
+namespace SixpenceStudio.Core
 {{
     [Entity(""{entity.code}"",""{entity.GetLogicalName()}"", {entity.is_sys})]
     public partial class {entity.code} : BaseEntity
@@ -145,8 +141,8 @@ namespace SixpenceStudio.Core.SysEntity
         /// 实体id
         /// </summary>
         [DataMember]
-        [Column(""{entity.PrimaryKey.Name}"", ""实体id"", DataType.Varchar, 100)]
-        public string {entity.PrimaryKey.Name} {{ get; set; }}
+        [PrimaryColumn]
+        public string {entity.GetPrimaryColumn().Name} {{ get; set; }}
 
         {attributes}
     }}

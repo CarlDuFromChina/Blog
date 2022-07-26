@@ -15,7 +15,7 @@ export default {
   name: 'robot-list',
   data() {
     return {
-      controllerName: 'Robot',
+      controllerName: 'robot',
       operations: ['new', 'delete'],
       columns: [
         { prop: 'name', label: '机器人名' },

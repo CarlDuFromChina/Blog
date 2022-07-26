@@ -15,6 +15,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize(Policy = "Refresh")]
+        [Route("refresh_access_token")]
         public Token RefreshAccessToken()
         {
             var tokenHeader = HttpContext.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
@@ -26,7 +27,7 @@ namespace Blog.Core.Auth
         /// 锁定用户
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet]
+        [HttpPut("{id}/lock")]
         public void LockUser(string id)
         {
             new AuthUserService().LockUser(id);
@@ -36,7 +37,7 @@ namespace Blog.Core.Auth
         /// 解锁用户
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet]
+        [HttpPut("{id}/unlock")]
         public void UnlockUser(string id)
         {
             new AuthUserService().UnlockUser(id);
@@ -47,7 +48,7 @@ namespace Blog.Core.Auth
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="code"></param>
-        [HttpPost]
+        [HttpPost("bind")]
         public void BindThirdPartyAccount(ThirdPartyLoginType type, string userid, string code)
         {
             new AuthUserService().BindThirdPartyAccount(type, userid, code);

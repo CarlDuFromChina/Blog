@@ -107,7 +107,7 @@ namespace Blog.Core.Module.DataService
                 return new LoginResponse() { result = false, message = "用户名或密码错误" };
             }
 
-            if (authUser.is_lock)
+            if (authUser.is_lock.Value)
             {
                 return new LoginResponse() { result = false, message = "用户已被锁定，请联系管理员" };
             }
@@ -182,8 +182,8 @@ namespace Blog.Core.Module.DataService
         /// <returns></returns>
         public LoginResponse Signup(LoginRequest model)
         {
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.code, "账号不能为空", "");
-            AssertUtil.CheckIsNullOrEmpty<SpException>(model.password, "密码不能为空", "");
+            AssertUtil.IsNullOrEmpty(model.code, "账号不能为空");
+            AssertUtil.IsNullOrEmpty(model.password, "密码不能为空");
 
             return Manager.ExecuteTransaction(() =>
             {
@@ -201,7 +201,7 @@ namespace Blog.Core.Module.DataService
                     id = id,
                     name = "账号激活邮件",
                     content = $@"你好,<br/><br/>
-请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/mail_vertification/ActivateUser?id={id}"">链接</a>激活，失效请重新登录注册
 ",
                     expire_time = DateTime.Now.AddHours(2),
                     is_active = false,
@@ -273,7 +273,7 @@ WHERE user_infoid = @id;
         public void ForgetPassword(string code)
         {
             var user = Manager.QueryFirst<user_info>("SELECT * FROM user_info WHERE code = @mail OR mailbox = @mail", new Dictionary<string, object>() { { "@mail", code } });
-            AssertUtil.CheckNull<SpException>(user, "用户不存在", "5E507D9C-47BC-4586-880D-D9E42D02FEA4");
+            AssertUtil.IsNull(user, "用户不存在");
             UserIdentityUtil.SetCurrentUser(MapperHelper.Map<CurrentUserModel>(user));
             var id = Guid.NewGuid().ToString();
             var sms = new mail_vertification()
@@ -281,7 +281,7 @@ WHERE user_infoid = @id;
                 id = id,
                 name = "重置密码",
                 content = $@"你好,<br/><br/>
-请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/MailVertification/ResetPassword?id={id}"">链接</a>重置密码
+请在两小时内点击该<a href=""{ SystemConfig.Config.Protocol }://{SystemConfig.Config.Domain}/api/mail_vertification/ResetPassword?id={id}"">链接</a>重置密码
 ",
                 expire_time = DateTime.Now.AddHours(2),
                 is_active = false,

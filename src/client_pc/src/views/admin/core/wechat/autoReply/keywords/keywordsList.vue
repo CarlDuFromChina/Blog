@@ -9,7 +9,7 @@ export default {
   name: 'materialList',
   data() {
     return {
-      controllerName: 'WeChatKeywords',
+      controllerName: 'wechat_keywords',
       editComponent: keywordsEdit,
       operations: ['new', 'delete', 'search'],
       columns: [

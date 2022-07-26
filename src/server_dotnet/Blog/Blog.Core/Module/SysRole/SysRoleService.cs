@@ -1,17 +1,12 @@
-﻿using Blog.Core.Auth.UserInfo;
+﻿using Blog.Core.Auth;
+using Blog.Core.Auth.UserInfo;
+using Blog.Core.Entity;
+using Blog.Core.Extensions;
 using Sixpence.ORM.Entity;
+using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Blog.Core.Auth.Role;
-using Blog.Core.Auth;
-
-
-using Sixpence.Common.Utils;
-using Sixpence.ORM.EntityManager;
-using Blog.Core.Extensions;
 
 namespace Blog.Core.Module.Role
 {
@@ -29,8 +24,8 @@ namespace Blog.Core.Module.Role
             var currentRoleId = Manager.QueryFirst<user_info>(UserIdentityUtil.GetCurrentUserId())?.roleid;
             var role = roles.FirstOrDefault(item => item.id == currentRoleId);
 
-            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic ? role.id : role.parent_roleid, item.is_basic ? item.id : item.parent_roleid))
-                .Where(item => item.is_basic)
+            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic.Value ? role.id : role.parent_roleid, item.is_basic.Value ? item.id : item.parent_roleid))
+                .Where(item => item.is_basic.Value)
                 .Select(item => new SelectOption(item.name, item.id));
         }
 
@@ -41,7 +36,7 @@ namespace Blog.Core.Module.Role
             var currentRoleId = Manager.QueryFirst<user_info>(UserIdentityUtil.GetCurrentUserId())?.roleid;
             var role = roles.FirstOrDefault(item => item.id == currentRoleId);
 
-            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic ? role.id : role.parent_roleid, item.is_basic ? item.id : item.parent_roleid))
+            return roles.Where(item => UserIdentityUtil.IsOwner(role.is_basic.Value ? role.id : role.parent_roleid, item.is_basic.Value ? item.id : item.parent_roleid))
                 .Select(item => new SelectOption(item.name, item.id));
         }
 

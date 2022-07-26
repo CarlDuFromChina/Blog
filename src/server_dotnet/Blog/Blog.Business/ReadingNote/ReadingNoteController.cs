@@ -7,21 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sixpence.ORM.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.ReadingNote
 {
     public class ReadingNoteController : EntityBaseController<reading_note, ReadingNoteService>
     {
-        [AllowAnonymous]
+        [HttpGet("{id}"), AllowAnonymous]
         public override reading_note GetData(string id)
         {
             return base.GetData(id);
         }
 
-        [AllowAnonymous]
-        public override DataModel<reading_note> GetViewData(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
+        [HttpGet("search"), AllowAnonymous]
+        public override DataModel<reading_note> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
-            return base.GetViewData(searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+            return base.GetViewData(pageSize, pageIndex, searchList, orderBy, viewId, searchValue);
         }
     }
 }

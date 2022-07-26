@@ -10,6 +10,7 @@ namespace Blog.Core.Module.SysMenu
     public class SysMenuController : EntityBaseController<sys_menu, SysMenuService>
     {
         [HttpGet]
+        [Route("first_menu")]
         public IList<sys_menu> GetFirstMenu()
         {
             return new SysMenuService().GetFirstMenu();

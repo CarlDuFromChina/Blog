@@ -20,7 +20,7 @@
               <a-switch v-model="data.is_basic" disabled />
             </a-form-model-item>
           </a-col>
-          <a-col :span="12" v-if="!data.is_basic || data.is_basic == 0">
+          <a-col :span="12" v-if="!data.is_basic">
             <a-form-model-item label="继承角色">
               <sp-select v-model="data.parent_roleid" :options="roles" @change="item => (data.parent_roleid_name = item.name)"></sp-select>
             </a-form-model-item>
@@ -51,7 +51,7 @@ export default {
   components: { entityPrivilege, menuPrivilege },
   data() {
     return {
-      controllerName: 'SysRole',
+      controllerName: 'sys_role',
       rules: {
         name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
       },
@@ -64,7 +64,7 @@ export default {
     };
   },
   created() {
-    sp.get('api/SysRole/GetBasicRole').then(resp => {
+    sp.get('api/sys_role/basic_role_options').then(resp => {
       this.roles = resp;
     });
   },
@@ -73,8 +73,8 @@ export default {
       this.getEntities();
     },
     async getEntities() {
-      this.entityList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.id}&roleType=0`);
-      this.menuList = await sp.get(`api/SysRolePrivilege/GetUserPrivileges?roleid=${this.data.id}&roleType=1`);
+      this.entityList = await sp.get(`api/sys_role_privilege/${this.data.id}/0`);
+      this.menuList = await sp.get(`api/sys_role_privilege/${this.data.id}/1`);
     }
   }
 };

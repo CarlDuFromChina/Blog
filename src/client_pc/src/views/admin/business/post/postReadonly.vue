@@ -58,7 +58,7 @@
               v-show="showComment"
               :object-id="id"
               :data="data"
-              :disabled="!!data.disable_comment"
+              :disabled="data.disable_comment"
               objectName="blog"
             ></sp-comments>
           </a-layout-sider>
@@ -187,7 +187,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      controllerName: 'blog',
+      controllerName: 'post',
       data: {},
       recommandList: [],
       loading: false,
@@ -206,9 +206,9 @@ export default {
     if (this.data.title) {
       document.title = this.data.title;
     }
-    this.user = await sp.get(`api/UserInfo/GetData?id=${this.data.created_by}`);
+    this.user = await sp.get(`api/user_info/${this.data.created_by}`);
     if (this.isLoggedIn) {
-      this.isUp = await sp.get(`api/Upvote/IsUp?objectid=${this.data.id}`);
+      this.isUp = await sp.get(`api/upvote/is_up?objectid=${this.data.id}`);
     }
     this.loadRecommand();
   },
@@ -276,12 +276,13 @@ export default {
       document.getElementById('comment').scrollIntoView();
     },
     loadRecommand() {
-      sp.get('api/RecommendInfo/GetRecommendList').then(resp => {
-        this.recommandList = resp;
+      const searchList = [{ Name: 'recommend_type', Value: "url", Type: 0 }];
+      sp.get('api/recommend_info/search?pageSize=5&pageIndex=1&searchList=' + JSON.stringify(searchList)).then(resp => {
+        this.recommandList = resp.DataList;
       });
     },
     read(item) {
-      sp.get(`api/RecommendInfo/RecordReadingTimes?id=${item.id}`);
+      sp.get(`api/recommend_info/reading_times?id=${item.id}`);
       item.reading_times = (item.reading_times || 0) + 1;
       window.open(item.url);
     },
@@ -307,7 +308,7 @@ export default {
     async loadData() {
       this.loading = true;
       try {
-        this.data = await sp.get(`api/${this.controllerName}/GetData?id=${this.id}`);
+        this.data = await sp.get(`api/${this.controllerName}/${this.id}`);
       } finally {
         setTimeout(() => {
           this.loading = false;
@@ -321,7 +322,7 @@ export default {
       if (!this.$store.getters.isLoggedIn) {
         this.$router.push({ name: 'login' });
       }
-      sp.get(`/api/Blog/Upvote?id=${this.id}`).then(resp => {
+      sp.get(`/api/post/upvote?id=${this.id}`).then(resp => {
         if (resp) {
           this.$set(this.data, 'upvote_times', (this.data.upvote_times || 0) + 1);
         } else {

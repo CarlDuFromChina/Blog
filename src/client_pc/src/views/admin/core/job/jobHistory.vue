@@ -14,7 +14,7 @@ export default {
   name: 'job-history',
   data() {
     return {
-      controllerName: 'JobHistory',
+      controllerName: 'job_history',
       columns: [
         { prop: 'job_name', label: '名称' },
         { prop: 'status', label: '状态' },
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     customApi() {
-      return `api/${this.controllerName}/GetDataList?searchList=${JSON.stringify(this.searchList)}&orderBy=created_at desc`;
+      return `api/${this.controllerName}/search?searchList=${JSON.stringify(this.searchList)}&orderBy=created_at desc`;
     }
   },
   methods: {

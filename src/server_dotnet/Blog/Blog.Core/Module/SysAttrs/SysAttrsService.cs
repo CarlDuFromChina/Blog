@@ -9,6 +9,7 @@ using System.Web;
 using Sixpence.ORM.Models;
 using Blog.Core.Profiles;
 using Sixpence.ORM.EntityManager;
+using Sixpence.ORM;
 
 namespace Blog.Core.Module.SysAttrs
 {
@@ -26,15 +27,17 @@ namespace Blog.Core.Module.SysAttrs
         /// <param name="id"></param>
         public void AddSystemAttrs(string id)
         {
-            var columns = new List<Column>()
+            var stringType = Manager.Driver.Convert2DbType(typeof(string));
+            var dateType = Manager.Driver.Convert2DbType(typeof(DateTime));
+            var columns = new List<ColumnOptions>()
             {
-                { new Column() { Name = "name", LogicalName = "名称", Type = DataType.Varchar, Length = 100, IsRequire = false } },
-                { new Column() { Name = "created_by", LogicalName = "创建人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "created_by_name", LogicalName = "创建人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name= "created_at", LogicalName = "创建日期", Type = DataType.Timestamp, IsRequire = true } },
-                { new Column() { Name = "updated_by", LogicalName = "修改人", Type = DataType.Varchar, Length = 40, IsRequire = true } },
-                { new Column() { Name = "updated_by_name", LogicalName = "修改人", Type = DataType.Varchar, Length = 100, IsRequire = true } },
-                { new Column() { Name = "updated_at", LogicalName = "修改日期", Type = DataType.Timestamp, IsRequire = true } }
+                { new ColumnOptions() { Name = "name", LogicalName = "名称", Type = stringType, Length = 100, IsRequire = false } },
+                { new ColumnOptions() { Name = "created_by", LogicalName = "创建人", Type = stringType, Length = 40, IsRequire = true } },
+                { new ColumnOptions() { Name = "created_by_name", LogicalName = "创建人", Type = stringType, Length = 100, IsRequire = true } },
+                { new ColumnOptions() { Name= "created_at", LogicalName = "创建日期", Type = dateType, IsRequire = true } },
+                { new ColumnOptions() { Name = "updated_by", LogicalName = "修改人", Type = stringType, Length = 40, IsRequire = true } },
+                { new ColumnOptions() { Name = "updated_by_name", LogicalName = "修改人", Type = stringType, Length = 100, IsRequire = true } },
+                { new ColumnOptions() { Name = "updated_at", LogicalName = "修改日期", Type = dateType, IsRequire = true } }
             };
             Manager.ExecuteTransaction(() =>
             {
@@ -46,7 +49,7 @@ SELECT * FROM sys_attrs
 WHERE entityid = @id AND code = @code;
 ";
                     var count = Manager.Query<sys_attrs>(sql, new Dictionary<string, object>() { { "@id", entity.id }, { "@code", item.Name } }).Count();
-                    AssertUtil.CheckBoolean<SpException>(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加", "E86150F7-52CC-4FB7-A6C4-B743BF382E92");
+                    AssertUtil.IsTrue(count > 0, $"实体{entity.code}已存在{item.Name}字段，请勿重复添加");
                     var attrModel = new sys_attrs()
                     {
                         id = Guid.NewGuid().ToString(),
@@ -54,14 +57,13 @@ WHERE entityid = @id AND code = @code;
                         name = item.LogicalName,
                         entityid = entity.id,
                         entityid_name = entity.name,
-                        attr_type = item.Type.ToString().ToLower(),
+                        attr_type = item.Type,
                         attr_length = item.Length,
                         isrequire = item.IsRequire == true,
                         default_value = ConvertUtil.ConToString(item.DefaultValue)
                     };
                     Manager.Create(attrModel, false);
                 });
-                Manager.Execute(Manager.Driver.GetAddColumnSql(entity.code, columns));
             });
         }
     }

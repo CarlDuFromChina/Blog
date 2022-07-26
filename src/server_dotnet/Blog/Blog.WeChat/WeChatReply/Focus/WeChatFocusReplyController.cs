@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Blog.WeChat.WeChatReply.Focus
 {
-    public class WeChatFocusReplyController : EntityBaseController<wechat_focus_reply, WeChatFocusReplyService>
+    public class WechatFocusReplyController : EntityBaseController<wechat_focus_reply, WeChatFocusReplyService>
     {
         /// <summary>
         /// 激活
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet]
+        [HttpGet("activate")]
         public void Activate(string id)
         {
             new WeChatFocusReplyService().Activate(id);
@@ -24,7 +24,7 @@ namespace Blog.WeChat.WeChatReply.Focus
         /// 停用
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet]
+        [HttpGet("deactivate")]
         public void Deactivate(string id)
         {
             new WeChatFocusReplyService().Deactivate(id);

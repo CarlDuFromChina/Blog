@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      controllerName: 'Comments',
+      controllerName: 'comments',
       showReply: false,
       value: '',
     };
@@ -83,7 +83,6 @@ export default {
         return;
       }
       const comment = {
-        id: uuid.generate(),
         name: '回复',
         comment: this.value,
         objectid: this.data.objectId,
@@ -93,7 +92,7 @@ export default {
         replyid_name: this.data.created_by_name,
         parentid: this.data.parentid || this.data.id
       };
-      sp.post('api/Comments/CreateData', comment).then(() => {
+      sp.post('api/comments', comment).then(() => {
         this.$message.success('留言成功');
         this.showReply = false;
         this.value = '';

@@ -10,7 +10,7 @@ function getDownloadUrl(value, isUrl = true) {
   if (sp.isNullOrEmpty(value)) {
     return '';
   }
-  const url = isUrl ? value : `/api/SysFile/Download?objectId=${value}`;
+  const url = isUrl ? value : `/api/sys_file/download?objectId=${value}`;
   if (url.charAt(0) === '/') {
     return `${getServerUrl().trimLast('/')}${url}`;
   }
@@ -23,7 +23,7 @@ function getAvatar(id) {
     var avatar = require('../assets/images/avatar.png');
     return avatar;
   }
-  return `${getServerUrl()}api/System/GetAvatar?id=${id}`;
+  return `${getServerUrl()}api/system/avatar/${id}`;
 }
 
 function getUserId() {

@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async refreshCount() {
-      const result = await sp.get('api/MessageRemind/GetUnReadMessageCount');
+      const result = await sp.get('api/message_remind/unread_message_count');
       const { upvote, comment, system } = result;
       this.upvote = upvote;
       this.comment = comment;

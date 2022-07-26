@@ -37,8 +37,8 @@ export default {
   mixins: [select],
   data() {
     return {
-      controllerName: 'SysFile',
-      operations: ['new', 'delete', 'search', 'more'],
+      controllerName: 'sys_file',
+      operations: ['delete', 'search', 'more'],
       columns: [
         { prop: 'name', label: '名称' },
         { prop: 'file_type', label: '关联实体' },
@@ -62,7 +62,7 @@ export default {
       return searchList;
     },
     customApi() {
-      let url = `api/${this.controllerName}/GetViewData?pageIndex=$pageIndex&pagesize=$pageSize`;
+      let url = `api/${this.controllerName}/search?pageIndex=$pageIndex&pagesize=$pageSize`;
       url += `&orderBy=&searchValue=$searchValue&searchList=${JSON.stringify(this.searchList)}&viewId=DD1D72FB-D7DE-49AC-B387-273375E6A7BA`;
       return url;
     }

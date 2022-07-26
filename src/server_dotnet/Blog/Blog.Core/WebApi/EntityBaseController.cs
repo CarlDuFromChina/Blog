@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sixpence.ORM.Models;
+using Sixpence.Common.Utils;
+using System.IO;
 
 namespace Blog.Core.WebApi
 {
-    [Authorize( Policy = "Api")]
+    [Authorize(Policy = "Api")]
     public class EntityBaseController<E, S> : BaseApiController
         where E : BaseEntity, new()
         where S : EntityService<E>, new()
@@ -20,25 +22,10 @@ namespace Blog.Core.WebApi
         /// 获取视图
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("views")]
         public IList<EntityView> GetViewList()
         {
             return new S().GetViewList();
-        }
-
-        /// <summary>
-        /// 获取筛选数据
-        /// </summary>
-        /// <param name="searchList"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="viewId"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public virtual IList<E> GetDataList(string searchList = "", string orderBy = "",string viewId = "", string searchValue = "")
-        {
-            var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new S().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
         }
 
         /// <summary>
@@ -51,11 +38,39 @@ namespace Blog.Core.WebApi
         /// <param name="viewId"></param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        [HttpGet]
-        public virtual DataModel<E> GetViewData(string searchList, string orderBy, int pageSize, int pageIndex, string viewId = "", string searchValue = "")
+        [HttpGet("search")]
+        public virtual DataModel<E> GetViewData(string pageSize = "", string pageIndex = "", string searchList = "", string orderBy = "", string viewId = "", string searchValue = "")
         {
             var _searchList = string.IsNullOrEmpty(searchList) ? null : JsonConvert.DeserializeObject<IList<SearchCondition>>(searchList);
-            return new S().GetDataList(_searchList, orderBy, pageSize, pageIndex, viewId, searchValue);
+
+            if (string.IsNullOrEmpty(pageSize) || string.IsNullOrEmpty(pageIndex))
+            {
+                var list = new S().GetDataList(_searchList, orderBy, viewId, searchValue).ToList();
+                return new DataModel<E>()
+                {
+                    DataList = list,
+                    RecordCount = list.Count
+                };
+            }
+
+            int.TryParse(pageSize, out var size);
+            int.TryParse(pageIndex, out var index);
+            return new S().GetDataList(_searchList, orderBy, size, index, viewId, searchValue);
+        }
+
+        /// <summary>
+        /// 获取所有数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public virtual DataModel<E> GetDataList()
+        {
+            var list = new S().GetAllData().ToList();
+            return new DataModel<E>()
+            {
+                DataList = list,
+                RecordCount = list.Count
+            };
         }
 
         /// <summary>
@@ -64,6 +79,7 @@ namespace Blog.Core.WebApi
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("{id}")]
         public virtual E GetData(string id)
         {
             return new S().GetData(id);
@@ -84,7 +100,7 @@ namespace Blog.Core.WebApi
         /// 更新数据
         /// </summary>
         /// <param name="entity"></param>
-        [HttpPost]
+        [HttpPut]
         public void UpdateData(E entity)
         {
             new S().UpdateData(entity);
@@ -96,6 +112,7 @@ namespace Blog.Core.WebApi
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("save")]
         public string CreateOrUpdateData(E entity)
         {
             return new S().CreateOrUpdateData(entity);
@@ -105,16 +122,29 @@ namespace Blog.Core.WebApi
         /// 删除数据
         /// </summary>
         /// <param name="ids"></param>
-        [HttpPost]
-        public void DeleteData([FromBody]List<string> ids)
+        [HttpDelete("{id}")]
+        public void DeleteData(string id)
         {
-            new S().DeleteData(ids);
+            if (!string.IsNullOrEmpty(id))
+            {
+                var ids = id.Split(",").ToList();
+                new S().DeleteData(ids);
+            }
         }
 
         [HttpGet]
+        [Route("privilege")]
         public EntityPrivilegeResponse GetPrivilege()
         {
             return new S().GetPrivilege();
+        }
+
+        [HttpGet, Route("export/csv")]
+        public virtual IActionResult ExportCsv()
+        {
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+            var fileName = new S().Export();
+            return File(FileUtil.GetFileStream(fileName), "application/octet-stream", Path.GetFileName(fileName));
         }
     }
 }
