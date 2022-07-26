@@ -22,7 +22,7 @@ export default {
   methods: {
     loadData() {
       this.$indicator.open('加载中...');
-      sp.get(`api/ReadingNote/${this.Id}`)
+      sp.get(`api/reading_note/${this.Id}`)
         .then(resp => {
           this.data = resp;
         })

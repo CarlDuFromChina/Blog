@@ -14,7 +14,7 @@ function getDownloadUrl(value, isUrl = true) {
   if (sp.isNullOrEmpty(value)) {
     return '';
   }
-  const url = isUrl ? value : `/api/SysFile/Download?objectId=${value}`;
+  const url = isUrl ? value : `/api/sys_file/Download?objectId=${value}`;
   if (url.charAt(0) === '/') {
     return `${getServerUrl().trimEnd('/')}${url}`;
   }
