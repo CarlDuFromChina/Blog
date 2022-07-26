@@ -87,7 +87,7 @@ $buildException = dotnet build ".\Blog.sln" -f netcoreapp3.1 -r win-x64 -c Relea
 If (! $?) { Throw $buildException }
 Pop-Location
 New-Item -ItemType directory ".\release\server"
-$release = ".\src\server_dotnet\Blog\build\netcoreapp3.1\win-x64\*"
+$release = ".\src\server_dotnet\Blog\build\win-x64\*"
 Copy-Item -Force -Recurse $release ".\release\server\"
 Write-Success-Message "OK."
 
