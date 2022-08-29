@@ -1,4 +1,4 @@
-using Blog.Core.Config;
+using Sixpence.Web.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

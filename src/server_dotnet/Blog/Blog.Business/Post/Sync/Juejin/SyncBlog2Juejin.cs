@@ -1,5 +1,5 @@
 ﻿using Blog.Business.Post.Sync.Juejin.Model;
-using Blog.Core.Module.SysConfig;
+using Sixpence.Web.Module.SysConfig;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sixpence.Common;

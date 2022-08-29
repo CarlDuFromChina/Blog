@@ -1,5 +1,5 @@
 ﻿using Sixpence.ORM.Entity;
-using Blog.Core.WebApi;
+using Sixpence.Web.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

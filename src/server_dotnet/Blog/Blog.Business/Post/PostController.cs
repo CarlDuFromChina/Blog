@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blog.Business.Post.Model;
-using Blog.Core.Auth.UserInfo;
-using Blog.Core.WebApi;
+using Sixpence.Web.Auth.UserInfo;
+using Sixpence.Web.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sixpence.Common.Utils;

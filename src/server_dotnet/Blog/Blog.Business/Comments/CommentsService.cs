@@ -1,4 +1,4 @@
-﻿using Blog.Core;
+﻿using Sixpence.Web;
 using Sixpence.ORM.Entity;
 using Sixpence.Common;
 using System.Collections.Generic;

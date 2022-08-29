@@ -16,26 +16,70 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="version\2.2\2021072101-新增链接菜单.sql" />
     <None Remove="version\3.0\" />
+    <None Remove="Sixpence.Web" />
+    <None Remove="version\1.0\" />
+    <None Remove="version\3.0\2022062001-sys_role.csv" />
+    <None Remove="version\3.0\2022062002-auth_user.csv" />
+    <None Remove="version\3.0\2022062003-user_info.csv" />
+    <None Remove="version\3.0\2022062004-sys_menu.csv" />
+    <None Remove="version\3.0\2022062005-sys_config.csv" />
+    <None Remove="version\3.0\2022062006-sys_param.csv" />
+    <None Remove="version\3.0\2022062007-sys_paramgroup.csv" />
+    <None Remove="version\3.0\2022062008-quartz.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Sixpence.Web" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blog.Core\Blog.Core.csproj" />
     <ProjectReference Include="..\Blog.WeChat\Blog.WeChat.csproj" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Folder Include="version\3.0\" />
+    <Folder Include="version\1.0\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="version\3.0\2022062001-sys_role.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062002-auth_user.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062003-user_info.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062004-sys_menu.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062005-sys_config.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062006-sys_param.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062007-sys_paramgroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="version\3.0\2022062008-quartz.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="version\3.0\2022062002-auth_user.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="version\3.0\2022062004-sys_menu.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

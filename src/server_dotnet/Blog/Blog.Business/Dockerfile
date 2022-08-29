@@ -7,8 +7,6 @@ EXPOSE 5000
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 COPY ["Blog.Business/Blog.Business.csproj", "Blog.Business/"]
-COPY ["Blog.Core/Blog.Core.csproj", "Blog.Core/"]
-COPY ["Blog.WeChat/Blog.WeChat.csproj", "Blog.WeChat/"]
 RUN dotnet restore "Blog.Business/Blog.Business.csproj"
 COPY . .
 WORKDIR "/src/Blog.Business"

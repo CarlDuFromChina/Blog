@@ -1,4 +1,4 @@
-﻿using Blog.Core.WebApi;
+﻿using Sixpence.Web.WebApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sixpence.ORM.Models;

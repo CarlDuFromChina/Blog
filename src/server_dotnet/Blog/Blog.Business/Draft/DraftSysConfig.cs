@@ -1,4 +1,4 @@
-﻿using Blog.Core.Module.SysConfig;
+﻿using Sixpence.Web.Module.SysConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;

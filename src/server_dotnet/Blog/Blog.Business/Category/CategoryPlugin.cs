@@ -1,4 +1,4 @@
-﻿using Blog.Core.Module.SysMenu;
+﻿using Sixpence.Web.Module.SysMenu;
 using Sixpence.ORM.EntityManager;
 using System;
 using System.Collections.Generic;

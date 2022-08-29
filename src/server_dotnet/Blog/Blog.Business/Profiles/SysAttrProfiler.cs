@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Blog.Core;
+using Sixpence.Web;
 using Sixpence.ORM.Entity;
-using Blog.Core.Module.SysAttrs;
-using Blog.Core.Profiles;
+using Sixpence.Web.Module.SysAttrs;
+using Sixpence.Web.Profiles;
 using Sixpence.Common;
 using System;
 using System.Collections.Generic;

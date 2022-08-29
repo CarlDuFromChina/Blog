@@ -1,5 +1,5 @@
 ﻿using Sixpence.ORM.Entity;
-using Blog.Core.Module.MessageRemind;
+using Sixpence.Web.Module.MessageRemind;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

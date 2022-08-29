@@ -1,5 +1,5 @@
 ﻿using Blog.Comments;
-using Blog.Core.Auth;
+using Sixpence.Web.Auth;
 
 using Sixpence.ORM.Entity;
 using Sixpence.ORM.EntityManager;

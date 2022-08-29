@@ -21,16 +21,16 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "Swagger",
+      "applicationUrl": "http://localhost:5050",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:5050"
+      }
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/Swagger",
-      "publishAllPorts": true
+      "environmentVariables": {}
     }
   }
 }

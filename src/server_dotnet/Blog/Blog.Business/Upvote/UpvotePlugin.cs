@@ -1,6 +1,6 @@
-﻿using Blog.Core;
+﻿using Sixpence.Web;
 using Sixpence.ORM.Entity;
-using Blog.Core.Module.MessageRemind;
+using Sixpence.Web.Module.MessageRemind;
 using Newtonsoft.Json;
 using Sixpence.Common;
 using System;
