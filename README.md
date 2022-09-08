@@ -4,6 +4,14 @@
 
 预览网站，请访问 🌍[此网站](https://www.karldu.cn/)获取最新信息。
 
+## 项目
+
+| Repo                                                         | language   | Main Framework | Version | Desc     |
+| ------------------------------------------------------------ | ---------- | -------------- | ------- | -------- |
+| [Blog.UI](https://github.com/CarlDuFromChina/Blog.UI) | JavaScript | vue 2          | 3.0.0   | PC端UI项目 |
+| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | vue 2          | 3.0.0   | 移动端UI项目 |
+| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | NestJS  | 3.0.0   | 后端项目 |
+
 ## 文档
 
 要查看文档，请点击[此处](https://karl-du.gitbook.io/sixpence-blog/)
