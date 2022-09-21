@@ -1,0 +1,1 @@
+pg_restore -h 127.0.0.1 -U postgres -d blog -O "E:\dump\2021-01-17 blog.dmp"
