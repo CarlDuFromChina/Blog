@@ -1,16 +1,18 @@
 # Blog
 
-基于`.Net Core Web API`和`Vue`开发的博客系统，支持移动端和 PC 端显示
+本系统基于`.Net Core`和`Vue`开发，支持移动端和 PC 端显示
 
-预览网站，请访问 🌍[此网站](https://www.karldu.cn/)获取最新信息。
+博客使用 Markdown 进行创作，同时，本系统支持将博客同步到微信公众号和掘金
+
+预览网站，请访问 🌍[此网站](https://www.karldu.cn/)获取最新信息
 
 ## 项目
 
 | Repo                                                         | language   | Main Framework | Version | Desc     |
 | ------------------------------------------------------------ | ---------- | -------------- | ------- | -------- |
-| [Blog.UI](https://github.com/CarlDuFromChina/Blog.UI) | JavaScript | vue 2          | 3.0.0   | PC端UI项目 |
-| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | vue 2          | 3.0.0   | 移动端UI项目 |
-| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | NestJS  | 3.0.0   | 后端项目 |
+| [Blog.UI](https://github.com/CarlDuFromChina/Blog.UI) | JavaScript | Vue 2.6.14   | 3.0.1  | PC 端 UI 项目 |
+| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 移动端 UI 项目 |
+| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.0.0   | 后端项目 |
 
 ## 文档
 
