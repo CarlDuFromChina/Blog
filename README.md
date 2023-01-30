@@ -1,10 +1,8 @@
 # Blog
 
-本系统基于`.Net Core`和`Vue`开发，支持移动端和 PC 端显示
+基于`.Net Core`和`Vue`开发的前后端分离博客
 
-博客使用 Markdown 进行创作，同时，本系统支持将博客同步到微信公众号和掘金
-
-预览网站，请访问 🌍[此网站](https://www.karldu.cn/)获取最新信息
+欢迎访问：[我的博客](https://karldu.cn)
 
 ## 项目
 
@@ -14,55 +12,40 @@
 | [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 移动端 UI 项目 |
 | [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.0.0   | 后端项目 |
 
+## 项目特点
+
++ 支持`PC`和移动端显示
++ 支持第三方登录（`Github`、`Gitee`）快捷注册
++ 采用`Markdown`编辑器，更适合程序员的编辑器
++ 想法和读书笔记采用`wangEditor`富文本编辑器，放飞自我
++ 留言板支持内置留言组件和`Disqus`两种方式，自由切换
++ 支持代码高亮和复制，图片预览，深色模式等功能，提升用户体验。
++ 项目采用前后端分离
++ 项目支持`Docker`部署和传统部署（`Windows`、`Linux`）
++ 支持分享到第三方平台（掘金、微信公众号）
++ 支持编辑和同步微信公众号图文素材
+
 ## 文档
 
-要查看文档，请点击[此处](https://karl-du.gitbook.io/sixpence-blog/)
++ [部署指南](https://karl-du.gitbook.io/sixpence-blog/bu-shu)
 
-## 功能
+  + [Windows 部署](https://karl-du.gitbook.io/sixpence-blog/bu-shu/windows-bu-shu)
 
-+ 创作平台
-  + 博客
-  + 专栏
-  + 想法
-  + 读书笔记
-  + 推荐信息
-  + 站外链接
-+ 资源管理
-  + 文件管理
-  + 图库
-+ 系统设置
-  + 菜单
-  + 实体
-  + 作业计划
-  + 用户管理
-  + 角色管理
-  + 系统参数
-+ 企业微信机器人
-  + 定时发送信息
-+ 微信公众号平台
-  + 同步图文素材
-  + 自动回复设置
-  + 关注回复设置
+  + [Docker 部署](https://karl-du.gitbook.io/sixpence-blog/bu-shu/docker-bu-shu)
+
++ [版本迁移](https://karl-du.gitbook.io/sixpence-blog/ban-ben)
 
 ## 截图
-
-登录
-
-![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_login.png)
 
 首页
 
 ![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_index.png)
-![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_index2.pgn.png)
 
-编辑
+编辑博客
 
 ![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_edit.png)
 
-博客
+阅读博客
 
 ![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_read.png)
 
-管理员
-
-![Image](https://raw.githubusercontent.com/CarlDuFromChina/library/main/blog/blog_admin.png)
