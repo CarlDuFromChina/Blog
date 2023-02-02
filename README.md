@@ -8,10 +8,10 @@
 
 | Repo                                                         | language   | Main Framework | Version | Desc     |
 | ------------------------------------------------------------ | ---------- | -------------- | ------- | -------- |
-| [Blog.Portal](https://github.com/CarlDuFromChina/Blog.Portal) | JavaScript | Vue 2.6.14 | 3.0.1 | 博客前端项目 |
-| [Blog.Admin](https://github.com/CarlDuFromChina/Blog.Admin) | JavaScript | Vue 2.6.14   | 3.0.1  | 博客后台管理前端项目 |
+| [Blog.Portal](https://github.com/CarlDuFromChina/Blog.Portal) | JavaScript | Vue 2.6.14 | 3.1.0 | 博客前端项目 |
+| [Blog.Admin](https://github.com/CarlDuFromChina/Blog.Admin) | JavaScript | Vue 2.6.14   | 3.1.0  | 博客后台管理前端项目 |
 | [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 博客移动端前端项目 |
-| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.0.0   | 博客后端项目 |
+| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.1.0   | 博客后端项目 |
 
 ## 项目特点
 
