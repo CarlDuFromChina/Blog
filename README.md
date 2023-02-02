@@ -8,9 +8,10 @@
 
 | Repo                                                         | language   | Main Framework | Version | Desc     |
 | ------------------------------------------------------------ | ---------- | -------------- | ------- | -------- |
-| [Blog.UI](https://github.com/CarlDuFromChina/Blog.UI) | JavaScript | Vue 2.6.14   | 3.0.1  | PC 端 UI 项目 |
-| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 移动端 UI 项目 |
-| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.0.0   | 后端项目 |
+| [Blog.Portal](https://github.com/CarlDuFromChina/Blog.Portal) | JavaScript | Vue 2.6.14 | 3.0.1 | 博客前端项目 |
+| [Blog.Admin](https://github.com/CarlDuFromChina/Blog.Admin) | JavaScript | Vue 2.6.14   | 3.0.1  | 博客后台管理前端项目 |
+| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 博客移动端前端项目 |
+| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.0.0   | 博客后端项目 |
 
 ## 项目特点
 
@@ -18,7 +19,7 @@
 + 支持第三方登录（`Github`、`Gitee`）快捷注册
 + 采用`Markdown`编辑器，更适合程序员的编辑器
 + 想法和读书笔记采用`wangEditor`富文本编辑器，放飞自我
-+ 留言板支持内置留言组件和`Disqus`两种方式，自由切换
++ 留言板采用`Disqus`，最流行的评论组件
 + 支持代码高亮和复制，图片预览，深色模式等功能，提升用户体验。
 + 项目采用前后端分离
 + 项目支持`Docker`部署和传统部署（`Windows`、`Linux`）
