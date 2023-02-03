@@ -4,6 +4,8 @@
 
 欢迎访问：[我的博客](https://karldu.cn)
 
+版本变更：[CHANGELOG.md](https://github.com/CarlDuFromChina/Blog/blob/master/CHANGELOG.md)
+
 ## 项目
 
 | Repo                                                         | language   | Main Framework | Version | Desc     |

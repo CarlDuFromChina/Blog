@@ -6,23 +6,33 @@ services:
     links:
       - blog-server
     ports:
-      - "8002:80"
+      - "8003:80"
     volumes:
       - /docker_data/blog/pc/nginx.conf:/etc/nginx/nginx.conf
-      - /docker_data/blog/pc/config.json:/usr/share/nginx/html/static/config.json
     networks:
       - blog-network
 
+  blog-html-admin:
+    container_name: "blog-html-admin"
+    image: carldu/blog-html-admin:latest
+    links:
+      - blog-server
+    ports:
+      - "8006:80"
+    volumes:
+      - /docker_data/blog/admin/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - blog-network
+      
   blog-html-mobile:
     container_name: "blog-html-mobile"
     image: carldu/blog-html-mobile:latest
     links:
       - blog-server
     ports:
-      - "8003:80"
+      - "8004:80"
     volumes:
       - /docker_data/blog/mobile/nginx.conf:/etc/nginx/nginx.conf
-      - /docker_data/blog/mobile/config.json:/usr/share/nginx/html/static/config.json
     networks:
       - blog-network
 
@@ -35,11 +45,11 @@ services:
         max-size: "50m"
     restart: always
     ports:
-      - "5434:5432"
+      - "5432:5432"
     environment:
       POSTGRES_DB: blog
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123123
+      POSTGRES_PASSWORD: blog
     volumes:
       - /docker_data/blog/pg_data:/var/lib/postgresql/data
     networks:
@@ -48,17 +58,17 @@ services:
   blog-server:
     container_name: "blog-server"
     image: carldu/blog-server:latest
-    ports:
-      - "5001:5000"
     links:
       - blog-db
+    environment:
+      TZ: Asia/Shanghai
     volumes:
       - /docker_data/blog/server/appsettings.json:/app/appsettings.json
       - /docker_data/blog/server/logs:/app/log
       - /docker_data/blog/server/storage:/app/storage
     networks:
       - blog-network
-
+      
 networks:
   blog-network:
     driver: bridge
