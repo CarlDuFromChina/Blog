@@ -1,6 +1,6 @@
 # Blog
 
-基于`.Net Core`和`Vue`开发的前后端分离博客
+基于`.Net 6.0`和`Vue 2.6`开发博客`web`系统，支持`PC`端和移动端显示
 
 欢迎访问：[我的博客](https://karldu.cn)
 
@@ -13,7 +13,7 @@
 | [Blog.Portal](https://github.com/CarlDuFromChina/Blog.Portal) | JavaScript | Vue 2.6.14 | 3.1.0 | 博客前端项目 |
 | [Blog.Admin](https://github.com/CarlDuFromChina/Blog.Admin) | JavaScript | Vue 2.6.14   | 3.1.0  | 博客后台管理前端项目 |
 | [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 博客移动端前端项目 |
-| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net Core 3.1 | 3.1.0   | 博客后端项目 |
+| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net 6.0 | 3.1.0   | 博客后端项目 |
 
 ## 项目特点
 
