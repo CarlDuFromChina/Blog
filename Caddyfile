@@ -1,0 +1,14 @@
+admin.karldu.cn {
+	encode gzip
+	reverse_proxy	127.0.0.1:8006
+}
+
+karldu.cn, www.karldu.cn {
+	encode gzip
+	reverse_proxy	127.0.0.1:8003
+}
+
+m.karldu.cn {
+	encode gzip
+	reverse_proxy	127.0.0.1:8004
+}
