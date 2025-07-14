@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>4aa1042d-eae1-4fa7-9ad7-9fcf049a88ae</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\build</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="version\1.0\**" />
+    <Content Remove="version\1.0\**" />
+    <EmbeddedResource Remove="version\1.0\**" />
+    <None Remove="version\1.0\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Sixpence.Web" />
+    <None Remove="version\3.0\2022062009-sys_menu.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Sixpence.Web" Version="2.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="version\3.0\2022062009-sys_menu.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+	
+  <!--Windows-->
+  <ItemGroup Condition="'$(OS)'=='Windows_NT'">
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062001-sys_role.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062002-auth_user.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062003-user_info.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062004-sys_menu.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062006-sys_param.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062007-sys_paramgroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(UserProfile)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062008-quartz.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!--Mac & Linux-->
+  <ItemGroup Condition="'$(OS)'!='Windows_NT'">
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062001-sys_role.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062002-auth_user.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062003-user_info.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062004-sys_menu.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062006-sys_param.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062007-sys_paramgroup.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="$(HOME)\.nuget\packages\sixpence.web\2.0.0\contentFiles\any\netcoreapp3.1\version\Template\2022062008-quartz.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

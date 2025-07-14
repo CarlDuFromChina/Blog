@@ -6,15 +6,6 @@
 
 版本变更：[CHANGELOG.md](https://github.com/CarlDuFromChina/Blog/blob/master/CHANGELOG.md)
 
-## 项目
-
-| Repo                                                         | language   | Main Framework | Version | Desc     |
-| ------------------------------------------------------------ | ---------- | -------------- | ------- | -------- |
-| [Blog.Portal](https://github.com/CarlDuFromChina/Blog.Portal) | JavaScript | Vue 2.6.14 | 3.1.0 | 博客前端项目 |
-| [Blog.Admin](https://github.com/CarlDuFromChina/Blog.Admin) | JavaScript | Vue 2.6.14   | 3.1.1  | 博客后台管理前端项目 |
-| [Blog.MUI](https://github.com/CarlDuFromChina/Blog.MUI) | JavaScript | Vue 2.6.14    | 3.0.0   | 博客移动端前端项目 |
-| [Blog.Server](https://github.com/CarlDuFromChina/Blog.Server) | C#         | .Net 6.0 | 3.1.0   | 博客后端项目 |
-
 ## 项目特点
 
 + 支持`PC`和移动端显示
@@ -37,6 +28,28 @@
   + [Docker 部署](https://karl-du.gitbook.io/sixpence-blog/bu-shu/docker-bu-shu)
 
 + [版本迁移](https://karl-du.gitbook.io/sixpence-blog/ban-ben)
+
+## 环境配置
+
+项目使用环境配置文件来管理不同环境的配置，请根据以下步骤配置：
+
+### Admin 后台管理
+
+```bash
+cd admin
+cp .env.example .env
+# 编辑 .env 文件，配置对应的环境变量
+```
+
+### Portal 门户网站
+
+```bash
+cd portal
+cp .env.example .env
+# 编辑 .env 文件，配置对应的环境变量
+```
+
+**注意：** `.env` 文件包含敏感信息，不会被提交到版本控制系统中。
 
 ## 截图
 
